@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app metadata-complete="true" version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>房产交易</display-name>
+
+    <!-- 定义webAppRootKey 防止多个工程冲突,主要由log4j引发 -->
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>insurance</param-value>
+    </context-param>
+
+    <!-- logback -->
+    <context-param>
+        <param-name>logbackConfigLocation</param-name>
+        <param-value>WEB-INF/logback.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>com.yjf.common.log.LogbackConfigListener</listener-class>
+    </listener>
+     <!-- session -->
+    <context-param>
+		<param-name>sessionCookieName</param-name>
+		<param-value>
+			SUPSESSIONID
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>com.born.insurance.web.listener.SessionCookieServletContextListener</listener-class>
+	</listener>
+	
+	 <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+<filter>
+	<filter-name>charChangeFilter</filter-name>
+	   <filter-class>com.yjf.common.web.CrossScriptingFilter</filter-class>
+	   <init-param>
+	   <param-name>excludeUrl</param-name>
+	   <param-value>((\/services.*$)|(\/index\.htm.*))</param-value>
+	   </init-param>
+	    <init-param>
+	   <param-name>excludeUrlPath</param-name>
+	   <param-value>/projectMg/projectRiskLog,/projectMg/meetingMg/summary,/projectMg/chargeNotification,/projectMg/riskHandle,/projectMg/riskWarning,/projectMg/formChangeApply,/projectMg/setUp,/systemMg,/projectMg/contract,/projectMg/consentIssueNotice,/customerMg/evalueSet,/customerMg/financialEvalueSet,/customerMg/evaluting,/projectMg/recovery,/projectMg/afterwardsCheck,/projectMg/investigation,/projectMg/form,/customerMg/companyCustomer,/customerMg/personalCustomer,/projectMg/recovery/projectRecoverySave.json</param-value>
+	   </init-param>
+	    <init-param>
+	      <param-name>autoCheck</param-name>
+ 		  <param-value>true</param-value>
+	   </init-param>
+	   <init-param>
+	    	<param-name>escapeJavaScript</param-name>
+ 			<param-value>false</param-value>
+	   </init-param>
+	
+	</filter>
+	<filter-mapping>
+	   <filter-name>charChangeFilter</filter-name>
+	   <url-pattern>/*</url-pattern>
+	</filter-mapping>  
+	
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+	   <filter-name>requestLogFilter</filter-name>
+	   <filter-class>com.born.insurance.web.filter.RequestLogFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>requestLogFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> 
+	 <!-- shiro filter -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- 跨站攻击防御filter -->
+
+
+
+   
+
+
+    <!-- Spring配置 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:spring/*.xml
+        </param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>insurance</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>insurance</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>insurance</servlet-name>
+        <url-pattern>*.json</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>insurance</servlet-name>
+        <url-pattern>*.checkcode</url-pattern>
+    </servlet-mapping>
+    
+    
+
+    <!-- java 专用 WEB SERVICE -->
+    <servlet>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error4.htm</location>
+    </error-page>
+    <error-page>
+        <error-code>405</error-code>
+        <location>/error5.htm</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error0.htm</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.htm</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/error.htm</location>
+    </error-page>
+    <welcome-file-list>
+        <welcome-file>/index.htm</welcome-file>
+    </welcome-file-list>
+</web-app>

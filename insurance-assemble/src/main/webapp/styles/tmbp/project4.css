@@ -1,0 +1,119 @@
+.m-item3 .m-label{margin-left:0;position: static;width: 160px;display: inline-block;zoom: 1;*display: inline;_display: inline;}
+.m-item3.fnUpAttach .fnUpAttachUl{margin-left:170px;}
+.m-item3.fnUpAttach .fnUpAttachUl .fileItems{overflow: hidden; white-space: nowrap; text-overflow: ellipsis;display: inline-block;zoom: 1;*display: inline;_display: inline;max-width: 75%;width: 110px;}
+.m-item3.fnUpAttach .fn-blank5{display: none;}
+.m-item-half-1{min-width:290px;}
+.item-files{height:26px;line-height:26px;}
+.fnUpAttach .viewDaliog{padding: 0 10px 0 0;}
+.ui-btn-edit.ui-btn-blue-1{background-color: #00b7ee; border-color: #00a0e9;}
+.ui-btn-blue-1{background-color: #00b7ee; border-color: #00a0e9;height:22px;line-height: 22px; width:60px;border-radius: 4px; color: #fff; cursor: pointer;margin-top:2px;margin-right:10px;}
+.fn-ti1{text-indent:10px;}
+.m-textarea{width:90%;font-size:0;}
+.m-textarea .ui-textarea{width:60%;height:300px;font-size:12px;}
+.loadType .loadType{background:#EBEBEB;}
+.icon-select-left{position:absolute;top:5px;left:0;display: inline-block;zoom: 1; vertical-align: top;*display: inline;top:11px;width:12px;height:12px;background:url('img/project/select-arrow.png') no-repeat 0 -13px;background-size:12px 24px;}
+.icon-select-left.down{left:0;width:10px;height:10px;background:url('img/project/select-arrow.png') no-repeat 0 0;background-size:8px 35px;overflow:hidden;}
+
+/*!*自定义报表*!*/
+.apply-step{ background-color: #fff;}
+.apply-step .item{ float: left; width: 140px; margin-left: 10px; text-align: center; cursor: pointer; color: #161717;}
+.apply-step .icon{ width: 35px; height: 35px; margin-top: 20px; background-image: url(img/project/icon_view_report.png); background-repeat: no-repeat;}
+.apply-step .icon-s1{ background-position: 0 0;}
+.apply-step .icon-s2{ background-position: 0 -40px;}
+.apply-step .icon-s3{ background-position: 0 -80px;}
+.apply-step .icon-s4{ background-position: 0 -120px;}
+.apply-step .icon-s5{ background-position: 0 -160px;}
+.apply-step .icon-s6{ background-position: 0 -200px;}
+.apply-step .icon-s7{ background-position: 0 -240px;}
+.apply-step .step-line{ position: absolute; margin-top: -68px; margin-left: 140px; width: 0px; height: 60px; border-right: 1px solid #d6d0d0;}
+.apply-step .step-line2{ position: absolute; height: 3px; width: 80px;}
+.apply-step .item.active .step-line{ width: 10px; border-right: 0; background: url(img/project/apply_step_line.jpg) 50% 50% no-repeat;}
+.apply-step .item.active .step-line2{ background-color: #77c188; margin-top: -78px; margin-left: 30px;}
+.apply-step .item.active{ color: #77c188; font-weight: 700;}
+.apply-step .item.active .icon{ background-image: url(img/project/icon_view_report.png);}
+
+body .m-item b.error-tip{color:#f30 !important;font-family:'Microsoft YaHei';}
+
+/*comm*/
+.tips-999{color: #999;}
+
+/*多文件上传组件*/
+.uploadFileM .uploadify{display: inline-block;}
+.uploadFileM #queueDiv{max-height: 204px;overflow: hidden;overflow-y: auto;min-height: 10px;}
+.uploadFileM .uploadify-queue-item{position: relative;margin-top:10px;}
+.uploadFileM .cancel{position: absolute;bottom: -5px;right:15%;}
+.uploadFileM .uploadify-progress{width:80%;margin-top:5px;background: #999;height:5px;}
+.uploadFileM .uploadify-progress-bar{background: #47a55c;height:5px;}
+.uploadFileM .data{margin-left:4px;color: #f30;font-size: 12px;}
+.uploadFileM .error_msg,
+.uploadFileM .upload_msg{margin-left:10px;font-size: 12px;}
+.uploadFileM .error_msg{max-height:100px;overflow: hidden;overflow-y: auto;margin-bottom: 20px;}
+.uploadFileM .error_msg p{margin: 3px 0;color: #f30;}
+.uploadFileM .fn-bottom p{width: 90%;display: inline-block;color:#999999;word-wrap: break-word;word-wrap: break-word; word-break: normal;font-size: 12px;margin-bottom: 5px;}
+.uploadFileM .fn-bottom .surpport_type{width: 80%;margin-left: 10%;font-size: 14px;}
+.uploadFileM .fn-bottom{margin-bottom:20px;margin-top:20px;}
+.uploadFileM .uploadify-button{background:#00b7ee;color: #fff;border-radius: 4px;padding:1px 15px;height: 28px; line-height: 28px;display: inline-block;}
+.uploadFileM .wnd-body{border-top:1px solid #f3f3f3;padding-top:20px;cursor: pointer;}
+.uploadFileM .btn-opts{display: inline-block;width:70px;height: 30px;text-align: center;line-height: 30px;padding: 0;left: 0;top:0;background: url("img/project/com-btn.jpg") no-repeat left -72px;}
+
+/*!*appdownload*!*/
+.downloadCrnVer{padding: 0 10px;height: 30px;line-height: 30px;background: #00b7ee;color: #fff;border-radius: 5px;}
+.downloadCrnVer:hover{color: #fff;}
+.configApp .fnUpAttach{margin-top: 0;padding: 0;}
+.fnUpAttach .fnUpAttachUl .imgPreItem img,
+.logoPreArea img{width: 250px;height: auto;}
+.apply-step{margin-left:100px;margin-bottom:30px;}
+.apply-step .andriod_icon{ width: 35px; height: 42px; margin-top: 20px; background: url(img/project/andriod_icon.png); background-repeat: no-repeat;}
+.apply-step .apple_icon{ width: 35px; height: 42px; margin-top: 20px; background: url(img/project/apple_icon.png); background-repeat: no-repeat;}
+.apply-step .item{width:140px;margin-left:0;    position: relative;}
+.apply-step .item a{ display:block; width:100%; height:100%;position: relative;}
+.apply-step .item.active a{color:#77c188;}
+.apply-step .item.active .step-line2{width:100%;margin: 0;top:0;}
+
+/*分类管理*/
+.productList{padding: 20px;width: 75%;box-sizing: border-box;}
+
+table table.innerTabel{border: 0;}
+table table.innerTabel tr,
+table table.innerTabel td,
+table table.innerTabel th{border: 0;}
+table table.innerTabel .fn-border-r{border-right: 1px solid #d1d1d1;}
+table table.innerTabel .fn-border-b{border-bottom: 1px solid #d1d1d1;}
+table table.innerTabel .fn-border-t{border-top: 1px solid #d1d1d1;}
+table table.innerTabel .fn-border-l{border-left: 1px solid #d1d1d1;}
+table table.innerTabel .fn-border-rb{border-right: 1px solid #d1d1d1;border-bottom: 1px solid #d1d1d1;}
+table table.innerTabel .fn-border-rt{border-right: 1px solid #d1d1d1;border-top: 1px solid #d1d1d1;}
+table table.innerTabel tr{margin-top: -5px;}
+table.boxTable{box-sizing: content-box;}
+
+.addline-2{background: #47a55c;right: -30px;padding: 0 2px;}
+.delLine-2{background: #fff;right: -30px;padding: 0;text-align: center;height: 20px;width: 20px;color: #fff;border-radius: 50%;font-size: 16px;font-weight: bold;border: solid #f30 1px;}
+.addline-2 i.icon-add{margin: 0;}
+table tr .deleteInsuranceLine{display: inline-block;padding: 0;height: 20px;width: 20px;top:2px;right:-20px;font-size: 20px;color: #fff;border-radius: 50%;line-height: 18px;z-index: 4000;}
+table tr .deleteInsuranceLine:hover{color: #fff;}
+
+/*佣金明细*/
+.personCommissionViewChange,.presonCommissionTable{margin: 20px 2%;padding: 0;}
+.commissionIncommon{color: #55b66b;}
+.commissionDraw{color: #FF6600;}
+
+.icon-select-down{display: inline-block;zoom: 1; vertical-align: top;*display: inline;position:absolute;right:3px;top:8px;width:10px;height:10px;background:url('img/project/select-arrow.png') no-repeat 0 0;background-size:8px 35px;overflow:hidden;}
+.icon-select-up{display: inline-block;zoom: 1; vertical-align: top;*display: inline;background:url('img/project/select-arrow.png') no-repeat 0 -10px;background-size:8px 35px;}
+
+.radio-no{display: inline-block;zoom: 1; /* vertical-align: top; */*display: inline;width:13px;height:13px;background:url('img/project/radioBtn.png') no-repeat 0 0;background-size:13px auto;overflow:hidden;font-style: normal;padding-left: 3px;cursor: pointer;margin-left: 5px;}
+.radio-checked{background:url('img/project/radioBtn.png') no-repeat 0 -13px;background-size:13px auto;}
+.icon-export{display: inline-block;zoom: 1; vertical-align: top;*display: inline;min-width:20px;height:20px;background:#f3753d url('img/project/icon_export.png') no-repeat 0 0;background-size:20px auto;background-position: 5px 5px;cursor: pointer;border-radius: 5px;padding: 5px 10px 5px 30px;font-style: normal;color: #fff;}
+.icon-print{display: inline-block;zoom: 1; vertical-align: top;*display: inline;min-width:20px;height:20px;background:#f3753d url('img/project/icon_print.png') no-repeat 0 0;background-size:20px auto;background-position: 5px 5px;cursor: pointer;border-radius: 5px;padding: 5px 10px 5px 30px;font-style: normal;color: #fff;}
+.icon-saveAll{min-width:20px;height:20px;background:#f3753d url('img/project/icon_saveAll.png') no-repeat 0 0;background-size:20px auto;background-position: 5px 5px;cursor: pointer;border-radius: 5px;padding: 5px 10px 5px 30px;font-style: normal;color: #fff;}
+.icon-copy{background:#00b7ee url('img/project/icon_copy.png') no-repeat 15px center;background-size:20px auto;}
+
+/*续期缴费*/
+.renewalPaymentBody .paymentWayItems b.error-tip{position: absolute;bottom: 12px;right: -10%;}
+/*询价*/
+.inquiryTemplate .isIinquiryPlanBodyTd{display: none;}
+.inquiryTemplate{border: 1px solid #eee;margin: 20px 2% 0 2%;}
+.inquiryTemplate:hover{box-shadow: 0px 1px 5px 0px rgba(9, 2, 4, 0.2);transition: all ease-in-out 0.2s;}
+.deletePriceTemplate{bottom:2px;right:2px;}
+.quotationCompany .m-item .fnUpAttachUl{height: auto;}
+.mod-render-template .insurancePlanBox,
+.mod-render-template .form_template{display: none;}

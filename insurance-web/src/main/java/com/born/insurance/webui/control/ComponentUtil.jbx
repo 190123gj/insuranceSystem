@@ -1,0 +1,29 @@
+[PropertyInfo]
+_instance,ComponentUtil,false,false, , ,false,<default>
+COMPONENTUTIL_CONFIG_FILE,String,false,false, , ,false,<default>
+CSSDIR,String,false,false, , ,false,<default>
+cssRequestPath,String,false,false, , ,true,<default>
+dataMap,Map,false,false, , ,false,<default>
+IMAGESDIR,String,false,false, , ,false,<default>
+imagesRequestPath,String,false,false, , ,true,<default>
+ISUPDATEJS,String,false,false, , ,false,<default>
+JSDIR,String,false,false, , ,false,<default>
+JSFilePath,String,false,false, , ,true,<default>
+JSRequestPath,String,false,false, , ,true,<default>
+RESFILEPATH,String,false,false, , ,false,<default>
+RESREQUESTPATH,String,false,false, , ,false,<default>
+ROOTFILEPATH,String,false,false, , ,false,<default>
+rootRequestPath,String,false,false, , ,true,<default>
+rootRequestPath,HttpServletRequest,false,false, , ,true,<default>
+ROOTREQUESTPATH,String,false,false, , ,false,<default>
+SEARCHDATAREQUEST,String,false,false, , ,false,<default>
+searchDataRequestPath,String,false,false, , ,true,<default>
+SERVEREVENTREQUEST,String,false,false, , ,false,<default>
+serverEventRequestPath,String,false,false, , ,true,<default>
+updateJsEveryTime,boolean,false,false, , ,true,<default>
+updateJsEvetyTime,boolean,false,false, , ,true,<default>
+[IconNames]
+
+
+
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>机构管理</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;机构管理&nbsp;&gt;&nbsp;新增机构
+</div>
+<h2 class="m-h2-title">新增机构</h2>
+<div class="fn-blank20"></div>
+<form class="m-main border ui-bg-fff" action="/insurance/organization/selectType.htm"  method="POST" id="form">
+    <div class="m-search fn-clear">
+		 <div class="item">
+            机构类型：
+			<select  name="orgType" id="orgType" class="ui-select fn-w200 fnChangeInput">
+            <option value="INSURANCE_INSTITUTIONS">保险机构</option>
+			<option value="THIRD_PARTY_MECHANISM">第三方机构</option>
+			</select>
+		</div>
+    </div>
+    <div class="fn-tac fn-pt20 fn-pb30">
+		
+        <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn" type="submit" value="下一步">
+        <a href="javascript:void(0)" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5 toCanleOpt">返回</a>
+    </div>
+</form>
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+</body>
+</html>

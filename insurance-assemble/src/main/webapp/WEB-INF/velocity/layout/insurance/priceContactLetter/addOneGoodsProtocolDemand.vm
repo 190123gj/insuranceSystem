@@ -1,0 +1,367 @@
+##定义一些变量，询价用
+###set($isIinquiryPlan = true)
+#set($isHide = "fn-hide")
+#set($isDisabled = "disabled")
+#set($tdColspan = 7)
+#if($!isIinquiryPlan == true)
+    ##用于隐藏
+    #set($isHide = "")
+    ##用于禁用提交，验证
+    #set($isDisabled = "")
+    ##合并单元格
+    #set($tdColspan = 12)
+#end
+<div class="onceGoodsProtocolTemplate inquiryTemplate fn-mt20" templatecode="onceGoodsProtocolTemplate" parentdiyname="demandOrders" templatename="ONEGOODS">
+    <span class="fn-hide insurancePlanJosn">$!{demandInfo.schemeInfo.schemeDetail}</span>
+    <input type="hidden" name="demandType" value="onceGoodsProtocolTemplate">
+    <div class="m-item">
+        <label class="m-label fn-font-b" style="font-size: 16px;">单次货运类询价标的</label>
+    </div>
+
+    #if($!{isEdit}=="Y")
+        <input type="hidden" name="id" value="$!{demandInfo.id}">
+    #end
+
+    <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>投保人：</label>
+        <input class="ui-text fn-w200" type="text" name="policyHolder" value="$!{demandInfo.policyHolder}">
+    </div>
+
+    <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>被保险人：</label>
+        <input class="ui-text fn-w200" type="text" name="insuredPerson" value="$!{demandInfo.insuredPerson}">
+    </div>
+
+    <div class="m-item">
+        <label class="m-label"></label>
+        <div class="fn-wp90">
+            <table class="m-table m-table-list">
+                <tr>
+                    <td>
+                        提单(运单)号：
+                        <input class="ui-text fn-w200" type="text" name="billLadingNo" value="$!{demandInfo.billLadingNo}">
+                    </td>
+                    <td>
+                        发票号：
+                        <input class="ui-text fn-w200" type="text" name="invoiceNo" value="$!{demandInfo.invoiceNo}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        信用证号：
+                        <input class="ui-text fn-w200" type="text" name="creditLetterNo" value="$!{demandInfo.creditLetterNo}">
+                    </td>
+                    <td>
+                        发票金额：
+                        <input class="ui-text fn-w200" type="text" name="invoiceValue" value="$!{demandInfo.invoiceValue}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        合同号：
+                        <input class="ui-text fn-w200" type="text" name="contractNo" value="$!{demandInfo.contractNo}">
+                    </td>
+                    <td>
+                        加成比例：
+                        <input class="ui-text fn-w200" type="text" name="additionRatio" value="$!{demandInfo.additionRatio}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        起运日期：
+                        <input class="ui-text fn-w200" type="text" name="departureDate" value="$!{demandInfo.departureDate}">
+                    </td>
+                    <td>
+                        运输方式：
+                        <input class="ui-text fn-w200" type="text" name="transportWay" value="$!{demandInfo.transportWay}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        运输工具及航次：
+                        <input class="ui-text fn-w200" type="text" name="transportNum" value="$!{demandInfo.transportNum}">
+                    </td>
+                    <td>
+                        转运工具：
+                        <input class="ui-text fn-w200" type="text" name="transportTools" value="$!{demandInfo.transportTools}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        起运地：
+                        <input class="ui-text fn-w200" type="text" name="departurePlace" value="$!{demandInfo.departurePlace}">
+                    </td>
+                    <td>
+                        途经地：
+                        <input class="ui-text fn-w200" type="text" name="viaPlace" value="$!{demandInfo.viaPlace}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        目的地：
+                        <input class="ui-text fn-w200" type="text" name="destinationPlace" value="$!{demandInfo.destinationPlace}">
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>风险信息：</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="1">散装</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="2">裸装</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="3">二手</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="4">旧货</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="5">退货</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="6">舱面</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="7">危险货物</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="8">冷藏</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="9">防震</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="10">防尘</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="11">防倾斜</label>
+        <label class="fn-mr20"><input type="checkbox" name="eeee" class="checkbox" value="12">恒温</label>
+    </div>
+
+    <div class="m-item diyNameBox">
+        <label class="m-label"><span class="m-required">*</span>保险方案建议：</label>
+        <div class="fn-wp90 itemBox">
+            <p>提示：免赔额/率为绝对免赔额/率，如采用相对免赔额/率。</p>
+            <table class="m-table m-table-list itemsList boxTable insurancePlanBox">
+                <tr>
+                    <th class="fn-tac">险种分类</th>
+                    ##询价用
+                    #if($!isIinquiryPlan == true)
+                        <th class="fn-tac isIinquiryPlanBodyTd">产品</th>
+                    #end
+                    <th class="fn-tac">品名</th>
+                    <th class="fn-tac">包装及数量</th>
+                    <th class="fn-tac">标记</th>
+                    <th class="fn-tac">保额</th>
+                    <th class="fn-tac">免赔额/率</th>
+                    <th class="fn-tac">预计保费费率</th>
+                    <th class="fn-tac"><span class="m-required">*</span>预计保费</th>
+                    <th class="fn-tac">意向经纪<br/>费比例(%)</th>
+                    ##询价用
+                    #if($!isIinquiryPlan == true)
+                        <th class="fn-tac isIinquiryPlanBodyTd">费率(‰)</th>
+                        <th class="fn-tac isIinquiryPlanBodyTd"><span class="m-required">*</span>保费</th>
+                        <th class="fn-tac isIinquiryPlanBodyTd">经纪费比例(%)</th>
+                        <th class="fn-tac isIinquiryPlanBodyTd"><span class="m-required">*</span>经纪费金额</th>
+                    #end
+                    <th class="fn-tac fn-w80">操作</th>
+                </tr>
+##                <tr diyname="schemeOrder.schemeDetailOrders" class="itemLine" rowspan="1" targetindex="0">
+##                    <td class="fn-tac rowspanTr selectFnBoxTd" rowspan="1">
+##                        <div class="selectFnBox1 onlyChildrenCanChoose">
+##                            <span class="ui-text fn-w200 fnInput selectFn fn-text-overflow"><label class="key-parentCatalogName">请选择</label><i class="icon icon-select-down"></i></span>
+##                            <input class="syncsVal selectedId" type="hidden" name="parentCatalogId" value="">
+##                            <input class="syncsVal selectedName" type="hidden" name="parentCatalogName" value="">
+##                            <div class="selectRslt fn-p-abs fn-usn">
+##                            </div>
+##                        </div>
+####                        <a href="javascript:void(0);" templateid="TMP_EXTRA_INSURANCET_ONEGOODS" class="addInsurance">[ 新增附加险 ]</a><br/>
+##                    </td>
+##                ##询价时显示产品 START
+##                    #if($!isIinquiryPlan == true)
+##                        <td class="fn-tac ">
+##                            <input class="text fn-validate" type="text">
+##                        </td>
+##                    #end
+##                ##询价时显示产品 END
+##                    <td class="fn-tac ">
+##                        <input class="text fn-validate" type="text">
+##                    </td>
+##                    <td class="fn-tac ">
+##                        <input class="text fn-validate" type="text">
+##                    </td>
+##                    <td class="fn-tac ">
+##                        <input class="text fn-validate" type="text">
+##                    </td>
+##                    <td class="fn-tac ">
+##                        <input class="text fn-validate" type="text">
+##                    </td>
+##                    <td class="fn-tac">
+##                        <input class="text" type="text" name="deductibleRate" value="">
+##                    </td>
+##                    <td class="fn-tac ">
+##                        <input class="text fn-validate" type="text" name="premiumRate">
+##                    </td>
+##                    <td class="fn-tac fn-p-reb">
+##                        <input class="text fn-validate" type="text" name="expectPremiumAmount">
+##                    ##            <a class="ui-btn ui-btn-fill ui-btn-danger deleteInsuranceLine fn-p-abs" href="javascript:void(0);" tdcolspan="$!tdColspan">-</a>
+##                    </td>
+##                    <td class="fn-tac rowspanTr" rowspan="1">
+##                        <input class="text fn-validate syncsVal intentionBrokerRate" type="text" name="intentionBrokerRate">
+##                    </td>
+##                    <td class="fn-tac fn-w80 rowspanTr" rowspan="1"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" tdcolspan="$!tdColspan">删除</a></td>
+##                </tr>
+            </table>
+            <div class="fn-tar fn-mt20">
+                <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_INSURANCE_PLAN_RECOMED_ONEGOODS" addindex="targetindex" href="javascript:void(0);"><i class="icon icon-add"></i>增加保险方案</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-item">
+        <label class="m-label">附件信息：</label>
+        <div class="fnUpAttach">
+            #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="pathName_PRODUCT1_PROTOCOL")
+                #set($hiddenUrls = $!{hiddenUrls_PRODUCT1_PROTOCOL})
+                #set($attachments = $!{attaches_PRODUCT1_PROTOCOL})
+                #parse("/layout/common/uploadAttachment.vm")
+        </div>
+        <p>提示：可上传资产负债表、固定资产清单、设备清单或者其他附件信息</p>
+    </div>
+</div>
+
+
+##保险方案建议
+<script type="text/html" id="TMP_INSURANCE_PLAN_RECOMED_ONEGOODS">
+
+    <tr diyname="schemeOrder.schemeDetailOrders" class="itemLine" rowspan="1">
+        <td class="fn-tac rowspanTr selectFnBoxTd" rowspan="1">
+            <div class="selectFnBox1 onlyChildrenCanChoose">
+                <span class="ui-text fn-w200 fnInput selectFn fn-text-overflow"><label class="key-parentCatalogName">请选择</label><i class="icon icon-select-down"></i></span>
+                <input class="syncsVal selectedId" type="hidden" name="parentCatalogId" value="">
+                <input class="syncsVal selectedName" type="hidden" name="parentCatalogName" value="">
+                <div class="selectRslt fn-p-abs fn-usn">
+                </div>
+            </div>
+##            <a href="javascript:void(0);" templateid="TMP_EXTRA_INSURANCET_ONEGOODS" class="addInsurance">[ 新增附加险 ]</a><br/>
+        </td>
+
+    ##询价时显示产品 START
+        #if($!isIinquiryPlan == true)
+            <td class="fn-tac ">
+                <input class="text fn-validate" type="text">
+            </td>
+        #end
+    ##询价时显示产品 END
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="name">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="packingQuantity">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="sign">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="insuranceAmount">
+        </td>
+        <td class="fn-tac">
+            <input class="text" type="text" name="deductibleRate" value="">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="premiumRate">
+        </td>
+        <td class="fn-tac fn-p-reb">
+            <input class="text fn-validate" type="text" name="expectPremiumAmount">
+##            <a class="ui-btn ui-btn-fill ui-btn-danger deleteInsuranceLine fn-p-abs" href="javascript:void(0);" tdcolspan="$!tdColspan">-</a>
+        </td>
+        <td class="fn-tac rowspanTr" rowspan="1">
+            <input class="text fn-validate syncsVal intentionBrokerRate" type="text" name="intentionBrokerRate">
+        </td>
+        <td class="fn-tac fn-w80 rowspanTr" rowspan="1"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" tdcolspan="$!tdColspan">删除</a></td>
+    </tr>
+</script>
+
+##保险方案建议--主险
+<script type="text/html" id="TMP_MAIN_INSURANCET_ONEGOODS">
+    <tr diyname="schemeOrder.schemeDetailOrders" class="itemLine" rowspan="1">
+        <td class="fn-tac rowspanTr selectFnBoxTd fn-hide" rowspan="1" >
+            <div class="selectFnBox1 onlyChildrenCanChoose">
+                <span class="ui-text fn-w200 fnInput selectFn fn-text-overflow"><label class="key-parentCatalogName">请选择</label><i class="icon icon-select-down"></i></span>
+                <input class="syncsVal selectedId" type="hidden" name="parentCatalogId" value="">
+                <input class="syncsVal selectedName" type="hidden" name="parentCatalogName" value="">
+                <div class="selectRslt fn-p-abs fn-usn">
+                </div>
+            </div>
+            <a href="javascript:void(0);" templateid="TMP_EXTRA_INSURANCET" class="addInsurance">[ 新增附加险 ]</a><br/>
+        </td>
+    ##询价时显示产品 START
+        #if($!isIinquiryPlan == true)
+            <td class="fn-tac ">
+                <input class="text fn-validate" type="text">
+            </td>
+        #end
+    ##询价时显示产品 END
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="name">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="packingQuantity">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="sign">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="insuranceAmount">
+        </td>
+        <td class="fn-tac">
+            <input class="text" type="text" name="deductibleRate" value="">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="premiumRate">
+        </td>
+        <td class="fn-tac fn-p-reb">
+            <input class="text fn-validate" type="text" name="expectPremiumAmount">
+##            <a class="ui-btn ui-btn-fill ui-btn-danger deleteInsuranceLine fn-p-abs" href="javascript:void(0);" tdcolspan="$!tdColspan">-</a>
+        </td>
+        <td class="fn-tac rowspanTr fn-hide" rowspan="1">
+            <input class="text fn-validate syncsVal intentionBrokerRate" type="text" name="intentionBrokerRate">
+        </td>
+    </tr>
+</script>
+
+##保险方案建议--附加险
+<script type="text/html" id="TMP_EXTRA_INSURANCET_ONEGOODS">
+    <tr diyname="schemeOrder.schemeDetailOrders" class="itemLine" rowspan="1">
+        <td class="fn-tac rowspanTr selectFnBoxTd fn-hide" rowspan="1" >
+            <div class="selectFnBox1 onlyChildrenCanChoose">
+                <span class="ui-text fn-w200 fnInput selectFn fn-text-overflow"><label class="key-parentCatalogName">请选择</label><i class="icon icon-select-down"></i></span>
+                <input class="syncsVal selectedId" type="hidden" name="parentCatalogId" value="">
+                <input class="syncsVal selectedName" type="hidden" name="parentCatalogName" value="">
+                <div class="selectRslt fn-p-abs fn-usn">
+                </div>
+            </div>
+            <a href="javascript:void(0);" templateid="TMP_EXTRA_INSURANCET" class="addInsurance">[ 新增附加险 ]</a><br/>
+        </td>
+        ##询价时显示产品 START
+        #if($!isIinquiryPlan == true)
+            <td class="fn-tac ">
+                <input class="text fn-validate" type="text">
+            </td>
+        #end
+        ##询价时显示产品 END
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="name">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="packingQuantity">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="sign">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="insuranceAmount">
+        </td>
+        <td class="fn-tac">
+            <input class="text" type="text" name="deductibleRate" value="">
+        </td>
+        <td class="fn-tac ">
+            <input class="text fn-validate" type="text" name="premiumRate">
+        </td>
+        <td class="fn-tac fn-p-reb">
+            <input class="text fn-validate" type="text" name="expectPremiumAmount">
+            <a class="ui-btn ui-btn-fill ui-btn-danger deleteInsuranceLine fn-p-abs" href="javascript:void(0);" tdcolspan="$!tdColspan">-</a>
+        </td>
+        <td class="fn-tac rowspanTr fn-hide" rowspan="1">
+            <input class="text fn-validate syncsVal intentionBrokerRate" type="text" name="intentionBrokerRate">
+        </td>
+    </tr>
+</script>
+
+

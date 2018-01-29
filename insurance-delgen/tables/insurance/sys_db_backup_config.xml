@@ -1,0 +1,86 @@
+<table sqlname="sys_db_backup_config">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO sys_db_backup_config(config_id,db_user,db_psw,db_host,db_port,db_home,scheme_name,backup_folder,backup_inverval_minute,backup_time_begin,backup_time_end,in_use,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO sys_db_backup_config(config_id,db_user,db_psw,db_host,db_port,db_home,scheme_name,backup_folder,backup_inverval_minute,backup_time_begin,backup_time_end,in_use,raw_add_time) VALUES (#configId#,#dbUser#,#dbPsw#,#dbHost#,#dbPort#,#dbHome#,#schemeName#,#backupFolder#,#backupInvervalMinute#,#backupTimeBegin#,#backupTimeEnd#,#inUse#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="configId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE sys_db_backup_config SET db_user=?,db_psw=?,db_host=?,db_port=?,db_home=?,scheme_name=?,backup_folder=?,backup_inverval_minute=?,backup_time_begin=?,backup_time_end=?,in_use=? WHERE config_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  config_id ,db_user ,db_psw ,db_host ,db_port ,db_home ,scheme_name ,backup_folder ,backup_inverval_minute ,backup_time_begin ,backup_time_end ,in_use ,raw_add_time ,raw_update_time  FROM sys_db_backup_config WHERE config_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM sys_db_backup_config WHERE config_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  config_id ,db_user ,db_psw ,db_host ,db_port ,db_home ,scheme_name ,backup_folder ,backup_inverval_minute ,backup_time_begin ,backup_time_end ,in_use ,raw_add_time ,raw_update_time  FROM sys_db_backup_config WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  config_id ,db_user ,db_psw ,db_host ,db_port ,db_home ,scheme_name ,backup_folder ,backup_inverval_minute ,backup_time_begin ,backup_time_end ,in_use ,raw_add_time ,raw_update_time  FROM sys_db_backup_config where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM sys_db_backup_config WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM sys_db_backup_config  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

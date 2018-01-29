@@ -1,0 +1,100 @@
+<table sqlname="business_bill">
+<column name="insurance_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="premium_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="gross_profit" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="broker_val" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="common_val" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO business_bill(business_bill_id,letter_id,form_id,insurance_of_type,bill_no,price_no,renewal_no,batch_no,plate_number,periods,insurance_depart,insurance_team,insurance_broker_no,insurance_broker_name,insurance_no,invoice_no,bill_customer_id,bill_customer_name,bill_insured_id,bill_insured_name,insurance_type_id,insurance_type_name,insurance_catalog_id,insurance_catalog_name,insurance_amount,premium_amount,insuranceDate,beginDate,endDate,business_user_id,business_user_name,insurance_company_id,insurance_company_name,agency_company_id,agency_company_name,remark,sorce_business_bill_id,bill_status,status,version,creator_id,creator_name,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO business_bill(business_bill_id,letter_id,form_id,insurance_of_type,bill_no,price_no,renewal_no,batch_no,plate_number,periods,insurance_depart,insurance_team,insurance_broker_no,insurance_broker_name,insurance_no,invoice_no,bill_customer_id,bill_customer_name,bill_insured_id,bill_insured_name,insurance_type_id,insurance_type_name,insurance_catalog_id,insurance_catalog_name,insurance_amount,premium_amount,insuranceDate,beginDate,endDate,business_user_id,business_user_name,insurance_company_id,insurance_company_name,agency_company_id,agency_company_name,remark,sorce_business_bill_id,bill_status,status,version,creator_id,creator_name,raw_add_time) VALUES (#businessBillId#,#letterId#,#formId#,#insuranceOfType#,#billNo#,#priceNo#,#renewalNo#,#batchNo#,#plateNumber#,#periods#,#insuranceDepart#,#insuranceTeam#,#insuranceBrokerNo#,#insuranceBrokerName#,#insuranceNo#,#invoiceNo#,#billCustomerId#,#billCustomerName#,#billInsuredId#,#billInsuredName#,#insuranceTypeId#,#insuranceTypeName#,#insuranceCatalogId#,#insuranceCatalogName#,#insuranceAmount#,#premiumAmount#,#insuranceDate#,#beginDate#,#endDate#,#businessUserId#,#businessUserName#,#insuranceCompanyId#,#insuranceCompanyName#,#agencyCompanyId#,#agencyCompanyName#,#remark#,#sorceBusinessBillId#,#billStatus#,#status#,#version#,#creatorId#,#creatorName#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="businessBillId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE business_bill SET letter_id=?,form_id=?,insurance_of_type=?,bill_no=?,price_no=?,renewal_no=?,batch_no=?,plate_number=?,periods=?,insurance_depart=?,insurance_team=?,insurance_broker_no=?,insurance_broker_name=?,insurance_no=?,invoice_no=?,bill_customer_id=?,bill_customer_name=?,bill_insured_id=?,bill_insured_name=?,insurance_type_id=?,insurance_type_name=?,insurance_catalog_id=?,insurance_catalog_name=?,insurance_amount=?,premium_amount=?,insuranceDate=?,beginDate=?,endDate=?,business_user_id=?,business_user_name=?,insurance_company_id=?,insurance_company_name=?,agency_company_id=?,agency_company_name=?,broker_scale=?,common_scale=?,gross_rate=?,gross_profit=?,broker_val=?,common_val=?,remark=?,sorce_business_bill_id=?,bill_status=?,status=?,version=?,creator_id=?,creator_name=? WHERE business_bill_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  business_bill_id ,letter_id ,form_id ,insurance_of_type ,bill_no ,price_no ,renewal_no ,batch_no,plate_number,periods ,insurance_depart ,insurance_team ,insurance_broker_no ,insurance_broker_name ,insurance_no ,invoice_no ,bill_customer_id ,bill_customer_name ,bill_insured_id ,bill_insured_name ,insurance_type_id ,insurance_type_name ,insurance_catalog_id ,insurance_catalog_name ,insurance_amount ,premium_amount ,insuranceDate ,beginDate ,endDate ,business_user_id ,business_user_name ,insurance_company_id ,insurance_company_name ,agency_company_id ,agency_company_name , broker_scale,common_scale,gross_rate,gross_profit,broker_val,common_val,remark ,sorce_business_bill_id ,bill_status,status ,version ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM business_bill WHERE business_bill_id=?
+			]]>
+        </sql>
+    </operation>
+    
+    
+    <operation name="findByFormId" >
+        <sql>
+            <![CDATA[
+			  SELECT  business_bill_id ,letter_id ,form_id ,insurance_of_type ,bill_no ,price_no ,renewal_no ,batch_no ,plate_number,periods,insurance_depart ,insurance_team ,insurance_broker_no ,insurance_broker_name ,insurance_no ,invoice_no ,bill_customer_id ,bill_customer_name ,bill_insured_id ,bill_insured_name ,insurance_type_id ,insurance_type_name ,insurance_catalog_id ,insurance_catalog_name ,insurance_amount ,premium_amount ,insuranceDate ,beginDate ,endDate ,business_user_id ,business_user_name ,insurance_company_id ,insurance_company_name ,agency_company_id ,agency_company_name ,broker_scale,common_scale,gross_rate,gross_profit,broker_val,common_val,remark ,sorce_business_bill_id ,bill_status,status ,version ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM business_bill WHERE  form_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM business_bill WHERE business_bill_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  business_bill_id ,letter_id ,form_id ,insurance_of_type ,bill_no ,price_no ,renewal_no ,batch_no ,plate_number,periods,insurance_depart ,insurance_team ,insurance_broker_no ,insurance_broker_name ,insurance_no ,invoice_no ,bill_customer_id ,bill_customer_name ,bill_insured_id ,bill_insured_name ,insurance_type_id ,insurance_type_name ,insurance_catalog_id ,insurance_catalog_name ,insurance_amount ,premium_amount ,insuranceDate ,beginDate ,endDate ,business_user_id ,business_user_name ,insurance_company_id ,insurance_company_name ,agency_company_id ,agency_company_name ,broker_scale,common_scale,gross_rate,gross_profit,broker_val,common_val,remark ,sorce_business_bill_id ,bill_status,status ,version ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM business_bill WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  business_bill_id ,letter_id ,form_id ,insurance_of_type ,bill_no ,price_no ,renewal_no ,batch_no ,plate_number,periods,insurance_depart ,insurance_team ,insurance_broker_no ,insurance_broker_name ,insurance_no ,invoice_no ,bill_customer_id ,bill_customer_name ,bill_insured_id ,bill_insured_name ,insurance_type_id ,insurance_type_name ,insurance_catalog_id ,insurance_catalog_name ,insurance_amount ,premium_amount ,insuranceDate ,beginDate ,endDate ,business_user_id ,business_user_name ,insurance_company_id ,insurance_company_name ,agency_company_id ,agency_company_name ,broker_scale,common_scale,gross_rate,gross_profit,broker_val,common_val,remark ,sorce_business_bill_id ,bill_status,status ,version ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM business_bill where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM business_bill WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM business_bill  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

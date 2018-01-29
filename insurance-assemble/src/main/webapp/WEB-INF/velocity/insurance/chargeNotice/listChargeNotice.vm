@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>demo</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;结算管理&nbsp;&gt;&nbsp;结算通知单
+</div>
+
+<form class="m-main border ui-bg-fff" action="/insurance/chargeNotice/list.htm" id="fnListSearchForm" method="POST">
+
+    
+       
+    <div class="m-search fn-clear">
+
+      
+        <div class="item">
+           保单号：
+            <input class="ui-text fn-w150" type="text" name="insuranceNo" value="$!{queryConditions.insuranceNo}">
+        </div>
+        
+          <div class="item">
+           险种类别：
+            <input class="ui-text fn-w150" type="text" name="insuranceTypeName" value="$!{queryConditions.insuranceTypeName}">
+        </div>
+        
+          <div class="item">
+            审核状态：
+            <select name="formStatus" class="ui-select fn-w100">
+                <option value="">请选择</option>
+                #foreach ($status in  $!{status})
+                    <option value="$status.code" #if ($status.code == $!queryConditions.formStatus) selected #end>$status.message</option>
+                #end
+            </select>
+        </div>
+        
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20"></div>
+
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+				 	                <th>部门</th>
+				 	                <th>保单号</th>
+				 	                <th>经纪人编号</th>
+				 	                <th>经纪人姓名</th>
+				 	                <th>承保人简称</th>
+				 	                <th>险种类别名称</th>
+				 	                <th>日期</th>
+				 	                <th>审核状态</th>
+				                     <th width="100px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+			 						 <td>	$!{item.depart} </td>
+			 						 <td>	$!{item.insuranceNo} </td>
+			 						 <td>	$!{item.insuranceBrokerNo} </td>
+			 						 <td>	$!{item.insuranceBrokerName} </td>
+			 						 <td>	$!{item.billCustomerName} </td>
+			 						 <td>	$!{item.insuranceTypeName} </td>
+			 						 <td>	$!dateUtil.formatDay($!{item.noticeDate}) </td>
+			 						 <td>	$!{item.formStatus.message}  </td>
+			                         <td>
+			                           <a href="/insurance/chargeNotice/view.htm?formId=$!{item.formId}">[ 查看详情 ]</a><br />
+			                      #set($processUrl = "")
+			                      #if($!stringUtil.isNotBlank($item.taskUserData))
+			                            #set($processUrl = $!formUtil.getProcessUrl($!item.taskUserData,$!sessionLocal.userId))
+			                      #end
+			                       #if($!stringUtil.isNotBlank($processUrl))
+	                                 <a href="$!processUrl">[ 处理 ]</a>
+	                     		   #end
+	                     		    #if ($!item.formStatus.code == "DRAFT" && $!isRightOperate)
+	                     		    	<a href="/insurance/chargeNotice/edit.htm?formId=$!{item.formId}">[ 编辑]</a>  <br />
+                  				  	#end
+	                  				   #if ($!item.formStatus.code == "SUBMIT" && $!isRightOperate)
+	                           		  <a href="javascript:void(0);" formId="$!{item.formId}" class="revoke">[ 撤销 ] </a>
+	                          		  #end
+	                      		  	 #if ($!item.formStatus == "CANCEL" && $!isRightOperate)
+	                      	 	    	<a href="/insurance/chargeNotice/edit.htm?formId=$!{item.formId}">[重新申请]</a><br />
+	                      	      	 #end
+									 </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        
+        
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+   seajs.use($_GLOBAL.zyw+'/chargeNotice/chargeNotice.list.js');
+</script>
+</body>
+</html>

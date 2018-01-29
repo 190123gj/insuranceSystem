@@ -1,0 +1,105 @@
+<table sqlname="customer_his_business_bill">
+    <column name="premium_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO customer_his_business_bill(his_bill_id,bill_no,bill_customer_id,bill_customer_name,catalog_id,catalog_name,premium_amount,insuranceDate,beginDate,endDate,insurance_company_id,insurance_company_name,remark) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO customer_his_business_bill(his_bill_id,bill_no,bill_customer_id,bill_customer_name,catalog_id,catalog_name,premium_amount,insuranceDate,beginDate,endDate,insurance_company_id,insurance_company_name,remark) VALUES (#hisBillId#,#billNo#,#billCustomerId#,#billCustomerName#,#catalogId#,#catalogName#,#premiumAmount#,#insuranceDate#,#beginDate#,#endDate#,#insuranceCompanyId#,#insuranceCompanyName#,#remark#)
+		        <selectKey  resultClass ="long"  keyProperty ="hisBillId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE customer_his_business_bill SET bill_no=?,bill_customer_id=?,bill_customer_name=?,catalog_id=?,catalog_name=?,premium_amount=?,insuranceDate=?,beginDate=?,endDate=?,insurance_company_id=?,insurance_company_name=?,remark=? WHERE his_bill_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  his_bill_id ,bill_no ,bill_customer_id ,bill_customer_name ,catalog_id ,catalog_name ,premium_amount ,insuranceDate ,beginDate ,endDate ,insurance_company_id ,insurance_company_name ,remark  FROM customer_his_business_bill WHERE his_bill_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM customer_his_business_bill WHERE his_bill_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteByUserId" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM customer_his_business_bill WHERE bill_customer_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  his_bill_id ,bill_no ,bill_customer_id ,bill_customer_name ,catalog_id ,catalog_name ,premium_amount ,insuranceDate ,beginDate ,endDate ,insurance_company_id ,insurance_company_name ,remark  FROM customer_his_business_bill WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  his_bill_id ,bill_no ,bill_customer_id ,bill_customer_name ,catalog_id ,catalog_name ,premium_amount ,insuranceDate ,beginDate ,endDate ,insurance_company_id ,insurance_company_name ,remark  FROM customer_his_business_bill where 1=1
+              <dynamic>
+                  <isGreaterThan property="customerHisBusinessBill.billCustomerId"  compareValue="0" prepend=" and ">
+	                bill_customer_id = #customerHisBusinessBill.billCustomerId#
+	            </isGreaterThan>
+	          </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM customer_his_business_bill WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM customer_his_business_bill  where 1=1
+	            <dynamic>
+                      <isGreaterThan property="billCustomerId"  compareValue="0" prepend=" and ">
+	                bill_customer_id = #billCustomerId#
+	                </isGreaterThan>
+	             </dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

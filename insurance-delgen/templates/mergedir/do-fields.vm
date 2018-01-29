@@ -1,0 +1,30 @@
+    //========== properties ==========
+#foreach($column in $table.columns) 
+
+#if ($column.simpleJavaType == "Money")
+	private Money $column.variableName = new Money(0, 0);
+#else
+	private $column.simpleJavaType $column.variableName;
+#end	
+#end
+
+    //========== getters and setters ==========
+#foreach($column in $table.columns) 
+
+	public $column.simpleJavaType ${column.getterName}() {
+		return $column.variableName;
+	}
+	
+	public void ${column.setterName}($column.simpleJavaType $column.variableName) {
+#if ($column.simpleJavaType == "Money")
+		if ($column.variableName == null) {
+			this.$column.variableName = new Money(0, 0);
+		} else {
+			this.$column.variableName = $column.variableName;
+		}
+#else
+		this.$column.variableName = $column.variableName;
+#end	
+	}
+#end
+

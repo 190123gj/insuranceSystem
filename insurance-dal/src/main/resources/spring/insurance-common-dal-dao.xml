@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	default-autowire="byName">
+	
+	<context:annotation-config />
+	
+	<bean id="extraDAO" class="com.born.insurance.ibatis.IbatisExtraDAO" parent="baseSqlMapClientDAO"/>
+	<bean id="busiDAO" class="com.born.insurance.ibatis.IbatisBusiDAO" parent="baseSqlMapClientDAO"/>
+	<bean id="operationJournalDAO" class="com.born.insurance.ibatis.IbatisOperationJournalDAO" parent="baseSqlMapClientDAO"/>
+
+	<!-- ======================================================================== -->
+    <!-- 								 gen DAO            				      -->
+    <!-- ======================================================================== -->
+    <bean id="baseDataInfoDAO" class="com.born.insurance.dal.ibatis.IbatisBaseDataInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="billPayFeeDetailDAO" class="com.born.insurance.dal.ibatis.IbatisBillPayFeeDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="billSettlementApplyDAO" class="com.born.insurance.dal.ibatis.IbatisBillSettlementApplyDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="billSettlementApplyDetailDAO" class="com.born.insurance.dal.ibatis.IbatisBillSettlementApplyDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="brokerageFeeDAO" class="com.born.insurance.dal.ibatis.IbatisBrokerageFeeDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="brokerageFeeDetailDAO" class="com.born.insurance.dal.ibatis.IbatisBrokerageFeeDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="businessBillDAO" class="com.born.insurance.dal.ibatis.IbatisBusinessBillDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="businessBillBeneficiaryDAO" class="com.born.insurance.dal.ibatis.IbatisBusinessBillBeneficiaryDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="businessBillCoinsInfoDAO" class="com.born.insurance.dal.ibatis.IbatisBusinessBillCoinsInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="businessBillCorrectingDAO" class="com.born.insurance.dal.ibatis.IbatisBusinessBillCorrectingDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="businessBillCostInfoDAO" class="com.born.insurance.dal.ibatis.IbatisBusinessBillCostInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="businessBillCustomerDAO" class="com.born.insurance.dal.ibatis.IbatisBusinessBillCustomerDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="businessBillPayPlanDAO" class="com.born.insurance.dal.ibatis.IbatisBusinessBillPayPlanDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="businessBillReinsInfoDAO" class="com.born.insurance.dal.ibatis.IbatisBusinessBillReinsInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="businessBillUnderInforDAO" class="com.born.insurance.dal.ibatis.IbatisBusinessBillUnderInforDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="chargeNoticeDAO" class="com.born.insurance.dal.ibatis.IbatisChargeNoticeDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="claimSettlementDAO" class="com.born.insurance.dal.ibatis.IbatisClaimSettlementDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="claimSettlementProcessDAO" class="com.born.insurance.dal.ibatis.IbatisClaimSettlementProcessDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="commissionInfoDAO" class="com.born.insurance.dal.ibatis.IbatisCommissionInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="commissionInfoDetailDAO" class="com.born.insurance.dal.ibatis.IbatisCommissionInfoDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="commonAttachmentDAO" class="com.born.insurance.dal.ibatis.IbatisCommonAttachmentDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerBankInfoDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerBankInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerBaseInfoDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerBaseInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerCertInfoDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerCertInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerCompanyDetailDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerCompanyDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerContactWayDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerContactWayDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerHisBusinessBillDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerHisBusinessBillDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerInfoTraceDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerInfoTraceDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerPersonDetailDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerPersonDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerProtocolDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerProtocolDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerRelationDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerRelationDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="customerRelationApplyDAO" class="com.born.insurance.dal.ibatis.IbatisCustomerRelationApplyDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="demoDAO" class="com.born.insurance.dal.ibatis.IbatisDemoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="formDAO" class="com.born.insurance.dal.ibatis.IbatisFormDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="formMessageTempleteDAO" class="com.born.insurance.dal.ibatis.IbatisFormMessageTempleteDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="formRelatedUserDAO" class="com.born.insurance.dal.ibatis.IbatisFormRelatedUserDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="formTemplateDAO" class="com.born.insurance.dal.ibatis.IbatisFormTemplateDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="formTemplateFieldDAO" class="com.born.insurance.dal.ibatis.IbatisFormTemplateFieldDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="formTemplateGridDAO" class="com.born.insurance.dal.ibatis.IbatisFormTemplateGridDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="formTemplateModuleDAO" class="com.born.insurance.dal.ibatis.IbatisFormTemplateModuleDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="formTemplateTabDAO" class="com.born.insurance.dal.ibatis.IbatisFormTemplateTabDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="industryDAO" class="com.born.insurance.dal.ibatis.IbatisIndustryDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceBillRenewalDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceBillRenewalDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceCatalogDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceCatalogDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceCatalogLiabilityDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceCatalogLiabilityDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceCatalogRelationDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceCatalogRelationDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceConditionDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceConditionDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceContactCertDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceContactCertDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceContactLetterDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceContactLetterDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceContactLetterDetailDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceContactLetterDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceLiabilityDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceLiabilityDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceProductDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceProductDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceProductLevelDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceProductLevelDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceProtocolDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceProtocolDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceProtocolChargeDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceProtocolChargeDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="insuranceProtocolInfoDAO" class="com.born.insurance.dal.ibatis.IbatisInsuranceProtocolInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="invoiceRequisitionDAO" class="com.born.insurance.dal.ibatis.IbatisInvoiceRequisitionDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="messageInfoDAO" class="com.born.insurance.dal.ibatis.IbatisMessageInfoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="messageReceivedDAO" class="com.born.insurance.dal.ibatis.IbatisMessageReceivedDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="messageTemplateDAO" class="com.born.insurance.dal.ibatis.IbatisMessageTemplateDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="messageTemplateWayDAO" class="com.born.insurance.dal.ibatis.IbatisMessageTemplateWayDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="personCommissionDAO" class="com.born.insurance.dal.ibatis.IbatisPersonCommissionDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="personCommissionDetailDAO" class="com.born.insurance.dal.ibatis.IbatisPersonCommissionDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="personCommissionProcessDAO" class="com.born.insurance.dal.ibatis.IbatisPersonCommissionProcessDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterAskCompanyDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterAskCompanyDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterAskCompanyChargeDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterAskCompanyChargeDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterCompanyReportPriceDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterCompanyReportPriceDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterCompanyReportPriceDetailDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterCompanyReportPriceDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterDemandDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterDemandDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterDemandDetailDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterDemandDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterDemandDetailTwoDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterDemandDetailTwoDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterReportPriceDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterReportPriceDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterSchemeDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterSchemeDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceContactLetterSchemeDetailDAO" class="com.born.insurance.dal.ibatis.IbatisPriceContactLetterSchemeDetailDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="priceTemplateDAO" class="com.born.insurance.dal.ibatis.IbatisPriceTemplateDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="projectSetupDAO" class="com.born.insurance.dal.ibatis.IbatisProjectSetupDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="projectSetupCatalogDAO" class="com.born.insurance.dal.ibatis.IbatisProjectSetupCatalogDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="projectSetupCustomerDAO" class="com.born.insurance.dal.ibatis.IbatisProjectSetupCustomerDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="regionDAO" class="com.born.insurance.dal.ibatis.IbatisRegionDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="relatedUserDAO" class="com.born.insurance.dal.ibatis.IbatisRelatedUserDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="salesAreaDAO" class="com.born.insurance.dal.ibatis.IbatisSalesAreaDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="settlementCompanyBillDAO" class="com.born.insurance.dal.ibatis.IbatisSettlementCompanyBillDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="settlementCompanyBillProcessDAO" class="com.born.insurance.dal.ibatis.IbatisSettlementCompanyBillProcessDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="settlementInvoiceInformationDAO" class="com.born.insurance.dal.ibatis.IbatisSettlementInvoiceInformationDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="sysDbBackupConfigDAO" class="com.born.insurance.dal.ibatis.IbatisSysDbBackupConfigDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="sysDbBackupLogDAO" class="com.born.insurance.dal.ibatis.IbatisSysDbBackupLogDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="sysParamDAO" class="com.born.insurance.dal.ibatis.IbatisSysParamDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="sysWebAccessTokenDAO" class="com.born.insurance.dal.ibatis.IbatisSysWebAccessTokenDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="userExtraMessageDAO" class="com.born.insurance.dal.ibatis.IbatisUserExtraMessageDAO" parent="baseSqlMapClientDAO"/>
+    <bean id="valueTaxInfoDAO" class="com.born.insurance.dal.ibatis.IbatisValueTaxInfoDAO" parent="baseSqlMapClientDAO"/>
+
+</beans>

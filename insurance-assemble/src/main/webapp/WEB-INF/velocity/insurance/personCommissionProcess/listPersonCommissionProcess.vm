@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>demo</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;结算管理&nbsp;&gt;&nbsp;佣金结算申请处理
+</div>
+
+<form class="m-main border ui-bg-fff" action="" id="fnListSearchForm" method="POST">
+
+     <div class="m-search fn-clear">
+        <div class="item">
+            业务员姓名
+            <input class="ui-text fn-w200 fnInput" type="text" name="businessUserName" value="$!{queryConditions.businessUserName}">
+        </div>
+         <div class="item">
+            证件号码
+            <input class="ui-text fn-w200 fnInput" type="text" name="businessUserCertNo" value="$!{queryConditions.businessUserCertNo}">
+        </div>
+        <br />
+                <div class="item">
+            手机号码
+            <input class="ui-text fn-w200 fnInput" type="text" name="businessUserMobile" value="$!{queryConditions.businessUserMobile}">
+        </div>       
+                <div class="item">
+            结算状态
+             <select name="status" class="ui-select fn-w200">
+             <option value="">请选择</option>
+            #foreach ($settlementStatus in $!{settlementStatus})
+            <option value="$!settlementStatus.code" #if ($!queryConditions.status == $!settlementStatus.code) selected #end>$!{settlementStatus.message}</option>
+            #end
+            </select>
+        </div>
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+    </div>
+    
+    <div class="fn-pl15 fn-pr15">        
+       
+        <div class="fn-mb20 fn-mt20">
+
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty checkAllItems" href="javascript:void(0);"><b>+</b>选择所有&nbsp;</a>
+            <div class="fn-right">
+                <span class="item-name fn-mr20 countCheckedItensData">
+                    <input type="hidden" class="commissionProcessIds" name="commissionProcessIds">
+                    <input type="hidden" class="businessUserId" name="businessUserId"/>
+                    <input type="hidden" class="applyDrawAmount" name="applyDrawAmount"/>
+                    共选择<label class="allItems fn-mr5 fn-ml5">0</label>条记录，
+                    合计：<label class="accountBalance fn-mr5">0</label>元
+                </span>
+                <a class="ui-btn ui-btn-fill ui-btn-green-empty updateStatus updateAllcheckedItems" href="javascript:void(0);"><b>+</b>批量更新结算状态</a>
+            </div>
+        </div>
+       
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+					<th><input type="checkbox" class="checkAllItems"/></th>
+ 	                <th>序号</th>
+ 	                <th>结算单号</th>
+ 	                <th>业务员</th>
+ 	                <th>手机号码</th>
+ 	                <th>申请结算金额</th>
+ 	                <th>申请时间</th>
+ 	                <th>状态</th>
+                    <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                <tr>
+                    <td> #if ($!item.status == "processing") <input type="checkbox" value="$!item.commissionProcessId" class="checkItem"/> #end</td>
+                    <td>	$!{velocityCount} </td>
+                    <td>	$!{item.settlementNumber} </td>
+                    <td>	$!{item.businessUserName} </td>
+                    <td>	$!{item.businessUserMobile}</td>
+                    <td class="applyDrawAmount">	$!{item.applyDrawAmount} </td>
+                    <td>   $dateUtil.simpleFormat($!{item.rawAddTime})  </td>
+                    <td>
+                        #if ($!item.status == "success") 结算成功 #end
+                        #if ($!item.status == "fail") 结算失败 #end
+                        #if ($!item.status == "processing") 处理中 #end
+                    </td>
+                    <td>
+                        #if ($!item.status == "fail")  <a href="javascript:void(0);" reason="$!{item.reason}" class="lookReason">[ 查看原因 ]</a> #end
+                        #if ($!item.status == "processing")
+                         <a href="javascript:void(0)" class="updateSuccess">[ 成功 ]</a>
+                         <a href="javascript:void(0)" class="updateFail">[ 失败 ]</a>
+                           #end
+                    </td>
+                    <input type="hidden" value="$!{item.businessUserId}" class="businessUserId" />
+                    <input type="hidden" value="$!{item.status}" class="status" />
+                </tr>
+                #end
+            </tbody>
+        </table>
+        #parse("/layout/common/pages.vm")
+        
+    </div>
+
+</form>
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+## 计算状态更新与批量更新
+<script type="text/html" id="PERSONCOMMISSIONUPDATE">
+    <div class="wnd-wnd wnd-common">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">结算结果更新</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+        <form id="form" action="/insurance/personCommissionProcess/editSubmit.json"  method="post">
+            <div class="wnd-body fn-clear">
+                ##批量更新是展示统计数据
+                <div class="wnd-items wnd-items90 allCHoosedItems">
+                    <input type="hidden" class="commissionProcessIds" name="commissionProcessIds">
+                    <input type="hidden" class="businessUserId" name="businessUserId"/>
+                    <input type="hidden" class="applyDrawAmount" name="applyDrawAmount"/>
+                </div>
+                <div class="wnd-items wnd-items90">
+                    <span class="item-name">更新结算结果：</span>
+                    <select class="ui-select fn-w200 fn-validate" name="status">
+                        <option value="">请选择</option>
+                        <option value="success">结算成功</option>
+                        <option value="fail">结算失败</option>
+                    </select>
+                </div> 
+                
+                <div style="margin-left:20px;" class="wnd-items wnd-items90 reason fn-hide">
+                    <span class="item-name">失败原因：</span>
+                     <textarea class="n-validate" cols="27" rows="5" disabled="true" name="reason"></textarea>
+                </div>
+            </div>
+            <div class="wnd-bottom">
+                <a href="javascript:void(0)" class="submit-btn submitBtn">确定</a>
+                <a href="javascript:void(0)" class="wnd-close close-btn closeBtn">取消</a>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/html" id="PERSONCOMMISSIONUPDATEFAIL">
+    <div class="wnd-wnd wnd-common" style="width:400px;">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">结算失败原因</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+        <form id="failForm" action="/insurance/personCommissionProcess/editSubmit.json"  method="post">
+ 			<input type="hidden" class="commissionProcessIds" name="commissionProcessIds">
+            <input type="hidden" class="businessUserId" name="businessUserId"/>
+            <input type="hidden" class="applyDrawAmount" name="applyDrawAmount"/>
+            <div class="wnd-body fn-clear">
+                <div style="margin-left:20px;" class="wnd-items">
+                     <textarea class="fn-validate" cols="50" rows="8" name="reason"></textarea>
+                </div>
+            </div>
+            <div class="wnd-bottom">
+                <a href="javascript:void(0)" class="submit-btn failBtn">确定</a>
+                <a href="javascript:void(0)" class="wnd-close close-btn closeBtn">取消</a>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/html" id="PERSONCOMMISSIONREASON">
+    <div class="wnd-wnd wnd-common">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">结算失败原因</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+          <div class="wnd-body fn-clear">
+          			 <div class="wnd-items wnd-items100 reason">
+                  	 
+               		 </div> 
+          </div>
+    </div>
+</script>
+<script type="text/javascript">
+  seajs.use($_GLOBAL.zyw+'/personCommission/personCommissionProcess');
+</script>
+</body>
+</html>

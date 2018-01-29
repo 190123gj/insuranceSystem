@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title></title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保后管理&nbsp;&gt;&nbsp;保单管理&nbsp;&gt;&nbsp;保单详情
+</div>
+<div class="m-main border ui-bg-fff">
+ <h2 class="m-htitle fn-mb20 fn-mt20" id="khlxxx"><span>基本信息</span></h2>
+		<div class="m-item">
+            <label class="m-label">保单号：</label>
+           	<div>$!{info.insuranceNo}</div>
+        </div>
+        
+        <div class="m-item">
+            <label class="m-label">业务单号：</label>
+           	<div>$!{info.billNo}</div>
+        </div>
+        
+        <div class="m-item">
+            <label class="m-label">询价单号：</label>
+           	<div>$!{info.priceNo}</div>
+        </div>
+        
+         <div class="m-item">
+            <label class="m-label">续保单号：</label>
+           	<div>$!{info.renewalNo}</div>
+        </div>
+        
+         <div class="m-item">
+            <label class="m-label">批单号：</label>
+           	<div>$!{info.batchNo}</div>
+        </div>
+        
+          <div class="m-item">
+            <label class="m-label">发票号：</label>
+           	<div>$!{info.invoiceNo}</div>
+        </div>
+    <h2 class="m-htitle fn-mb20 fn-mt20" id="khlxxx"><span>客户信息</span></h2>     
+         #if ($!insuranceContactLetterInfo.insuranceType == "isLifeInsurance") 
+        <div class="m-item">
+            <label class="m-label">客户信息：</label>
+           	 <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac"></th>
+                        <th class="fn-tac">名称</th>
+                        <th class="fn-tac">证件类型</th>
+                        <th class="fn-tac">证件号码</th>
+                        <th class="fn-tac">关系</th>
+                    </tr>
+                    #foreach ($billCustomer in $!{billCustomers})
+	                     <tr class="itemLine" >
+	                     	#if ($!billCustomer.type == 0 ) 
+	                     	<td class="fn-tac">投保人</td>
+	                     	#else
+	                     	<td class="fn-tac">被保险人</td>
+	                     	#end
+	                    	<td class="fn-tac">$!billCustomer.customerUserName</td>
+	                    	<td class="fn-tac">$!billCustomer.customerCertType</td>
+	                    	<td class="fn-tac">$!billCustomer.customerCertNo</td>
+	                    	<td class="fn-tac">$!billCustomer.relation</td>
+	                    </tr>
+                    #end
+                </table>
+            </div>
+        </div>
+        
+         <div class="m-item itemBox benefitPlanBox diyNameBox">
+            <label class="m-label">受益人信息：</label>
+            <div class="fn-mb10">
+                <label>受益方案：</label>
+                <label><input type="radio" class="radio benefitPlan" checked templateid="TMP_BENEFIT_PLAN_ORDER" name="status"/>顺序</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input type="radio" class="radio benefitPlan" templateid="TMP_BENEFIT_PLAN_SCALE" name="status"/>比例</label>
+                <input type="hidden" class="ignore allScaleNum" value="0">
+            </div>
+            <table class="m-table m-table-list itemsList" style="width: 96%;">
+                <tr>
+                    <th class="fn-tac fn-w100">受益顺序</th>
+                    <th class="fn-tac fn-w100 fn-hide">受益比例（%）</th>
+                    <th class="fn-tac">受益人名称</th>
+                    <th class="fn-tac">证件类型</th>
+                    <th class="fn-tac">证件号码</th>
+                    <th class="fn-tac">操作</th>
+                </tr>
+            </table>
+        </div>
+        #else
+        	#if ($!insuranceContactLetterInfo.isQuota == "YES") 
+			      	 <div class="m-item">
+			            <label class="m-label">地址：</label>
+			             <div></div>
+			        </div>
+	        	#else
+			        <div class="m-item">
+			            <label class="m-label">客户名称：</label>
+			             <div>$!{insuranceContactLetterInfo.customerUserName}</div>
+			        </div>
+			        
+			        <div class="m-item">
+			            <label class="m-label">性别：</label>
+			             <div></div>
+			        </div>
+			        
+			        <div class="m-item">
+			            <label class="m-label">出生日期：</label>
+			             <div></div>
+			        </div>
+            #end
+              		<div class="m-item">
+			            <label class="m-label">证件类型：</label>
+			             <div></div>
+			        </div>
+			        
+			         <div class="m-item">
+			            <label class="m-label">证件号码：</label>
+			             <div></div>
+			        </div>
+        #end
+        
+     <h2 class="m-htitle fn-mb20 fn-mt20" id="khlxxx"><span>承保信息</span></h2>
+          <div class="m-item">
+            <label class="m-label">投保日期：</label>
+            <div>$dateUtil.formatDay($!{info.insuranceDate})</div>
+        </div>
+        <div class="m-item">
+            <label class="m-label">保险起期：</label>
+            <div>$dateUtil.formatDay($!{info.beginDate})</div>
+        </div>
+          <div class="m-item">
+            <label class="m-label">保险止期：</label>
+            <div>$dateUtil.formatDay($!{info.endDate})</div>
+        </div>
+         
+         #if ($!insuranceContactLetterInfo.insuranceType == "noIsLifeInsurance" && $!insuranceContactLetterInfo.isQuota == "YES") 
+          <div class="m-item">
+            <label class="m-label">保险产品：</label>
+            <div>$!{insuranceContactLetterInfo.productName}</div>
+       	  </div>
+       	  
+       	  <div class="m-item">
+            <label class="m-label">保障期限：</label>
+            <div>$!{insuranceContactLetterInfo.guaranteePeriod}</div>
+       	  </div>
+       	  
+       	   <div class="m-item">
+            <label class="m-label">档次：</label>
+            <div>$!{insuranceContactLetterInfo.productLevelLevel}</div>
+       	  </div>
+         
+         
+          <div class="m-item">
+            <label class="m-label">保费：</label>
+            <div>$!{insuranceContactLetterInfo.premiumAmount}</div>
+       	  </div>
+       	  
+       	  
+          <div class="m-item">
+            <label class="m-label">是否随车销售：</label>
+            <div>#if ($!insuranceContactLetterInfo.isCarSales == "YES") 是 #else 否 #end</div>
+       	  </div>
+       	  
+       	  #if ($!insuranceContactLetterInfo.isCarSales == "YES")
+          <div class="m-item">
+            <label class="m-label">车牌号：</label>
+            <div>$!insuranceContactLetterInfo.plateNumber</div>
+       	  </div>
+          #end
+         #else
+             <div class="m-item">
+            <label class="m-label"></label>
+           	 <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">保险产品</th>
+                        #if ($!insuranceContactLetterInfo.insuranceType == "isLifeInsurance") 
+                        <th class="fn-tac">缴费期数</th>
+                        <th class="fn-tac">保额</th>
+                        <th class="fn-tac">首期保费</th>
+                        #else
+                        <th class="fn-tac">保额</th>
+                        <th class="fn-tac">保费</th>
+                        <th class="fn-tac">经纪费</th>
+                        #end
+                    </tr>
+                    
+                    #foreach ($insuranceContactLetterDetails in $!{insuranceContactLetterDetails})
+                     <tr>
+                    	<td class="fn-tac">$insuranceContactLetterDetails.productName</td>
+                    	 #if ($!insuranceContactLetterInfo.insuranceType == "isLifeInsurance") 
+                    	 <td class="fn-tac">$insuranceContactLetterDetails.period</td>
+                    	 <td class="fn-tac">$insuranceContactLetterDetails.premiumAmount</td>
+                    	 <td class="fn-tac">$insuranceContactLetterDetails.firstPremiumAmount</td>
+                    	 #else
+                    	 <td class="fn-tac">$insuranceContactLetterDetails.premiumAmount</td>
+                    	 <td class="fn-tac">$insuranceContactLetterDetails.insuranceAmount</td>
+                    	 <td class="fn-tac">$insuranceContactLetterDetails.brokerAmount</td>
+                    	 #end
+                    	
+                    </tr>
+                    #end
+                   
+                </table>
+            </div>
+        </div>
+        
+         #end
+         
+      <h2 class="m-htitle fn-mb20 fn-mt20" id="khlxxx"><span>费用信息</span></h2>
+        <div class="m-item">
+            <label class="m-label">缴费计划：</label>
+        </div>
+        <div class="m-item">
+            <label class="m-label"></label>
+           	 <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                   	    <th class="fn-tac">期数</th>
+                        <th class="fn-tac">保险费（元）</th>
+                        <th class="fn-tac">应收日期</th>
+                        <th class="fn-tac">实收日期</th>
+                    </tr>
+                    #foreach ($billPayPlanInfos in $!{billPayPlanInfos})
+	                      <tr>
+	                        <td class="fn-tac">$!billPayPlanInfos.appserialPeriod</td>
+	                    	<td class="fn-tac">$!billPayPlanInfos.premiumAmount</td>
+	                    	<td class="fn-tac">$dateUtil.dtSimpleFormat($!billPayPlanInfos.planPayDate)</td>
+	                    	<td class="fn-tac">$dateUtil.dtSimpleFormat($!billPayPlanInfos.actualPayDate)</td>
+	                     </tr>
+                    #end
+                  
+                </table>
+            </div>
+        </div>
+        
+         <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>经纪费信息：</label>
+            <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac"></th>
+                        <th class="fn-tac">比例(%)</th>
+                        <th class="fn-tac" colspan="2">金额(元)</th>
+                    </tr>
+                    
+                    #if($!info.businessBillId > 0) 
+                    <tr>
+                        <td class="fn-tac">经纪费收入</td>
+                        <td class="fn-tac">$!{brokerageFeeInfo.brokerageScale}</td>
+                        <td class="fn-tac" colspan="2">$!{brokerageFeeInfo.brokerageAmount}</td>
+                    </tr>
+                    #else
+                    <tr>
+                        <td class="fn-tac">经纪费收入</td>
+                        <td class="fn-tac ">
+                            <div class="inComeRate"></div>
+                            <input type="hidden" class="inComeRate fn-validate" name="brokerageFeeOrder.brokerageScale" />
+                        </td>
+                        <td class="fn-tac" colspan="2">
+                            <div class="inCome"></div>
+                            <input type="hidden" class="inCome fn-validate" name="brokerageFeeOrder.brokerageAmount" />
+                        </td>
+                    </tr>
+                    #end
+                    
+                </table>
+            </div>
+            <div class="itemBox diyNameBox">明细：
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">经纪费比例</th>
+                        <th class="fn-tac">应收金额</th>
+                        <th class="fn-tac">应收日期</th>
+                        <th class="fn-tac">实收日期</th>
+                    </tr>
+                    
+                    #foreach ($brokerageFee in $!{brokerageFeeDetails})
+                     <tr class="itemLine" diyname="brokerageFeeDetailOrder"> 
+                     	<td class="fn-tac">$!brokerageFee.borkerageScale</td>
+                     	<td class="fn-tac">$!brokerageFee.receivableAmount</td>
+                     	<td class="fn-tac planPayDate">$dateUtil.dtSimpleFormat($!brokerageFee.planPayDate)</td>
+                     	<td class="fn-tac">$dateUtil.simpleFormat($!brokerageFee.actualPayDate)</td>
+                     </tr>
+                    #end
+                </table>
+
+                <p class="fn-mb10 fn-mt10 fn-hide">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_JJFDETAIL" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </p>
+            </div>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>佣金信息：</label>
+            <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac"></th>
+                        <th class="fn-tac">分类</th>
+                        <th class="fn-tac">比例(%)</th>
+                        <th class="fn-tac" colspan="2">金额（元） </th>
+                    </tr>
+                      #if($!info.businessBillId > 0) 
+                      <tr>
+                        <td class="fn-tac">费用信息</td>
+                        <td class="fn-tac">$!{commissionInfoInfo.commissionCatalog}类</td>
+                        <td class="fn-tac"> $!{commissionInfoInfo.commissionScale}</td>
+                        <td class="fn-tac colspan="2">$!{commissionInfoInfo.commissionAmount} </td>
+                    </tr>
+                      #else
+                      
+                    <tr>
+                        <td class="fn-tac">费用信息</td>
+                        <td class="fn-tac">
+                           <select class="ui-select fn-w200" name="commissionInfoOrder.commissionCatalog">
+				                <option value="1">1类</option>
+				                <option value="2">2类</option>
+				                <option value="3">3类</option>
+				            </select>
+				       </td>
+                        <td class="fn-tac">
+                        	<div class="payRate"></div>
+                         </td>
+                        <td class="fn-tac" colspan="2"> 
+                        	<div class="payAmount"></div>
+                        </td>
+                    </tr>
+                      #end
+                </table>
+            </div>
+            <div>说明：该业务单投保申请时关联了超权限审批单，该业务员佣金比例使用的费用政策为“占经纪费比例40%”。</div>
+            <div class="itemBox diyNameBox">明细：
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">应付日期</th>
+                        <th class="fn-tac">应付金额</th>
+                    </tr>
+                    #foreach ($commissionInfo in $!{commissionInfoDetails})
+                     <tr class="itemLine" diyname="commissionInfoDetailOrder">
+                        <td class="fn-tac planPayDate">$dateUtil.dtSimpleFormat($!commissionInfo.planPayDate)</td>
+                        <td class="fn-tac">$!commissionInfo.receivableAmount</td>
+                    </tr>
+                    #end
+                </table>
+
+                <p class="fn-mb10 fn-mt10 fn-hide">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_YJDETAIL" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </p>
+            </div>
+        </div>
+        
+         <h2 class="m-htitle fn-mb20 fn-mt20" id="khlxxx"><span>机构信息</span></h2>
+         <div class="m-item">
+            <label class="m-label">业务员：</label>
+             <div>$!{info.businessUserName}</div>
+        </div>
+          <div class="m-item">
+            <label class="m-label">业务部门：</label>
+            <div>$!{info.invoiceNo}</div>
+        </div>
+          <div class="m-item">
+            <label class="m-label">承保公司：</label>
+            <div>$!{info.insuranceCompanyName}</div>
+        </div>
+         <div class="m-item">
+            <label class="m-label">中介渠道：</label>
+            <div>$!{info.agencyCompanyName}</div>
+        </div>
+        
+        
+        
+         <div class="m-item">
+            <label class="m-label">共保信息：</label>
+           	 <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">保险公司</th>
+                        <th class="fn-tac">首席</th>
+                        <th class="fn-tac">份额</th>
+                        <th class="fn-tac">保险费</th>
+                        <th class="fn-tac">经纪费</th>
+                        <th class="fn-tac">出单费</th>
+                        <th class="fn-tac">其他费用</th>
+                    </tr>
+                    
+                    #foreach ($billCoins in $!{billCoins})
+                    <tr class="itemLine" >
+                    	<td class="fn-tac">$billCoins.insuraceCompanyName</td>
+                    	<td class="fn-tac">$billCoins.chief</td>
+                    	<td class="fn-tac">$billCoins.portion</td>
+                    	<td class="fn-tac">$billCoins.premiumAmount</td>
+                    	<td class="fn-tac">$billCoins.brokerAmount</td>
+                    	<td class="fn-tac">$billCoins.outAmount</td>
+                    	<td class="fn-tac">$billCoins.otherAmount</td>
+                    </tr>
+                    #end
+                  
+                </table>
+            </div>
+        </div>
+        
+        <div class="m-item">
+            <label class="m-label">再保信息：</label>
+           	 <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">再保险公司</th>
+                        <th class="fn-tac">再保费</th>
+                        <th class="fn-tac">再保手续费</th>
+                    </tr>
+                    #foreach ($billReins in $!{billReins}) 
+                    <tr class="itemLine" >
+                    	<td class="fn-tac">$billReins.insuraceCompanyName</td>
+                    	<td class="fn-tac">$billReins.premiumAmount</td>
+                    	<td class="fn-tac">$billReins.poundageAmount</td>
+                    </tr>
+                    #end
+                   
+                </table>
+            </div>
+        </div>
+        
+         <div class="m-item">
+            <label class="m-label">客户保单回执：</label>
+             <div><a href="javascript:void(0);">点击查看</a></div>
+        </div>
+        
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <a href="/insurance/businessBill/list.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+		
+		
+</div>
+</body>
+</html>

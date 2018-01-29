@@ -1,0 +1,109 @@
+<table sqlname="insurance_catalog">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+								INSERT INTO insurance_catalog(catalog_id,catalog_name,catalog_code,node_path,depth,last_depth,parent_catalog_id,remark,type,is_life_insurance,is_main,abbr1,abbr2,abbr3,creator_id,creator_name,price_template,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO insurance_catalog(catalog_id,catalog_name,catalog_code,node_path,depth,last_depth,parent_catalog_id,remark,type,is_life_insurance,is_main,abbr1,abbr2,abbr3,creator_id,creator_name,price_template,raw_add_time) VALUES (#catalogId#,#catalogName#,#catalogCode#,#nodePath#,#depth#,#lastDepth#,#parentCatalogId#,#remark#,#type#,#isLifeInsurance#,#isMain#,#abbr1#,#abbr2#,#abbr3#,#creatorId#,#creatorName#,#priceTemplate#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="catalogId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE insurance_catalog SET catalog_name=?,catalog_code=?,node_path=?,depth=?,last_depth=?,parent_catalog_id=?,remark=?,type=?,is_life_insurance=?,is_main=?,abbr1=?,abbr2=?,abbr3=?,creator_id=?,creator_name=?,price_template=? WHERE catalog_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			 SELECT  catalog_id ,catalog_name ,catalog_code ,node_path ,depth ,last_depth ,parent_catalog_id ,remark ,type ,is_life_insurance ,is_main ,abbr1 ,abbr2 ,abbr3 ,creator_id ,creator_name ,price_template ,raw_add_time ,raw_update_time  FROM insurance_catalog WHERE catalog_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_catalog WHERE catalog_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+            <param name="certainIds" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+						SELECT  catalog_id ,catalog_name ,catalog_code ,node_path ,depth ,last_depth ,parent_catalog_id ,remark ,type ,is_life_insurance ,is_main ,abbr1 ,abbr2 ,abbr3 ,creator_id ,creator_name ,price_template ,raw_add_time ,raw_update_time  FROM insurance_catalog WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         		SELECT  catalog_id ,catalog_name ,catalog_code ,node_path ,depth ,last_depth ,parent_catalog_id ,remark ,type ,is_life_insurance ,is_main ,abbr1 ,abbr2 ,abbr3 ,creator_id ,creator_name ,price_template ,raw_add_time ,raw_update_time  FROM insurance_catalog WHERE 1=1
+             <dynamic>
+                 <isEmpty property="certainIds"   prepend="  ">
+             	 <isNotEmpty property="insuranceCatalog.parentCatalogId"   prepend=" and ">
+	                parent_catalog_id = #insuranceCatalog.parentCatalogId#
+	            </isNotEmpty>
+                 </isEmpty>
+	            <isNotEmpty property="certainIds"   prepend=" and ">
+	                catalog_id in ($certainIds$)
+	            </isNotEmpty>
+             </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+        <extraparams>
+            <param name="certainIds" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM insurance_catalog WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM insurance_catalog  where 1=1
+	        <dynamic>
+	          <isEmpty property="certainIds"   prepend="  ">
+	             <isNotEmpty property="insuranceCatalog.parentCatalogId" prepend=" and ">
+	                parent_catalog_id = #insuranceCatalog.parentCatalogId#
+	            </isNotEmpty>
+	          </isEmpty>
+
+	            <isNotEmpty property="certainIds"   prepend=" and ">
+	                catalog_id in ($certainIds$)
+	            </isNotEmpty>
+             </dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

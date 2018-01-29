@@ -1,0 +1,121 @@
+<table sqlname="claim_settlement">
+	<operation name="insert" paramtype="object">
+		<sql>
+            <![CDATA[
+				INSERT INTO claim_settlement(claim_settlement_id,insurance_no,business_bill_id,informant,mobile,danger_place,danger_date,remark,creator_id,creator_name,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+		</sql>
+
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO claim_settlement(claim_settlement_id,insurance_no,business_bill_id,informant,mobile,danger_place,danger_date,remark,creator_id,creator_name,raw_add_time) VALUES (#claimSettlementId#,#insuranceNo#,#businessBillId#,#informant#,#mobile#,#dangerPlace#,#dangerDate#,#remark#,#creatorId#,#creatorName#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="claimSettlementId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+	</operation>
+
+	<operation name="update" paramtype="object">
+		<sql>
+            <![CDATA[
+			UPDATE claim_settlement SET insurance_no=?,business_bill_id=?,informant=?,mobile=?,danger_place=?,danger_date=?,remark=?,creator_id=?,creator_name=? WHERE claim_settlement_id=?
+                  
+			]]>
+		</sql>
+	</operation>
+
+	<operation name="findById">
+		<sql>
+            <![CDATA[
+			  SELECT  claim_settlement_id ,insurance_no ,business_bill_id ,informant ,mobile ,danger_place ,danger_date ,remark ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM claim_settlement WHERE claim_settlement_id=?
+			]]>
+		</sql>
+	</operation>
+
+
+	<operation name="deleteById" paramtype="string">
+		<sql>
+            <![CDATA[
+				  DELETE FROM claim_settlement WHERE claim_settlement_id=?
+			]]>
+		</sql>
+	</operation>
+
+
+	<operation name="findByCondition" paramtype="object"
+		multiplicity="many">
+		<extraparams>
+			<param name="sortCol" javatype="java.lang.String" />
+			<param name="sortOrder" javatype="java.lang.String" />
+			<param name="limitStart" javatype="long" />
+			<param name="pageSize" javatype="long" />
+			<param name="startTime" javatype="java.util.Date" />
+			<param name="endTime" javatype="java.util.Date" />
+		</extraparams>
+		<sql>
+            <![CDATA[
+					SELECT  claim_settlement_id ,insurance_no ,business_bill_id ,informant ,mobile ,danger_place ,danger_date ,remark ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM claim_settlement WHERE 1=1
+	        ]]>
+		</sql>
+		<sqlmap>
+            <![CDATA[
+	         SELECT  claim_settlement_id ,insurance_no ,business_bill_id ,informant ,mobile ,danger_place ,danger_date ,remark ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM claim_settlement where 1=1
+	         <dynamic>
+				<isNotEmpty property="claimSettlement.informant" prepend=" and ">
+					informant=#claimSettlement.informant#
+				</isNotEmpty>
+				<isNotEmpty property="startTime" prepend=" and ">
+				    ${cdata-start}  danger_date >= #startTime#   ${cdata-end}
+				</isNotEmpty>
+				<isNotEmpty property="endTime" prepend=" and ">
+				 ${cdata-start}  danger_date <= #endTime#   ${cdata-end}
+				</isNotEmpty>
+			</dynamic>
+			<isNotEmpty property="sortCol" prepend=" order by ">
+				$sortCol$
+				<isNotEmpty property="sortOrder">
+					$sortOrder$
+				</isNotEmpty>
+			</isNotEmpty>
+			<isGreaterThan property="pageSize" compareValue="0"
+				prepend="">
+				LIMIT #limitStart#,#pageSize#;
+			</isGreaterThan>
+	        ]]>
+			
+		</sqlmap>
+	</operation>
+
+
+	<operation name="findByConditionCount" paramtype="object">
+		<extraparams>
+			<param name="startTime" javatype="java.util.Date" />
+			<param name="endTime" javatype="java.util.Date" />
+		</extraparams>
+		<sql>
+            <![CDATA[
+	        SELECT  count(*) FROM claim_settlement WHERE  1=1
+	        ]]>
+		</sql>
+		<sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM claim_settlement  where 1=1
+	           <dynamic>
+				<isNotEmpty property="informant" prepend=" and ">
+					informant=#informant#
+				</isNotEmpty>
+				<isNotEmpty property="startTime" prepend=" and ">
+					${cdata-start} danger_date >= #startTime# ${cdata-end}
+				</isNotEmpty>
+				<isNotEmpty property="endTime" prepend=" and ">
+					${cdata-start} danger_date <= #endTime# ${cdata-end}
+				</isNotEmpty>
+			</dynamic>
+	           	
+	        ]]>
+			
+		</sqlmap>
+	</operation>
+</table>

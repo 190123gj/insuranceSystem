@@ -1,0 +1,26 @@
+#if($!fenbaoList)
+ <h2 class="m-htitle fn-mb20 fn-mt20"><span>分保信息</span></h2>
+ <table class="m-table fn-tac">
+ 	    <thead>
+          <tr>
+              <th>分保方</th>
+              <th>分保比例（%）</th>
+              <th>分保金额（元）</th>
+          </tr>
+      </thead>
+        #foreach( $item in $!fenbaoList )
+         <tr diyname="listBondReinsuranceOrder">
+             <td>
+                 $item.reinsuranceObject
+             </td>
+             <td>
+                 $!rateUtil.formatRate($item.reinsuranceRatio)
+             </td>
+             <td>
+                $item.reinsuranceAmount.toStandardString()
+             </td>
+         </tr>
+       #end
+	</table>
+	<div class="fn-mt20 fn-mb20"></div>
+#end

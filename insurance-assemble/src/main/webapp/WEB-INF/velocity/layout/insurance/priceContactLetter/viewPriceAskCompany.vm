@@ -1,0 +1,289 @@
+<div class="m-blank fn-mt20 fn-mb20"></div>
+
+<div class="m-item">
+    <span class="fn-hide insurancePlanJosn">$!{demandInfo.schemeInfo.schemeDetail}</span>
+    <label class="m-label"><span class="m-required">*</span>特别承保要求：</label>
+$!{info.specialReq}
+#if($!{isEdit}=="Y")
+    <input type="hidden" name="schemeOrder.id" value="$!{demandInfo.schemeInfo.id}">
+ #end
+</div>
+#if($!{isEdit}=="Y")
+
+<div class="priceCompanyConent parentDiyNameBox">
+    #foreach($demandInfo in $info.demandInfos)
+    #if($!showPriceCompany != true)
+        <div parentdiyname="demandOrders" class="priceCompanyConent_$!{demandInfo.demandType}" >
+            <div class="m-item diyNameBox">
+                <label class="m-label"><span class="m-required">*</span>本次询价保险公司：</label>
+                <div class="fn-wp90 itemBox">
+                    <table class="m-table m-table-list itemsList askCompanyOrders">
+                        <tr>
+                        ##如果是业务员，则不展示保险公司的联系人、联系电话、邮箱
+                            <th class="fn-tac">保险公司名称</th>
+                            <th class="fn-tac">协议经纪费比例（%）</th>
+                            <th class="fn-tac">意向经纪费比例（%）</th>
+                            <th class="fn-tac">联系人</th>
+                            <th class="fn-tac">联系电话</th>
+                            <th class="fn-tac">邮箱地址</th>
+                       </tr>
+                           #foreach($item in $!{demandInfo.askCompanyInfoList})
+                                <tr diyname="askCompanyOrders" class="itemLine clearChooseListBox">
+                                    <td class="fn-tac fn-w200">
+                                        #if($!{isEdit}=="Y")
+                                            <input type="hidden" name="id" value="$!{item.id}">
+                                        #end
+                                $!{item.companyUserName}
+
+                                    </td>
+                                    <td class="fn-tac">
+                                        <input class="protocolFees fn-validate" type="hidden" name="protocolFees" value="$!{item.protocolFees}">
+                                        <div class="protocolFees_add">
+                                            #foreach($item2 in $item.chargeInfos)
+                                                <p class="fn-mb5 insuranceName_add_$!{item2.catalogId}">
+                                                    <span class="insuranceName_add fn-mr10">$!{item2.catalogName}</span>
+                                                    <span class="insuranceRate_add fn-mr5">比例</span>$!{item2.protocolFee}%</p>
+                                            #end
+                                        </div>
+                                    </td>
+                                    <td class="fn-tac parentsErrorBox">
+                                        <input class="catologIds notEmptyVal" type="hidden" name="catalogIds" value="$!{item.catalogIds}">
+                                        <input class="catalogNames notEmptyVal" type="hidden" name="catalogNames" value="$!{item.catalogNames}">
+                                        <input class="insuranceRates fn-validate" type="hidden" name="intentionFees" value="$!{item.intentionFees}">
+                                        <div class="mainInsurance_add">
+                                            #foreach($item2 in $item.chargeInfos)
+                                                <p class="fn-mb5 insuranceName_add_$!{item2.catalogId}">
+                                                    <span class="insuranceName_add fn-mr10">$!{item2.catalogName}</span>
+                                                    <span class="insuranceRate_add fn-mr5">比例</span>
+                                                    $!{item2.intentionFee}
+                                                </p>
+                                            #end
+                                        </div>
+                                    </td>
+                                    <td class="fn-tac">
+                                        $!{item.contactUserName}
+                                    </td>
+
+                                    <td class="fn-tac">
+                                        $!{item.contactUserMobile}
+                                    </td>
+
+                                    <td class="fn-tac">
+                                     $!{item.contactUserEmail}
+                                    </td>
+
+                                </tr>
+                        #end
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    #end
+    #end
+</div>
+
+#else
+<div class="priceCompanyConent parentDiyNameBox">
+    #if($!showPriceCompany != true)
+        <div parentdiyname="demandOrders">
+            <div class="m-item diyNameBox">
+                <label class="m-label"><span class="m-required">*</span>本次询价保险公司：</label>
+                <div class="fn-wp90 itemBox">
+                    <table class="m-table m-table-list itemsList askCompanyOrders">
+                        <tr>
+                        ##如果是业务员，则不展示保险公司的联系人、联系电话、邮箱
+                            <th class="fn-tac">保险公司名称</th>
+                            <th class="fn-tac">协议经纪费比例（%）</th>
+                            <th class="fn-tac">意向经纪费比例（%）</th>
+                            <th class="fn-tac">联系人</th>
+                            <th class="fn-tac">联系电话</th>
+                            <th class="fn-tac">邮箱地址</th>
+
+                        </tr>
+
+                            <tr diyname="askCompanyOrders" class="itemLine clearChooseListBox">
+                                <td class="fn-tac fn-w200">
+                                    <input type="text" class="ui-text fn-w100 companyUserName needToClearInput" readonly name="companyUserName" value=""/>
+                                    <input class="fn-validate companyUserId needToClearInput" type="hidden" name="companyUserId" value="">
+                                    <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseCompanyName" style="color: #fff;">选择</a>
+                                    <a href="javascript:void(0);" class="fn-hide fnToChooseCompanyNameHiddenBtn" style="color: #fff;">选择</a>
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="protocolFees fn-validate" type="hidden" name="protocolFees" value="">
+                                    <div class="protocolFees_add">
+                                    </div>
+                                </td>
+                                <td class="fn-tac parentsErrorBox">
+                                    <input class="catologIds notEmptyVal" type="hidden" name="catalogIds" value="">
+                                    <input class="catalogNames notEmptyVal" type="hidden" name="catalogNames" value="">
+                                    <input class="insuranceRates fn-validate" type="hidden" name="intentionFees" value="">
+                                    <div class="mainInsurance_add">
+                                    </div>
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text needToClearInput" type="text" name="contactUserName" readonly value="">
+                                </td>
+
+                                <td class="fn-tac">
+                                    <input class="text needToClearInput" type="text" name="contactUserMobile" readonly value="">
+                                </td>
+
+                                <td class="fn-tac">
+                                    <input class="text needToClearInput" type="text" name="contactUserEmail" readonly value="">
+                                </td>
+                                <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+                            </tr>
+                    </table>
+                    <div class="fn-tar fn-mt20">
+                        <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_XUNJIA_INSURANCET_COMPANY"  href="javascript:void(0);" templatelist="tr"><i class="icon icon-add"></i>新增一行</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    #end
+</div>
+
+
+#end
+<div class="m-item">
+    <label class="m-label"><span class="m-required">*</span>询价期限：</label>
+    请在&nbsp;&nbsp;$!{info.askDate}前回复，超过此期限有可能使客户拒绝接受此报价
+</div>
+
+<div class="m-item">
+    <label class="m-label">客户委托书：</label>
+    <div class="fnUpAttach">
+        #set($attachmentTitle="上传附件")
+        #set($attachmentNameAttr="pathName_PRODUCT1_PROTOCOL")
+        #set($hiddenUrls = $!{hiddenUrls_PRODUCT1_PROTOCOL})
+        #set($attachments = $!{attaches_PRODUCT1_PROTOCOL})
+        #parse("/layout/common/uploadAttachment.vm")
+    </div>
+</div>
+
+#parse("/layout/insurance/priceContactLetter/addFirstStepField.vm")
+
+<script type="text/html" id="TMP_XUNJIA_INSURANCET_COMPANY">
+    ##如果是业务员，则不展示保险公司的联系人、联系电话、邮箱
+    <tr diyname="askCompanyOrders" class="itemLine clearChooseListBox">
+        <td class="fn-tac fn-w200">
+            <input type="text" class="ui-text fn-w100 companyUserName needToClearInput" readonly name="companyUserName" value=""/>
+            <input class="fn-validate companyUserId needToClearInput" type="hidden" name="companyUserId" value="">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseCompanyName" style="color: #fff;">选择</a>
+            <a href="javascript:void(0);" class="fn-hide fnToChooseCompanyNameHiddenBtn" style="color: #fff;">选择</a>
+        </td>
+        <td class="fn-tac">
+            <input class="protocolFees fn-validate" type="hidden" name="protocolFees" value="">
+            <div class="protocolFees_add">
+            </div>
+        </td>
+        <td class="fn-tac parentsErrorBox">
+            <input class="catologIds notEmptyVal" type="hidden" name="catalogIds" value="">
+            <input class="catalogNames notEmptyVal" type="hidden" name="catalogNames" value="">
+            <input class="insuranceRates fn-validate" type="hidden" name="intentionFees" value="">
+            <div class="mainInsurance_add">
+            ##                #foreach($item2 in $item.chargeInfos)
+##                    <p class="fn-mb5 insuranceName_add_$!{item2.catalogId}">
+##                        <span class="insuranceName_add fn-mr10">$!{item2.catalogName}</span>
+##                        <span class="insuranceRate_add fn-mr5">比例</span>
+##                        <input class="ui-text fn-w40 singleInsuranceRate valid" type="text" value="" aria-invalid="false">
+##                    </p>
+##                #end
+            </div>
+        </td>
+        <td class="fn-tac">
+            <input class="text needToClearInput" type="text" name="contactUserName" readonly value="">
+        </td>
+
+        <td class="fn-tac">
+            <input class="text needToClearInput" type="text" name="contactUserMobile" readonly value="">
+        </td>
+
+        <td class="fn-tac">
+            <input class="text needToClearInput" type="text" name="contactUserEmail" readonly value="">
+        </td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+    </tr>
+</script>
+
+
+##保险方案建议--询价表
+<script type="text/html" id="TMP_EXTRA_INSURANCET_XTABLE">
+
+    ##询价用
+        #if($!isIinquiryPlan == true)
+        ##费率（‰）
+        <td class="fn-tac isIinquiryPlanBodyTd">
+            <input class="text fn-validate syncsVal" type="text" name="" disabled>
+        </td>
+        ##*保费
+        <td class="fn-tac isIinquiryPlanBodyTd">
+            <input class="text fn-validate syncsVal" type="text" name="" disabled>
+        </td>
+        ##经纪费比例（%）
+        <td class="fn-tac isIinquiryPlanBodyTd">
+            <input class="text fn-validate syncsVal" type="text" name="" disabled>
+        </td>
+        ##* 经纪费金额
+        <td class="fn-tac isIinquiryPlanBodyTd">
+            <input class="text fn-validate syncsVal" type="text" name="" disabled>
+        </td>
+        #end
+</script>
+<script type="text/html" id="TMP_PRICECOMPANY">
+    <div parentdiyname="demandOrders">
+        <div class="m-item diyNameBox">
+            <label class="m-label"><span class="m-required">*</span>本次询价保险公司：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList askCompanyOrders">
+                    <tr>
+                    ##如果是业务员，则不展示保险公司的联系人、联系电话、邮箱
+                        <th class="fn-tac">保险公司名称</th>
+                        <th class="fn-tac">协议经纪费比例（%）</th>
+                        <th class="fn-tac">意向经纪费比例（%）</th>
+                        <th class="fn-tac">联系人</th>
+                        <th class="fn-tac">联系电话</th>
+                        <th class="fn-tac">邮箱地址</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+                    <tr diyname="askCompanyOrders" class="itemLine clearChooseListBox">
+                        <td class="fn-tac fn-w200">
+                            <input type="text" class="ui-text fn-w100 companyUserName needToClearInput" readonly name="companyUserName" value=""/>
+                            <input class="fn-validate companyUserId needToClearInput" type="hidden" name="companyUserId" value="">
+                            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseCompanyName" style="color: #fff;">选择</a>
+                            <a href="javascript:void(0);" class="fn-hide fnToChooseCompanyNameHiddenBtn" style="color: #fff;">选择</a>
+                        </td>
+                        <td class="fn-tac">
+                            <input class="protocolFees fn-validate" type="hidden" name="protocolFees" value="">
+                            <div class="protocolFees_add">
+                            </div>
+                        </td>
+                        <td class="fn-tac parentsErrorBox">
+                            <input class="catologIds notEmptyVal" type="hidden" name="catalogIds" value="">
+                            <input class="catalogNames notEmptyVal" type="hidden" name="catalogNames" value="">
+                            <input class="insuranceRates fn-validate" type="hidden" name="intentionFees" value="">
+                            <div class="mainInsurance_add">
+                            </div>
+                        </td>
+                        <td class="fn-tac">
+                            <input class="text needToClearInput" type="text" name="contactUserName" readonly value="">
+                        </td>
+
+                        <td class="fn-tac">
+                            <input class="text needToClearInput" type="text" name="contactUserMobile" readonly value="">
+                        </td>
+
+                        <td class="fn-tac">
+                            <input class="text needToClearInput" type="text" name="contactUserEmail" readonly value="">
+                        </td>
+                        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+                    </tr>
+                </table>
+                <div class="fn-tar fn-mt20">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_XUNJIA_INSURANCET_COMPANY"  href="javascript:void(0);" templatelist="tr"><i class="icon icon-add"></i>新增一行</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

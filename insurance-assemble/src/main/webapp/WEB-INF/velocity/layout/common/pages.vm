@@ -1,0 +1,45 @@
+<div class="m-pages">
+    #set($start = ($page.currentPageNo - 1)* $page.pageSize + 1)
+    #set($end = ($start - 1)+ $page.result.size())
+
+    #if ($!{page.totalCount} > 0)
+
+        #if($!{page.totalCount} > 0)第$!{page.currentPageNo}页，#end共$!{page.totalPageCount}页，合计 $!{page.totalCount}条&nbsp;|&nbsp;
+        #if(1< $!{page.currentPageNo})
+            <a href="javaScript:toPage($!{page.totalPageCount},1)">首页</a>
+        #else
+            <span>首页</span>
+        #end
+        #if($page.hasPreviousPage())
+            <a href="javaScript:toPage($!{page.totalPageCount},$!{page.previosPageNo})">上一页</a>
+        #else
+            <span>上一页</span>
+        #end
+        #if($page.hasNextPage())
+        <a href="javaScript:toPage($!{page.totalPageCount},$!{page.nexPagetNo})">下一页</a>
+        #else
+            <span>下一页</span>
+        #end
+        #if($!{page.totalPageCount} > $!{page.currentPageNo})
+        <a href="javaScript:toPage($!{page.totalPageCount},$!{page.totalPageCount})">尾页</a>
+        #else
+            <span>尾页</span>
+        #end
+        #if(!$withOutJubmBtn)
+        <input class="text fnMakeNumber" type="text" id="fnListSearchInput">
+        <input class="btn" type="button" value="GO" id="fnListSearchGo" maxitem="$!{page.totalPageCount}">
+        #end
+        ## <input class="btn" type="button" onclick="var pageNum = jQuery(this).parent().parent().find('.page_input_num').val();if(!(/^[1-9]\d*$/).test(pageNum)) return;toPage($!{page.totalPageCount},pageNum)" value="GO">
+
+    #else
+
+        <p class="fn-tac fn-fs20">暂无数据</p>
+
+    #end
+    ## 分页数据
+    <input type="hidden" name="pageNumber" value="$!page.currentPageNo" id="fnPageNumber">
+    <input type="hidden" name="pageSize" value="$!page.pageSize" id="fnPageSize">
+    ## 排序
+    <input type="hidden" name="sortOrder" value="$!page.sortOrder" id="fnSortOrder">
+    <input type="hidden" name="sortCol" value="$!page.sortCol" id="fnSortCol">
+</div>

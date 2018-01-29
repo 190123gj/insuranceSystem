@@ -1,0 +1,25 @@
+<div class="ui-top" id="fnCTop">
+    <div class="ui-layout fn-clear">
+
+        <div class="fn-left">
+            您好<span class="fn-f30 fn-ml5">${sessionLocal.realName}</span>，欢迎来到保险经纪！
+            <span class="msg fn-ml20" style="cursor: pointer;" onclick="window.location='/systemMg/message/user/list.htm?status=UNREAD'"><a id="messageCount" href="/systemMg/message/user/list.htm" class="fn-dpib fn-hidden"></a></span>
+            <span class="fn-ml20 fn-mr20"></span><span id="nowTime"></span>
+        </div>
+        <div class="fn-right"><a href="javascript:void(0);" hrefs="/userHome/modifyPassword.htm" targets="main" id="fnChangePws">修改密码</a>&nbsp;&nbsp;&nbsp;<a href="/login/logout.htm" id="logout">退出</a></div>
+
+    </div>
+</div>
+<div class="ui-nav fnTransitionAll" id="fnCNav">
+    <div class="ui-layout fn-clear">
+        <h1 class="logo-box fn-left"><a class="logo" href="/userHome/mainIndex.htm" title="保险经纪系统">保险经纪</a></h1>
+        <div class="nav-box">
+            <ul class="fn-clear nav" id="nav">
+                <li><a href="#if($!permissionUtil.checkPermission('/userHome/mainIndex.htm'))/userHome/mainIndex.htm#else javascript:void(0)#end" alias="workbench">我的工作台</a></li>
+                <li><a href="#if($!permissionUtil.checkPermission('/insurance/index.htm'))/insurance/index.htm#else javascript:void(0)#end" alias="project">保险经纪</a></li>
+##                <li><a href="javascript: void(0);" alias="risk">操作说明</a></li>
+                <li><a href="#if($!permissionUtil.checkPermission('/systemMg/index.htm'))/systemMg/index.htm#else javascript:void(0)#end" alias="set">系统设置</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

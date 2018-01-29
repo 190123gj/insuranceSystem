@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+## <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title>新增管理日志</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;项目管理&nbsp;&gt;&nbsp;风险管控&nbsp;&gt;&nbsp;新增管理日志
+</div>
+
+<h2 class="m-h2-title">新增管理日志</h2>
+
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff" id="apply">
+    <div class="fn-blank20"></div>
+    #set($isBelong2Xinhui = $!dataPermissionUtil.isBelong2Xinhui())
+    <form id="form" action="/insurance/customerManage/editPersonalInfoSubmit.htm" method="post" callbackhref="">
+
+		<div class="m-item">
+				<input class="ui-text fn-w90" type="hidden" name="customerId" id="customerId" value="$!{info.customerId}" />
+        </div>
+		<div class="m-item">
+				<input class="ui-text fn-w90" type="hidden" name="userId" id="userId" value="$!{info.userId}" />
+        </div>
+		
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>客户姓名：</label>
+				<input class="ui-text fn-w90" type="text" name="customerName" id="customerName" value="$!{info.customerName}" />
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>证件类型：</label>
+            <select  name="certType" id="certType">
+				#foreach($certType in $!{certTypeList})	
+			<option value="$!{certType.code}" #if("$!{info.certType.code}"=="$!{certType.code}") selected="selected" #end>$!{certType.message}</option>
+			#end
+			</select>
+           
+        </div>
+		
+		
+	    <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>证件号码：</label>
+           <input class="ui-text fn-w90" type="text" name="certNo" id="certNo" value="$!{info.certNo}" />
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>证件有效期：</label>
+            <input class="ui-text fn-w200 laydate-icon fnChangeInput fnRequired fnInput" type="text" name="certExpDate" id="certExpDate" value="$!dateUtil.formatDay($!info.certExpDate)" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+        </div>
+		
+		 <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>出生日期：</label>
+            <input class="ui-text fn-w200 laydate-icon fnChangeInput fnRequired fnInput" type="text" name="birthDay" id="birthDay" value="$!dateUtil.formatDay($!info.birthDay)" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+        </div>
+
+		<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>民族：</label>
+           <input class="ui-text fn-w90" type="text" name="nation" id="nation" value="$!{info.nation}" />
+        </div>
+		<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>联系地址：</label>
+           <input class="ui-text fn-w90" type="text" name="address" id="address" value="$!{info.address}" />
+        </div>
+		<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>移动电话：</label>
+           <input class="ui-text fn-w90" type="text" name="mobile" id="mobile" value="$!{info.mobile}" />
+        </div>
+		<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>固定电话：</label>
+           <input class="ui-text fn-w90" type="text" name="telphone" id="telphone" value="$!{info.telphone}" />
+        </div>
+		<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>E-mail地址：</label>
+           <input class="ui-text fn-w90" type="text" name="email" id="email" value="$!{info.email}" />
+        </div>
+		<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>微信号：</label>
+           <input class="ui-text fn-w90" type="text" name="weixin" id="weixin" value="$!{info.weixin}" />
+        </div>
+		<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>QQ号：</label>
+           <input class="ui-text fn-w90" type="text" name="qq" id="qq" value="$!{info.qq}" />
+        </div>
+			<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>工作单位：</label>
+           <input class="ui-text fn-w90" type="text" name="company" id="company" value="$!{info.company}" />
+		   
+		  <span class="m-required">*</span>部门：
+           <input class="ui-text fn-w90" type="text" name="company" id="company" value="$!{info.company}" />
+		   
+		   <span class="m-required">*</span>职务：
+           <input class="ui-text fn-w90" type="text" name="job" id="job" value="$!{info.job}" />
+        </div>
+		<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>所属业务员：</label>
+           <input class="ui-text fn-w90" type="text" name="businessUserName" id="businessUserName" value="$!{info.businessUserName}" />
+        </div>
+      
+
+           <div class="m-item m-item3">
+            <label class="m-label">附件上传：</label>
+##            #set($attachmentTitle="上传附件")
+##            #set($attachmentNameAttr="pathName_PROJECT_RISK_LOG")
+##            #set($hiddenUrls = $!{hiddenUrls_PROJECT_RISK_LOG})
+##            #set($attachments = $!{attaches_PROJECT_RISK_LOG})
+##            #parse("/layout/common/uploadAttachment.vm")
+           <div class="fnUpAttach">
+               <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn"><i class="icon icon-add"></i>上传附件</a>
+               <input class="fnUpAttachVal" type="hidden" name="">
+               <div class="fn-blank5"></div>
+               <div class="m-attach fnUpAttachUl"></div>
+           </div>
+        </div>
+
+    </form>
+    <div class="fn-blank20"></div>
+    <div class="m-blank fn-mt20 fn-mb20"></div>
+    <div class="fn-tac fn-pt20 fn-pb30">
+        <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn" type="button" id="submit" value="修改">
+        <a href="javascript:void(0)" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5 toCanleOpt">返回</a>
+    </div>
+
+    <div class="fn-blank20"></div>
+</div>
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    seajs.use($_GLOBAL.zyw+'/customer/customer.management');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<table sqlname="business_bill_pay_plan">
+<column name="premium_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO business_bill_pay_plan(pay_plan_id,type_id,premium_amount,year,appserial_period,plan_pay_date,actual_pay_date,payment_status,business_bill_id,data_add_time,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO business_bill_pay_plan(pay_plan_id,type_id,premium_amount,year,appserial_period,plan_pay_date,actual_pay_date,payment_status,business_bill_id,data_add_time,raw_add_time) VALUES (#payPlanId#,#typeId#,#premiumAmount#,#year#,#appserialPeriod#,#planPayDate#,#actualPayDate#,#paymentStatus#,#businessBillId#,#dataAddTime#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="payPlanId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE business_bill_pay_plan SET type_id=?,premium_amount=?,year=?,appserial_period=?,plan_pay_date=?,actual_pay_date=?,payment_status = ?,business_bill_id=?,data_add_time=? WHERE pay_plan_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  pay_plan_id ,type_id ,premium_amount ,year ,appserial_period ,plan_pay_date ,actual_pay_date ,payment_status,business_bill_id,data_add_time,raw_update_time,raw_add_time  FROM business_bill_pay_plan WHERE pay_plan_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM business_bill_pay_plan WHERE pay_plan_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  pay_plan_id ,type_id ,premium_amount ,year ,appserial_period ,plan_pay_date ,actual_pay_date ,payment_status,business_bill_id,data_add_time,raw_update_time,raw_add_time  FROM business_bill_pay_plan WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  pay_plan_id ,type_id ,premium_amount ,year ,appserial_period ,plan_pay_date ,actual_pay_date ,payment_status,business_bill_id,data_add_time,raw_update_time,raw_add_time  FROM business_bill_pay_plan where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM business_bill_pay_plan WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM business_bill_pay_plan  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    
+    <operation name="findBusinessBillPayPlan" paramtype="long" multiplicity="many">
+     
+  		 <sql>
+            <![CDATA[
+					SELECT  pay_plan_id ,type_id ,premium_amount ,year ,appserial_period ,plan_pay_date ,actual_pay_date ,payment_status ,business_bill_id,data_add_time,raw_update_time,raw_add_time  FROM business_bill_pay_plan  WHERE business_bill_id =  ? AND payment_status = 0
+	        ]]>
+        </sql>
+    </operation>
+    
+       <operation name="findAllBusinessBillPayPlan" paramtype="long" multiplicity="many">
+     
+  		 <sql>
+            <![CDATA[
+					SELECT  pay_plan_id ,type_id ,premium_amount ,year ,appserial_period ,plan_pay_date ,actual_pay_date ,payment_status ,business_bill_id,data_add_time,raw_update_time,raw_add_time  FROM business_bill_pay_plan  WHERE business_bill_id =  ? ORDER BY pay_plan_id
+	        ]]>
+        </sql>
+    </operation>
+    
+    
+  <operation name="findCurrentBusinessBillPayPlan">
+     
+  		 <sql>
+            <![CDATA[
+					SELECT  pay_plan_id ,type_id ,premium_amount ,year ,appserial_period ,plan_pay_date ,actual_pay_date ,payment_status ,business_bill_id  FROM business_bill_pay_plan  WHERE business_bill_id =  ?  and appserial_period = ?
+	        ]]>
+        </sql>
+    </operation>
+
+    
+</table>

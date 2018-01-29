@@ -1,0 +1,137 @@
+/*daixy*/
+.red{color: #f00;}
+.blue{ color: #00a0e9;}
+.green{ color: #47a55c;}
+.fn-999{ color: #999; }
+.bgc{ background: #ccc; color: #fff;}
+.fs12{ font-size: 12px;}
+a.green:hover{ color: #6db97e;}
+.lh24{ line-height: 24px; height: 24px;}
+.lh32{ line-height: 32px; height: 32px; }
+.lh60{ line-height: 60px; height: 60px; }
+.fn-w850{ width: 850px;}
+select.fn-w200{width: 212px;}
+.hide{ display: none;}
+.show{ display: block;}
+.rel{ position: relative;}
+.abs{ position: absolute;}
+.pb25{ padding-bottom: 25px;}
+input:read-only{ background-color: #eee;}
+input:-moz-read-only{ background-color: #eee; }
+.fn-w185{ width: 185px;}
+.bgnone{ background: none !important;}
+.rel>b.error-tip{ position: absolute; right: 5px; top: 30%;}
+.fnpabs .rel>b.error-tip{ position: absolute; right: 5px; top: 36%;}
+.fnpas2 .rel>b.error-tip{ position: absolute; right: 0; top: 30%;}
+.fnpas3 .rel>b.error-tip{ position: absolute; left: 3px; bottom: 0; top: auto;}
+.hh,.fn-addtab td{ word-break: break-word !important}
+.alltext .hh{ line-height: 24px; text-indent: 2em;}
+.fnStep .m-item b.error-tip{font-weight: bold; color: #f00 !important;}
+table td{word-break: break-all;}
+a.add-btn{ display: inline-block; width: 19px; height: 19px; border-radius: 9.5px; background: url(img/add-btn.jpg) no-repeat; position: absolute; right: 3px; bottom: 12px;}
+a.jian-btn{ display: inline-block; width: 19px; height: 19px; border-radius: 9.5px; background: url(img/add-btn.jpg) no-repeat 0 -19px; position: absolute; right: 3px; bottom: 12px;}
+a.addBtn2{ position: absolute; bottom: 10px; left: 855px; }
+a.jianBtn2{ position: absolute; bottom: 10px; right: -55px;height:28px; line-height:28px; color:#f00; width:auto;}
+
+.apply-org2{ width: 500px; height: 260px; margin-left: -250px; margin-top: -130px;}
+.border0{border: 0 !important;}
+.borderT0{ border-top: 0 !important;}
+.borderB0{ border-bottom: 0 !important; }
+.borderT0 td{ border-top: 0;}
+.underline{text-decoration: underline;}
+.fn-w185{ width: 185px; }
+.seal-box { width: 36%; margin: 0 7%; line-height: 28px; }
+.table-input{ width: 100%; height: 22px; line-height: 22px;text-align: center; border: 0; outline: none;}
+.audit-box,.audit-opinion{ width: 96%; padding: 0 2%; }
+.audit-detail{ width: 96%; padding: 30px 2%; position: relative;} 
+.audit-detail ul{ width: 100%; }
+.audit-detail ul li{ float: left; width: 12.5%; height: 57px; position: relative; }
+.audit-detail ul li span.round{ display: inline-block; width: 34px; height: 34px; border-radius: 17px; color: #fff; text-align: center; line-height: 34px; font-size: 24px; font-weight: bold; background: #c5c5c5; position: absolute; left: 0; top: 0; z-index: 2; }
+.audit-detail ul li i.line{ display: inline-block; width: 100%; height: 5px; background: #dcdcdc; position: absolute; left: 0; top: 14.5px; z-index: 0; }
+.audit-detail ul li p{position: absolute; top: 40px;; left: -17px;}
+.audit-detail ul li.active span.round{ background: #00a0e9; }
+.audit-detail ul li.active i.line{ background: #00a0e9; }
+.audit-detail ul li.ing span.round{ border: 3px #29bafc solid; background: #4cc7ff; width: 28px; height: 28px; line-height: 28px;}
+.audit-detail ul li.start p,.audit-detail ul li.end p{left: 0;}
+.border{ border: 1px solid #e5e1e1;}
+.audit-detail .audit-top{ margin-left: 43px;}
+.close-btn{ display: inline-block; width:24px;height:24px; line-height: 20px; font-size: 22px; border-radius: 12px; cursor: pointer; text-align: center; color: #fff; background: #00a0e9; position: absolute; right: 10px; top: 10px;}
+.audit-seal ul li{ width: 20%; height: 95px;}
+.audit-seal .audit-top{ margin-left: 85px;}
+.audit-detail ul li p{ left: 0;}
+.audit-detail ul li.ing p{ color: #00a0e9; }
+.Spectbb{ color: #00a0e9; position: absolute; right: 20px; top: 29px; font-size: 14px; }
+.choose-box p{ cursor: pointer; display: inline-block; margin:  0 15px; line-height: 26px; height: 26px; }
+.choose-box p i{ display: inline-block; *display: inline; float: left; width: 10px; height: 10px; background: #fff; border: 3px #dedede solid; border-radius: 8px; margin: 3px 5px;  }
+.choose-box p.active{ color: #47a55c; }
+.choose-box p.active i{ background: #fff; border-color: #47a55c; }
+.notice-ul{ width: 400px; overflow: hidden; margin: 0 50px;}
+.notice-ul .notice-li{ float: left; width: 150px; height: 90px; overflow: hidden; margin: 25px; }
+.notice-ul .notice-li .notice-name{ height: 40px; line-height: 40px; color: #6db97e; border: 1px #47a55c solid; text-align: center; font-size: 14px; margin-bottom: 15px; cursor: pointer; }
+.notice-ul .notice-li .notice-name:hover{ color: #fff; background: #6db97e; border: 1px #47a55c solid;}
+.fnUpFile2{ position: relative; text-decoration: underline;}
+.fnUpFile2 input{ position: absolute; font-size: 100px; right: 0;top: 0; opacity: 0;filter: alpha(opacity=0);cursor: pointer }
+.table-box{ width: 95%;}
+.apply-upfile-img{ display: block; cursor: pointer; margin-top: 20px; max-width: 450px;}
+.apply-upfile-img.nomt{ margin-top: 0;}
+.apply-upfile-tip{ color: #d84a12; margin: 10px 0 0 0 !important;}
+
+/*资料打印*/
+.notice-content .ui-text,.contract-text .ui-text{ border: 0; border-bottom: 1px #ccc solid; border-radius: 0; text-align: center;}
+.fn-w50{ width: 50px;}
+.print-data .item{ float: left; width: 140px; margin-left: 10px; text-align: center; cursor: pointer; color: #161717;}
+.print-data .icon{ width: 32px; height: 32px; margin-top: 21px; background-image: url(img/project/print_data_icon.png)!important;}
+.print-data .item.active .icon{ background-position: 0 -140px; }
+.print-data .item.active .icon-s2{ background-position: 0 -175px; }
+.print-data .item.active .icon-s3{ background-position: 0 -210px; }
+.print-data .item.active .icon-s4{ background-position: 0 -245px; }
+.contract-text p{ margin-top: 10px; line-height: 32px; }
+
+/*新增合同模板*/
+.type-box{ padding: 20px; }
+.type-box h2{ padding: 0 15px; height: 36px; line-height: 36px; font-size: 16px; background: #d8ecd1; color: #666; font-weight: normal;}
+.type-content{ width: 510px; overflow: hidden; padding: 0 15px; }
+.type-content h3{ font-size: 14px; color: #666; margin: 5px 0;}
+.type-content ul{ width: 510px; overflow: hidden; }
+.type-content ul li{ float: left; width: 140px; margin: 5px; height: 28px; line-height: 28px; background: #f5f5f5; border-left: 2px #69a080 solid; padding-left: 18px; }
+.type-content ul li a{ display: inline-block; width: 100%; height: 100%; }
+.type-content ul li:hover a{ color: #69a080; font-weight: bold;}
+
+.packBtn{ width:28px; height:28px; background:url(img/project/pack_icon.png); cursor:pointer; margin-top:20px; }
+.packBtn.reversal{ background-position: 0 -28px; }
+.bac1,.bac1 input{ background:#d9ecd2; }
+.bac2,.bac2 input{ background:#98d8a7; }
+.bac3,.bac3 input,.bac3 td{ background:#ff8863; color:#fff; }
+.bac4,.bac4 input{ background:#fde9c3; }
+.bac5,.bac5 input{ background:#daeef3; }
+.m-table a{ color: #55b66b;}
+
+.editorAddButton.m-label{ position: fixed; top: 0;}
+
+
+
+// 资产
+.pfBox{ width: 100%; margin-top: -10px; }
+.pfBox li{ width: 100%; height: 26px; line-height: 26px; padding: 10px 0;}
+.pfBox li span.pfItem{ display: inline-block; width: 125px; text-align: right; margin-right: 10px;}
+.pfBox li span.fnItemsum{ font-size: 18px; font-weight: bold; color: #f62a1a; font-style: italic; }
+
+// 评分 stars
+.pfStars{ margin-left: 10px;}
+.pfStars .starsIcon,.pfStars .starsIcon2{ width: 155px; height: 26px; line-height: 26px; overflow: hidden;}
+.pfStars .starsIcon i,.pfStars .starsIcon2 i{ display: inline-block; width: 24px; height: 24px; float: left; background: url(img/project/stars-icon.png) 0 0 no-repeat; cursor: pointer; margin: 1px 3px; transition: background .25s;}
+.pfStars .starsIcon i.active,.pfStars .starsIcon2 i.active{ background-position: 0 -24px;}
+.pfStars .starsIcon span,.pfStars .starsIcon2 span{ color: #e15450; }
+.pfStars p{ color: #999; }
+
+// 选择
+.fnh300{ height: 300px;}
+.leftBox select,.rightBox select{ border-radius: 2px; border: 1px #ccc solid; line-height: 30px; height: 240px; overflow-y: visible;}
+.leftBox select option,.rightBox select option{padding: 0.5em .5em;}
+.addBox,.sortBox{ width: 25px; height: 60px; margin: 90px 20px; }
+.addBox input,.sortBox input{ display: inline-block; width: 25px; height: 25px; border: 0 ; background: url(img/project/icon.png) no-repeat;}
+.addBox input#removeOne {background-position: 0 -25px;}
+.sortBox input#Up{ background-position: 0 -75px;}
+.sortBox input#Down{ background-position: 0 -50px;}
+
+.view img,.fuwenb img{ max-width: 100% !important;}

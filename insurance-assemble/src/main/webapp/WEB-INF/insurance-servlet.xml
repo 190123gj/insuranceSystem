@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+	      http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		  http://www.springframework.org/schema/beans 
+		  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		  http://www.springframework.org/schema/context 
+		  http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		  http://www.springframework.org/schema/aop 
+          http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
+       default-autowire="byName">
+
+    <context:component-scan base-package="com.born.insurance.web" />
+
+    <context:annotation-config />
+
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+    <!-- Forwards requests to the "/" resource to the "welcome" view -->
+    <mvc:view-controller path="/" view-name="welcome" />
+
+
+
+    <!-- 拦截器 -->
+    <mvc:interceptors>
+        <bean class="com.born.insurance.web.interceptor.LoginInterceptorAdapter">
+            <property name="ignoreUrlStr"
+                      value="/,/signIn.html,/login.html,/register.html,/signUp.html,/index.html,/logout.html,/supplier/signIn.html,/supplier/login.html,/supplier/register.html,/supplier/signUp.html,/detail.html,/list.html,/categoryList.html,/checkcode.html,/search.html,/member/notExist.html,/supplier/notExist.html" />
+        </bean>
+    </mvc:interceptors>
+    
+    <mvc:resources location="/mobile/**" mapping="/mobile/**"/>
+   <!-- 
+    <mvc:interceptors>
+        <bean id="duplicateSubmitInterceptor" class="com.yjf.common.web.DuplicateSubmitInterceptor" />
+    </mvc:interceptors>
+ -->
+    <!-- velocity view config -->
+    <bean id="velocityViewResolver"
+          class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="cache" value="true" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="requestContextAttribute" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="prefix" value=""></property>
+        <property name="order" value="1"></property>
+        <property name="allowSessionOverride" value="true"></property>
+        <property name="viewNames">
+            <list>
+                <value>*.vm</value>
+                <value>*.htm</value>
+            </list>
+        </property>
+        <property name="contentType" value="text/html; charset=UTF-8"></property>
+        <property name="toolboxConfigLocation" value="/WEB-INF/config/velocity-toolbox.xml"></property>
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.velocity.VelocityLayoutView" />
+        <property name="layoutUrl" value="layout/layout.vm" />
+    </bean>
+
+    <bean id="velocityConfig"
+          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/velocity/" />
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">UTF-8</prop>
+                <prop key="output.encoding">UTF-8</prop>
+                <prop key="parser.pool.size">100</prop>
+                <prop key="velocimacro.library">macros/macros.vm</prop>
+                <prop key="velocimacro.library.autoreload">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewNameTranslator"
+          class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator">
+        <property name="stripExtension" value="false"></property>
+    </bean>
+
+    <bean id="defaultAnnotationHandlerMapping"
+          class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+
+    <bean
+            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean
+                        class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/plain;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="webBindingInitializer">
+            <bean class="com.born.insurance.web.controller.base.WebParamBinder" />
+        </property>
+    </bean>
+
+
+    <!-- JSR303数据验证 -->
+    <bean id="validator"
+          class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource" />
+    </bean>
+
+    <!-- AnnotationBeanValidationConfigurationLoader -->
+    <bean id="configurationLoader"
+          class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader" />
+
+    <mvc:annotation-driven  conversion-service="conversionService"/>
+
+    <bean id="conversionService"
+          class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.born.insurance.util.StringToEnumConverterFactory" />
+            </set>
+        </property>
+    </bean>
+
+</beans>

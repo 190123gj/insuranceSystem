@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>理赔服务</title>
+</head>
+<body>
+<div class="ui-breadcrumb">
+    &nbsp;业务管理&nbsp;&gt;&nbsp;理赔服务&nbsp;&gt;&nbsp;理赔服务列表
+</div>
+<form class="m-main border ui-bg-fff" action="/insurance/claimSettlement/list.htm" id="fnListSearchForm" method="POST"> 
+    <div class="m-search fn-clear">
+        <div class="item">
+            报案人：
+            <input class="ui-text fn-w200 fnInput" type="text" name="informant" id="informant" value="$!{queryConditions.informant}">
+        </div>
+     <div class="item">
+            报案时间：
+             <input class="ui-text fn-w200 laydate-icon fnChangeInput fn-validate" value="$!dateUtil.simpleFormat($!{queryConditions.startTime})" type="text" name="startTime" id="startTime" onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm:ss'})">
+             至
+              <input class="ui-text fn-w200 laydate-icon fnChangeInput fn-validate" value="$!dateUtil.simpleFormat($!{queryConditions.endTime})" type="text" name="endTime" id="endTime" onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm:ss'})">
+     </div>
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+    </div>    
+    <div class="fn-pl15 fn-pr15">    
+        <div class="fn-mb20 fn-mt20">
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/claimSettlement/edit.htm"><b>+</b>新增理赔服务&nbsp;</a>
+        </div>       
+        <table class="m-table m-table-list fn-tac" id="list">
+            <thead>
+                <tr id="fnListSearchTh">
+ 	                <th>序号</th>
+ 	                <th>保单号</th>
+ 	                <th>报案人</th>
+					<th>出险人</th>
+ 	                <th>联系电话</th>
+ 	                <th>报案时间</th>
+ 	                <th>处理进度</th>
+                   <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+ 						 <td> $!{velocityCount}  </td>
+ 						 <td> $!{item.insuranceNo}</td>
+ 						 <td> $!{item.informant} </td>
+						 <td>$!{item.informant}</td>
+ 						 <td> $!{item.mobile}</td>
+ 						 <td> $!dateUtil.simpleFormat($!{item.dangerDate})</td>
+ 						 <td>
+ 						 #if($!item.schedule=="FILING")立案 #end
+                          #if($!item.schedule=="CONFIRMLOSS")定损 #end
+                          #if($!item.schedule=="SETTLEACCOUNTS")结算#end
+                          #if($!item.schedule=="PAYMENT")支付#end
+                          #if($!item.schedule=="VISIT")回访#end
+ 						 </td>
+                         <td>
+                         <a href="/insurance/claimSettlement/info.htm?claimSettlementId=$!{item.claimSettlementId}">[ 报案详情 ]</a> <br /> 
+                         <a href="/insurance/claimSettlementProcess/scheduleMaintenance.htm?claimSettlementId=$!{item.claimSettlementId}">[ 进度维护 ]</a> <br /> 
+                         <a href="/insurance/claimSettlement/edit.htm?claimSettlementId=$!{item.claimSettlementId}">[ 编辑 ]</a> <br /> 
+                         </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>        
+        #parse("/layout/common/pages.vm")
+    </div>
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/claimSettlement/listclaimSettlement');
+</script>
+</body>
+</html>

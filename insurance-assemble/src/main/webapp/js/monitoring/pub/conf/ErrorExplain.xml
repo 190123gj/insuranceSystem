@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+-10、15开头的是设备返回的错误码；
+-20开头的是SP ERROR；
+-30开头的是MC ERROR；
+-40开头的是DTC ERROR
+-50开头的是VARender ERROR
+-60开头的是VARecorder ERROR
+-70开头的是AudioCapEnc ERROR
+-80开头的是AudioDecPlay ERROR
+-->
+<ErrorExplain Version="2.0">
+	<ErrorCode Number="0000">
+		<zh-CN>成功</zh-CN>
+		<en>Succeed</en>
+	</ErrorCode>
+	<ErrorCode Number="-1">
+		<zh-CN>未知错误</zh-CN>
+		<en>Unknown error</en>
+	</ErrorCode>
+	<!--PU 错误码 2000-->
+	<ErrorCode Number="1001">
+		<zh-CN>设置值不在取值范围内</zh-CN>
+		<en>Setting value is out of range</en>
+	</ErrorCode>
+	<ErrorCode Number="1002">
+		<zh-CN>操作不支持</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1003">
+		<zh-CN>参数错误</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1004">
+		<zh-CN>报文格式错误</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1005">
+		<zh-CN>资源错误</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1006">
+		<zh-CN>操作失败</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1007">
+		<zh-CN>操作没有权限</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1008">
+		<zh-CN>通道不在线</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1009">
+		<zh-CN>功能失效</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1010">
+		<zh-CN>功能超时</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1501">
+		<zh-CN>路由器模式导致申请流失败</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1502">
+		<zh-CN>该流被禁用导致申请流失败</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1503">
+		<zh-CN>流量限制导致申请流失败</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1504">
+		<zh-CN>上网时长限制导致申请流失败</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<ErrorCode Number="1505">
+		<zh-CN>命令没有转发关系</zh-CN>
+		<en>Operation is not support</en>
+	</ErrorCode>
+	<!--SP 错误码 2000-->
+	<ErrorCode Number="2001">
+		<zh-CN>错误的消息体格式</zh-CN>
+		<en>Wrong format of message body</en>
+	</ErrorCode>
+	<ErrorCode Number="2002">
+		<zh-CN>错误的参数（属性值）</zh-CN>
+		<en>Wrong parameter（Property value）</en>
+	</ErrorCode>
+	<ErrorCode Number="2003">
+		<zh-CN>不支持的操作</zh-CN>
+		<en>Unsupported operation</en>
+	</ErrorCode>
+	<ErrorCode Number="2004">
+		<zh-CN>目标鉴权失败</zh-CN>
+		<en>Failed to authenticate target</en>
+	</ErrorCode>
+	<ErrorCode Number="2005">
+		<zh-CN>优先级鉴权失败</zh-CN>
+		<en>Failed to authenticate priority</en>
+	</ErrorCode>
+	<ErrorCode Number="2006">
+		<zh-CN>EPID鉴权失败</zh-CN>
+		<en>Failed to authenticate EPID</en>
+	</ErrorCode>
+	<ErrorCode Number="2007">
+		<zh-CN>操作鉴权失败</zh-CN>
+		<en>Failed to authenticate operation</en>
+	</ErrorCode>
+	<ErrorCode Number="2008">
+		<zh-CN>资源鉴权失败</zh-CN>
+		<en>Failed to authenticate resource</en>
+	</ErrorCode>
+	<ErrorCode Number="2009">
+		<zh-CN>命令超时</zh-CN>
+		<en>Command timeout</en>
+	</ErrorCode>
+	<ErrorCode Number="2010">
+		<zh-CN>路由失败</zh-CN>
+		<en>Routing failure</en>
+	</ErrorCode>
+	<ErrorCode Number="2011">
+		<zh-CN>没有对象操作权限</zh-CN>
+		<en>No object operating permission</en>
+	</ErrorCode>
+	<ErrorCode Number="2012">
+		<zh-CN>对象不存在</zh-CN>
+		<en>Object does not exist</en>
+	</ErrorCode>
+	<ErrorCode Number="2013">
+		<zh-CN>对象已存在</zh-CN>
+		<en>Object already exists</en>
+	</ErrorCode>
+	<ErrorCode Number="2014">
+		<zh-CN>超过支持的最大用户数</zh-CN>
+		<en>Exceed the maximum number of supported</en>
+	</ErrorCode>
+	<ErrorCode Number="2015">
+		<zh-CN>目标用户支持的操作集过大</zh-CN>
+		<en>Set of operations supported by target user is too large</en>
+	</ErrorCode>
+	<ErrorCode Number="2016">
+		<zh-CN>优先级不足，不支持本项操作</zh-CN>
+		<en>Lack of priority, this operation is unsupported</en>
+	</ErrorCode>
+	<ErrorCode Number="2017">
+		<zh-CN>请求的令牌不存在</zh-CN>
+		<en>Request token does not exist</en>
+	</ErrorCode>
+	<ErrorCode Number="2018">
+		<zh-CN>没有可用的分发单元</zh-CN>
+		<en>No available distributive unit</en>
+	</ErrorCode>
+	<ErrorCode Number="2019">
+		<zh-CN>音频输出通道已被占用</zh-CN>
+		<en>Audio output channel is occupied</en>
+	</ErrorCode>
+	<ErrorCode Number="2020">
+		<zh-CN>会议室密码不正确</zh-CN>
+		<en>The password of meeting room is incorrect</en>
+	</ErrorCode>
+	<ErrorCode Number="2021">
+		<zh-CN>非法的资源</zh-CN>
+		<en>Illegal recourse</en>
+	</ErrorCode>
+	<ErrorCode Number="2022">
+		<zh-CN>超过最大的流转发负荷</zh-CN>
+		<en>Exceed the maximum load of stream transmission</en>
+	</ErrorCode>
+	<ErrorCode Number="2023">
+		<zh-CN>没有可用的云存储服务</zh-CN>
+		<en>No available cloud storage service</en>
+	</ErrorCode>
+	<ErrorCode Number="-2100">
+		<zh-CN>VS未知错误</zh-CN>
+		<en>VS unknown error</en>
+	</ErrorCode>
+	<ErrorCode Number="-2201">
+		<zh-CN>VS没有可用的分发单元</zh-CN>
+		<en>VS has not VTDU</en>
+	</ErrorCode>
+	<ErrorCode Number="-2202">
+		<zh-CN>VS密码错误</zh-CN>
+		<en>VS password error</en>
+	</ErrorCode>
+	<ErrorCode Number="-2203">
+		<zh-CN>VS不支持的错误</zh-CN>
+		<en>VS unsupport operation</en>
+	</ErrorCode>
+	<ErrorCode Number="-2204">
+		<zh-CN>VS的Token不存在</zh-CN>
+		<en>VS Token no exists</en>
+	</ErrorCode>
+	<ErrorCode Number="-2205">
+		<zh-CN>VS路由失败</zh-CN>
+		<en>VS route failed</en>
+	</ErrorCode>
+	<ErrorCode Number="-2206">
+		<zh-CN>VS中Cell状态失同步</zh-CN>
+		<en>VS wrong sync status</en>
+	</ErrorCode>
+	<!--MC 错误码 3000-->
+	<ErrorCode Number="3001">
+		<zh-CN>操作正在进行中</zh-CN>
+		<en>Operating is in progress</en>
+	</ErrorCode>
+	<ErrorCode Number="3002">
+		<zh-CN>函数参数错误</zh-CN>
+		<en>Function parameter error</en>
+	</ErrorCode>
+	<ErrorCode Number="3003">
+		<zh-CN>NC请求超时</zh-CN>
+		<en>NC request timeout</en>
+	</ErrorCode>
+	<ErrorCode Number="3004">
+		<zh-CN>状态错误</zh-CN>
+		<en>State error</en>
+	</ErrorCode>
+	<ErrorCode Number="3005">
+		<zh-CN>无扩展参数</zh-CN>
+		<en>No extended parameter</en>
+	</ErrorCode>
+	<ErrorCode Number="-3001">
+		<zh-CN>未定义错误</zh-CN>
+		<en>Undefined error</en>
+	</ErrorCode>
+	<ErrorCode Number="-3002">
+		<zh-CN>服务器地址或端口不可达</zh-CN>
+		<en>The server address or port is unreachable</en>
+	</ErrorCode>
+	<ErrorCode Number="-3003">
+		<zh-CN>命令连接超时</zh-CN>
+		<en>Command connection timeout</en>
+	</ErrorCode>
+	<ErrorCode Number="-3004">
+		<zh-CN>内存分配出错</zh-CN>
+		<en>Memory allocation error</en>
+	</ErrorCode>
+	<ErrorCode Number="-3005">
+		<zh-CN>发送数据时出错</zh-CN>
+		<en>Error occurred in sending data</en>
+	</ErrorCode>
+	<ErrorCode Number="-3006">
+		<zh-CN>接收数据时出错</zh-CN>
+		<en>Error occurred in receiving data</en>
+	</ErrorCode>
+	<ErrorCode Number="-3007">
+		<zh-CN>操作被中止</zh-CN>
+		<en>Operation is terminated</en>
+	</ErrorCode>
+	<ErrorCode Number="-3008">
+		<zh-CN>路由失败</zh-CN>
+		<en>Operation is terminated</en>
+	</ErrorCode>
+	<ErrorCode Number="-3009">
+		<zh-CN>服务为开启</zh-CN>
+		<en>Operation is terminated</en>
+	</ErrorCode>
+	<ErrorCode Number="-3010">
+		<zh-CN>地址不可达</zh-CN>
+		<en>Operation is terminated</en>
+	</ErrorCode>
+	<ErrorCode Number="-3104">
+		<zh-CN>注册时返回的扩展参数长度错误</zh-CN>
+		<en>The returned length of extended parameter is wrong when registering</en>
+	</ErrorCode>
+	<ErrorCode Number="-3108">
+		<zh-CN>注册时返回HTTP头中无内容长度</zh-CN>
+		<en>Return no content length in HTTP header when registering</en>
+	</ErrorCode>
+	<ErrorCode Number="-3109">
+		<zh-CN>注册时返回HTTP头中的内容长度溢出</zh-CN>
+		<en>Return content length overflow in HTTP header when registering</en>
+	</ErrorCode>
+	<ErrorCode Number="-3110">
+		<zh-CN>注册时返回HTTP内容中没有XML头</zh-CN>
+		<en>Return no XML header in HTTP content when registering</en>
+	</ErrorCode>
+	<ErrorCode Number="-3111">
+		<zh-CN>注册时返回HTTP内容中XML格式错误</zh-CN>
+		<en>Return XML format error in HTTP content when registering</en>
+	</ErrorCode>
+	<ErrorCode Number="-3112">
+		<zh-CN>注册时返回的重定向报文中的结果错误</zh-CN>
+		<en>The returned result in redirecting message is wrong when registering</en>
+	</ErrorCode>
+	<ErrorCode Number="-3113">
+		<zh-CN>注册时返回的挑战报文版本号不对</zh-CN>
+		<en>Starting characters when receiving command</en>
+	</ErrorCode>
+	<ErrorCode Number="-3201">
+		<zh-CN>接收命令时起始字符</zh-CN>
+		<en>Starting characters when receiving command</en>
+	</ErrorCode>
+	<ErrorCode Number="-3202">
+		<zh-CN>接收命令时版本错误</zh-CN>
+		<en>Version error when receiving command</en>
+	</ErrorCode>
+	<ErrorCode Number="-3203">
+		<zh-CN>接收命令时控制字段错误</zh-CN>
+		<en>Control field error when receiving command</en>
+	</ErrorCode>
+	<ErrorCode Number="-3204">
+		<zh-CN>接收命令时消息类型错误</zh-CN>
+		<en>Message type error when receiving command</en>
+	</ErrorCode>
+	<ErrorCode Number="-3205">
+		<zh-CN>接收命令时包长度错误</zh-CN>
+		<en>Packet length error when receiving command</en>
+	</ErrorCode>
+	<ErrorCode Number="-3206">
+		<zh-CN>接收命令时包类型错误</zh-CN>
+		<en>Packet type error when receiving command</en>
+	</ErrorCode>
+	<ErrorCode Number="-3207">
+		<zh-CN>接收命令时包体长度不合法</zh-CN>
+		<en>Packet body length is illegal when receiving command</en>
+	</ErrorCode>
+	<ErrorCode Number="-3299">
+		<zh-CN>注册时返回未知错误</zh-CN>
+		<en>Returned an unknown error in registration</en>
+	</ErrorCode>
+	<ErrorCode Number="-3301">
+		<zh-CN>用户不存在</zh-CN>
+		<en>User does not exist</en>
+	</ErrorCode>
+	<ErrorCode Number="-3302">
+		<zh-CN>用户被禁用</zh-CN>
+		<en>User is disabled</en>
+	</ErrorCode>
+	<ErrorCode Number="-3303">
+		<zh-CN>企业被禁用</zh-CN>
+		<en>EPID is disabled</en>
+	</ErrorCode>
+	<ErrorCode Number="-3306">
+		<zh-CN>密码错误</zh-CN>
+		<en>Password error</en>
+	</ErrorCode>
+	<ErrorCode Number="-3307">
+		<zh-CN>无效的USB密钥</zh-CN>
+		<en>Invalid USB key</en>
+	</ErrorCode>
+	<ErrorCode Number="-3308">
+		<zh-CN>在线用户已满</zh-CN>
+		<en>The online user is full already</en>
+	</ErrorCode>
+	<ErrorCode Number="-3309">
+		<zh-CN>认证超时</zh-CN>
+		<en>Certification timeout</en>
+	</ErrorCode>
+	<ErrorCode Number="-3310">
+		<zh-CN>路由失败</zh-CN>
+		<en>Routing failure</en>
+	</ErrorCode>
+	<ErrorCode Number="-3311">
+		<zh-CN>无效的认证密钥</zh-CN>
+		<en>Invalid auth key</en>
+	</ErrorCode>
+	<ErrorCode Number="-3312">
+		<zh-CN>超过企业限制的最大在线用户数</zh-CN>
+		<en>Exceed the maximum number of online users enterprise limited</en>
+	</ErrorCode>
+	<ErrorCode Number="-3381">
+		<zh-CN>密码输入错误。【再输错4次，账号将被锁定！】</zh-CN>
+		<en>Password input error . [ Lose wrong four times , the account will be locked ! ]</en>
+	</ErrorCode>
+	<ErrorCode Number="-3382">
+		<zh-CN>密码输入错误。【再输错3次，账号将被锁定！】</zh-CN>
+		<en>Password input error . [ Lose wrong three times , the account will be locked ! ]</en>
+	</ErrorCode>
+	<ErrorCode Number="-3383">
+		<zh-CN>密码输入错误。【再输错2次，账号将被锁定！】</zh-CN>
+		<en>Password input error . [ Lose wrong two times , the account will be locked ! ]</en>
+	</ErrorCode>
+	<ErrorCode Number="-3384">
+		<zh-CN>密码输入错误。【再输错1次，账号将被锁定！】</zh-CN>
+		<en>Password input error . [ Lose wrong one times , the account will be locked ! ]</en>
+	</ErrorCode>
+	<ErrorCode Number="-3385">
+		<zh-CN>您的账号已被锁定，请24小时后重试！</zh-CN>
+		<en>Your account has been locked , please try again in 24 hours !</en>
+	</ErrorCode>
+	<ErrorCode Number="-3499">
+		<zh-CN>重定向时返回未知错误</zh-CN>
+		<en>Return undefined error in redirecting</en>
+	</ErrorCode>
+	<ErrorCode Number="-3501">
+		<zh-CN>报文格式出错</zh-CN>
+		<en>Message format error</en>
+	</ErrorCode>
+	<ErrorCode Number="-3502">
+		<zh-CN>不支持的终端类型</zh-CN>
+		<en>Unsupported terminal type</en>
+	</ErrorCode>
+	<ErrorCode Number="-3503">
+		<zh-CN>没有在线的用户接入服务</zh-CN>
+		<en>No online server for user access</en>
+	</ErrorCode>
+	<ErrorCode Number="-3504">
+		<zh-CN>没有支持重定向的用户接入服务</zh-CN>
+		<en>No redirection-supported server for user access</en>
+	</ErrorCode>
+	<ErrorCode Number="-3505">
+		<zh-CN>不支持该厂商ID</zh-CN>
+		<en>Do not support the vendor ID</en>
+	</ErrorCode>
+	<ErrorCode Number="-3510">
+		<zh-CN>操作暂时无法完成</zh-CN>
+		<en>The operation is unable to be completed temporarily</en>
+	</ErrorCode>
+	<!--DTC 4000 -->
+	<ErrorCode Number="4001">
+		<zh-CN>操作暂时无法完成</zh-CN>
+		<en>The operation is unable to be completed temporarily</en>
+	</ErrorCode>
+	<ErrorCode Number="4002">
+		<zh-CN>帧长度错误</zh-CN>
+		<en>Frame length error</en>
+	</ErrorCode>
+	<ErrorCode Number="4003">
+		<zh-CN>接收到结束包</zh-CN>
+		<en>Receiving the end packet</en>
+	</ErrorCode>
+	<ErrorCode Number="-4001">
+		<zh-CN>未定义错误</zh-CN>
+		<en>Undefined error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4002">
+		<zh-CN>参数错误</zh-CN>
+		<en>Parameter error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4003">
+		<zh-CN>无效数据通道句柄</zh-CN>
+		<en>Invalid data channel handle</en>
+	</ErrorCode>
+	<ErrorCode Number="-4004">
+		<zh-CN>内存错误</zh-CN>
+		<en>Memory error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4005">
+		<zh-CN>数据通道请求超时</zh-CN>
+		<en>Request for data channel timeout</en>
+	</ErrorCode>
+	<ErrorCode Number="-4006">
+		<zh-CN>连接错误</zh-CN>
+		<en>Connection error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4007">
+		<zh-CN>TCP发送出错</zh-CN>
+		<en>Sending TCP error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4008">
+		<zh-CN>TCP接收出错</zh-CN>
+		<en>Receiving TCP error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4010">
+		<zh-CN>UDP网络出错</zh-CN>
+		<en>UDP error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4011">
+		<zh-CN>收到断开连接的命令</zh-CN>
+		<en>Received break command</en>
+	</ErrorCode>
+	<ErrorCode Number="-4012">
+		<zh-CN>操作不支持</zh-CN>
+		<en>UDP error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4013">
+		<zh-CN>没有初始化</zh-CN>
+		<en>Not init</en>
+	</ErrorCode>
+	<ErrorCode Number="-4101">
+		<zh-CN>无效令牌</zh-CN>
+		<en>Invalid token</en>
+	</ErrorCode>
+	<ErrorCode Number="-4102">
+		<zh-CN>通道类型错误</zh-CN>
+		<en>Channel type error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4103">
+		<zh-CN>通道已经存在</zh-CN>
+		<en>Channel already exists</en>
+	</ErrorCode>
+	<ErrorCode Number="-4201">
+		<zh-CN>包版本错误</zh-CN>
+		<en>Packet version error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4202">
+		<zh-CN>包类型错误</zh-CN>
+		<en>Packet type error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4203">
+		<zh-CN>包长度错误</zh-CN>
+		<en>Packet length error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4204">
+		<zh-CN>帧开始标志错误</zh-CN>
+		<en>Frame starting flag error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4205">
+		<zh-CN>帧结束标志错误</zh-CN>
+		<en>Frame ending flag error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4211">
+		<zh-CN>帧类型错误</zh-CN>
+		<en>Frame type error</en>
+	</ErrorCode>
+	<ErrorCode Number="-4212">
+		<zh-CN>数据帧长度错误</zh-CN>
+		<en>Data frame length error</en>
+	</ErrorCode>
+	<!--VARender 错误码 5000-->
+	<ErrorCode Number="5001">
+		<zh-CN>操作无法立即执行</zh-CN>
+		<en>Operating is in progress</en>
+	</ErrorCode>
+	<ErrorCode Number="-5001">
+		<zh-CN>未知错误</zh-CN>
+		<en>Unkown error</en>
+	</ErrorCode>
+	<ErrorCode Number="-5004">
+		<zh-CN>创建定时器失败</zh-CN>
+		<en>Create Timer Failed</en>
+	</ErrorCode>
+	<ErrorCode Number="-5005">
+		<zh-CN>资源不可用</zh-CN>
+		<en>Resouce is unused</en>
+	</ErrorCode>
+	<ErrorCode Number="-5006">
+		<zh-CN>CodeShell出错</zh-CN>
+		<en>CodeShell error</en>
+	</ErrorCode>
+	<ErrorCode Number="-5007">
+		<zh-CN>分配内存出错</zh-CN>
+		<en>Memory allocation error</en>
+	</ErrorCode>
+	<!--VARender 错误码 6000-->
+	<ErrorCode Number="6001">
+		<zh-CN>操作无法立即执行</zh-CN>
+		<en>Operating is in progress</en>
+	</ErrorCode>
+	<ErrorCode Number="-6001">
+		<zh-CN>未知错误</zh-CN>
+		<en>Unkown error</en>
+	</ErrorCode>
+	<ErrorCode Number="-6002">
+		<zh-CN>帧信息发生改变</zh-CN>
+		<en>Frame info has been changed</en>
+	</ErrorCode>
+	<ErrorCode Number="-6003">
+		<zh-CN>不支持的帧信息</zh-CN>
+		<en>Unkown frame info</en>
+	</ErrorCode>
+	<!--AudioCapEnc 错误码 7000-->
+	<ErrorCode Number="-7001">
+		<zh-CN>未知错误</zh-CN>
+		<en>Unkown error</en>
+	</ErrorCode>
+	<ErrorCode Number="-7002">
+		<zh-CN>分配内存错误</zh-CN>
+		<en>Memory allocation error</en>
+	</ErrorCode>
+	<ErrorCode Number="-7003">
+		<zh-CN>溢出错误</zh-CN>
+		<en>Overflow error</en>
+	</ErrorCode>
+	<ErrorCode Number="-7004">
+		<zh-CN>音频采集错误</zh-CN>
+		<en>Audio capture failed</en>
+	</ErrorCode>
+	<ErrorCode Number="-7005">
+		<zh-CN>音频编码错误</zh-CN>
+		<en>Audio encode failed</en>
+	</ErrorCode>
+	<ErrorCode Number="-7006">
+		<zh-CN>信号量错误</zh-CN>
+		<en>Sem Error</en>
+	</ErrorCode>
+	<ErrorCode Number="-7007">
+		<zh-CN>线程错误</zh-CN>
+		<en>Thread error</en>
+	</ErrorCode>
+	<!--AudioDecPlay 错误码 8000-->
+	<ErrorCode Number="8001">
+		<zh-CN>操作无法立即执行</zh-CN>
+		<en>Operating is in progress</en>
+	</ErrorCode>
+	<ErrorCode Number="-8001">
+		<zh-CN>未知错误</zh-CN>
+		<en>Unkown error</en>
+	</ErrorCode>
+	<ErrorCode Number="-8002">
+		<zh-CN>分配内存错误</zh-CN>
+		<en>Memory allocation error</en>
+	</ErrorCode>
+	<ErrorCode Number="-8003">
+		<zh-CN>不支持的帧信息</zh-CN>
+		<en>Unkown frame info</en>
+	</ErrorCode>
+	<ErrorCode Number="-8004">
+		<zh-CN>不支持的帧信息</zh-CN>
+		<en>Audio play failed</en>
+	</ErrorCode>
+	<ErrorCode Number="-8005">
+		<zh-CN>音频解码错误</zh-CN>
+		<en>Audio decode failed</en>
+	</ErrorCode>
+	<ErrorCode Number="-8006">
+		<zh-CN>信号量错误</zh-CN>
+		<en>Sem Error</en>
+	</ErrorCode>
+	<ErrorCode Number="-8007">
+		<zh-CN>线程错误</zh-CN>
+		<en>Thread error</en>
+	</ErrorCode>
+</ErrorExplain>

@@ -1,0 +1,565 @@
+﻿
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>清新互联ICVS2 Javascript API</title>
+<link rel="stylesheet" type="text/css" href="../utility/mini-easyui/themes/gray/easyui.css"  />
+<link rel="stylesheet" type="text/css" href="../utility/mini-easyui/themes/icon.css"  />
+<link rel="stylesheet" type="text/css" href="../utility/snippet/jquery.snippet.css" />
+
+<script type="text/javascript" src="../utility/mini-easyui/jquery.min.js" ></script>
+<script type="text/javascript" src="../utility/mini-easyui/jquery.easyui.min.js" ></script>
+<script type="text/javascript" src="../utility/snippet/jquery.snippet.js"></script>
+<script type="text/javascript" src="conf.js"></script>
+<style>
+.snippet-wrap pre.sh_sourceCode{
+	padding:1em;line-height:1.8em;
+	overflow:auto;position:relative;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	box-shadow: 1px 1px 2px #333;
+	-moz-box-shadow: 1px 1px 2px #333;
+	-webkit-box-shadow: 1px 1px 2px #333;
+	height: 320px;
+}
+
+.expand {
+	background: url('images/datagrid_icons.png') no-repeat -32px center;
+}
+.collapse {
+	background: url('images/datagrid_icons.png') no-repeat -48px center;
+}
+</style>
+<script>
+jQuery.browser = {};
+jQuery.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
+jQuery.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
+jQuery.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
+jQuery.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+
+</script>
+</head>
+<body>
+	<div class="easyui-layout" fit="true" border="false">
+		<div data-options="region:'north'" style="height:80px;">
+			<div class="easyui-panel" fit="true" border=false>
+				<img src="images/logo.png"  height="75" />
+			</div>
+		</div>
+		<div data-options="region:'center'" >
+			<div id="mytabs" class="easyui-tabs" fit="true"  data-options="tabPosition:'left'" >
+				<div title="关于" style="padding:3px;">
+					<div title="示例目录" class="easyui-panel" fit=true >
+					<div style=" margin-left:30px;margin-top:10px;">
+						<table class="easyui-datagrid" style="width:520px;height:auto;">
+							 <thead>
+                  			 <tr>
+		                        <th data-options="field:'path'" width="300">示例路径</th>
+		                        <th data-options="field:'desc'" width="200" >描述</th>
+			                    </tr>
+			                </thead>
+			                <tbody>
+							<tr>
+								<td>/documents</td><td>API接口文档</td>
+							</tr>
+							<tr>
+								<td>/lib</td><td>API接口</td>
+							</tr>
+							<tr>
+								<td>/plugin</td><td>插件安装包</td>
+							</tr>
+							<tr>
+								<td>/utility</td><td>demo公共库</td>
+							</tr>
+							<tr>
+								<td >/examples/index.html</td><td>demo页面</td>
+							</tr>
+							<tr>
+								<td >/examples/demo/connect.html</td><td>创建连接页面</td>
+							</tr>
+							<tr>
+								<td >/examples/demo/playvideo.html</td><td>播放视频页面</td>
+							</tr>
+							<tr>
+								<td >/examples/demo/download.html</td><td>查询下载点播页面</td>
+							</tr>
+							<tr>
+								<td >/examples/images</td><td>图片以及CSS文件</td>
+							</tr>
+							<tr>
+								<td ><span id="version"></span></td><td>版本</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					</div>
+				</div>
+				
+				<div title="连接" style="padding:3px;" >
+					<div id="conn_panel" title="创建连接 P_LY.Connect" class="easyui-panel" fit=true >
+						
+						<p style="text-indent: 2em">当页面加载，初始化插件后，就可以进行创建连接了。创建连接可以调用P_LY.Connect(connParams)函数。参数为P_LY.Struct.ConnParamStruct结构，应按照结构中传参。连接成功后，连接参数等信息将给记录在P_LY.Struct.ConnectionStruct中。
+						</p>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								连接服务器或直连设备参数结构 P_LY.Struct.ConnParamStruct:
+							</strong>
+						</p>
+						<div style=" margin-left:30px;">
+							<table class="easyui-datagrid" style="width:462px;height:auto;">
+								<thead>
+					                <th data-options="field:'const'" width="120">变量</th>
+					                <th data-options="field:'type'" width="120">类型</th>
+					                <th data-options="field:'desc'" width="220">描述</th>
+								</thead>
+								<tbody>
+									<tr><td>path</td><td>String NOT NULL</td><td>服务器地址[ip：port]支持域名  </td></tr>
+									<tr><td>epId</td><td>String NOT NULL</td><td>epId企业ID </td></tr>
+									<tr><td>username</td><td>String NOT NULL</td><td>登录服务器用户名</td></tr>
+									<tr><td>password</td><td>String NULL</td><td>登录服务器密码</td></tr>
+									<tr><td>bFixCUIAddress</td><td>String NULL</td><td>是否透过网闸模式(是1，否非1)</td></tr>					   
+								</tbody>
+							</table>
+						</div>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								返回值 P_LY.Struct.ReturnValueStruct
+							</strong>			
+						</p>
+						<div style=" margin-left:30px;">
+							<table class="easyui-datagrid" style="width:562px;height:auto;">
+								<thead>
+					                <th data-options="field:'const'" width="120">变量</th>
+					                <th data-options="field:'type'" width="120">类型</th>
+					                <th data-options="field:'desc'" width="320">描述</th>
+								</thead>
+								<tbody>
+									<tr><td>rv</td><td>Number</td><td>错误编码</td></tr>
+									<tr><td>response</td><td>Object NULL</td><td>当rv为0时，返回有效的值，否则为NULL;</br>这里response应为connectId</td></tr>			 
+									<tr><td></td><td></td><td></td></tr>			   
+								</tbody>
+							</table>
+						</div>
+						
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								连接对象信息结构 P_LY.Struct.ConnectionStruct
+							</strong>
+						</p>
+						<div style=" margin-left:30px;">
+							<table class="easyui-datagrid" style="width:680px;height:auto;">
+								<thead>
+					                <th data-options="field:'const'" width="120">变量</th>
+					                <th data-options="field:'type'" width="200">类型</th>
+					                <th data-options="field:'desc'" width="358">描述</th>
+								</thead>
+								<tbody>
+									<tr><td>key</td><td>String NOT NULL</td><td>Connect ID创建一个连接后，系统生成的Conenct ID</td></tr>			 
+									<tr><td>connParam</td><td>P_LY.Struct.ConnParamStruct</td><td>连接登录参数</td></tr>
+									<tr><td>connType</td><td>P_LY.Enum.ConnectionType</td><td>连接类型</td></tr>
+									<tr><td>status</td><td>P_LY.Enum.ConnectionStatus</td><td>连接登陆状态</td></tr>
+									<tr><td>session</td><td>String NOT NULL</td><td>连接句柄</td></tr>
+									<tr><td>systemName</td><td>String NOT NULL</td><td>登陆后获取来的平台系统名</td></tr>
+									<tr><td>domainRoad</td><td>Array NULL</td><td>具有的子域名信息</td></tr>
+									<tr><td>resource</td><td>P_LY.Struct.PUNodeStruct</td><td>资源信息</td></tr>
+								</tbody>
+							</table>
+						</div>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								示例&nbsp;
+							</strong>
+							<span>
+								<a href="#" class="easyui-linkbutton" style="text-indent: 0;" onclick="collapse(this,'connect_frame_container')" data-options="iconCls:'collapse',plain:true">折叠</a>
+							</span>
+						</p>
+						<div id="connect_frame_container" style=" margin-left:30px;">
+							<iframe id="connect_frame" src="demo/connect.html" width="90%" height="280" frameborder="0" ></iframe>
+						</div>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								源码
+							</strong>
+							<span>
+								<a href="#" class="easyui-linkbutton" style="text-indent: 0;" onclick="collapse(this,'connect_source_code_container')" data-options="iconCls:'collapse',plain:true">折叠</a>
+							</span>
+						</p>
+						<div id="connect_source_code_container" style="padding-left:25px;padding-top:2px;height:450px;overflow:none;direction:ltr;width:850px" >			
+							<pre id="connect_source_code" style="width:100%;">
+							</pre>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div title="视频" style="padding:3px;" >
+					<div id="video_panel" title="播放视频 P_LY.PlayVideo" class="easyui-panel" fit=true >
+					
+				    <div class="content cc">
+						<p style="text-indent: 2em;">当页面加载完成，获取过资源之后，就可以播放视频了。播放视频首先需要创建窗口插件。需要在调用播放视频接口之前，先调用NPPILY.CreateWindow接口。该接口会创建窗口插件，返回窗口信息，并记录在NPPILY.Struct.WindowStruct。接着调用播放视频接口NPPILY.PlayVideo,就可以播放视频了。具体请看下面的接口说明。
+						</p>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								窗口信息结构 NPPILY.Struct.WindowStruct:
+							</strong>
+						</p>
+						<div style=" margin-left:30px;">
+							<table class="easyui-datagrid" style="width:562px;height:auto;">
+								<thead>
+					                <th data-options="field:'const'" width="120">变量</th>
+					                <th data-options="field:'type'" width="120">类型</th>
+					                <th data-options="field:'desc'" width="320">描述</th>
+								</thead>
+								<tbody>			 
+									<tr><td>container</td><td>String NOT NULL</td><td>窗口容器DOM对象</td></tr>			 
+									<tr><td>containerId</td><td>String NOT NULL</td><td>窗口容器ID</td></tr>			 
+									<tr><td>wndName</td><td>String NOT NULL</td><td>窗口插件Name</td></tr>			 
+									<tr><td>wnd</td><td>Object NOT NULL</td><td>窗口插件对象</td></tr>			 
+									<tr><td>connectId</td><td>String NOT NULL</td><td>与服务器连接id</td></tr>			 
+									<tr><td>wndHandle</td><td>String NOT NULL</td><td>窗口句柄</td></tr>		 
+									<tr><td>type</td><td>NPPILY.Enum.WindowType NOT NULL</td><td>窗口类型</td></tr>		 
+									<tr><td>params</td><td>Object</td><td>相关视频参数</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;puid</td><td>String NOT NULL</td><td>设备PUID</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;idx</td><td>String NOT NULL</td><td>视频资源索引</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;streamType</td><td>NPPILY.Enum.NrcapStreamType NOT NULL</td><td>流类型</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;ivStreamHandle</td><td>String NULL</td><td>视频流句柄</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;iaStreamHandle</td><td>String NULL</td><td>音频流句柄</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;alg</td><td>String NULL</td><td>平台转码流编码算法</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;resolution</td><td>String NULL</td><td>平台转码流分辨率</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;bitRate</td><td>String NULL</td><td>平台转码流码率</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;frameRate</td><td>String NULL</td><td>平台转码流帧率</td></tr>	 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;speed</td><td>String NULL</td><td>点播速度</td></tr>	 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;startTime</td><td>String NULL</td><td>点播开始时间</td></tr>	 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;endTime</td><td>String NULL</td><td>点播结束时间</td></tr>	 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;fileFullPath</td><td>String NULL</td><td>点播文件全路径</td></tr>	 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;fileTimeLength</td><td>String NULL</td><td>点播文件时长</td></tr> 
+									<tr><td>status</td><td>Object</td><td>视频窗口状态</td></tr> 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;isddrawing</td><td>Bool NULL FALSE</td><td>是否使用了ddraw模式</td></tr> 
+									<!--<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;isplaybyP2P</td><td>Bool NULL FALSE</td><td>是否使用了P2P（点对点）方式观看视频<span style="color:red">(未启用)</span></td></tr>--> 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;recording</td><td>Bool NULL FALSE</td><td>是否在本地录像</td></tr> 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;playaudioing</td><td>Bool NULL FALSE</td><td>是否在播放音频</td></tr> 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;playvideoing</td><td>Bool NULL FALSE</td><td>是否在播放视频</td></tr>
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;playvoding</td><td>Bool NULL FALSE</td><td>是否在点播录像</td></tr>
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;isfullscreening</td><td>Bool NULL FALSE</td><td>视频窗口是否在全屏</td></tr>
+									<tr><td>customParams</td><td>Object NULL</td><td>自定义参数</td></tr>
+									<!--<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;style</td><td>Object</td><td>窗口样式<span style="color:red">(未启用)</span></td></tr>-->
+								</tbody>
+							</table>
+						</div>
+						
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								窗口事件信息结构 NPPILY.Struct.WindowEventStruct
+							</strong>
+						</p>
+						<div style=" margin-left:30px;">
+							<table class="easyui-datagrid" style="width:562px;height:auto;">
+								<thead>
+					                <th data-options="field:'const'" width="120">变量</th>
+					                <th data-options="field:'type'" width="120">类型</th>
+					                <th data-options="field:'desc'" width="320">描述</th>
+								</thead>
+								<tbody>			 
+									<tr><td>lbtn_click</td><td>Object NULL</td><td>鼠标左键点击</td></tr>
+									<tr><td>select_rect</td><td>Object NULL</td><td>矩形框选择</td></tr>
+									<tr><td>ptz_control</td><td>Object NULL</td><td>云台控制</td></tr>
+									<tr><td>fsw_show</td><td>Object NULL</td><td>显示全屏 </td></tr>
+									<tr><td>fsw_hide</td><td>Object NULL</td><td>关闭全屏</td></tr>
+									<tr><td>menu_command</td><td>Object NULL</td><td>自定义右键菜单项</td></tr>
+								</tbody>
+							</table>
+						</div>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								示例&nbsp;
+							</strong>
+							<span>
+								<a href="#" class="easyui-linkbutton" style="text-indent: 0;" onclick="collapse(this,'playvideo_frame_container')" data-options="iconCls:'collapse',plain:true">折叠</a>
+							</span>
+						</p>
+						<div id="playvideo_frame_container" style=" margin-left:30px;">
+							<iframe id="playvideo_frame" src="demo/playvideo.html" width="90%" height="380" frameborder="0" ></iframe>
+						</div>
+						
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								源码
+							</strong>
+							<span>
+								<a href="#" class="easyui-linkbutton" style="text-indent: 0;" onclick="collapse(this,'playvideo_source_code_container')" data-options="iconCls:'collapse',plain:true">折叠</a>
+							</span>
+						</p>
+						<div id="playvideo_source_code_container" style="padding-left:25px;padding-top:2px;height:450px;overflow:none;direction:ltr;width:850px" >			
+							<pre id="playvideo_source_code" style="width:100%;">
+							</pre>
+						</div>
+					</div>
+					</div>
+				</div>
+				
+				<div title="查询下载点播" style="padding:3px;" >
+					<div id="query_panel" title="查询下载点播 " class="easyui-panel" fit=true >
+				
+				    <div class="content cc">
+						<p style="text-indent: 2em;">查询录像之前，需要登录平台，选择要查询的摄像头，双击即可查询。查询调用P_LY.Control.CommonGet通用查询接口
+						</p>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								查询录像 P_LY.Control.CommonGet
+							</strong>
+						</p>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								参数信息
+							</strong>
+						</p>
+						<div style=" margin-left:30px;">
+							<table class="easyui-datagrid" style="width:872px;height:auto;">
+								<thead>
+					                <th data-options="field:'const'" width="120">变量</th>
+					                <th data-options="field:'type'" width="130">类型</th>
+					                <th data-options="field:'desc'" width="620">描述</th>
+								</thead>
+								<tbody>			 			 	 
+									<tr><td>connectId</td><td>String NOT NULL</td><td>与服务器连接id</td></tr>			 
+									<tr><td>params</td><td>Object</td><td>相关查询参数</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;puid</td><td>String NOT NULL</td><td>设备PUID</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;resIdx</td><td>String NOT NULL</td><td>视频资源索引</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;resType</td><td>String NOT NULL</td><td>资源类型（云存储：ST，前端存储：SG）</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;controlID</td><td>String NOT NULL</td><td>控制命令（云存储：C_CSS_QueryStorageFiles，前端存储：C_SG_QueryRecordFiles）</td></tr>
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;xmlObjSets</td><td>xml String NOT NULL</td><td>其他可能对象参数,查询前端录像可设置为空.</br>格式为：&ltOSets&gt&ltRes OType="201" OID="" Type="IV" Idx="" /&gt&lt/OSets&gt.</br>参数说明：OType固定为201，OID为puid,Type固定为IV,Idx为视频资源索引</td></tr>
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;param</td><td>xml String NOT NULL</td><td>自定义查询参数.</br>格式为：&ltParam Idx="" Offset="",Count="",Type="0",Begin="" End="" LogicMode=""  /&gt.</br>参数说明：Idx,Type位必须填写的，Idx为视频资源索引,Offset为查询开始条数，Count为查询的总条数，</br>Type为0表示查询录像，1表示查询图片，Begin，End为查询开始与结束时间
+									
+									</td></tr>		 		  
+								</tbody>		 
+								</tbody>
+							</table>
+						</div>
+						
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								下载前端录像 P_LY.Download.StartCEFSVodFileDownload
+							</strong>
+						</p>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								参数信息
+							</strong>
+						</p>
+						<div style=" margin-left:30px;">
+							<table class="easyui-datagrid" style="width:872px;height:auto;">
+								<thead>
+					                <th data-options="field:'const'" width="120">变量</th>
+					                <th data-options="field:'type'" width="130">类型</th>
+					                <th data-options="field:'desc'" width="620">描述</th>
+								</thead>
+								<tbody>			 			 	 
+									<tr><td>connectId</td><td>String NOT NULL</td><td>与服务器连接id</td></tr>			 
+									<tr><td>puid</td><td>String NOT NULL</td><td>设备PUID</td></tr>		 
+									<tr><td>sgIndex</td><td>String NOT NULL</td><td>前端存储器资源索引，默认为0</td></tr>			 
+									<tr><td>remoteFile</td><td>String NOT NULL</td><td>文件下载地址</td></tr>
+									<tr><td>localSaveAsFile</td><td>String NOT NULL</td><td>文件保存地址</td></tr>			 		 		  
+								</tbody>		 
+								</tbody>
+							</table>
+						</div>
+						
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								下载云录像 P_LY.Download.StartCloudFileDownload
+							</strong>
+						</p>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								参数信息
+							</strong>
+						</p>
+						<div style=" margin-left:30px;">
+							<table class="easyui-datagrid" style="width:872px;height:auto;">
+								<thead>
+					                <th data-options="field:'const'" width="120">变量</th>
+					                <th data-options="field:'type'" width="130">类型</th>
+					                <th data-options="field:'desc'" width="620">描述</th>
+								</thead>
+								<tbody>			 			 	 
+									<tr><td>connectId</td><td>String NOT NULL</td><td>与服务器连接id</td></tr>			 
+									<tr><td>szId</td><td>String NOT NULL</td><td>中心存储器PUID(查询返回)</td></tr>		 	 
+									<tr><td>remoteFile</td><td>String NOT NULL</td><td>文件下载地址</td></tr>
+									<tr><td>localSaveAsFile</td><td>String NOT NULL</td><td>文件保存地址</td></tr>			 		 		  
+								</tbody>		 
+								</tbody>
+							</table>
+						</div>
+						
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								点播录像  P_LY.PlayVod 点播回放录像是也需要创建窗口对象。
+							</strong>
+						</p>
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								参数信息
+							</strong>
+						</p>
+						<div style=" margin-left:30px;">
+							<table class="easyui-datagrid" style="width:872px;height:auto;">
+								<thead>
+					                <th data-options="field:'const'" width="120">变量</th>
+					                <th data-options="field:'type'" width="130">类型</th>
+					                <th data-options="field:'desc'" width="620">描述</th>
+								</thead>
+								<tbody>			 			 	 
+									<tr><td>connectId</td><td>String NOT NULL</td><td>与服务器连接id</td></tr>			 
+									<tr><td>objWnd</td><td>String NOT NULL</td><td>窗口对象（P_LY.Enum.WindowType.VOD类型）</td></tr>		 	 
+									<tr><td>remoteFile</td><td>String NOT NULL</td><td>文件下载地址</td></tr>
+									<tr><td>options</td><td>object</td><td>点播相关参数</td></tr>
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;type</td><td>String NOT NULL</td><td>存储文件类型</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;szId</td><td>String NOT NULL</td><td>中心存储器PUID</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;puid</td><td>String NOT NULL</td><td>点播对象（设备）PUID</td></tr>
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;sgIndex</td><td>String NOT NULL</td><td>前端点播时存储器资源索引</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;filePath</td><td>String NOT NULL</td><td>点播录像路径</td></tr>		 
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;beginTime</td><td>String NOT NULL</td><td>录像开始时间</td></tr>
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;endTime</td><td>String NOT NULL</td><td>录像结束时间</td></tr>
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;speed</td><td>String NOT NULL</td><td>播放速度，缺省0为正常速度</td></tr>
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;direction</td><td>String NOT NULL</td><td>播放时间轴方向，1正向（缺省），0倒向</td></tr>	
+									<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;ivIndex</td><td>String NOT NULL</td><td>点播对象（摄像头）资源索引</td></tr>						 		 		  
+								</tbody>		 
+								</tbody>
+							</table>
+						</div>
+		
+		
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								示例&nbsp;
+							</strong>
+							<span>
+								<a href="#" class="easyui-linkbutton" style="text-indent: 0;" onclick="collapse(this,'download_fream_container')" data-options="iconCls:'collapse',plain:true">折叠</a>
+							</span>
+						</p>
+						<div id="download_fream_container" style=" margin-left:30px;">
+							<iframe id="download_frame" src="demo/download.html" width="90%" height="980" frameborder="0" ></iframe>
+						</div>
+						
+						<p style="text-indent: 2em;padding-top:5px;">
+							<strong>
+								源码
+							</strong>
+							<span>
+								<a href="#" class="easyui-linkbutton" style="text-indent: 0;" onclick="collapse(this,'download_source_code_container')" data-options="iconCls:'collapse',plain:true">折叠</a>
+							</span>
+						</p>
+						<div id="download_source_code_container" style="padding-left:25px;padding-top:2px;height:450px;overflow:none;direction:ltr;width:850px" >			
+							<pre id="download_source_code" style="width:100%;">
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	
+	
+	
+</body>
+</html>
+
+	<script>
+		$(function(){
+			$('#mytabs').tabs({
+			    border:false,
+			    onSelect:function(title){
+			    	$.parser.parse();
+			    	var id = "";
+			    	if(title == "连接"){
+			    		frameId = "connect_frame";
+			    	}else if(title == "视频"){
+			    		frameId = "playvideo_frame";
+			    	}else{
+			    		frameId = "download_frame";
+			    	}
+					var iframe = document.getElementById(frameId);
+					iframe.src = iframe.src;
+			    }
+			});
+			
+    		if (window.location.protocol == "http:"){
+			    $('#connect_frame').load(function(){
+			    	view_source_code('connect');
+			    });	
+			    
+			    $('#playvideo_frame').load(function(){
+			    	view_source_code('playvideo');
+			    });
+			    
+			     $('#download_frame').load(function(){
+			    	view_source_code('download');
+			    });
+
+
+    		}else{
+		    	view_source_code('connect');
+		    	view_source_code('playvideo');
+    		}
+    		
+    		$('#version').html("v"+_cf.ver);
+    		
+//			$('#conn_panel').panel({
+//				href:'template/_conn.html',
+//				onLoad:function(){					
+//				    $('#connect_frame').load(function(){
+//				 		var source = document.getElementById('connect_frame').contentWindow.document.documentElement.innerHTML;
+//				 		$('#connect_source_code').text(source);
+//						$("#connect_source_code").snippet("javascript_dom", {collapse:false,startCollapsed:false,style:"ide-eclipse"});
+//				    });
+//				}
+//			});
+			
+//			$('#video_panel').panel({
+//				href:'template/_playvideo.html',
+//				onLoad:function(){
+//					
+//				    $('#playvideo_frame').load(function(){
+//				    	
+//				 		var source = document.getElementById('playvideo_frame').contentWindow.document.documentElement.innerHTML;
+//				 		$('#playvideo_source_code').text(source);
+//						$("#playvideo_source_code").snippet("javascript_dom", {collapse:false,startCollapsed:false,style:"ide-eclipse"});
+//				    });
+//				}
+//			});
+		})
+		
+		function view_source_code(id){
+			
+    		var note = "本地无法浏览源码，请把API Demo发布到webserver。";
+	 		if(window.location.protocol == "http:"){
+	 			var source = document.getElementById(id+'_frame').contentWindow.document.documentElement.innerHTML;
+		 		$('#'+id+'_source_code').text(source);
+				$('#'+id+'_source_code').snippet("javascript_dom", {collapse:false,startCollapsed:false,style:"ide-eclipse"});	
+	 		}else{
+		 		$('#'+id+'_source_code').text(note);
+	 			
+	 		}
+			
+		}
+		
+		function collapse(btn,container){
+		
+			var opts= $(btn).linkbutton('options');
+			//console.log(opts)
+			if(opts.iconCls == "collapse"){
+				opts.iconCls = "expand";
+				opts.text = "展开";
+				$('#'+container).hide();
+			}else{
+				opts.iconCls = "collapse";
+				opts.text = "折叠";
+				$('#'+container).show();
+			}
+			$(btn).linkbutton(opts)
+		}
+	</script>
+	

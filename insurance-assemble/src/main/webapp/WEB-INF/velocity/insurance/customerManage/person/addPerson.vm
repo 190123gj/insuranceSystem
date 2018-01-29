@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+    <title>个人客户</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;客户管理&nbsp;&gt;&nbsp;个人客户&nbsp;&gt;&nbsp;#if($!{info.userId}>0)编辑 #else 新增 #end 个人客户
+</div>
+
+<h2 class="m-h2-title">#if($!{info.userId}>0)编辑 #else 新增 #end 个人客户</h2>
+##侧边栏响应链接，编辑时才存在
+#if($!{info.userId}>0)
+<div class="publicOPNLink fn-hide">
+    <a href="url" target="_blank"><span id="customerBasicInfo">客户基本情况</span></a>
+    <a href="url" target="_blank"><span id="customerContactInfo">客户联系情况</span></a>
+    <a href="url" target="_blank"><span id="customerRelateInfo">关系</span></a>
+    <a href="url" target="_blank"><span id="historyListInfo">历史保单信息</span></a>
+</div>
+
+#end
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff">
+    <div class="fn-mb20 apply-step" id="step">
+        <ul class="ul fn-clear">
+            <li class="item icon-s1 active" ftf="khjbqk">
+                <a href="#khjbqk">
+                    <i class="icon icon-s1"></i>
+                    <p>客户基本情况</p>
+                    <div class="step-line"></div>
+                    <div class="step-line2"></div>
+                </a>
+            </li>
+            <li class="item icon-s2" ftf="khlxxx">
+                <a href="#khlxxx">
+                    <i class="icon icon-s2"></i>
+                    <p>客户联系信息</p>
+                    <div class="step-line"></div>
+                    <div class="step-line2"></div>
+                </a>
+            </li>
+            <li class="item icon-s3" ftf="khglgx">
+                <a href="#khglgx">
+                    <i class="icon icon-s3"></i>
+                    <p>客户关联关系</p>
+                    <div class="step-line"></div>
+                    <div class="step-line2"></div>
+                </a>
+            </li>
+            <li class="item icon-s4" ftf="lsbdxx">
+                <a href="#lsbdxx">
+                    <i class="icon icon-s4"></i>
+                    <p>历史保单信息</p>
+                    <div class="step-line"></div>
+                    <div class="step-line2"></div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <form action="/insurance/customer/person/save.json" id="form" callbackhref="/insurance/customer/person/list.htm">
+        <input class="ui-text fn-w200 fnInput" type="hidden" name="type" id="type" value="insuranceCommission"  />
+        <input class="ui-text fn-w90" type="hidden" name="customerId" id="customerId" value="$!{info.customerId}" />
+        <input class="ui-text fn-w90" type="hidden" name="userId" id="userId" value="$!{info.userId}" />
+        <h2 class="m-htitle fn-mb20" id="khjbqk"><span>客户基本情况</span></h2>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>客户姓名：</label>
+            <input class="ui-text fn-w200 fnInput fn-validate" type="text" name="customerName" id="customerName" value="$!{info.customerName}" />
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">客户性别：</label>
+            <select class="ui-select fn-w200" name="sex">
+                #foreach($sex in $!{sexs})
+                    <option value="$!{sex.code}" #if("$!{info.sex}"=="$!{sex.code}") selected="selected" #end>$!{sex.name}</option>
+                #end
+            </select>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">出生日期：</label>
+            <input class="ui-text fn-w200 laydate-icon" type="text" name="birthDay" id="birthDay" value="$!info.birthDay" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">民族：</label>
+            <input class="ui-text fn-w200" type="text" name="nation" id="nation" value="$!{info.nation}" />
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">职业：</label>
+            <input class="ui-text fn-w200" type="text" name="job" value="$!{info.job}" />
+        </div>
+        <div class="m-item itemBox diyNameBox">
+            <label class="m-label">证件信息：</label>
+            <div>## class="itemsList"
+            <div >##class="itemLine newItemList" diyname="certOrders"
+            <table class="m-table itemsList" style="margin: 0 0 20px 0;">
+                <tr class="cardClass" #if($!{info.userId}<=0) style="display: none;" #end>
+                    <th class="fn-w100">证件类型</th>
+                    <th class="fn-w100">证件号码</th>
+                    <th class="fn-w100">证件有效期</th>
+                    <th class="fn-w100">上传证件影像</th>
+                    <th class="fn-w100">操作</th>
+                </tr>
+                #foreach($item in $info.certInfos)
+
+                <tr class="itemLine newItemList" diyname="certOrders">
+##                    <td class="fn-w100">证件类型：</td>
+                <td class="fn-tac">
+                <select class="ui-select fn-w200" name="certType">
+                    #foreach($certType in $!{certTypeList})
+                        <option value="$!{certType.code}" #if("$!{item.certType.code}"=="$!{certType.code}") selected="selected" #end>$!{certType.message}</option>
+                    #end
+
+                </select>
+                    #if("$!{item.certType.code}"=="OTHER")
+                        <input  class="text fn-w200 certTypeClass" type="text" name="certTypeName"  value="$!{item.certTypeName}" />
+                    #else
+                        <input style="display: none" class="text fn-w200 certTypeClass" type="text" name="certTypeName"  value="" />
+                    #end
+
+                </td>
+##                </tr>
+##                    <tr>
+##                        <td class="fn-w100">证件号码：</td>
+                        <td class="fn-tac">
+                            <input type="hidden" id="id" name="id" value="0">
+                            <input class="ui-text fn-w200" type="text" name="certNo" id="certNo" value="$!{item.certNo}" />
+                        </td>
+##                    </tr>
+##                    <tr>
+##                        <td class="fn-w100">证件有效期：</td>
+                        <td class="fn-tac">
+                            <input class="ui-text fn-w200 laydate-icon" type="text" name="certExpDate" id="certExpDate" value="$!dateUtil.formatDay($!item.certExpDate)" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+##                            <input type="checkbox" class="checkbox checkedForLong">
+                            <label><input type="checkbox" class="checkbox checkedForLong" name="longTime" value="YES" #if($!{item.longTime} == "YES") checked         #end>永久</label>
+                        </td>
+##                    </tr>
+##                    <tr>
+##                        <td class="fn-w100">上传证件影像：</td>
+                        <td class="fn-tac">
+                            <div class="fnUpAttach">
+                                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn" filetype="*.jpg; *.jpeg; *.png; *.tiff"><i class="icon icon-add"></i>上传附件</a>
+                                <input class="fnUpAttachVal " type="hidden" name="certPic" value="$!item.hiddenUrls">
+                                <div class="fn-blank5"></div>
+                                <div class="m-attach fnUpAttachUl">
+                                                        #foreach($item2 in $!{item.commonAttachementList})
+                                                            #set($pic = false)
+                                                            #if($!item2.fileName.endsWith(".jpg") || $!item2.fileName.endsWith(".JPG") ||
+                                                                $!item2.fileName.endsWith(".png") || $!item2.fileName.endsWith(".PNG") ||
+                                                                $!item2.fileName.endsWith(".jpeg") || $!item2.fileName.endsWith(".JPEG") ||
+                                                                $!item2.fileName.endsWith(".tiff") || $!item2.fileName.endsWith(".TIFF") ||
+                                                                $!item2.fileName.endsWith(".bmp") || $!item2.fileName.endsWith(".BMP"))
+                                                                #set($pic = true)
+                                                            #end
+                                                            #set($fullStr = $!item2.fileName + "," + $!item2.filePhysicalPath +
+                                                                "," + $!item2.requestPath)
+                                                            #if(!$pic)
+                                                                <a title="点击下载" href="/baseDataLoad/downLoad.htm?id=$!item2.attachmentId">
+                                    <span class="attach-item fnAttachItem" val="$!{fullStr}">
+                                        <i class="icon icon-file"></i>
+                                        <span class="fileItems" title="$!{item2.fileName}">$!{item2.fileName}</span>
+                                        <span class="attach-del fn-csp fn-usn fnUpAttachDel">&times;</span>
+                                    </span>
+                                                                </a>
+                                                            #else
+                                                                <span class="attach-item fnAttachItem" val="$!{fullStr}">
+                                    <i class="icon icon-img "></i>
+                                    <span class="fnAttachView fn-csp fileItems" title="$!{item2.fileName}">$!{item2.fileName}</span>
+                                    <span class="attach-del fn-csp fn-usn fnUpAttachDel">&times;</span>
+                                </span>
+                                                            #end
+
+                                                        #end
+
+
+                                </div>
+                            </div>
+                        </td>
+##                    </tr>
+##                    <tr>
+                        <td colspan="2" class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+                    </tr>
+
+                #end
+                </table>
+                </div>
+            </div>
+            <p class="fn-mt10 fn-mb10"><a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_CARDINFO_1" href="javascript:void(0);" ><i class="icon icon-add"></i>新增</a></p>
+        </div>
+
+        <h2 class="m-htitle fn-mb20 fn-mt20" id="khlxxx"><span>客户联系信息</span></h2>
+
+##        <div class="m-item fnChangeApply" id="selectAddress">
+##            <label class="m-label fnChangeLabel">联系地址：</label>
+##
+##            <span id="addressBox"></span>
+##            <input type="hidden" name="provinceCode" value="$!info.provinceCode" id="provinceCode"> ## 省
+##            <input type="hidden" name="provinceName" value="$!info.provinceName" id="provinceName">
+##            <input type="hidden" name="cityCode" value="$!info.cityCode" id="cityCode"> ## 市
+##            <input type="hidden" name="cityName" value="$!info.cityName" id="cityName">
+##            <input type="hidden" name="countyCode" value="$!info.countyCode" id="countyCode" id="countyCode"> ## 区
+##            <input type="hidden" name="countyName" value="$!info.countyName" id="countyName">
+##
+##            <input type="text" class="fn-input-hidden fnRequired" id="addressResult"> ##是否选到末尾
+##
+##        </div>
+
+        <div class="m-item diyNameBox">
+            <label class="m-label">地址信息：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th>联系地址</th>
+                        <th>详细地址</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr diyname="addressOrders">
+                        <td class="fn-tac">
+                            <div class="fnChangeApply selectAddress" id="">
+                                <span id="" class="addressBox"></span>
+                                <input type="hidden" name="provinceCode" value="$!info.provinceCode" id="provinceCode"> ## 省
+                                <input type="hidden" name="provinceName" value="$!info.provinceName" id="provinceName">
+                                <input type="hidden" name="cityCode" value="$!info.cityCode" id="cityCode"> ## 市
+                                <input type="hidden" name="cityName" value="$!info.cityName" id="cityName">
+                                <input type="hidden" name="countyCode" value="$!info.countyCode" id="countyCode" id="countyCode"> ## 区
+                                <input type="hidden" name="countyName" value="$!info.countyName" id="countyName">
+                                <input type="hidden" class="adressCode" name="adressCode">
+
+                                <input type="text" class="fn-input-hidden fnRequired addressResult" id="addressResult"> ##是否选到末尾
+                            </div>
+                        </td>
+                        <td class="fn-tac">
+                            <input class="ui-text fn-w200 fnInput " style="margin-bottom: 5px" type="text" name="way" id="address" value="$!{item.way}" />
+                        </td>
+                        <td class="fn-tac">
+                            <a class="ui-btn ui-btn-fill ui-btn-green addLine " id="addressNew"  templateid="TMP_ADDRESS" href="javascript:void(0);"><i class="icon icon-add"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+##        <div class="m-item">
+##            <label class="m-label">详细地址：</label>
+##            <input class="ui-text fn-w200 fnInput" type="text" name="address" id="address" value="$!{info.address}" />
+##        </div>
+##        <div class="m-item diyNameBox">
+##            <label class="m-label">详细地址：</label>
+##            <div class="addInput ">
+##            #if($listUtil.isNotEmpty($info.addressInfos))
+##            #foreach($item in $info.addressInfos)
+##                            <div diyname="addressOrders">
+##                                <input class="ui-text fn-w200 fnInput " style="margin-bottom: 5px" type="text" name="way" id="address" value="$!{item.way}" />
+##                            </div>
+##            #end
+##
+##            #else
+##                <div diyname="addressOrders">
+##                    <input class="ui-text fn-w200 fnInput " style="margin-bottom: 5px" type="text" name="way" id="address" value="$!{item.way}" />
+##                </div>
+##            #end
+##            </div>
+##            <div style="float: left; padding: 6px 0 0 5px;">
+##                <a class="ui-btn ui-btn-fill ui-btn-green addSignal" href="javascript:void(0);"><i class="icon icon-add"></i></a>
+##                <a class="ui-btn ui-btn-fill ui-btn-danger removeSignal" #if($!{info.userId} <=0) style="display: none;" #end href="javascript:void(0);"><i class="icon icon-del"></i></a>
+##            </div>
+##            <div style="clear: both"></div>
+##        </div>
+
+        <div class="m-item">
+            <label class="m-label">备注：</label>
+            <textarea class="ui-textarea audit-textarea90" name="remark">$!{info.remark}</textarea>
+        </div>
+
+        <div class="m-item diyNameBox">
+            <label class="m-label">联系电话：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">电话类型</th>
+                        <th class="fn-tac">电话</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+                    #if($listUtil.isNotEmpty($info.contactMobileInfos))
+                        #foreach($item in $info.contactMobileInfos)
+
+                            <tr diyname="mobileOrders" class="itemLine">
+                                <td class="fn-tac">
+                                    <select class="ui-select fn-w200" name="wayTypeId">
+                                        <option value="">请选择</option>
+                                        #foreach($mobileType in $mobileTypes)
+                                            <option value="$mobileType.id"  #if("$!{item.wayTypeId}"=="$!{mobileType.id}") selected="selected" #end>$mobileType.name</option>
+                                        #end
+                                    </select>
+                                </td>
+                                <input name="type" type="hidden" value="mobile">
+                                <td class="fn-tac">
+                                    <input class="text" type="text" name="way" value="$!item.way">
+                                </td>
+                                <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+                            </tr>
+                        #end
+##                    #else
+##                        <tr diyname="mobileOrders" class="itemLine">
+##                            <td class="fn-tac">
+##                                <select class="ui-select fn-w200 " name="wayTypeId">
+##                                    <option value="">请选择</option>
+##                                    #foreach($item in $mobileTypes)
+##                                        <option value="$item.id">$item.name</option>
+##                                    #end
+##                                </select>
+##                            </td>
+##                            <input name="type" type="hidden" value="mobile">
+##                            <td class="fn-tac">
+##                                <input class="text " type="text" name="way">
+##                            </td>
+##                            <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+##                        </tr>
+                    #end
+
+                </table>
+                <div class="fn-tar fn-mt20">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_TELPHONE" tplID="t-tbodyZZZS" cttID="tbodyZZZS" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-item diyNameBox">
+            <label class="m-label">电子邮箱：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">邮箱</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+                    #if($listUtil.isNotEmpty($info.contactEmailInfos))
+                        #foreach($item in $info.contactEmailInfos)
+                            <tr diyname="emailOrders" class="itemLine">
+                                <input name="type" type="hidden" value="email">
+                                <td class="fn-tac"><input type="text" class="text" name="way" value="$!item.way"></td>
+                                <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine del" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+##                                ui-btn ui-btn-fill ui-btn-danger deleteLine
+                            </tr>
+                        #end
+##                    #else
+##                        <tr diyname="emailOrders" class="itemLine">
+##                            <input name="type" type="hidden" value="email">
+##                            <td class="fn-tac"><input type="text" class="text" name="way"></td>
+##                            <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+##                        </tr>
+                    #end
+
+
+                </table>
+                <div class="fn-tar fn-mt20">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_EMAIL" tplID="t-tbodyZZZS" cttID="tbodyZZZS" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </div>
+            </div>
+        </div>
+        <div class="m-item diyNameBox">
+            <label class="m-label">微信号：</label>
+            <div class="addInput ">
+        #if($listUtil.isNotEmpty($info.contactWeiXinInfos))
+            #foreach($item in $info.contactWeiXinInfos)
+            <div diyname="weixinOrders">
+                <input class="ui-text fn-w200 fnInput " style="margin-bottom: 5px" type="text" name="way" id="weixin" value="$!{item.way}" />
+            </div>
+            #end
+        #else
+            <div diyname="weixinOrders">
+                <input class="ui-text fn-w200 fnInput "style="margin-bottom: 5px" type="text" name="way" id="weixin" value="" />
+            </div>
+        #end
+
+            </div>
+            <div style="float: left; padding: 6px 0 0 5px;">
+                <a class="ui-btn ui-btn-fill ui-btn-green addSignal" href="javascript:void(0);"><i class="icon icon-add"></i></a>
+                <a class="ui-btn ui-btn-fill ui-btn-danger removeSignal" #if($!{info.userId} <=0) style="display: none;" #end href="javascript:void(0);"><i class="icon icon-del"></i></a>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+        <div class="m-item diyNameBox">
+            <label class="m-label">QQ号：</label>
+            <div class="addInput ">
+            #if($listUtil.isNotEmpty($info.contactQQInfos))
+                #foreach($item in $info.contactQQInfos)
+                            <div diyname="qqOrders">
+                                <input class="ui-text fn-w200 fnInput "  style="margin-bottom: 5px" type="text" name="way" id="qq" value="$!{item.way}" />
+                            </div>
+                #end
+            #else
+                <div diyname="qqOrders">
+                    <input class="ui-text fn-w200 fnInput "style="margin-bottom: 5px" type="text" name="way" id="qq" value="" />
+                </div>
+            #end
+            </div>
+            <div style="float: left;padding: 6px 0 0 5px;">
+                <a class="ui-btn ui-btn-fill ui-btn-green addSignal" href="javascript:void(0);"><i class="icon icon-add"></i></a>
+                <a class="ui-btn ui-btn-fill ui-btn-danger removeSignal" #if($!{info.userId} <=0) style="display: none;" #end href="javascript:void(0);"><i class="icon icon-del"></i></a>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+        <div class="m-item">
+            <label class="m-label">工作单位：</label>
+            <input class="ui-text fn-w200 fnInput " type="text" name="company" id="company" value="$!{info.company}" />
+        </div>
+        <div class="m-item">
+            <label class="m-label">  部门：</label>
+            <input class="ui-text fn-w200 fnInput " type="text" name="dept" id="dept" value="$!{info.dept}" />
+        </div>
+        <div class="m-item">
+            <label class="m-label">  职务：</label>
+            <input class="ui-text fn-w200 fnInput " type="text" name="job" id="job" value="$!{info.job}" />
+        </div>
+        <div class="m-item diyNameBox" >
+            <label class="m-label">  账户信息：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">账户名称</th>
+                        <th class="fn-tac">开户行</th>
+                        <th class="fn-tac">账号</th>
+                        <th class="fn-tac">备注</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+                    #if($listUtil.isNotEmpty($info.bankInfos))
+                        #foreach($item in $info.bankInfos)
+                            <tr diyname="bankOrders" class="itemLine">
+                                <td class="fn-tac">
+                                    <input class="text " type="text" name="bankCardName" value="$!item.bankCardName">
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text " type="text" name="openBankName" value="$!item.openBankName">
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text " type="text" name="bankCardNo" value="$!item.bankCardNo">
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text " type="text" name="remark" value="$!item.remark">
+                                </td>
+                                <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+                            </tr>
+                        #end
+##                    #else
+##                        <tr diyname="bankOrders" class="itemLine">
+##                            <td class="fn-tac">
+##                                <input class="text " type="text" name="bankCardName">
+##                            </td>
+##                            <td class="fn-tac">
+##                                <input class="text " type="text" name="openBankName">
+##                            </td>
+##                            <td class="fn-tac">
+##                                <input class="text " type="text" name="bankCardNo">
+##                            </td>
+##                            <td class="fn-tac">
+##                                <input class="text " type="text" name="备注">
+##                            </td>
+##                            <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+##                        </tr>
+                    #end
+
+
+                </table>
+                <div class="fn-tar fn-mt20">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_BANKORDERS" tplID="t-tbodyZZZS" cttID="tbodyZZZS" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="m-htitle fn-mb20 fn-mt20" id="khglgx"><span>关系</span></h2>
+
+        <div class="m-item">
+            <label class="m-label">所属业务员：</label>
+            <input class="ui-text fn-w200 fnInput " type="text" name="businessUserName" id="businessUserName" value="$!{info.businessUserName}" readonly/>
+            <input type="hidden" name="businessUserId" id="businessUserId" value="$!{info.businessUserId}"/>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseBusinessUserName" id="fnToChooseBusinessUserName" style="color: #fff;">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClearBusinessUserName" id="fnToClearBusinessUserName" style="color: #fff;">清除</a>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label">推荐人：</label>
+            <input class="ui-text fn-w200 fnInput " type="text" name="refereeName" id="refereeName" value="$!{info.refereeName}" readonly/>
+            <input type="hidden" name="refereeId" id="refereeId" value="$!{info.refereeId}"/>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseRefereeName" id="fnToChooseRefereeName" style="color: #fff;">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClearRefereeName" id="fnToClearRefereeName" style="color: #fff;">清除</a>
+        </div>
+
+
+        <div class="m-item diyNameBox">
+            <label class="m-label">客户关系：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">与本人关系</th>
+                        <th class="fn-tac">姓名</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+
+
+                    #if($listUtil.isNotEmpty($info.relationInfos))
+                        #foreach($item in $info.relationInfos)
+                            <tr diyname="relationOrders" class="itemLine">
+                                <td class="fn-tac">
+                                    <select class="ui-select fn-w200 " name="typeId">
+                                        <option value="">请选择</option>
+                                        #foreach($relationInfos in $customerRelation)
+                                            <option value="$relationInfos.id" #if("$!{item.typeId}"=="$!{relationInfos.id}") selected="selected" #end>$relationInfos.name</option>
+                                        #end
+                                    </select>
+                                </td>
+                                <input name="relationId" type="hidden" value="0">
+                                <td class="fn-tac">
+                                    <input type="text" class="ui-text fn-w200 fnInput  parentNameClass" name="parentName" readonly value="$!item.parentName">
+                                    <input type="hidden" name="parentId" class="parentIdClass" value="$!item.parentId">
+                                    <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChoose" style="color: #fff;">选择</a>
+                                    <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClear" style="color: #fff;">清除</a>
+                                </td>
+                                <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" minlength="-1" style="color: #fff;">删除</a></td>
+                            </tr>
+                        #end
+
+
+                    #end
+
+                </table>
+                <div class="fn-tar fn-mt20">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_CUSTOMER"  href="javascript:void(0);" ><i class="icon icon-add"></i>新增一行</a>
+                </div>
+            </div>
+        </div>
+        <div class="m-item diyNameBox">
+            <label class="m-label">单位关系：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">单位名称</th>
+                        <th class="fn-tac">备注</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+#if($listUtil.isNotEmpty($info.corpInfos))
+        #foreach($item in $info.corpInfos)
+
+            <tr diyname="corpOrders" class="itemLine">
+                <td><input type="text" class="text" name="way" value="$!{item.way}"></td>
+                <td><input type="text" class="text" name="remark" value="$!{item.remark}"></td>
+                <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" minlength="-1" style="color: #fff;">删除</a></td>
+            </tr>
+        #end
+    #else
+        <tr diyname="corpOrders" class="itemLine">
+            <td><input type="text" class="text" name="way" value=""></td>
+            <td><input type="text" class="text" name="remark" value=""></td>
+            <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" minlength="-1" style="color: #fff;">删除</a></td>
+        </tr>
+#end
+
+                </table>
+                <div class="fn-tar fn-mt20">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_COMPANY"  href="javascript:void(0);" ><i class="icon icon-add"></i>新增一行</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="m-htitle fn-mb20 fn-mt20" id="lsbdxx"><span>历史保单信息</span></h2>
+        <div class="m-item diyNameBox">
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">保单号</th>
+                        <th class="fn-tac">保险公司</th>
+                        <th class="fn-tac">保险险种</th>
+                        <th class="fn-tac fn-w250">保障期间</th>
+                        <th class="fn-tac">投保时间</th>
+                        <th class="fn-tac">保费（元）</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+#if($listUtil.isNotEmpty($info.billInfos))
+#foreach($item in $info.billInfos)
+                    <tr class="itemLine" diyname="billOrders">
+                        <td class="fn-tac"><input type="text" class="text" name="billNo" value="$!{item.billNo}"></td>
+                        <td class="fn-tac"><input type="text" class="text" name="insuranceCompanyName" value="$!{item.insuranceCompanyName}"></td>
+                        <td class="fn-tac"><input type="text" class="text" name="catalogName" value="$!{item.catalogName}"></td>
+                        <td class="fn-tac"><input class="text laydate-icon fn-w100" type="text" style="width: 100px;" name="beginDate" value="$!{item.beginDate}" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">&nbsp;&nbsp;-&nbsp;&nbsp;<input class="text fn-w100 laydate-icon" style="width: 100px;" type="text" name ="endDate" value="$!{item.endDate}" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})"></td>
+                        <td class="fn-tac"><input class="text laydate-icon" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="insuranceDate" value="$!{item.insuranceDate}"></td>
+                        <td class="fn-tac"><input type="text" class="text" name="premiumAmount" value="$!{item.premiumAmount}"></td>
+                        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+                    </tr>
+#end
+
+#end
+                </table>
+                <div class="fn-tar fn-mt20">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_POLICYINFO" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn" type="button" value="提交"/>
+            <a href="/insurance/xxxx.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+
+    </form>
+</div>
+<script type="text/html" id="TMP_TELPHONE">
+    <tr diyname="mobileOrders" class="itemLine">
+        <td class="fn-tac">
+            <select class="ui-select fn-w200 " name="wayTypeId">
+                <option value="">请选择</option>
+                #foreach($item in $mobileTypes)
+                    <option value="$item.id">$item.name</option>
+                #end
+            </select>
+        </td>
+        <input name="type" type="hidden" value="mobile">
+        <td class="fn-tac">
+            <input class="text " type="text" name="way">
+        </td>
+        <td class="fn-tac" colspan="2"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+    </tr>
+</script>
+<script type="text/html" id="TMP_EMAIL">
+    <tr diyname="emailOrders" class="itemLine">
+        <input name="type" type="hidden" value="email">
+        <td><input type="text" class="text " name="way"></td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+    </tr>
+</script>
+<script type="text/html" id="TMP_CUSTOMER">
+    <tr diyname="relationOrders" class="itemLine">
+        <td class="fn-tac">
+            <select class="ui-select fn-w200 " name="typeId">
+                <option value="">请选择</option>
+                #foreach($item in $customerRelation)
+                    <option value="$item.id">$item.name</option>
+                #end
+            </select>
+        </td>
+        <input name="relationId" type="hidden" value="0">
+        <td class="fn-tac">
+            <input type="text" class="ui-text fn-w200 fnInput  parentNameClass" name="parentName" readonly>
+            <input type="hidden" class="parentIdClass" name="parentId">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChoose" style="color: #fff;">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClear" style="color: #fff;">清除</a>
+        </td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" minlength="-1" style="color: #fff;">删除</a></td>
+    </tr>
+</script>
+<script type="text/html" id="TMP_COMPANY">
+    <tr diyname="corpOrders" class="itemLine">
+        <td><input type="text" class="text" name="way" value=""></td>
+        <td><input type="text" class="text" name="remark" value=""></td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" minlength="-1" style="color: #fff;">删除</a></td>
+    </tr>
+</script>
+
+
+<script type="text/html" id="TMP_BANKORDERS">
+    <tr diyname="bankOrders" class="itemLine">
+        <td class="fn-tac">
+            <input class="text " type="text" name="bankCardName">
+        </td>
+        <td class="fn-tac">
+            <input class="text " type="text" name="openBankName">
+        </td>
+        <td class="fn-tac">
+            <input class="text " type="text" name="bankCardNo">
+        </td>
+        <td class="fn-tac">
+            <input class="text " type="text" name="remark">
+        </td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+    </tr>
+</script>
+##<script type="text/html" id="TMP_CARDINFO">
+##    <div class="itemLine" diyname="certOrders">
+##        <table class="m-table" style="margin: 0 0 20px 0;">
+##            <tr>
+##                <th class="fn-w100">证件类型</th>
+##                <th class="fn-w100">证件号码</th>
+##                <th class="fn-w100">证件有效期</th>
+##                <th class="fn-w100">上传证件影像</th>
+##                <th class="fn-w100">操作</th>
+##            </tr>
+##            <tr>
+####                <td class="fn-w100">证件类型：</td>
+##                <td class="fn-tac">
+##                    <select class="ui-select fn-w200 " name="certType">
+##                        #foreach($certType in $!{certTypeList})
+##                            <option value="$!{certType.code}" #if("$!{info.certType.code}"=="$!{certType.code}") selected="selected" #end>$!{certType.message}</option>
+##                        #end
+##                    </select>
+##                    <input style="display: none" class="text fn-w200 certTypeClass" type="text" name=""  value="" />
+##                </td>
+####            </tr>
+####            <tr>
+####                <td class="fn-w100">证件号码：</td>
+##                <td class="fn-tac">
+##                    <input type="hidden" id="id" name="id" value="0">
+##                    <input class="ui-text fn-w200 " type="text" name="certNo" id="certNo" value="" />
+##                </td>
+####            </tr>
+####            <tr>
+####                <td class="fn-w100">证件有效期：</td>
+##                <td class="fn-tac">
+##                    <input class="ui-text fn-w200 laydate-icon" type="text" name="certExpDate" id="certExpDate" value="" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+##                    <label><input type="checkbox" class="checkbox checkedForLong" name="permanent">永久</label>
+##                </td>
+####            </tr>
+####            <tr>
+####                <td class="fn-w100">上传证件影像：</td>
+##                <td class="fn-tac">
+##                    <div class="fnUpAttach">
+##                        <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn"  filetype="*.jpg; *.jpeg; *.png; *.tiff"><i class="icon icon-add"></i>上传附件</a>
+##                        <input class="fnUpAttachVal " type="hidden" name="certPic">
+##                        <div class="fn-blank5"></div>
+##                        <div class="m-attach fnUpAttachUl"></div>
+##                    </div>
+##                </td>
+####            </tr>
+####            <tr>
+##                <td colspan="2" class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+##            </tr>
+##        </table>
+##    </div>
+##</script>
+##---------------------------
+<script type="text/html" id="TMP_CARDINFO">
+    <div class="itemLine" diyname="certOrders">
+        <table class="m-table" style="margin: 0 0 20px 0;">
+            <tr>
+                <th class="fn-w100">证件类型</th>
+                <th class="fn-w100">证件号码</th>
+                <th class="fn-w100">证件有效期</th>
+                <th class="fn-w100">上传证件影像</th>
+                <th class="fn-w100">操作</th>
+            </tr>
+            <tr>
+            ##                <td class="fn-w100">证件类型：</td>
+                <td class="fn-tac">
+                    <select class="ui-select fn-w200 " name="certType">
+                        #foreach($certType in $!{certTypeList})
+                            <option value="$!{certType.code}" #if("$!{info.certType.code}"=="$!{certType.code}") selected="selected" #end>$!{certType.message}</option>
+                        #end
+                    </select>
+                    <input style="display: none" class="text fn-w200 certTypeClass" type="text" name="certTypeName"  value="" />
+                </td>
+            ##            </tr>
+            ##            <tr>
+            ##                <td class="fn-w100">证件号码：</td>
+                <td class="fn-tac">
+                    <input type="hidden" id="id" name="id" value="0">
+                    <input class="ui-text fn-w200 " type="text" name="certNo" id="certNo" value="" />
+                </td>
+            ##            </tr>
+            ##            <tr>
+            ##                <td class="fn-w100">证件有效期：</td>
+                <td class="fn-tac">
+                    <input class="ui-text fn-w200 laydate-icon" type="text" name="certExpDate" id="certExpDate" value="" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                    <label><input type="checkbox" class="checkbox checkedForLong" name="longTime" value="YES">永久</label>
+                </td>
+            ##            </tr>
+            ##            <tr>
+            ##                <td class="fn-w100">上传证件影像：</td>
+                <td class="fn-tac">
+                    <div class="fnUpAttach">
+                        <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn"  filetype="*.jpg; *.jpeg; *.png; *.tiff"><i class="icon icon-add"></i>上传附件</a>
+                        <input class="fnUpAttachVal " type="hidden" name="certPic">
+                        <div class="fn-blank5"></div>
+                        <div class="m-attach fnUpAttachUl"></div>
+                    </div>
+                </td>
+            ##            </tr>
+            ##            <tr>
+                <td colspan="2" class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+            </tr>
+        </table>
+    </div>
+</script>
+<script type="text/html" id="TMP_CARDINFO_1">
+##    <div class="itemLine" diyname="certOrders">
+##        <table class="m-table" style="margin: 0 0 20px 0;">
+##            <tr>
+##                <th class="fn-w100">证件类型</th>
+##                <th class="fn-w100">证件号码</th>
+##                <th class="fn-w100">证件有效期</th>
+##                <th class="fn-w100">上传证件影像</th>
+##                <th class="fn-w100">操作</th>
+##            </tr>
+            <tr class="itemLine newItemList" diyname="certOrders">
+            ##                <td class="fn-w100">证件类型：</td>
+                <td class="fn-tac">
+                    <select class="ui-select fn-w200 " name="certType">
+                        #foreach($certType in $!{certTypeList})
+                            <option value="$!{certType.code}" #if("$!{info.certType.code}"=="$!{certType.code}") selected="selected" #end>$!{certType.message}</option>
+                        #end
+                    </select>
+                    <input style="display: none" class="text fn-w200 certTypeClass" type="text" name="certTypeName"  value="" />
+                </td>
+            ##            </tr>
+            ##            <tr>
+            ##                <td class="fn-w100">证件号码：</td>
+                <td class="fn-tac">
+                    <input type="hidden" id="id" name="id" value="0">
+                    <input class="ui-text fn-w200 " type="text" name="certNo" id="certNo" value="" />
+                </td>
+            ##            </tr>
+            ##            <tr>
+            ##                <td class="fn-w100">证件有效期：</td>
+                <td class="fn-tac">
+                    <input class="ui-text fn-w200 laydate-icon" type="text" name="certExpDate" id="certExpDate" value="" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                    <label><input type="checkbox" class="checkbox checkedForLong" name="longTime" value="YES">永久</label>
+                </td>
+            ##            </tr>
+            ##            <tr>
+            ##                <td class="fn-w100">上传证件影像：</td>
+                <td class="fn-tac">
+                    <div class="fnUpAttach">
+                        <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn"  filetype="*.jpg; *.jpeg; *.png; *.tiff"><i class="icon icon-add"></i>上传附件</a>
+                        <input class="fnUpAttachVal " type="hidden" name="certPic">
+                        <div class="fn-blank5"></div>
+                        <div class="m-attach fnUpAttachUl"></div>
+                    </div>
+                </td>
+            ##            </tr>
+            ##            <tr>
+                <td colspan="2" class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+            </tr>
+##        </table>
+##    </div>
+</script>
+##------------------------------
+<script type="text/html" id="TMP_POLICYINFO">
+    <tr class="itemLine" diyname="billOrders">
+        <td class="fn-tac"><input type="text" class="text" name="billNo"></td>
+        <td class="fn-tac"><input type="text" class="text" name="insuranceCompanyName"></td>
+        <td class="fn-tac"><input type="text" class="text" name="catalogName"></td>
+        <td class="fn-tac"><input class="text laydate-icon fn-w100" type="text" style="width: 100px;" name="beginDate" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">&nbsp;&nbsp;-&nbsp;&nbsp;<input class="text fn-w100 laydate-icon" style="width: 100px;" type="text" name ="endDate" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})"></td>
+        <td class="fn-tac"><input class="text laydate-icon" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="insuranceDate"></td>
+        <td class="fn-tac"><input type="text" class="text" name="premiumAmount"></td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+    </tr>
+</script>
+<script type="text/html" id="TMP_ADDRESS">
+    <tr diyname="addressOrders">
+        <td class="fn-tac">
+            <div class="fnChangeApply selectAddress">
+                <span id="" class="addressBox"></span>
+                <input type="hidden" name="provinceCode" value="$!info.provinceCode" id="provinceCode"> ## 省
+                <input type="hidden" name="provinceName" value="$!info.provinceName" id="provinceName">
+                <input type="hidden" name="cityCode" value="$!info.cityCode" id="cityCode"> ## 市
+                <input type="hidden" name="cityName" value="$!info.cityName" id="cityName">
+                <input type="hidden" name="countyCode" value="$!info.countyCode" id="countyCode" id="countyCode"> ## 区
+                <input type="hidden" name="countyName" value="$!info.countyName" id="countyName">
+                <input type="hidden" class="adressCode" name="adressCode">
+
+                <input type="text" class="fn-input-hidden fnRequired addressResult" id="addressResult"> ##是否选到末尾
+            </div>
+        </td>
+        <td class="fn-tac">
+            <input class="ui-text fn-w200 fnInput " style="margin-bottom: 5px" type="text" name="way" id="address" value="$!{item.way}" />
+        </td>
+        <td class="fn-tac">
+            <a class="ui-btn ui-btn-fill ui-btn-danger addressDel" href="javascript:void(0);"><i class="icon icon-del"></i></a>
+        </td>
+    </tr>
+</script>
+##----------------------------------------
+    #parse("/layout/common/footer.vm")
+    #parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    seajs.use($_GLOBAL.zyw+'/customer/addPerson');
+</script>
+
+</body>
+</html>

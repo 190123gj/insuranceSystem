@@ -1,0 +1,38 @@
+#if($!auditHisList && $!auditHisList.size() > 0)
+    <h2 class="m-h2-title">审批记录</h2>
+    <div class="fn-blank20"></div>
+    <table class="m-table fn-tac">
+
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>任务名称</th>
+                <th>开始时间</th>
+                <th>开始结束</th>
+                <th>审批人</th>
+                <th>审批状态</th>
+                <th>审批意见</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            #set($dataCount = 0)
+            #foreach($!data in $!auditHisList)
+                #if($!data.exeUserId != $!form.userId)
+                    #set($dataCount = $!dataCount + 1)
+                    <tr>
+                        <td width="5%">$!dataCount</td>
+                        <td width="10%">$!data.taskName</td>
+                        <td width="10%">$!data.startTime</td>
+                        <td width="10%">$!data.endTime</td>
+                        <td width="10%">$!data.exeFullname</td>
+                        <td width="10%">$!data.checkStatusMessage</td>
+                        <td class="fn-tal">$!data.opinion</td>
+                    </tr>
+                #end
+            #end
+        </tbody>
+
+    </table>
+    <div class="fn-blank20"></div>
+#end

@@ -1,0 +1,105 @@
+<table sqlname="price_contact_letter_ask_company_charge">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO price_contact_letter_ask_company_charge(id,ask_company_id,catalogId,catalogName,intentionFee,protocolFee,version,ext) VALUES (?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO price_contact_letter_ask_company_charge(id,ask_company_id,catalogId,catalogName,intentionFee,protocolFee,version,ext) VALUES (#id#,#askCompanyId#,#catalogId#,#catalogName#,#intentionFee#,#protocolFee#,#version#,#ext#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE price_contact_letter_ask_company_charge SET ask_company_id=?,catalogId=?,catalogName=?,intentionFee=?,protocolFee=?,version=?,ext=? WHERE id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,ask_company_id ,catalogId ,catalogName ,intentionFee ,protocolFee ,version ,ext  FROM price_contact_letter_ask_company_charge WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM price_contact_letter_ask_company_charge WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteByAskCompanyId" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM price_contact_letter_ask_company_charge WHERE ask_company_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,ask_company_id ,catalogId ,catalogName ,intentionFee ,protocolFee ,version ,ext  FROM price_contact_letter_ask_company_charge WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,ask_company_id ,catalogId ,catalogName ,intentionFee ,protocolFee ,version ,ext  FROM price_contact_letter_ask_company_charge where 1=1
+             <dynamic>
+                  <isGreaterThan property="priceContactLetterAskCompanyCharge.askCompanyId"  compareValue="0" prepend=" and ">
+	                ask_company_id = #priceContactLetterAskCompanyCharge.askCompanyId#
+	            </isGreaterThan>
+			</dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM price_contact_letter_ask_company_charge WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM price_contact_letter_ask_company_charge  where 1=1
+	          <dynamic>
+                  <isGreaterThan property="askCompanyId"  compareValue="0" prepend=" and ">
+	                ask_company_id = #askCompanyId#
+	            </isGreaterThan>
+			</dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

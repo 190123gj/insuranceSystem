@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" class="m-body">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>我的工作台</title>
+</head>
+<body class="m-body">
+
+#parse("/layout/common/header.vm")
+
+<div class="ui-body fnFullScreen" id="fnMainBox">
+    <div id="fnSidebar" class="fn-hide">避免getNav报错</div>
+    <!-- sidebar start -->
+    ## <div class="m-sidebar fn-left fnTransitionAll">
+    ##     <div class="ui-full-screen" id="fnFullScreen"></div>
+    ##     <h3 class="s-title"><i class="icon icon-hd"></i>我的工作台<span class="sjx"></span></h3>
+    ##     <div class="fn-usn fn-pt20 fn-pb20 m-ul" id="fnSidebar">
+    ##         <ul class="s-ul active s-ul-bg0">
+    ##             <li class="s-li">
+    ##                 <p class="s-ul-hd fnMore"><a href="javascript: void(0);"><i class="icon icon-pc"></i>我的工作台</a><span class="indicators fnMore">&gt;</span></p>
+    ##                 ## <ul class="s-ul s-ul-bg1 active">
+    ##                 ##     <li class="s-li"><p class="s-ul-hd"><a href="" target="_blank">视频监控</a></p>
+    ##                 ## </ul>
+    ##             </li>
+    ##         </ul>
+    ##     </div>
+    ## </div>
+    <!-- sidebar end -->
+    <!-- main start -->
+    <div class="m-main-box">
+        <div class="m-main-in fnTransitionAll m-main-page">
+
+            <div class="m-main ui-bg-fff my-workbench">
+            
+
+                <div id="stay2already">
+                    <ul class="fn-clear list-title">
+                        <li class="active">
+                            <a href="javascript:void(0);">待办事项</a>
+                            <label class="fn-csp fn-usn fn-ml20 showback">
+                                <input type="checkbox" class="checkbox" name="back" id="fnIsRejected"><font style="font-weight: normal;font-size: 14px">被驳回的单据</font>
+                            </label>
+                            <label class="fn-csp fn-usn fn-ml20 showback">
+                                <input type="checkbox" class="checkbox" name="group" id="groupTask"><font style="font-weight: normal;font-size: 14px">任务分类</font>
+                            </label>
+                        </li>
+                        <li><a href="javascript:void(0);">已办事项</a></li>
+                    </ul>
+                    <div class="stay2already">
+                        <div id="taskList" class="fn-mt20">
+                            #parse("/mainPage/taskList.vm")
+                        </div>
+                        <div id="fnIsRejectedIS" class="fn-mt20 fn-hide">
+                            #parse("/mainPage/backTaskList.vm")
+                        </div>
+        				<div id="taskGroup" class="fn-mt20 fn-hide">
+                            #parse("/mainPage/taskGroup.vm")
+                        </div>                        
+        				<div id="taskGroupList" class="fn-mt20 fn-hide m-table-list">
+                            #parse("/mainPage/taskGroupList.vm")
+                        </div>                        
+                    </div>
+                    <div id="doneTaskFrame" class="stay2already fn-hide">
+                        #parse("/mainPage/doneTaskList.vm")
+                    </div>
+                </div>
+                
+
+            </div>
+            
+
+        </div>
+    </div>
+    <!-- main end -->
+</div>
+
+<div class="my-workbench-flow fn-hide" id="fnMyWorkbenchFlow"></div>
+
+<script type="text/html" id="t-info">
+    #parse('/layout/common/workflowTemplate.vm')
+</script>
+
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/mydesk');
+</script>
+</body>

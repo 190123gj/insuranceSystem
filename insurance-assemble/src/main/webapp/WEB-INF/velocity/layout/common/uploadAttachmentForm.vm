@@ -1,0 +1,26 @@
+##需要在父元素中添加class="fnUpAttach"
+##需要set以下信息
+##set($attachmentTitle="附件上传")
+##set($hiddenUrls = $!{hiddenUrls_FORM_ATTACH})
+##set($attachments = $!{attaches_FORM_ATTACH})
+<a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn"><i class="icon icon-add"></i>附件上传</a>
+<input class="fnUpAttachVal fnChangeInput" type="hidden" name="pathName_FORM_ATTACH" value="$!hiddenUrls">
+<div class="fn-blank5"></div>
+<div class="m-attach fnUpAttachUl">
+    #foreach($item in $!{attachments})
+        #set($pic = false)
+        #if($!item.fileName.endsWith(".jpg") || $!item.fileName.endsWith(".JPG") ||
+            $!item.fileName.endsWith(".png") || $!item.fileName.endsWith(".PNG") ||
+            $!item.fileName.endsWith(".jpeg") || $!item.fileName.endsWith(".JPEG") ||
+            $!item.fileName.endsWith(".tiff") || $!item.fileName.endsWith(".TIFF") ||
+            $!item.fileName.endsWith(".bmp") || $!item.fileName.endsWith(".BMP"))
+            #set($pic = true)
+        #end
+        #set($fullStr = $!item.fileName + "," + $!item.filePhysicalPath + "," + $!item.requestPath)
+        <span class="attach-item fnAttachItem" val="$!{fullStr}">
+            <i class="icon #if($pic) icon-img #else icon-file #end "></i>
+            <span #if($pic) class="fnAttachView fn-csp" #end>$!{item.fileName}</span>
+            <span class="attach-del fn-csp fn-usn fnUpAttachDel">&times;</span>
+        </span>
+    #end
+</div>

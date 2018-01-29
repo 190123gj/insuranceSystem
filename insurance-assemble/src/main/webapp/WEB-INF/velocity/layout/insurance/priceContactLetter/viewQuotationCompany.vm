@@ -1,0 +1,223 @@
+<div class="m-blank fn-mt20 fn-mb20"></div>
+#if($!{isEdit}=="Y")
+
+<div class="priceCompanyConent parentDiyNameBox">
+    #foreach($demandInfo in $info.demandInfos)
+    #if($!showPriceCompany != true)
+        <div parentdiyname="paramOrders" class="priceCompanyConent_$!{demandInfo.demandType}" targetmod="$!{demandInfo.demandType}">
+            <div class="m-item diyNameBox">
+                <label class="m-label"><span class="m-required">*</span>本次询价保险公司：</label>
+                <p style="font-weight: bold;">
+                    #if($!{demandInfo.demandType} =="carTemplate")
+                      询价联络函-车辆
+                    #elseif($!{demandInfo.demandType} =="placeTemplate")
+                        询价联络函-场所责任
+                    #elseif($!{demandInfo.demandType} =="goodsTemplate")
+                        询价联络函-货物承运人
+                    #elseif($!{demandInfo.demandType} =="passengerTemplate")
+                        询价联络函-客运承运人
+                    #elseif($!{demandInfo.demandType} =="goodsProtocolTemplate")
+                        询价联络函-货运协议
+                    #elseif($!{demandInfo.demandType} =="employeeTemplate")
+                        询价联络函-雇员
+                    #elseif($!{demandInfo.demandType} =="shipTemplate")
+                        询价联络函-船舶
+                    #elseif($!{demandInfo.demandType} =="professionalDutyTemplate")
+                        询价联络函-职业责任
+                    #elseif($!{demandInfo.demandType} =="productLiabilityTemplate")
+                        询价联络函-产品责任
+                    #elseif($!{demandInfo.demandType} =="assetsTemplate")
+                        询价联络函-财产
+                    #elseif($!{demandInfo.demandType} =="projectTemplate")
+                        询价联络函-工程
+                    #elseif($!{demandInfo.demandType} =="onceGoodsProtocolTemplate")
+                        询价联络函-单次货运
+                     #end
+                </p>
+                <div class="fn-wp90 itemBox">
+                    <table class="m-table m-table-list itemsList askCompanyOrders">
+                        <tr>
+                        ##如果是业务员，则不展示保险公司的联系人、联系电话、邮箱
+                            <th class="fn-tac">保险公司名称</th>
+                            <th class="fn-tac">保险费(元)</th>
+                            <th class="fn-tac">经纪费（元）</th>
+                            <th class="fn-tac">经纪费比例</th>
+                            <th class="fn-tac">联系人</th>
+                            <th class="fn-tac">联系电话</th>
+                            <th class="fn-tac">邮箱地址</th>
+                            <th class="fn-tac">报价时间</th>
+                            <th class="fn-tac">报价有效期</th>
+                            <th class="fn-tac">操作</th>
+                       </tr>
+                           #foreach($item in $!{info.reportPriceInfo.companyReportPriceInfos})
+                                <tr diyname="companyReportPriceOrders" class="itemLine clearChooseListBox">
+                                    <input type="hidden" name="askCompanyOrdersData" class="askCompanyOrdersData" value='$!{item.detailInfos}'>
+                                    <td class="fn-tac fn-w200">
+                                        $!{item.customerUserName}
+                                    </td>
+                                    <td class="fn-tac">
+                                        <input class="fn-validate text fn-w100 premiumAmount" type="text" name="premiumAmount" value="$!{item.premiumAmount}" readonly>
+                                    </td>
+
+                                    <td class="fn-tac">
+                                        <input class="fn-validate text fn-w100 brokerAmount" type="text" name="brokerAmount" value="$!{item.brokerAmount}" readonly>
+                                    </td>
+                                    <td class="fn-tac parentsErrorBox">
+                                        <input class="fn-validate text fn-w100 borkerAmoutRate" type="text" name="brokerAmountRate" value="$!{item.brokerAmountRate}" readonly>
+                                    </td>
+                                    <td class="fn-tac">
+                                        $!{item.contactUserName}
+                                    </td>
+
+                                    <td class="fn-tac">
+                                        $!{item.contactUserMobile}
+                                    </td>
+
+                                    <td class="fn-tac">
+                                     $!{item.contactUserEmail}
+                                    </td>
+                                    <td class="fn-tac">
+                                        <input class="fn-validate text fn-w80 createDate" type="text" name="createDate" value="$!{item.createDate}" readonly>
+                                    </td>
+
+                                    <td class="fn-tac">
+                                        <input class="fn-validate text fn-w80 expiryDate" type="text" name="expiryDate" value="$!{item.expiryDate}" readonly>
+                                    </td>
+                                    <td class="fn-tac">
+                                        <a href="javascript:void(0)" flag="seeEdit" class="editQuotation">编辑报价</a>
+                                    </td>
+
+                                </tr>
+                        #end
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    #end
+    #end
+</div>
+#end
+<div class="mod-render-template"></div>
+<script type="text/html" id="TMP_QUOTATION">
+    ##    <div>
+
+    <div class="m-modal m-modal-default view-files quotationCompany" style="width: 80%;height: auto;">
+        <div class="m-modal-title"><span class="m-modal-close closeBtn">&times;</span><span class="title">添加询价标的类型</span></div>
+        <div class="m-modal-body fn-tac">
+            <div class="view-files-body" style="max-height:600px;overflow-y: auto;">
+                <form>
+                <div class="form_template">
+                    <div class="quotationCompany"></div>
+                    <div class="quotationOthers fn-p-reb" style="width:80%;text-align: left;">
+                        <input type="hidden" class="target_premiumAmount">
+                        <input type="hidden" class="target_borkerAmount">
+                        <input type="hidden" class="target_borkerAmountRate" value="0">
+                        <div class="m-item">
+                            <label class="m-label"><span class="m-required">*</span>报价时间：</label>
+                            <input type="text" name="quotationTime" class="ui-text fn-w200  laydate-icon createDate" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                        </div>
+                        <div class="m-item">
+                            <label class="m-label"><span class="m-required">*</span>报价有效期：</label>
+                            <input type="text" name="lineTime" class="ui-text fn-w200 laydate-icon expiryDate" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                        </div>
+                        <div class="m-item">
+                            <label class="m-label"><span class="m-required">*</span>备注：</label>
+                            <textarea class="ui-textarea audit-textarea90" name="remark"></textarea>
+                        </div>
+                        <div class="m-item">
+                            <label class="m-label">附件信息：</label>
+                            <div class="fnUpAttach">
+                                #set($attachmentTitle="上传附件")
+                                #set($attachmentNameAttr="pathName_PRODUCT1_PROTOCOL")
+                                #set($hiddenUrls = $!{hiddenUrls_PRODUCT1_PROTOCOL})
+                                #set($attachments = $!{attaches_PRODUCT1_PROTOCOL})
+                                #parse("/layout/common/uploadAttachment.vm")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fn-clear fn-text-c fn-mb20 view-files-btn">
+                        <div class="fn-mt10">
+                            <a class="ui-btn ui-btn-fill ui-btn-green fn-mr20 sureQuotationCompany">确认</a>
+                            <a class="ui-btn ui-btn-fill ui-btn-gray closeBtn" title="关闭">取消</a>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    ##    </div>
+</script>
+<script type="text/html" id="selectProductPopup">
+    <div class="newPopup">
+        <span class="close">×</span>
+        <dl>
+            <dt class="dt"><span>选择产品</span></dt>
+            <dd class="fn-mt10">
+                <div id="PopupFrom" class="fn-mb10">
+                    产品名称：
+                    <input class="ui-text fn-w90 fn-mr20" type="text" name="productName">
+                    <a class="ui-btn ui-btn-fill ui-btn-seek" id="PopupSubmit">搜索</a>
+                </div>
+                <table class="m-table" style="width:540px;margin:0;" border="1">
+                    <thead>
+                    <tr>
+                        <th>产品名称</th>
+                        <th>保险公司</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {{if success}}
+
+                    {{each data.pageList as value i}}
+                    <tr>
+                        <td class="fn-text-c onbreak">{{value.productName}}</td>
+                        <td class="fn-text-c onbreak">{{value.companyUserName}}</td>
+                        <td class="fn-text-c onbreak"><a class="fn-csp choose" productName="{{value.productName}}" companyUserName="{{value.companyUserName}}" productId="{{value.productId}}" firstPeriod = "{{value.firstPeriod}}">[选择]</a></td>
+                    </tr>
+                    {{/each}}
+
+                    {{else}}
+
+                    <tr>
+                        <td class="fn-text-c" colspan="6">{{message}}</td>
+                    </tr>
+
+                    {{/if}}
+
+                    </tbody>
+                </table>
+
+                {{if success}}
+
+                <div class="pageBox fn-text-r fn-mt5">
+
+                    第{{data.pageNumber}}页，共{{data.pageCount}}页，合计{{data.totalCount}}条&nbsp;|&nbsp;
+
+                    {{if data.pageNumber<2}}
+                    <a class="disabled">首页</a>
+                    <a class="disabled">上一页</a>
+                    {{else}}
+                    <a class="btn" page="1" href="javascript:void(0);">首页</a>
+                    <a class="btn" page="{{data.pageNumber-1}}" href="javascript:void(0);">上一页</a>
+                    {{/if}}
+
+                    {{if data.pageNumber+1>data.pageCount}}
+                    <a class="disabled">下一页</a>
+                    <a class="disabled">尾页</a>
+                    {{else}}
+                    <a class="btn" page="{{data.pageNumber+1}}" href="javascript:void(0);">下一页</a>
+                    <a class="btn" page="{{data.pageCount}}" href="javascript:void(0);">尾页</a>
+                    {{/if}}
+
+                </div>
+
+                {{/if}}
+
+            </dd>
+        </dl>
+    </div>
+</script>

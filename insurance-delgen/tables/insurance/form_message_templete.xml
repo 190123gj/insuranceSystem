@@ -1,0 +1,86 @@
+<table sqlname="form_message_templete">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO form_message_templete(templete_id,form_code,type,subject,content_html,content_txt,is_send_site_message,is_send_mail,is_send_sms,base_on,with_audit_opinion,remark,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO form_message_templete(templete_id,form_code,type,subject,content_html,content_txt,is_send_site_message,is_send_mail,is_send_sms,base_on,with_audit_opinion,remark,raw_add_time) VALUES (#templeteId#,#formCode#,#type#,#subject#,#contentHtml#,#contentTxt#,#isSendSiteMessage#,#isSendMail#,#isSendSms#,#baseOn#,#withAuditOpinion#,#remark#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="templeteId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE form_message_templete SET form_code=?,type=?,subject=?,content_html=?,content_txt=?,is_send_site_message=?,is_send_mail=?,is_send_sms=?,base_on=?,with_audit_opinion=?,remark=? WHERE templete_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  templete_id ,form_code ,type ,subject ,content_html ,content_txt ,is_send_site_message ,is_send_mail ,is_send_sms ,base_on ,with_audit_opinion ,remark ,raw_add_time ,raw_update_time  FROM form_message_templete WHERE templete_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM form_message_templete WHERE templete_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  templete_id ,form_code ,type ,subject ,content_html ,content_txt ,is_send_site_message ,is_send_mail ,is_send_sms ,base_on ,with_audit_opinion ,remark ,raw_add_time ,raw_update_time  FROM form_message_templete WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  templete_id ,form_code ,type ,subject ,content_html ,content_txt ,is_send_site_message ,is_send_mail ,is_send_sms ,base_on ,with_audit_opinion ,remark ,raw_add_time ,raw_update_time  FROM form_message_templete where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM form_message_templete WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM form_message_templete  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

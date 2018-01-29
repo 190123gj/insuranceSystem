@@ -1,0 +1,53 @@
+<div class="inquiryTemplate fn-mt20">
+        <div class="m-item">
+            <label class="m-label fn-font-b" style="font-size: 16px;">客户信息</label>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>关联超权限审批单名称：</label>
+            <input type="hidden" name="projectSetupId" id="projectSetupId" value="$!{info.projectSetupId}"/>
+                $!{info.projectSetupName}
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>询价名称：</label>
+            $!{info.name}
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>客户类型：</label>
+
+            #if($!{info.customerType} == "INDIVIDUAL_CUSTOMER")    个人客户    #end
+            #if($!{info.customerType} == "COMPANY_CUSTOMER")    团体客户    #end
+
+        </div>
+        <div class="m-item customerUserParam">
+            <label class="m-label"><span class="m-required">*</span>客户名称：</label>
+            $!{info.customerUserName}
+        </div>
+        <div class="m-item">
+            <label class="m-label">客户证件类型：</label>
+               #foreach($!item in $!certTypes)
+                  #if($!info.customerCertType == $!item.certType)    $!{item.certTypeName} #end
+                #end
+
+        </div>
+        <div class="m-item">
+            <label class="m-label">客户证件号码：</label>
+            $!{info.customerCertNo}
+        </div>
+        <div class="m-item">
+            <label class="m-label">客户附件：</label>
+            <div class="fnUpAttach">
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="pathName_PRODUCT1_PROTOCOL")
+                #set($hiddenUrls = $!{hiddenUrls_PRODUCT1_PROTOCOL})
+                #set($attachments = $!{attaches_PRODUCT1_PROTOCOL})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>所属业务员：</label>
+            $!{info.businessUserName}
+        </div>
+</div>
+
+

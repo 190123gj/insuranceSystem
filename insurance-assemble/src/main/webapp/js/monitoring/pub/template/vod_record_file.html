@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+<div id="record_file_layout" class="easyui-layout" fit="true"  style="width:auto;height:auto">
+
+<div data-options="region:'center',split:true" >			
+<table id="record_file_dr" class="easyui-datagrid" fit="true" border=0 style="width:auto;height:auto;" >
+<thead>
+<tr>
+<th data-options="field:'name',width:200">文件名</th>
+<th data-options="field:'size',width:100,formatter:_v.record_file_sizemap">大小</th>
+<th data-options="field:'beginTime',width:150">开始时间</th>
+<th data-options="field:'endTime',width:150">结束时间</th>
+<th data-options="field:'reason',width:300">录像原因</th>
+<th data-options="field:'path',width:300">路径</th>
+<th data-options="field:'op',width:300">操作</th>
+</tr>
+</thead>
+</table>
+</div>
+
+<div data-options="region:'south',title:'下载列表'" style="padding:2px;height:400px;">
+
+<table id="record_file_download_dr"  class="easyui-datagrid" style="width:auto;height:auto;" >
+<thead>
+<tr>
+<th data-options="field:'handler',width:0,hidden:true"></th>
+<th data-options="field:'path',width:0,hidden:true">路径</th>
+<th data-options="field:'time',width:0,hidden:true"></th>
+<th data-options="field:'name',width:200">文件名</th>
+<th data-options="field:'size',width:100,formatter:_v.record_file_sizemap">大小</th>
+<th data-options="field:'savePath',width:400">保存地址</th>
+<th data-options="field:'status',width:150,formatter:_v.download_record_file_statusmap">状态</th>
+<th data-options="field:'process',width:100,formatter:_v.record_file_processmap">进度</th>
+<th data-options="field:'op',width:100">操作</th>
+</tr>
+</thead>
+</table>
+</div>
+<div id="replayer_wnd" style='overflow:hidden'></div>
+
+<!--div id="test1" class="easyui-window" style="background:red;display:none;">
+<iframe style="width:100%;height:100%;"  marginWidth="0" hspace="0" vspace="0" marginHeight="0" frameBorder="0" scrolling="no"  style="overflow:hidden;" ></iframe>
+</div -->
+</body>
+</html>

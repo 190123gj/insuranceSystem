@@ -1,0 +1,126 @@
+<table sqlname="insurance_contact_letter_detail">
+<column name="insurance_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="premium_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="broker_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="first_premium_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO insurance_contact_letter_detail(letter_detail_id,letter_id,product_id,product_name,insurance_amount,premium_amount,broker_amount,first_premium_amount,period) VALUES (?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO insurance_contact_letter_detail(letter_detail_id,letter_id,product_id,product_name,insurance_amount,premium_amount,broker_amount,first_premium_amount,period) VALUES (#letterDetailId#,#letterId#,#productId#,#productName#,#insuranceAmount#,#premiumAmount#,#brokerAmount#,#firstPremiumAmount#,#period#)
+		        <selectKey  resultClass ="long"  keyProperty ="letterDetailId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE insurance_contact_letter_detail SET letter_id=?,product_id=?,product_name=?,insurance_amount=?,premium_amount=?,broker_amount=?,first_premium_amount=?,period=? WHERE letter_detail_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  letter_detail_id ,letter_id ,product_id ,product_name ,insurance_amount ,premium_amount ,broker_amount ,first_premium_amount ,period  FROM insurance_contact_letter_detail WHERE letter_detail_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_contact_letter_detail WHERE letter_detail_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  letter_detail_id ,letter_id ,product_id ,product_name ,insurance_amount ,premium_amount ,broker_amount ,first_premium_amount ,period  FROM insurance_contact_letter_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	        SELECT  letter_detail_id ,letter_id ,product_id ,product_name ,insurance_amount ,premium_amount ,broker_amount ,first_premium_amount ,period  FROM insurance_contact_letter_detail WHERE 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM insurance_contact_letter_detail WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM insurance_contact_letter_detail  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+        
+    <operation name="getInsuranceContactLetterDetails" paramtype="long" multiplicity="many">
+     
+  		 <sql>
+            <![CDATA[
+					SELECT  letter_detail_id ,letter_id ,product_id ,product_name ,insurance_amount ,premium_amount ,broker_amount ,first_premium_amount ,period  FROM insurance_contact_letter_detail where letter_id = ?
+	        ]]>
+        </sql>
+    </operation>
+    
+    <operation name="deleteByLetterId" paramtype="long">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_contact_letter_detail WHERE letter_id=?
+			]]>
+        </sql>
+    </operation>
+    
+      <operation name="findInsuranceContactLetterDetail">
+        <extraparams>
+			<param name="letterId" javatype="long" />
+			<param name="productId" javatype="long" />
+		</extraparams>
+		<sql>
+            <![CDATA[
+				SELECT  letter_detail_id ,letter_id ,product_id ,product_name ,insurance_amount ,premium_amount ,broker_amount ,first_premium_amount ,period  FROM insurance_contact_letter_detail WHERE 1=1
+	        ]]>
+		</sql>
+		<sqlmap>
+            <![CDATA[
+ 				SELECT  letter_detail_id ,letter_id ,product_id ,product_name ,insurance_amount ,premium_amount ,broker_amount ,first_premium_amount ,period  FROM insurance_contact_letter_detail WHERE letter_id = #letterId# and product_id = #productId#
+			]]>
+		</sqlmap>
+    </operation>
+    
+</table>

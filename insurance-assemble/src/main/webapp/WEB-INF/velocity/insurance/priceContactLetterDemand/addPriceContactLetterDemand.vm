@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title>xxxx - 新增</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;xxxx&nbsp;&gt;&nbsp;xxxx&nbsp;&gt;&nbsp;xxxx
+</div>
+
+<h2 class="m-h2-title">xxxx</h2>
+
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff">
+    
+    <form id="form" action="/insurance/xxxx.json" method="POST">
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>总长：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="totalLength" id="totalLength" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>工程承包人、建造承包人：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="engineeringContractor" id="engineeringContractor" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>上船台：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="berth" id="berth" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>建造地点：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="constructionSite" id="constructionSite" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>工程分包人、建造分包人：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="engineeringSubcontractor" id="engineeringSubcontractor" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>适航：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="airworthiness" id="airworthiness" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>详细信息：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="remark" id="remark" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>交船地点：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="deliveryShipPlace" id="deliveryShipPlace" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>保证期：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="warrantyPeriod" id="warrantyPeriod" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>其中动工：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="whichStart" id="whichStart" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>扩展字段：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="ext" id="ext" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>型宽：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="typeWidth" id="typeWidth" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>运输工具及航次：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="transportNum" id="transportNum" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>提单(运单)号：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="billLadingNo" id="billLadingNo" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>所属行业：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="industry" id="industry" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>施工面积：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="constructionArea" id="constructionArea" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>型深：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="deep" id="deep" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>试车期：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="commissioningPeriod" id="commissioningPeriod" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>主营业务：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="busiScope" id="busiScope" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>工程设计单位：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="engineeringDesignUnit" id="engineeringDesignUnit" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>总吨：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="totalTon" id="totalTon" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>临时：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="tempdoor" id="tempdoor" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>车位数：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="parkingNum" id="parkingNum" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>设计单位等级：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="designUnitLevel" id="designUnitLevel" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>启运日期：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="departureDate" id="departureDate" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>发票号：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="invoiceNo" id="invoiceNo" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>经营区域：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="busiAreas" id="busiAreas" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>起运地：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="departurePlace" id="departurePlace" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>工程名称、船名：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="projectName" id="projectName" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>室内：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="indoor" id="indoor" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>合同编号：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="contractNo" id="contractNo" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>面积：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="busiAcreage" id="busiAcreage" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>版本：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="version" id="version" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>id：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="id" id="id" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>载重吨：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="loadTon" id="loadTon" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>建造期限、建造期限：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="constructionPeriod" id="constructionPeriod" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>途径地：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="viaPlace" id="viaPlace" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>主要原料、产品及流程：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="products" id="products" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>船舶类型：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="shipType" id="shipType" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>发票金额：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="invoiceValue" id="invoiceValue" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>工程造价、船舶造价：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="engineeringCost" id="engineeringCost" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>交船：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="deliveryVessel" id="deliveryVessel" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>被保险人：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="insuredPerson" id="insuredPerson" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>摩托车位：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="motodoor" id="motodoor" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>目的地：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="destinationPlace" id="destinationPlace" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>施工期限：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="projectDuration" id="projectDuration" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>投保人：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="policyHolder" id="policyHolder" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>下水：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="beLaunched" id="beLaunched" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>地址：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="busiAddress" id="busiAddress" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>室外：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="outdoor" id="outdoor" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>试航区域：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="trialRegional" id="trialRegional" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>标的编号：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="demandNo" id="demandNo" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>工程所有人、船舶所有人：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="projectOwner" id="projectOwner" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>风险信息：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="riskInfo" id="riskInfo" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>信用证号：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="creditLetterNo" id="creditLetterNo" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>标的名称：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="demandName" id="demandName" value=""  >
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>询价方案id：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="contactLetterId" id="contactLetterId" value=""  >
+        </div>
+		      
+        
+
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submit" type="button" value="提交">
+            <a href="/insurance/xxxx.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+
+    </form>
+
+</div>
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+#parse("/layout/common/commonue.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    //seajs.use($_GLOBAL.zyw+'/project/rkct.rkwn.add');
+</script>
+
+</body>
+</html>

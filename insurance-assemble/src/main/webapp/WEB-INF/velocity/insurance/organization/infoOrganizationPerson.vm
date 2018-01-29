@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+    <title>机构管理</title>
+</head>
+<body>
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;机构管理&nbsp;&gt;&nbsp;用户详情
+</div>
+<h2 class="m-h2-title">用户详情</h2>
+<div class="fn-blank20"></div>
+<div class="m-main border ui-bg-fff">
+    <form action="" id="form" callbackhref="">
+        <input class="ui-text fn-w200 fnInput" type="hidden" name="type" id="type" value="insuranceCommission"  />
+        <input class="ui-text fn-w90" type="hidden" name="customerId" id="customerId" value="$!{info.customerId}" />
+        <input class="ui-text fn-w90" type="hidden" name="userId" id="userId" value="$!{info.userId}" />
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>客户姓名：</label>
+            $!{info.customerName}
+        </div>
+        <div class="m-item">
+            <label class="m-label">上传证件影像：</label>
+            <div class="fnUpAttach">
+                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn"><i class="icon icon-add"></i>上传附件</a>
+                <input class="fnUpAttachVal " type="hidden" name="">
+                <div class="fn-blank5"></div>
+                <div class="m-attach fnUpAttachUl"></div>
+            </div>
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>证件类型：</label>
+                #foreach($certType in $!{certTypeList})
+                    #if("$!{info.certType.code}"=="$!{certType.code}")  $!{certType.message}  #end
+                #end
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>证件号码：</label>
+            $!{info.certNo}
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>证件有效期：</label>
+            $!dateUtil.formatDay($!info.certExpDate)
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>客户性别：</label>
+           $!{info.sex}
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>出生日期：</label>
+           $!info.birthDay
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>民族：</label>
+    $!{info.nation}
+        </div>
+        <div class="m-item fnChangeApply" id="selectAddress">
+            <label class="m-label fnChangeLabel"><span class="m-required">*</span>联系地址：</label>
+            <span id="addressBox"></span>
+            <input type="hidden" name="provinceCode" value="$!info.provinceCode" id="provinceCode"> ## 省
+            <input type="hidden" name="provinceName" value="$!info.provinceName" id="provinceName">
+            <input type="hidden" name="cityCode" value="$!info.cityCode" id="cityCode"> ## 市
+            <input type="hidden" name="cityName" value="$!info.cityName" id="cityName">
+            <input type="hidden" name="countyCode" value="$!info.countyCode" id="countyCode" id="countyCode"> ## 区
+            <input type="hidden" name="countyName" value="$!info.countyName" id="countyName">
+            <input type="text" class="fn-input-hidden fnRequired" id="addressResult"> ##是否选到末尾
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>详细地址：</label>
+               $!{info.address}
+        </div>
+        <div class="m-item diyNameBox">
+            <label class="m-label"><span class="m-required">*</span>联系电话：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                           <tr>
+                            <th class="fn-tac">电话类型</th>
+                            <th class="fn-tac">电话</th>
+                          </tr>
+                               #foreach($item in $info.contactMobileInfos)
+                            <tr diyname="mobileOrders" class="itemLine">
+                                <td class="fn-tac">
+                                      #foreach($mobileType in $mobileTypes)
+                                          #if("$!{item.wayTypeId}"=="$!{mobileType.id}") $mobileType.name #end
+                                        #end
+                                </td>
+                                <input name="type" type="hidden" value="mobile">
+                                <td class="fn-tac">
+                             $!item.way
+                                </td>
+                            </tr>
+                        #end
+                </table>
+            </div>
+        </div>
+        <div class="m-item diyNameBox">
+            <label class="m-label"><span class="m-required">*</span>电子邮箱：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">邮箱</th>
+                    </tr>
+                    #if($listUtil.isNotEmpty($info.contactEmailInfos))
+                        #foreach($item in $info.contactEmailInfos)
+                            <tr diyname="emailOrders" class="itemLine">
+                                <td class="fn-tac">       $!item.way </td>
+                            </tr>
+                        #end
+                    #end
+                </table>
+            </div>
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>微信号：</label>
+            <input class="ui-text fn-w200 fnInput fn-validate" type="text" name="weixin" id="weixin" value="$!{info.weixin}" />
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>QQ号：</label>
+            <input class="ui-text fn-w200 fnInput fn-validate" type="text" name="qq" id="qq" value="$!{info.qq}" />
+        </div>
+        <div class="m-item diyNameBox" >
+            <label class="m-label">  <span class="m-required">*</span>账户名称：</label>
+            <div class="fn-w800 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">账户名称</th>
+                        <th class="fn-tac">开户行</th>
+                        <th class="fn-tac">账号</th>
+                    </tr>
+                    #if($listUtil.isNotEmpty($info.bankInfos))
+                        #foreach($item in $info.bankInfos)
+                            <tr diyname="bankOrders" class="itemLine">
+                                <td class="fn-tac">
+                            $!item.bankCardName
+                                </td>
+                                <td class="fn-tac">
+                                    $!item.openBankName
+                                </td>
+                                <td class="fn-tac">
+                                  $!item.bankCardNo
+                                </td>
+                            </tr>
+                        #end
+                    #end
+                </table>
+            </div>
+        </div>
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+    </form>
+</div>
+<div class="fn-tac fn-pt20 fn-pb30">
+        <a href="javascript:void(0)" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5 toCanleOpt">返回</a>
+    </div>
+</body>
+</html>

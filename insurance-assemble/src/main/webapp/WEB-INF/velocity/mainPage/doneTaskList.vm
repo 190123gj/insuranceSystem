@@ -1,0 +1,50 @@
+<div class="fn-ml20 fn-mr20">
+    <table class="m-table m-table-list fn-tac">
+        <thead>
+            <tr>
+                <th>任务名称</th>
+                <th width="80px">发起人</th>
+                <th width="150PX">发起时间</th>
+                <th width="150PX">结束时间</th>
+                <th width="150PX">持续时间</th>
+                <th width="100px">状态</th>
+                <th width="50px">操作</th>
+            </tr>
+        </thead>
+         <tbody>
+             #foreach($!task in $!pageDoneTask.result)
+                 <tr>
+                     <td>
+                         #if($!task.subjectView)
+                             $!task.subjectView
+                         #else
+                             $!task.subject
+                         #end
+                     </td>
+                     <td>$!task.creator</td>
+                     <td>$!dateUtil.simpleFormat($!task.createtime)</td>
+                     <td>#if($!task.endTime)$!dateUtil.simpleFormat($!task.endTime)#else-#end</td>
+                     <td>#if($!task.durationTime)$!task.durationTime#else-#end</td>
+                     <td>$!task.statusView</td>
+                     <td><a href="/insurance/form/view.htm?actInstId=$!task.actInstId" target="_blank">查看</a></td>
+                 </tr>
+                 #set($i=$i+1)
+             #end
+            </tbody>
+    </table>
+      #set($withOutJubmBtn = true)
+      #set($toPageCustomize = "toPageDoneTask")
+      #set($pageCustomize = $!pageDoneTask)
+	  #parse("/layout/common/pagesCustomize.vm")
+</div>
+<script>
+//已办任务分页
+    toPageDoneTask = function(totalPage, pageNo) {
+        if (totalPage < pageNo) {
+            return false;
+        }
+        $('#doneTaskFrame').load("/userHome/doneTaskList.htm", {
+            'pageNumber': pageNo
+        });	
+    }
+</script>

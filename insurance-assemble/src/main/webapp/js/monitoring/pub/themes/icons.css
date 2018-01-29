@@ -1,0 +1,140 @@
+@CHARSET "UTF-8";
+
+.icon-player{
+	  display: inline-block;
+	  width: 28px;
+	  height: 24px;
+	  line-height: 24px;
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -12px;
+	  font-size: 1px;
+	background:url('icons/player.png') no-repeat center center;
+	height:24px;
+	width: 24px;
+}
+
+
+.icon-search{
+	  display: inline-block;
+	  width: 28px;
+	  height: 24px;
+	  line-height: 24px;
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -12px;
+	  font-size: 1px;
+	background:url('icons/search.png') no-repeat center center;
+	height:24px;
+	width: 24px;
+}
+
+.icon-emap{
+	  display: inline-block;
+	  width: 28px;
+	  height: 24px;
+	  line-height: 24px;
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -12px;
+	  font-size: 1px;
+	background:url('icons/emap.png') no-repeat center center;
+	height:24px;
+	width: 24px;
+}
+
+.icon-configset{
+	  display: inline-block;
+	  width: 24px;
+	  height: 24px;
+	  line-height: 24px;
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -12px;
+	  font-size: 1px;
+	background:url('icons/configset.png') no-repeat center center;
+	height:24px;
+	width: 24px;
+}
+
+.icon-decode{
+	  display: inline-block;
+	  width: 24px;
+	  height: 24px;
+	  line-height: 24px;
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -12px;
+	  font-size: 1px;
+	 background:url('icons/decode.png') no-repeat center center;
+	 height:24px;
+	 width: 24px;
+}
+
+.icon-start{
+	background:url('icons/start.png') no-repeat center center;
+}
+.icon-stop{
+	background:url('icons/stop.png') no-repeat center center;
+}
+
+.icon-begin-point{
+	background:url('icons/beginpoint.png') no-repeat center center;
+}
+
+.icon-end-point{
+	background:url('icons/endpoint.png') no-repeat center center;
+}
+
+.icon-up-point{
+	background:url('icons/uppoint.png') no-repeat center center;
+}
+
+.icon-down-point{
+	background:url('icons/downpoint.png') no-repeat center center;
+}
+
+.icon-setting{
+	background:url('icons/setting.png') no-repeat center center;
+}
+
+.icon-close{
+	background:url('icons/close.png') no-repeat center center;
+}
+
+.icon-open{
+	background:url('icons/open.png') no-repeat center center;
+}
+
+.icon-rename{
+	background:url('icons/rename.png') no-repeat center center;
+}
+
+.icon-editor{
+	background:url('icons/editor.png') no-repeat center center;
+}
+
+.icon-go{
+	background:url('icons/go.png') no-repeat center center;
+}
+
+.icon-talk{
+	background:url('icons/talk.png') no-repeat center center;
+}
+
+.icon-call{
+	background:url('icons/call.png') no-repeat center center;
+}
+
+.icon-stopall{
+	background:url('icons/stopall.png') no-repeat center center;
+}
+
+.icon-playall{
+	background:url('icons/playall.png') no-repeat center center;
+}
+
+.ovtree .tree-file {
+background: url('') ;
+}
+

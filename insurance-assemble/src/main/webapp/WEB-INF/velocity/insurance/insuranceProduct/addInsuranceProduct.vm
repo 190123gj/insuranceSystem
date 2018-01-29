@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+    <title>产品-新增</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;资源管理&nbsp;&gt;&nbsp;产品管理&nbsp;&gt;&nbsp;#if($!{info.productId}>0)修改 #else 新增 #end 产品
+</div>
+<h2 class="m-h2-title">#if($!{info.productId}>0) 修改 #else 新增 #end 产品</h2>
+<div class="fn-blank20"></div>
+<div class="m-main border ui-bg-fff">
+    <form id="form" action="/insurance/insuranceProduct/editSubmit.json" method="POST" callbackhref="/insurance/insuranceProduct/list.htm">
+<input type="hidden" name="token" value="$!stringUtil.getToken($!{httpRequest})"/>   
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>产品名称：</label>
+            <input class="ui-text fn-w200 fnInput fn-validate" type="text" name="productName" id="productName" value="$!{info.productName}">
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">简称一：</label>
+            <div><input class="ui-text fn-w200 fnInput" type="text" name="abbr1" value="$!{info.abbr1}"/>
+                简称二：<input class="ui-text fn-w200 fnInput" type="text" name="abbr2" value="$!{info.abbr2}"/>
+                简称三：<input class="ui-text fn-w200 fnInput" type="text" name="abbr3" value="$!{info.abbr3}"/>
+            </div>
+        </div>
+
+
+       	   <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>保险公司：</label>
+                <input class="ui-text fn-w200 fnInput fn-validate" type="text" name="companyUserName" id="companyUserName" value="$!{info.companyUserName}" readOnly>
+                <input type="hidden" name="companyUserId" id="companyUserId" value="$!{info.companyUserId}"/>
+               <input type="hidden" name="companyBaseUserId" id="companyBaseUserId" value="$!{info.companyBaseUserId}"/>
+                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue" id="fnToChooseCompany">选择</a>
+                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClear">清除</a>
+            </div>
+
+        <div class="m-item">
+            <label class="m-label">备案号：</label>
+            <input class="ui-text fn-w200 fnInput" type="text" name="recordNumber" id="recordNumber" value="$!{info.recordNumber}" >
+        </div>
+
+
+        <div class="m-item fn-clear">
+            <label class="m-label fn-left"><span class="m-required">*</span>所属险种：</label>
+                #if($!{info.catalogId}==0)
+                <div class="selectFnBox1 fn-left">
+                    <span class="ui-text fn-w200 fnInput selectFn fn-text-overflow">
+                        <label>请选择</label>
+                        <i class="icon icon-select-down"></i>
+                    </span>
+                    <input type="hidden" class="fn-validate" name="catalogId" id="selectedId" value="">
+                    <input type="hidden" name="catalogName" id="selectedName" value="" >
+                    <div class="selectRslt fn-p-abs fn-usn">
+                    </div>
+                 </div>
+                #else
+            	<div class="selectFnBox1 fn-left" isreadonly="true">
+                    <span class="ui-text fn-w200 fnInput selectFn fn-text-overflow">
+                        <label>$!{info.catalogName}</label>
+                       ## <i class="icon icon-select-down"></i>
+                    </span>
+                    <input type="hidden" class="fn-validate" name="catalogId" id="selectedId" value="$!{info.catalogId}">
+                    <input type="hidden" name="catalogName" id="selectedName" value="$!{info.catalogName}">
+                    <div class="selectRslt fn-p-abs fn-usn">
+                    </div>
+                </div>
+                #end
+##            </div>
+
+        </div>
+
+        <div class="m-item itemBox #if ($!info.catalogId == 0) #if($!info.productId == 0) fn-hide #end #end diyNameBox insuranceCatalogLiability">
+            <label class="m-label"><span class="m-required">*</span>保险责任：</label>
+            <div id="insuranceCatalogLiability" class="fn-wp90">
+				<table class="m-table m-table-list itemsList">
+					<thead>
+                        <tr>
+                            <th class="fn-tac">名称</th>
+                            <th class="fn-tac fn-w100">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        #foreach ($list in $!{findInsuranceCatalogLiabilitys})
+                        <tr class="itemLine" diyname="insuranceCatalogLiabilityOrders">
+                            <td class="fn-tac">
+                            	<input type="hidden" value="$!list.liabilityId" name="liabilityId" /><input type="text" class="text fn-w200" value="$!list.liabilityName" name="liabilityName" style="width:80%"/>
+                                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChoose" style="color: #fff;">选择</a>
+                                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClear" style="color: #fff;">清除</a>
+                            </td>
+                            <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+                        </tr>
+                        #end
+                    </tbody>
+				</table>
+				<p class="fn-mt10 fn-mb10">
+     		 		<a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_INSURANCE_CATALOG_LIABILITY" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+     			 </p>
+            </div>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">是否寿险：</label>
+            <div id="isLifeInsuranceText">#if($stringUtil.isNotEmpty($!info.isLifeInsurance)) #if($!info.isLifeInsurance == "YES") 寿险 #else 非寿险 #end #end</div>
+            <input type="hidden" name="isLifeInsurance" id="isLifeInsurance" value="$!{info.isLifeInsurance}" />
+        </div>
+
+        <div class="m-item fn-hide lifeInsuranceNo">
+            <label class="m-label"><span class="m-required">*</span>是否定额：</label>
+            <label class="fn-mr10"><input type="radio" #if ($!info.isQuota == "YES") checked #end value="YES" name="isQuota" class="radio fn-validate"/>是</label>
+            <label class="fn-mr10"><input type="radio" #if ($!info.isQuota == "NO") checked #end value="NO" name="isQuota"  class="radio fn-validate"/>否</label>
+        </div>
+
+        <div class="m-item fn-hide lifeInsuranceYes">
+            <label class="m-label"><span class="m-required">*</span>保险期限：</label>
+            <div>
+                <input type="radio" #if ($!info.insurancePeriodType == "终身") checked #end value="终身" name="insurancePeriodType" class="radio fn-validate"/>终身
+
+                <input type="radio" #if ($!info.insurancePeriodType == "年") checked #end value="年" name="insurancePeriodType" class="radio fn-validate" />        <input class="ui-text fn-w80 fnInput year fnMakeNumber" type="text" name="insurancePeriod" value="$!{info.insurancePeriod}"/>年
+
+                <input type="radio" #if ($!info.insurancePeriodType == "岁") checked #end value="岁" name="insurancePeriodType" class="radio fn-validate" />到被保险人<input class="ui-text fn-w80 fnInput age fnMakeNumber" type="text" name="insurancePeriod" value="$!{info.insurancePeriod}"/>岁
+            </div>
+        </div>
+
+        <div class="m-item fn-hide lifeInsuranceYes">
+            <label class="m-label"><span class="m-required">*</span>费率表：</label>
+            <a href="javascript:void(0)" class="ui-btn ui-btn-fill ui-btn-blue setingRatio">设置费率表</a>
+            <input type="hidden" name="charge" class="setingRatioArr" value='$!{info.charge}'>
+            <input type="hidden" name="unitPrice" class="unitPrice fn-validate valid"  #if($!info.unitPrice != "0.00") value='$!{info.unitPrice}' #end >
+            ##定义选项
+            <input type="hidden" class="setingRatioOptinCode" value="0,1,5,10,15,20,25,30,DEFINED">
+            <input type="hidden" class="setingRatioOptinText" value="请选择,泵交,5年交,10年交,15年交,20年交,25年交,30年交,自定义">
+        </div>
+
+
+        <div class="m-item itemBox diyNameBox fn-hide lifeInsuranceNo lifeInsuranceLevel">
+            <label class="m-label"><span class="m-required">*</span>保险档次：</label>
+            <div class="fn-wp90">
+
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac fn-w100">档次</th>
+                        <th class="fn-tac fn-w100">基本保额(元)</th>
+                        <th class="fn-tac">保费(元)</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+                    #if ($listUtil.isNotEmpty($!{queryProductLevelInfoList}))
+                        #foreach ($infoList in $!{queryProductLevelInfoList})
+                            <tr class="itemLine" diyname="insuranceProductLevelOrders">
+                                <td class="fn-tac"><input class="text fn-validate" type="text" name="level" value="$!infoList.level"/></td>
+                                <td class="fn-tac"><input class="text fn-validate fnMakeNumber" type="text" name="coverageAmount" value="$!infoList.coverageAmount"/></td>
+                                <td class="fn-tac"><input class="text fn-validate fnMakeNumber" type="text" name="premiumAmount" value="$!infoList.premiumAmount"/></td>
+                                <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+                            </tr>
+                        #end
+                    #else
+                        <tr class="itemLine" diyname="insuranceProductLevelOrders">
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="level"/></td>
+                            <td class="fn-tac"><input class="text fn-validate fnMakeNumber" type="text" name="coverageAmount"/></td>
+                            <td class="fn-tac"><input class="text fn-validate fnMakeNumber" type="text" name="premiumAmount"/></td>
+                            <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+                        </tr>
+                    #end
+
+                </table>
+                <p class="fn-mt10 fn-mb10">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_INSURANCE_LEVEL" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="m-item saleStatus">
+            <label class="m-label"><span class="m-required">*</span>销售状态：</label>
+            <select name="saleStatus" class="ui-select fn-w200 fn-validate">
+                <option value="">请选择</option>
+                #foreach ($s in  $!{saleStatus})
+                    <option value="$!s.code" #if ($info.saleStatus == $!s.code) selected #end>$!s.message</option>
+                #end
+            </select>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">销售区域：</label>
+            <div class="salesAreasBox" style="width: 30%">
+                <div class="salesAreasCheckbox fn-hide">
+                    <dl class="level">
+                        <dt>
+                        <h2 class="m-htitle"><span>省/直辖市/自治区</span></h2></dt>
+                        <dd>
+                            <ul class="fn-clear fn-p15">##这里不用说了吧肯定要循环的
+                                #foreach($item in $provinceInfos)
+                                    <li class="fn-left fn-mr30">
+                                        <input class="fn-mr5" type="checkbox" value="$!{item.code}" toponymy="$!{item.name}" junior="$!{item.children}"  #foreach($item2 in $info.oneCityList) #if($!{item.code} =="$!item2.code") checked #end #end>
+                                        <a class="fn-blue fn-tdu" href="javascript:void(0)">$!{item.name}</a>
+                                    </li>
+                                #end
+                            </ul>
+                        </dd>
+                    </dl>
+                    <dl class="level" code="234">
+                        <dt>
+                        <h2 class="m-htitle"><span>市</span></h2></dt>
+                        <dd>
+                            <ul class="fn-clear fn-p15">
+
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <h2 class="m-htitle"><span>限定销售区域</span><a class="fn-right packBtn"></a></h2>
+                <div class="salesAreasOutput fn-line-rl">
+                    <div class="levelOutput">##只选择了一级城市类
+                        <dl class="fn-clear">
+                            #foreach($item in $info.oneCityList)
+                                <dd class="fn-left fn-mr20" code="$!{item.code}">$!{item.name}</dd>##一级城市类的key和val
+                            #end
+                        ##
+                        </dl>
+                    </div>
+                    <div class="levelOutput">##选择了二级城市类
+                        #foreach($item in $info.twoCityList)
+                            <dl class="fn-clear" code="$!item.code">##一级城市类的key
+                                <dt class="fn-left">$!item.name：</dt>##一级城市类的val
+                                #foreach($item2 in $item.cityInfoList)
+                                    <dd class="fn-left fn-mr20" code="$!item2.code">$!item2.name</dd>##二级城市类的key和val
+                                #end
+                            </dl>
+                        #end
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" class="salesAreasCollect" name="salesAreasCollect" value='$!{info.salesAreasCollect}'>##提交所有选择的值,格式如下[{"123":[]},{"234":[]},{"456":[]},{"345":["897","215","285"]}]
+
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">可销售止日期：</label>
+            <label class="fn-mr10"><input type="checkbox" class="stopSaleDate checkbox" #if ($!listUtil.isEmpty($!{info.stopSaleDate})) checked #end/>长期</label>
+            <input class="ui-text fn-w200 laydate-icon fnChangeInput" value="#if(!$!listUtil.isEmpty($!{info.stopSaleDate})) $!dateUtil.formatDay($!{info.stopSaleDate}) #end" #if($listUtil.isEmpty($!{info.stopSaleDate})) disabled #end type="text" name="stopSaleDate" id="stopSaleDate" onclick="laydate({istime: true,min: laydate.now(),format: 'YYYY-MM-DD'})">
+        </div>
+
+		##险种分类过来的，如果是寿险，显示缴费类型
+		#if ($!info.catalogId > 0 && $!info.isLifeInsurance == "YES")
+	        <div class="m-item lifeInsurance_payType">
+	            <label class="m-label"><span class="m-required">*</span>缴费类型：</label>
+	            #foreach ($typeList in $!{payTypeList})
+	                <label class="fn-mr10"><input type="radio" class="fn-validate radio" name="payType" value="$!typeList.id" #if ($!typeList.id == $info.payType) checked #end/>$!typeList.name</label>
+	            #end
+	        </div>
+		#end
+        
+        <div class="m-item periodRate fn-hide">
+            <label class="m-label">缴费系数：</label>
+           <input class="ui-text fn-w80 fnInput fn-validate fnInitNumber" disabled type="text" name="periodRate" #if ($info.periodRate != 0.0) value="$!{info.periodRate}"  #end />
+        </div>
+
+        <div class="m-item lifeInsuranceNo lifeInsurance_payPeriod fn-hide #if($!info.payType!=0 || $!info.payType!="")isPaytype#end" id="payPeriod">
+           <label class="m-label"><span class="m-required">*</span>缴费年限：</label>
+           <div class="#if($info.payType!=19) fn-hide #end isPayPeriod payTypeItems">
+           		<label><input type="checkbox" checked value="35" #if($info.payType!=19) disabled="true" #end name="payPeriod" class="checkbox"/>趸交</label>
+            </div>
+            <div class="#if($info.payType==19 || $info.payType==0) fn-hide #end notPayPeriod payTypeItems">
+            	#foreach($item in ${payPeriodList})
+					<label class="fn-mr10 payPeriodBox"><input type="checkbox" value="$item.id" #if ($projectUtil.judagePayPeriod("$!{item.id}","$!{info.payPeriod}")) checked #end #if($info.payType==19 || $info.payType==0) disabled="true" #end name="payPeriod" class="checkbox" targetval="$item.name"/>$item.name</label>
+				#end
+                <label class="fn-mr10 payPeriodOtherBox">
+                    <input type="checkbox" class="payPeriodOther checkbox" #if($stringUtil.isNotEmpty($!{info.payPeriodName})) checked #end>其他：
+                    <input type="text" class="ui-text fn-w200 fn-validate payPeriodOtherYear" name="payPeriod" id="payPeriodOtherYear" #if(!$stringUtil.isNotEmpty($!{info.payPeriodName})) disabled #end value="$!{info.payPeriodName}">年
+                </label>
+                <p class="fn-f30">选择其他时，填写的年限不能与前面相同；如果有多个年限，请以逗号分割各项，且各项值不能相同</p>
+            </div>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label">上传附件：</label>
+            <div class="fnUpAttach fn-mb10">
+                保险责任：
+                #if(1==1)
+                    #set($attachmentTitle="上传附件")
+                    #set($attachmentNameAttr="pathName_INSURANCE_PRODUCT__LIABILITY")
+                    #set($hiddenUrls = $!{hiddenUrls_INSURANCE_PRODUCT__LIABILITY})
+                    #set($attachments = $!{attaches_INSURANCE_PRODUCT__LIABILITY})
+                    #parse("/layout/common/uploadAttachment.vm")
+                #end
+            </div>
+            <div class="fnUpAttach fn-mb10">
+                &nbsp&nbsp;&nbsp;费率表：
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="")
+                #set($attachmentNameAttr="pathName_INSURANCE_PRODUCT__CHARGE")
+                #set($hiddenUrls ="")
+                #set($hiddenUrls = $!{hiddenUrls_INSURANCE_PRODUCT__CHARGE})
+                #set($attachments = "")
+                #set($attachments = $!{attaches_INSURANCE_PRODUCT__CHARGE})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+            <div class="fnUpAttach fn-mb10">
+                &nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;其他：
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="pathName_INSURANCE_PRODUCT__OTHER")
+                #set($hiddenUrls ="")
+                #set($hiddenUrls = $!{hiddenUrls_INSURANCE_PRODUCT__OTHER})
+                #set($attachments = "")
+                #set($attachments=$!{attaches_INSURANCE_PRODUCT__OTHER})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </div>
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <input type="hidden" name="typeId" value="$!{info.productId}" />
+            <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn" type="button" value="提交">
+            <a href="/insurance/xxxx.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+<script type="text/html" id="TMP_INSURANCE_LEVEL">
+    <tr class="itemLine" diyname="insuranceProductLevelOrders">
+        <td class="fn-tac"> <input class="text fn-validater" type="text" name="level"/></td>
+        <td class="fn-tac"> <input class="text fn-validater fnMakeNumber" type="text" name="coverageAmount"></td>
+        <td class="fn-tac"> <input class="text fn-validater fnMakeNumber" type="text" name="premiumAmount"></td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+    </tr>
+</script>
+
+
+<script type="text/html" id="TMP_INSURANCE_CATALOG_LIABILITY">
+  	<tr diyname="insuranceCatalogLiabilityOrders" class="itemLine">
+        <td class="fn-tac" >
+            <input type="hidden" name="liabilityId"  targetkey="liabilityId">
+            <input type="text" class="text fn-w200 fn-validate" readonly name="liabilityName"  targetkey="liabilityName" style="width: 80%;">
+            <a href="javascript:void(0);" class="fnToChoose fn-hide" >选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseBtn" style="color: #fff;">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClear" style="color: #fff;">清除</a>
+        </td>
+        <td class="fn-tac fn-w100"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+    </tr>
+    
+</script>
+<script type="text/html" id="setingRatioPopup">
+    <div class="newPopup">
+        <span class="close">×</span>
+        <dl class="dl">
+            <dt class="dt"><span>设置费用比例</span></dt>
+            <dd class="fn-mt10" style="position: relative;">
+                <div class="m-item" style="padding-left: 0;margin: 0 2%;"><span class="m-required">*</span>该表为每&nbsp;&nbsp;<input type="text" class="ui-text fn-w200 fnFloatNumber" name="unitPrice" id="unitPrice">元基本保障金额</div>
+                <table class="m-table" border="1">
+                    <thead>
+                    <tr class="thead1">
+                        <th class="fn-tac">性别</th>
+                        <th class="fn-tac trSexMan" colspan="{{itemsLen.colspanMan.length}}">男</th>
+                        <th class="fn-tac trSexWoman" colspan="{{itemsLen.colspanWoman.length}}">女</th>
+                    </tr>
+                    <tr class="thead2">
+                        <th style="padding:0;width:120px;height:45px;" class="onbreak">
+                            <div class="tableOut">
+                                <b style="font-size: 12px;">缴费年限</b>
+                                <em style="font-size: 12px;">投保年龄</em>
+                            </div>
+                        </th>
+                        ##男
+                        {{if itemsLen.colspanMan.length}}
+                            {{each itemsLen.colspanMan as value vlIndex}}
+                                    <td class="fn-p-reb fn-tac trSexMan">
+                                        <select class="ui-select fn-w100 paymentPeriodSelect {{if value.period == 'DEFINED'}} fn-hide {{/if}}" {{if value.period == 'DEFINED'}} disabled="true" {{/if}}>
+##                                        <option value="0">请选择</option>
+                                            {{each itemsLen.colspanManOptions.code as option opIndex}}
+                                                <option value="{{option}}" {{if value.period == option}} selected {{/if}}>{{itemsLen.colspanManOptions.text[opIndex]}}</option>
+                                            {{/each}}
+                                        </select>
+                                        <input type="text" class="fn-validate text paymentPeriodInput fnMakeNumber {{if value.period != 'DEFINED'}} fn-hide {{/if}}" {{if value.period != 'DEFINED'}} disabled="true" {{/if}} value="{{value.text}}">
+                                        {{if vlIndex>0}}
+                                        <span class="recordDelete rowDelete">━</span>
+                                        {{/if}}
+                                    </td>
+                            {{/each}}
+                        {{else}}
+                            <td class="fn-p-reb fn-tac trSexMan">
+                                <select class="ui-select fn-w100 paymentPeriodSelect">
+##                                    <option value="0">请选择</option>
+                                    {{each itemsLen.colspanManOptions.code as option opIndex}}
+                                        <option value="{{option}}" {{if value.period == option}} selected {{/if}}>{{itemsLen.colspanManOptions.text[opIndex]}}</option>
+                                    {{/each}}
+                                </select>
+                                <input type="text" class="fn-validate text paymentPeriodInput fnMakeNumber fn-hide" disabled="true">
+                            </td>
+                        {{/if}}
+                        ##女
+                        {{if itemsLen.colspanWoman.length}}
+                            {{each itemsLen.colspanWoman as value vlIndex}}
+                                <td class="fn-p-reb fn-tac trSexWoman">
+                                    <select class="ui-select fn-w100 paymentPeriodSelect {{if value.period == 'DEFINED'}} fn-hide {{/if}}" {{if value.period == 'DEFINED'}} disabled="true" {{/if}}>
+##                                        <option value="0">请选择</option>
+                                        {{each itemsLen.colspanWomanOptions.code as option opIndex}}
+                                            <option value="{{option}}" {{if value.period == option}} selected {{/if}}>{{itemsLen.colspanWomanOptions.text[opIndex]}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <input type="text" class="fn-validate text paymentPeriodInput fnMakeNumber {{if value.period != 'DEFINED'}} fn-hide {{/if}}" {{if value.period != 'DEFINED'}} disabled="true" {{/if}} value="{{value.text}}">
+                                    {{if vlIndex>0}}
+                                        <span class="recordDelete rowDelete">━</span>
+                                    {{/if}}
+                                </td>
+                            {{/each}}
+                        {{else}}
+                            <td class="fn-p-reb onbreak fn-tac trSexWoman">
+                                <select class="ui-select fn-w100 paymentPeriodSelect">
+##                                    <option value="0">请选择</option>
+                                    {{each itemsLen.colspanWomanOptions.code as option opIndex}}
+                                        <option value="{{option}}" {{if value.period == option}} selected {{/if}}>{{itemsLen.colspanWomanOptions.text[opIndex]}}</option>
+                                    {{/each}}
+                                </select>
+                                <input type="text" class="fn-validate text paymentPeriodInput fnMakeNumber fn-hide" disabled="true">
+                            </td>
+                        {{/if}}
+
+                    </tr>
+                    </thead>##{data: [{timeLimit: 1,periods: [123, 123, 123]}, {timeLimit: 3,periods: [321, 321]}],maxLength: 3}
+                    <tbody>
+                    {{if items.length}}
+                        {{each items as item i}}
+                            <tr {{if !!newly && newly[i]}} class="new" {{/if}}>
+                            <td class="fn-text-c fn-p-reb">
+                                <input type="text" class="text fnMakeNumber insureAge" value="{{item.year}}">
+                                {{if i > 0}}
+                                 <span class="recordDelete colDelete">━</span>
+                                {{/if}}
+                            </td>
+                            ##男
+                            {{if itemsLen.colspanMan.length}}
+                                {{each itemsLen.colspanMan as tdItem j}}
+                                    <td class="fn-text-c trSexMan">
+                                        <input class="text fnMax minZero" type="text" name="" value="{{item.man[j].charge?item.man[j].charge:''}}">
+                                    </td>
+                                {{/each}}
+                            {{/if}}
+                            ##女
+                            {{if itemsLen.colspanWoman.length}}
+                                {{each itemsLen.colspanWoman as tdItem j}}
+                                    <td class="fn-text-c trSexWoman">
+                                        <input class="text fnMax minZero" type="text" name="" value="{{item.woman[j].charge?item.woman[j].charge:''}}">
+                                    </td>
+                                {{/each}}
+                            {{/if}}
+                            </tr>
+                        {{/each}}
+                    {{else}}
+                        <tr>
+                            <td class="fn-tac"><input class="text fnMakeNumber insureAge" type="text" name=""></td>
+                            <td class="fn-tac trSexMan"><input class="text fnMax minZero" type="text" name=""></td>
+                            <td class="fn-tac trSexWoman"><input class="text fnMax minZero" type="text" name=""></td>
+                        </tr>
+                    {{/if}}
+
+                    </tbody>
+                </table>
+
+
+                <div class="fn-clear fn-text-c">
+                    <div class="fn-mt10" style="position: absolute;top:50px;left: 175px;">
+                        <a class="ui-btn colBtn" btnsex="trSexMan" maxitenlen="{{itemsLen.colspanManOptions.code.length}}"><i class="icon icon-add"></i></a>
+                    </div>
+                    <div class="fn-mt10" style="position: absolute;top: 50px;right: 55px;">
+                        <a class="ui-btn colBtn" btnsex="trSexWoman"  maxitenlen="{{itemsLen.colspanWomanOptions.code.length}}"><i class="icon icon-add"></i></a>
+                    </div>
+                    <div class="fn-mt10" style="position: absolute; bottom: 50px; left: -15px;">
+                        <a class="ui-btn rowBtn"><i class="icon icon-add" maxitemlength="100"></i></a>
+                    </div>
+
+                    <div class="fn-mt10">
+##                        <a class="ui-btn ui-btn-fill ui-btn-blue fn-mr20 colBtn" btnsex="trSexMan" maxitenlen="{{itemsLen.colspanManOptions.code.length}}">增加缴费年限（男）</a>
+##                        <a class="ui-btn ui-btn-fill ui-btn-blue fn-mr20 colBtn" btnsex="trSexWoman" maxitenlen="{{itemsLen.colspanWomanOptions.code.length}}">增加缴费年限（女）</a>
+##                        <a class="ui-btn ui-btn-fill ui-btn-blue fn-mr20 rowBtn" maxitemlength="100">投保年龄</a>
+                        <a class="ui-btn ui-btn-fill ui-btn-green fn-mr20 okBtn">确认</a>
+                        <a class="ui-btn ui-btn-fill ui-btn-gray close">取消</a>
+                    </div>
+
+                </div>
+
+            </dd>
+        </dl>
+    </div>
+</script>
+
+    #parse("/layout/common/footer.vm")
+    #parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    seajs.use($_GLOBAL.zyw+'/insuranceProduct/editInsuranceProduct');
+    var payPeriodList='$!{payPeriodList}';
+    var salesAreas = '$!{salesAreas}';
+</script>
+
+</body>
+</html>

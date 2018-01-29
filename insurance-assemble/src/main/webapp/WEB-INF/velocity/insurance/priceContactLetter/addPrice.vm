@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title>询价方案 - 制作</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;业务管理&nbsp;&gt;&nbsp;询价方案 - 制作
+</div>
+
+<h2 class="m-h2-title">询价方案 - 制作</h2>
+
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff">
+    
+    <form id="form" action="/insurance/priceContactLetter/addNext.htm" method="POST">
+        <h2 class="m-htitle fn-mb20"><span>客户信息</span></h2>
+        <div class="m-item">
+            <label class="m-label">关联超权限审批单名称：</label>
+            <input type="hidden" name="certainIds" id="certainIds"/>
+            <input type="hidden" name="projectSetupId" id="projectSetupId"/>
+            <input type="text" name="projectSetupName" id="projectSetupName" class="ui-text fn-w200"/>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseProjectSetup">选择</a>
+            <a href="javascript:void(0);" id="clearCertainId" class="ui-btn ui-btn-fill ui-btn-gray fnToProjectSetupClear fnToClear" style="color: #fff;">清除</a>
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>询价名称：</label>
+            <input type="text" class="ui-text fn-w200 fn-validate" name="name"/>
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>客户类型：</label>
+            <select class="ui-select fn-w200 fn-validate" name="customerType">
+##                <option value="">请选择</option>
+                <option class="INDIVIDUAL_CUSTOMER" value="INDIVIDUAL_CUSTOMER" #if($!{customerType} == "INDIVIDUAL_CUSTOMER") selected       #end>个人客户</option>
+                <option class="COMPANY_CUSTOMER" value="COMPANY_CUSTOMER" #if($!{customerType} == "COMPANY_CUSTOMER") selected       #end>团体客户</option>
+            </select>
+        </div>
+        <div class="m-item customerUserParam">
+            <label class="m-label"><span class="m-required">*</span>客户名称：</label>
+            <input type="hidden"   name="customerUserId" id="customerUserId" value="$!{userId}">
+            <input type="text" class="ui-text fn-w200 fn-validate" readonly  name="customerUserName" id="customerUserName" value="$!{userName}">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseCostomerName">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClear userNameClear" style="color: #fff;">清除</a>
+        </div>
+        <div class="m-item">
+            <label class="m-label">客户证件类型：</label>
+            <select class="ui-select fn-w200 customerUserCertType" name="customerUserCertType">
+                <option value="" certno="">请选择</option>
+            </select>
+        </div>
+        <div class="m-item">
+            <label class="m-label">客户证件号码：</label>
+            <input type="text" class="ui-text fn-w200 customerUserCertNo" name="customerCertNo" readonly/>
+        </div>
+        <div class="m-item">
+            <label class="m-label">客户附件：</label>
+            <div class="fnUpAttach">
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="pathName_PRODUCT1_PROTOCOL")
+                #set($hiddenUrls = $!{hiddenUrls_PRODUCT1_PROTOCOL})
+                #set($attachments = $!{attaches_PRODUCT1_PROTOCOL})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>所属业务员：</label>
+            <input class="ui-text fn-w200 fnInput " type="text" name="businessUserName" id="businessUserName"  readonly/>
+            <input type="hidden" name="businessUserId" id="businessUserId" value="$!{info.businessUserId}"/>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseBusinessUserName" id="fnToChooseBusinessUserName" style="color: #fff;">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClearBusinessUserName fnToClear" id="fnToClearBusinessUserName" style="color: #fff;">清除</a>
+        </div>
+
+        <h2 class="m-htitle fn-mb20 fn-mt20"><span>询价模板选择</span></h2>
+        #if($stringUtil.isNotEmpty($!{errorMessage1}))
+            <div class="m-item">
+                <label class="m-label" style="color: red">未找到对应询价模板</label>
+            </div>
+        #end
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>选择询价方式：</label>
+            <select class="ui-select fn-w200 fn-validate selectEnquiryWayOptions" name="priceType">
+                <option value="">请选择</option>
+                #foreach($way in $!{ways})
+                    <option value="$!{way.code}" #if($way=="template") selected   #end>$!{way.message}</option>
+                #end
+            </select>
+        </div>
+
+        <div class="selectEnquiryWay catalog fn-hide">
+            <div class="m-item productType fn-clear">
+                <label class="m-label fn-left"><span class="m-required">*</span>选择保险分类：</label>
+                <div class="selectFnBox1 fn-left fn-w300">
+                    <span class="ui-text fn-w200 selectFn fn-text-overflow">
+                        <label>请选择</label>
+                        <i class="icon icon-select-down"></i>
+                    </span>
+                    <input type="hidden" name="catalogId" id="selectedId" class="fn-validate ignore">
+                    <input type="hidden" name="catalogName fn-validate ignore" id="selectedName">
+                    <div class="selectRslt fn-p-abs fn-usn">
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-item conditionItems fn-hide">
+                <label class="m-label">业务条件：</label>
+                <select class="ui-select fn-w200 ignore" name="businessConditionId">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="selectEnquiryWay template">
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>询价模板：</label>
+                <select class="ui-select fn-w200 fn-validate ignore" name="priceTemplate">
+                    #foreach($templateInfo in $!{templateInfos})
+                        <option value="$!{templateInfo.code}">$!{templateInfo.name}</option>
+                    #end
+                </select>
+
+            </div>
+        </div>
+
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submit" type="submit" value="提交">
+            <a href="/insurance/xxxx.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+
+    </form>
+
+</div>
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    seajs.use($_GLOBAL.zyw+'/priceContactLetter/addPrice');
+
+</script>
+
+</body>
+</html>

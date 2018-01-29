@@ -1,0 +1,170 @@
+<table sqlname="settlement_company_bill">
+<column name="premium_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="broker_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO settlement_company_bill(settlement_company_id,bill_no,insurance_no,insurance_company_id,insurance_company_name,business_bill_id,appserial_period,customer_user_id,customer_user_name,insuance_person_id,insuance_person_name,premium_amount,rate,broker_amount,status,plan_pay_date,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO settlement_company_bill(settlement_company_id,bill_no,insurance_no,insurance_company_id,insurance_company_name,business_bill_id,appserial_period,customer_user_id,customer_user_name,insuance_person_id,insuance_person_name,premium_amount,rate,broker_amount,status,plan_pay_date,raw_add_time) VALUES (#settlementCompanyId#,#billNo#,#insuranceNo#,#insuranceCompanyId#,#insuranceCompanyName#,#businessBillId#,#appserialPeriod#,#customerUserId#,#customerUserName#,#insuancePersonId#,#insuancePersonName#,#premiumAmount#,#rate#,#brokerAmount#,#status#,#planPayDate#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="settlementCompanyId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE settlement_company_bill SET bill_no=?,insurance_no=?,insurance_company_id=?,insurance_company_name=?,business_bill_id=?,appserial_period=?,customer_user_id=?,customer_user_name=?,insuance_person_id=?,insuance_person_name=?,premium_amount=?,rate=?,broker_amount=?,status=?,plan_pay_date=? WHERE settlement_company_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  settlement_company_id ,bill_no ,insurance_no ,insurance_company_id ,insurance_company_name ,business_bill_id,appserial_period,customer_user_id ,customer_user_name ,insuance_person_id,insuance_person_name,premium_amount ,rate ,broker_amount ,status ,plan_pay_date ,raw_add_time ,raw_update_time  FROM settlement_company_bill WHERE settlement_company_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM settlement_company_bill WHERE settlement_company_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  settlement_company_id ,bill_no ,insurance_no ,insurance_company_id ,insurance_company_name ,business_bill_id ,appserial_period,customer_user_id ,customer_user_name ,insuance_person_id,insuance_person_name,premium_amount ,rate ,broker_amount ,status ,plan_pay_date ,raw_add_time ,raw_update_time  FROM settlement_company_bill se WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  settlement_company_id ,bill_no ,insurance_no ,insurance_company_id ,insurance_company_name ,business_bill_id ,appserial_period,customer_user_id ,customer_user_name,insuance_person_id,insuance_person_name,premium_amount ,rate ,broker_amount ,status ,plan_pay_date ,raw_add_time ,raw_update_time  FROM settlement_company_bill se where 1=1
+
+	       <dynamic>
+			<isNotEmpty property="settlementCompanyBill.insuranceNo" prepend=" and ">
+                se.insurance_no = #settlementCompanyBill.insuranceNo#
+            </isNotEmpty>
+            <isNotEmpty property="settlementCompanyBill.customerUserName" prepend=" and ">
+                se.customer_user_name = #settlementCompanyBill.customerUserName#
+            </isNotEmpty>
+            <isNotEmpty property="settlementCompanyBill.status" prepend=" and ">
+                se.status = #settlementCompanyBill.status#
+           </isNotEmpty>
+           <isGreaterThan property="settlementCompanyBill.insuranceCompanyId"  compareValue="0" prepend=" and ">
+           		se.insurance_company_id = #settlementCompanyBill.insuranceCompanyId#
+           </isGreaterThan>
+			<isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+			</dynamic>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM settlement_company_bill se WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM settlement_company_bill se  where 1=1
+	           <dynamic>
+			<isNotEmpty property="insuranceNo" prepend=" and ">
+                se.insurance_no = #insuranceNo#
+            </isNotEmpty>
+            <isNotEmpty property="customerUserName" prepend=" and ">
+                se.customer_user_name = #customerUserName#
+            </isNotEmpty>
+            <isNotEmpty property="status" prepend=" and ">
+                se.status = #status#
+           </isNotEmpty>
+           <isGreaterThan property="insuranceCompanyId"  compareValue="0" prepend=" and ">
+           		se.insurance_company_id = #insuranceCompanyId#
+           </isGreaterThan>
+			</dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    
+     <operation name="updateSettlementCompanyBill">
+    	 <extraparams>
+            <param name="status" javatype="java.lang.String" />
+            <param name="settlementCompanyIds" javatype="java.lang.String" />
+        </extraparams>
+      <sql>
+            <![CDATA[
+			   UPDATE settlement_company_bill SET status = ?
+			]]>
+        </sql>
+         <sqlmap>
+            <![CDATA[
+	        UPDATE settlement_company_bill SET status = #status#  WHERE settlement_company_id in ($settlementCompanyIds$)
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    
+    <operation name="findSettlementCompanyBills" multiplicity="many">
+    	<extraparams>
+            <param name="settlementCompanyIds" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  settlement_company_id ,bill_no ,insurance_no ,insurance_company_id ,insurance_company_name ,business_bill_id ,appserial_period,customer_user_id ,customer_user_name ,insuance_person_id,insuance_person_name,premium_amount ,rate ,broker_amount ,status ,plan_pay_date ,raw_add_time ,raw_update_time  FROM settlement_company_bill WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+			  SELECT  settlement_company_id ,bill_no ,insurance_no ,insurance_company_id ,insurance_company_name ,business_bill_id,appserial_period,customer_user_id ,customer_user_name ,insuance_person_id,insuance_person_name,premium_amount ,rate ,broker_amount ,status ,plan_pay_date ,raw_add_time ,raw_update_time  FROM settlement_company_bill WHERE settlement_company_id in ($settlementCompanyIds$)
+			]]>
+        </sqlmap>
+    </operation>
+    
+    
+      <operation name="findSettlementCompanyBill">
+    	<extraparams>
+            <param name="businessBillId" javatype="java.lang.long" />
+              <param name="period" javatype="java.lang.Integer" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  settlement_company_id ,bill_no ,insurance_no ,insurance_company_id ,insurance_company_name ,business_bill_id ,appserial_period,customer_user_id ,customer_user_name ,insuance_person_id,insuance_person_name,premium_amount ,rate ,broker_amount ,status ,plan_pay_date ,raw_add_time ,raw_update_time  FROM settlement_company_bill WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+			  SELECT  settlement_company_id ,bill_no ,insurance_no ,insurance_company_id ,insurance_company_name ,business_bill_id,appserial_period,customer_user_id ,customer_user_name ,insuance_person_id,insuance_person_name,premium_amount ,rate ,broker_amount ,status ,plan_pay_date ,raw_add_time ,raw_update_time  FROM settlement_company_bill WHERE business_bill_id = #businessBillId# and appserial_period = #period#
+			]]>
+        </sqlmap>
+    </operation>
+    
+</table>

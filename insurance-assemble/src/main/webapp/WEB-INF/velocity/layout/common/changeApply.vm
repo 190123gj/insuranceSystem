@@ -1,0 +1,19 @@
+<form class="fn-hide" id="fnChangeForm" action="/projectMg/formChangeApply/save.htm" ajaxaction="/projectMg/formChangeApply/save.htm" backurl="/projectMg/formChangeApply/list.htm">
+     ## 申请时带过来的数据
+     <input type="hidden" name="formId" value="$!changeApplyForm.formId"/>
+     <input type="hidden" name="applyFormId" value="$!changeApplyForm.formId"/>
+     <input type="hidden" name="applyId" value="$!changeApply.applyId"/>
+     <input type="hidden" name="changeForm" value="$!changeApply.changeForm"/>
+     <input type="hidden" name="changeFormId" value="$!changeApply.changeFormId"/>
+     <input type="hidden" name="applyType" value="$!changeApply.applyType"/>
+     <input type="hidden" name="projectCode" value="$!changeApply.projectCode"/>
+     <input type="hidden" name="tabIndex" value="$!changeRecord.tabIndex"/>
+     <input type="hidden" name="tabDesc" value="$!changeRecord.tabDesc"/>
+     <input type="hidden" name="exeUrl" value="$!changeRecord.exeUrl"/> ##原始表单提交地址
+     <input type="hidden" name="formDesc" value="$!changeRecord.formDesc"/>
+     <textarea name="formData">$!changeRecord.formData</textarea> ##修改后的表单数据
+     <textarea name="originalFormData">$!changeRecord.originalFormData</textarea> ##原始表达数据
+     <textarea name="pageContent">$!changeRecord.pageContent</textarea> ##修改后的页面
+     <textarea name="originalPageContent">$!changeRecord.originalPageContent</textarea> ##原始页面
+     <textarea name="detailData">$!changeRecord.detailData</textarea> ##修改记录
+ </form>

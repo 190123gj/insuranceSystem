@@ -1,0 +1,131 @@
+<table sqlname="region">
+
+	<operation name="insert" paramtype="object">
+		<sql>
+			<![CDATA[
+				INSERT INTO region
+					(code,
+						name,
+						parent_code,
+						level,
+						sort_order,
+						remark,
+						has_children,
+						raw_add_time) 
+				VALUES (?,?,?,?,?,?,?,?)
+			]]>
+		</sql>
+	</operation>
+	<operation name="update" paramtype="object">
+		<sql>
+			<![CDATA[
+				UPDATE region 
+				   SET code=?,
+						name=?,
+						parent_code=?,
+						level=?,
+						sort_order=?,
+						has_children=?,
+						remark=?
+				  WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="findById">
+		<sql>
+			<![CDATA[
+				SELECT  * FROM region WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="findByCode">
+		<sql>
+			<![CDATA[
+				SELECT  * FROM region WHERE code=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="deleteById">
+		<sql>
+			<![CDATA[
+				DELETE FROM region WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	
+	
+	<operation name="findByCondition" paramtype="object" multiplicity="many">
+		<extraparams>
+			<param name="limitStart" javatype="long" />
+			<param name="pageSize" javatype="long" />
+			<param name="sortCol" javatype="java.lang.String" />
+			<param name="sortOrder" javatype="java.lang.String" />
+		</extraparams>
+	    <sql>
+	        <![CDATA[
+	       SELECT  * FROM region WHERE 1=1
+	        ]]>
+	    </sql>
+	    <sqlmap>
+	        <![CDATA[
+	         SELECT * from region where 1=1
+	        <dynamic>
+	            <isGreaterThan property="region.id"  compareValue="0" prepend=" and ">
+	                id = #region.id#
+	            </isGreaterThan>
+	            <isGreaterThan property="region.level"  compareValue="0" prepend=" and ">
+	                level = #region.level#
+	            </isGreaterThan>
+	             <isNotEmpty property="region.code" prepend=" and ">
+	               	code = #region.code#
+	            </isNotEmpty>
+	             <isNotEmpty property="region.parentCode" prepend=" and ">
+	               	parent_code = #region.parentCode#
+	            </isNotEmpty>
+	             <isNotEmpty property="region.name" prepend=" and ">
+	               name like concat('%',#region.name#,'%')
+	            </isNotEmpty>
+	        </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#;
+	        ]]>
+	    </sqlmap>
+	</operation>
+	<operation name="findByConditionCount" paramtype="object" >
+	    <sql>
+	        <![CDATA[
+	       SELECT  count(*)  FROM region WHERE  1=1
+	        ]]>
+	    </sql>
+	    <sqlmap>
+	        <![CDATA[
+	         SELECT  count(*)  FROM region  where 1=1
+	        <dynamic>
+	            <isGreaterThan property="id"  compareValue="0" prepend=" and ">
+	                id = #id#
+	            </isGreaterThan>
+	            <isGreaterThan property="level"  compareValue="0" prepend=" and ">
+	                level = #level#
+	            </isGreaterThan>
+	             <isNotEmpty property="code" prepend=" and ">
+	               	code = #code#
+	            </isNotEmpty>
+	             <isNotEmpty property="parentCode" prepend=" and ">
+	               	parent_code = #parentCode#
+	            </isNotEmpty>
+	             <isNotEmpty property="name" prepend=" and ">
+	               name like concat('%',#name#,'%')
+	            </isNotEmpty>
+	        </dynamic>
+	        ]]>
+	    </sqlmap>
+	</operation>
+</table>

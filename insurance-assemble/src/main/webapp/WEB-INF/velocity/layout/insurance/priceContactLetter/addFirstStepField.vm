@@ -1,0 +1,36 @@
+#if($!{isEdit}=="Y")
+##<input type="hidden" name="projectSetupId" id="projectSetupId" value="$!{info.projectSetupId}"/>
+##<input type="hidden" name="projectSetupName" id="projectSetupName" value="$!{info.projectSetupName}"/>
+##<input type="hidden" name="name" value="$!{info.name}"/>
+##<input type="hidden" name="customerType" value="$!{info.customerType}"/>
+##<input type="hidden" name="customerUserId" id="customerUserId" value="$!{info.customerUserId}">
+##<input type="hidden" name="customerUserName" id="customerUserName" value="$!{info.customerUserName}">
+##<input type="hidden" name="customerCertType" id="customerCertType" value="$!{info.customerCertType}">
+##<input type="hidden" name="customerCertNo" id="customerCertNo" value="$!{info.customerCertNo}">
+##<input type="hidden" name="businessUserName" id="businessUserName" value="$!{info.businessUserName}"/>
+##<input type="hidden" name="businessUserId" id="businessUserId" value="$!{info.businessUserId}"/>
+<input type="hidden" name="priceType" id="priceType" value="$!{info.priceType}"/>
+<input type="hidden" name="catalogId" id="catalogId" value="$!{info.catalogId}"/>
+<input type="hidden" name="catalogName" id="catalogName" value="$!{info.catalogName}"/>
+<input type="hidden" name="businessConditionId" id="businessConditionId" value="$!{info.businessConditionId}"/>
+<input type="hidden" name="priceTemplate" id="priceTemplate" value="$!{info.priceTemplate}"/>
+<input type="hidden" name="id"  value="$!{info.id}"/>
+<input type="hidden" name="formId"  value="$!{form.formId}"/>
+<input type="hidden" name="billNo" value="$!{info.billNo}" />
+#else
+<input type="hidden" name="projectSetupId" id="projectSetupId" value="$!{projectSetupId}"/>
+<input type="hidden" name="projectSetupName" id="projectSetupName" value="$!{projectSetupName}"/>
+<input type="hidden" name="name" value="$!{name}"/>
+<input type="hidden" name="customerType" value="$!{customerType}"/>
+<input type="hidden" name="customerUserId" id="customerUserId" value="$!{customerUserId}">
+<input type="hidden" name="customerUserName" id="customerUserName" value="$!{customerUserName}">
+<input type="hidden" name="customerCertType" id="customerCertType" value="$!{customerCertType}">
+<input type="hidden" name="customerCertNo" id="customerCertNo" value="$!{customerCertNo}">
+<input type="hidden" name="businessUserName" id="businessUserName" value="$!{businessUserName}"/>
+<input type="hidden" name="businessUserId" id="businessUserId" value="$!{businessUserId}"/>
+<input type="hidden" name="priceType" id="priceType" value="$!{priceType}"/>
+<input type="hidden" name="catalogId" id="catalogId" value="$!{catalogId}"/>
+<input type="hidden" name="catalogName" id="catalogName" value="$!{catalogName}"/>
+<input type="hidden" name="businessConditionId" id="businessConditionId" value="$!{businessConditionId}"/>
+<input type="hidden" name="priceTemplate" id="priceTemplate" value="$!{priceTemplate}"/>
+#end

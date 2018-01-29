@@ -1,0 +1,148 @@
+<table sqlname="brokerage_fee_detail">
+<column name="receivable_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO brokerage_fee_detail(brokerage_fee_detail_id,brokerage_fee_id,appserial_period,borkerage_scale,receivable_amount,plan_pay_date,actual_pay_date,raw_add_time,update_add_time) VALUES (?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO brokerage_fee_detail(brokerage_fee_detail_id,brokerage_fee_id,appserial_period,borkerage_scale,receivable_amount,plan_pay_date,actual_pay_date,raw_add_time,update_add_time) VALUES (#brokerageFeeDetailId#,#brokerageFeeId#,#appserialPeriod#,#borkerageScale#,#receivableAmount#,#planPayDate#,#actualPayDate#,#rawAddTime#,#updateAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="brokerageFeeDetailId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE brokerage_fee_detail SET brokerage_fee_id=?,appserial_period=?,borkerage_scale=?,receivable_amount=?,plan_pay_date=?,actual_pay_date=?,update_add_time=? WHERE brokerage_fee_detail_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  brokerage_fee_detail_id ,brokerage_fee_id ,appserial_period ,borkerage_scale ,receivable_amount ,plan_pay_date ,actual_pay_date ,raw_add_time ,update_add_time  FROM brokerage_fee_detail WHERE brokerage_fee_detail_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM brokerage_fee_detail WHERE brokerage_fee_detail_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  brokerage_fee_detail_id ,brokerage_fee_id ,appserial_period ,borkerage_scale ,receivable_amount ,plan_pay_date ,actual_pay_date ,raw_add_time ,update_add_time  FROM brokerage_fee_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  brokerage_fee_detail_id ,brokerage_fee_id ,appserial_period ,borkerage_scale ,receivable_amount ,plan_pay_date ,actual_pay_date ,raw_add_time ,update_add_time  FROM brokerage_fee_detail where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM brokerage_fee_detail WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM brokerage_fee_detail  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="findBrokerageFeeDetails" multiplicity="many" >
+        <sql>
+            <![CDATA[
+			  SELECT  brokerage_fee_detail_id ,brokerage_fee_id ,appserial_period ,borkerage_scale ,receivable_amount ,plan_pay_date ,actual_pay_date ,raw_add_time ,update_add_time  FROM brokerage_fee_detail WHERE brokerage_fee_id=?
+			]]>
+        </sql>
+    </operation>
+    
+     <operation name="getBrokerageFee" >
+        <extraparams>
+            <param name="businessBillId" javatype="long" />
+            <param name="appserialPeriod" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  brokerage_fee_detail_id ,brokerage_fee_id ,appserial_period ,borkerage_scale ,receivable_amount ,plan_pay_date ,actual_pay_date ,raw_add_time ,update_add_time  FROM brokerage_fee_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+           <![CDATA[
+				 SELECT b.* from brokerage_fee a LEFT JOIN brokerage_fee_detail b on a.brokerage_id = b.brokerage_fee_id
+where a.business_bill_id = #businessBillId# and b.appserial_period= #appserialPeriod#
+			]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="getBrokerageFeeDetails" >
+        <extraparams>
+            <param name="businessBillId" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  brokerage_fee_detail_id ,brokerage_fee_id ,appserial_period ,borkerage_scale ,receivable_amount ,plan_pay_date ,actual_pay_date ,raw_add_time ,update_add_time  FROM brokerage_fee_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+           <![CDATA[
+				 SELECT b.* from brokerage_fee a LEFT JOIN brokerage_fee_detail b on a.brokerage_id = b.brokerage_fee_id
+where a.business_bill_id = #businessBillId# 
+			]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="getBrokerageFeeDetail" >
+        <extraparams>
+            <param name="businessBillId" javatype="long" />
+            <param name="appserialPeriod" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  brokerage_fee_detail_id ,brokerage_fee_id ,appserial_period ,borkerage_scale ,receivable_amount ,plan_pay_date ,actual_pay_date ,raw_add_time ,update_add_time  FROM brokerage_fee_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+           <![CDATA[
+				 SELECT b.* from brokerage_fee a LEFT JOIN brokerage_fee_detail b on a.brokerage_id = b.brokerage_fee_id
+where a.business_bill_id = #businessBillId# and b.appserial_period = #appserialPeriod#
+			]]>
+        </sqlmap>
+    </operation>
+</table>

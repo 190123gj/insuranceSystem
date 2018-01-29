@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="google" content="notranslate" />
+    <meta http-equiv="Cache-control" content="no-cache">
+    <title></title>
+    <script src="conf/conf.js" type="text/javascript"></script>
+    <script src="conf/include.js" type="text/javascript"></script>
+    
+</head>
+
+<body>
+	<div class="easyui-layout" fit="true" border="true">  
+		<div data-options="region:'north'" style="height:38px">
+		    <div class="easyui-layout" fit="true" border="false" >
+		        <div data-options="region:'west',border:false" style="width:550px;padding:1px;">
+					<div id="frame_north_menus" class="easyui-panel" data-options="border:true" style="margin-top:0px;">
+					</div>
+					<div id="frame_north_pulist" class="easyui-panel" data-options="border:true" style="margin-top:0px;">
+					</div>
+		        </div>
+		        <div id="frame_north_center" data-options="region:'center',border:false" style="text-align:center;" >
+		        	<div class="logo"></div>
+		        </div>
+		        <div data-options="region:'east',border:false" style="width:45%;padding:1px;">
+					<a id="about_btn" class="easyui-linkbutton" data-options="iconCls:'icon-help',plain:true" style="float:right;margin-top:4px;" ></a>
+					<div id="ver_span" style="margin:0px 5px;text-align:right;float:right;height:32px;line-height:32px;display: none;"></div>
+					<div id="time_span" style="text-align:right;float:right;height:32px;line-height:32px;"></div>
+		        </div>
+		    </div>
+	
+		</div>
+		<div data-options="region:'center',title:'',border:false,iconCls:'icon-ok'" >
+			<div id="frame_tabs" class="easyui-tabs" border="false" fit="true" style="width:auto;height:auto">
+			</div>
+		</div>
+	</div>
+	
+	<div id="login_dlg" data-options="iconCls:'icon-save',closable:false,closed:true,hidden:true" style="width:320px;height:200px;padding:10px"></div>
+	<div id="version_dlg"></div>
+	
+</body>
+</html>

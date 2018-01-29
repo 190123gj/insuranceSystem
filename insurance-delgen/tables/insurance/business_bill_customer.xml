@@ -1,0 +1,105 @@
+<table sqlname="business_bill_customer">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO business_bill_customer(bill_customer_id,customer_user_id,customer_user_name,customer_cert_type,customer_cert_no,relation,type,business_bill_id,bill_no) VALUES (?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO business_bill_customer(bill_customer_id,customer_user_id,customer_user_name,customer_cert_type,customer_cert_no,relation,type,business_bill_id,bill_no) VALUES (#billCustomerId#,#customerUserId#,#customerUserName#,#customerCertType#,#customerCertNo#,#relation#,#type#,#businessBillId#,#billNo#)
+		        <selectKey  resultClass ="long"  keyProperty ="billCustomerId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE business_bill_customer SET customer_user_id=?,customer_user_name=?,customer_cert_type=?,customer_cert_no=?,relation=?,type=?,business_bill_id=? WHERE bill_customer_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  bill_customer_id ,customer_user_id ,customer_user_name ,customer_cert_type ,customer_cert_no ,relation ,type ,business_bill_id,bill_no  FROM business_bill_customer WHERE bill_customer_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM business_bill_customer WHERE bill_customer_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  bill_customer_id ,customer_user_id ,customer_user_name ,customer_cert_type ,customer_cert_no ,relation ,type ,business_bill_id  FROM business_bill_customer WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  bill_customer_id ,customer_user_id ,customer_user_name ,customer_cert_type ,customer_cert_no ,relation ,type ,business_bill_id  FROM business_bill_customer where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM business_bill_customer WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM business_bill_customer  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    
+    <operation name="findBusinessBillCustomers" paramtype="String" multiplicity="many">
+     
+  		 <sql>
+            <![CDATA[
+					SELECT  bill_customer_id ,customer_user_id ,customer_user_name ,customer_cert_type ,customer_cert_no ,relation ,type ,business_bill_id,bill_no  FROM business_bill_customer  WHERE bill_no =  ?
+	        ]]>
+        </sql>
+    </operation>
+    
+    
+     <operation name="findBillCustomerInfo" >
+        <sql>
+            <![CDATA[
+			  SELECT  bill_customer_id ,customer_user_id ,customer_user_name ,customer_cert_type ,customer_cert_no ,relation ,type ,business_bill_id,bill_no  FROM business_bill_customer WHERE business_bill_id=? and type=?
+			]]>
+        </sql>
+    </operation>
+</table>

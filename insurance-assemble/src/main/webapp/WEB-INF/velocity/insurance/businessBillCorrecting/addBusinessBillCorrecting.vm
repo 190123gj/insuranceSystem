@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保后管理&nbsp;&gt;&nbsp;保单批改&nbsp;&gt;&nbsp;批改申请
+</div>
+
+
+<div class="m-main border ui-bg-fff">
+    <form id="form" action="/insurance/businessBillCorrecting/editSubmit.json" method="POST">
+     <h2 class="m-htitle fn-mb20 fn-mt20"><span>批改信息</span></h2>
+		<div class="m-item">
+            <label class="m-label">批单号：</label>
+            <div>$!{info.businessBillCorrectingNo}</div>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="hidden" name="businessBillCorrectingNo"  value="$!{info.businessBillCorrectingNo}">
+        </div>
+        
+	    <div class="m-item">
+                <label class="m-label">选择需批改的保单：</label>
+                <input class="ui-text fn-w200 fnInput ignore" type="text" name="insuranceNo" id="insuranceNo" value="$!{info.priceContactNo}" readOnly>
+                <input type="hidden" name="businessBillId" id="businessBillId">
+                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue" id="fnToChooseBusinessBill">选择</a>
+        </div>
+        <div class="businessBillInfo fn-hide">
+        	<div class="m-item">
+        		<input type="checkbox" value="1"/>退保
+        	</div>
+        	<div class="fn-clear">
+	            <div class="m-item m-item-half fn-left">
+	                <label class="m-label">保单号：</label>
+	                <div>$!{info.insuranceNo}</div>
+	            </div>
+	            
+	            <div class="m-item m-item-half fn-left">
+	                <label class="m-label">业务单号：</label>
+	                <div>$!{info.invoiceNo}</div>
+	            </div>
+	            
+	              <div class="m-item m-item-half fn-left">
+	                <label class="m-label">询价单号：</label>
+	                <div></div>
+	            </div>
+	
+	
+	            <div class="m-item m-item-half fn-left">
+	                <label class="m-label">续保单号：</label>
+	                <div></div>
+	            </div>
+	
+	              <div class="m-item m-item-half fn-left">
+	                <label class="m-label">发票号：</label>
+	                <div>$!{info.invoiceNo}</div>
+	            </div>
+        </div>
+        
+        <!--寿险批改-->
+	      <div class="lifeInsurance fn-hide">
+	       <div class="m-item diyNameBox">
+            <label class="m-label">客户信息：</label>
+            <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac"></th>
+                        <th class="fn-tac">名称</th>
+                        <th class="fn-tac">证件类型</th>
+                        <th class="fn-tac">证件号码</th>
+                        <th class="fn-tac">关系</th>
+                    </tr>
+                    <tr class="itemLine" diyname="businessBillCustomerOrder">
+                        <td class="fn-tac">投保人</td>
+                        <td class="fn-tac">
+                            <input class="ui-text fn-w200 fn-validate" type="text" id="policyHolder" name="customerUserName" readonly  value="$!{policyHolder.customerUserName}">
+                        	<input type="hidden" name="customerUserId" id="policyHolderId" value="$!{policyHolder.customerUserId}">
+                            <input type="hidden" value="0" name="type" />
+                        </td>
+                        <td class="fn-tac certType1">$!{policyHolder.customerCertType}</td>
+                        <input type="hidden" name="customerCertType" id="certType1" value="$!{policyHolder.customerCertType}" />
+                        <td class="fn-tac certNo1">$!{policyHolder.customerCertNo}</td>
+                        <input type="hidden" name="customerCertNo" id="certNo1" value="$!{policyHolder.customerCertNo}"/>
+                        <td class="fn-tac">
+                            <select class="ui-select fn-w200 fn-validate" name="relation" readOnly >
+                                <option value="">请选择</option>
+                                #foreach($relationInfos in $customerRelation)
+                                    <option value="$relationInfos.name" #if ($relationInfos.name == $policyHolder.relation) selected #end>$relationInfos.name</option>
+                                #end
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="itemLine" diyname="businessBillCustomerOrder">
+                        <td class="fn-tac">被保险人</td>
+                        <td class="fn-tac m-item">
+                            <input class="ui-text fn-w200 fn-validate" type="text" id="insuredPerson" name="customerUserName" readonly  value="$!{insuredPerson.customerUserName}" >
+                       		<input type="hidden" name="customerUserId"  id="insuredPersonId" value="$!{insuredPerson.customerUserId}">
+                            <input type="hidden" value="1" name="type" />
+                        </td>
+                        <td class="fn-tac certType2">$!{insuredPerson.customerCertType}</td>
+                         <input type="hidden" name="customerCertType" id="certType2" value="$!{insuredPerson.customerCertType}"/>
+                        <td class="fn-tac certNo2">$!{insuredPerson.customerCertNo}</td>
+                         <input type="hidden" name="customerCertNo" id="certNo2" value="$!{insuredPerson.customerCertNo}"/>
+                        <td class="fn-tac">
+                            <select class="ui-select fn-w200 fn-validate" name="relation" readOnly >
+                                <option value="">请选择</option>
+                                #foreach($relationInfos in $customerRelation)
+                                    <option value="$relationInfos.name" #if ($relationInfos.name == $insuredPerson.relation) selected #end>$relationInfos.name</option>
+                                #end
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="m-item itemBox benefitPlanBox diyNameBox">
+            <label class="m-label">受益人信息：</label>
+            <div class="fn-mb10">
+                <label>受益方案：</label>
+                <label><input type="radio" class="radio benefitPlan" checked templateid="TMP_BENEFIT_PLAN_ORDER" name="status"/>顺序</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input type="radio" class="radio benefitPlan" templateid="TMP_BENEFIT_PLAN_SCALE" name="status"/>比例</label>
+                <input type="hidden" class="ignore allScaleNum" value="0">
+            </div>
+            <table class="m-table m-table-list itemsList" style="width: 96%;">
+                <tr>
+                    <th class="fn-tac fn-w100">受益顺序</th>
+                    <th class="fn-tac fn-w100 fn-hide">受益比例（%）</th>
+                    <th class="fn-tac">受益人名称</th>
+                    <th class="fn-tac">证件类型</th>
+                    <th class="fn-tac">证件号码</th>
+                </tr>
+                  #foreach ($list in $!{findBusinessBillBeneficiarys})
+                	 <tr>
+	                    <td class="fn-tac">$!list.beneficiaryVal</td>
+	                    <td class="fn-tac">$!list.beneficiaryUserName</td>
+	                    <td class="fn-tac">$!list.beneficiaryCertType</td>
+	                    <td class="fn-tac">$!list.beneficiaryCertNo</td>
+               		 </tr> 
+                  #end
+            </table>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">承保信息</label>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>投保日期：</label>
+            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="insuranceDate" #if($!info.businessBillId > 0) disabled #end  type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="insuranceDate" value="$!dateUtil.formatDay($!{info.beginDate})"/></div>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>保险起期：</label>
+            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="beginDate" #if($!info.businessBillId > 0) disabled #end  type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="beginDate" value="$!dateUtil.formatDay($!{info.beginDate})"/></div>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>保险止期：</label>
+            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="endDate" #if($!info.businessBillId > 0) disabled #end  type="text" onclick="laydate({istime: true,min: laydate.now(),format: 'YYYY-MM-DD'})" name="endDate" value="$!dateUtil.formatDay($!{info.beginDate})"/></div>
+        </div>
+
+        <div class="m-item itemBox diyNameBox">
+            <label class="m-label"><span class="m-required">*</span>投保内容：</label>
+            <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">保险产品</th>
+                        <th class="fn-tac">缴费期限</th>
+                        <th class="fn-tac">保额</th>
+                        <th class="fn-tac">首期保费</th>
+                    </tr>
+                    #set($productId = 0)
+                    #if ($!info.businessBillId > 0 )
+                        #foreach ($list in $!{contactLetterDetails})
+                            <tr>
+                                <td class="fn-tac">$list.productName</td>
+                                <td class="fn-tac">$list.period年</td>
+                                <td class="fn-tac">$list.insuranceAmount</td>
+                                <td class="fn-tac">$list.firstPremiumAmount元</td>
+                            </tr>
+                        #end
+                    #else
+                        #foreach ($list in $!{insuranceContactLetterDetails})
+                          #set($productId = $list.productId)
+                            <tr>
+                                <td class="fn-tac">$list.productName</td>
+                                <td class="fn-tac">$list.period年</td>
+                                <td class="fn-tac">$list.insuranceAmount</td>
+                                <td class="fn-tac">$list.firstPremiumAmount元</td>
+                            </tr>
+                        #end
+                    #end
+                </table>
+                <input type="hidden" value="$!{amount}" name="premiumAmount" />
+                <input type="hidden" value="$!productId" name="productId" id="productId" />
+            </div>
+        </div>
+	        
+	        </div>
+	        
+	        
+	        
+	        
+	         <!--非寿险批改-->
+	        <div class="noLifeInsurance fn-hide">
+	        
+	        	 <h2 class="m-htitle fn-mb20 fn-mt20"><span>客户信息</span></h2>
+            <div class="m-item">
+                <label class="m-label">客户名称：</label>
+                <input class="ui-text fn-w200 fnInput type="text" value="$!{insuranceContactLetterInfo.customerUserName}" disabled="true">
+            </div>
+
+            <div class="m-item">
+                <label class="m-label">客户性别：</label>
+                <div>$!{insuranceContactLetterInfo.customerUserSex}</div>
+            </div>
+
+            <div class="m-item">
+                <label class="m-label">出生日期：</label>
+                <input class="ui-text fn-w200 fnInput type="text" value="$!{insuranceContactLetterInfo.customerUserBirth}"  disabled="true">
+            </div>
+
+          <h2 class="m-htitle fn-mb20 fn-mt20"><span>承保信息</span></h2>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>投保日期：</label>
+            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="insuranceDate" #if($!info.businessBillId > 0) disabled #end  type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="insuranceDate" value="$dateUtil.simpleFormat($!{info.beginDate})"/></div>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>保险起期：</label>
+            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="beginDate" #if($!info.businessBillId > 0) disabled #end  type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="beginDate" value="$dateUtil.simpleFormat($!{info.beginDate})"/></div>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>保险止期：</label>
+            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="endDate" #if($!info.businessBillId > 0) disabled #end  type="text" onclick="laydate({istime: true,min: laydate.now(),format: 'YYYY-MM-DD'})" name="endDate" value="$dateUtil.simpleFormat($!{info.beginDate})"/></div>
+        </div>
+
+        <div class="m-item itemBox diyNameBox">
+            <label class="m-label"><span class="m-required">*</span>投保内容：</label>
+            <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">保险产品</th>
+                        <th class="fn-tac">保额</th>
+                        <th class="fn-tac">保费</th>
+                        <th class="fn-tac">经纪费</th>
+                    </tr>
+                    #set($productId = 0)
+                    #if ($!info.businessBillId > 0 ) 
+                    	 #foreach ($list in $!{contactLetterDetails})
+	                    <tr>
+	                        <td class="fn-tac">$!list.productName</td>
+	                        <td class="fn-tac">$!list.insuranceAmount</td>
+	                        <td class="fn-tac">$!list.premiumAmount</td>
+	                        <td class="fn-tac">$!list.brokerAmount</td>
+	                    </tr>
+	                      #end
+	                #else
+	                    #foreach ($list in $!{insuranceContactLetterDetails})
+	                     #set($productId = $list.productId)
+		                    <tr>
+		                        <td class="fn-tac">$!list.productName</td>
+		                        <td class="fn-tac">$!list.insuranceAmount</td>
+		                        <td class="fn-tac">$!list.premiumAmount</td>
+		                        <td class="fn-tac">$!list.brokerAmount</td>
+		                    </tr>
+	                    #end
+                    #end
+                <input type="hidden" value="$!{amount}" name="premiumAmount" />
+                <input type="hidden" value="$!productId" name="productId" id="productId" />
+                </table>
+            </div>
+        </div>
+	        </div>
+	        
+	        
+	         <!--非寿险定额批改-->
+	        <div class="noLifeInsuranceQuota fn-hide">
+	        
+	        <h2 class="m-htitle fn-mb20 fn-mt20"><span>客户信息</span></h2>
+                <div class="m-item">
+                    <label class="m-label">地址：</label>
+                    <input class="ui-text fn-w200 fnInput type="text" value="$!{insuranceContactLetterInfo.customerUserAddress}" disabled="true">
+                </div>
+
+                <div class="m-item">
+                    <label class="m-label">证件类型：</label>
+                    <input class="ui-text fn-w200 fnInput type="text" value="$!{insuranceContactLetterInfo.customerCertType}"  disabled="true">
+                </div>
+
+                <div class="m-item">
+                    <label class="m-label">证件号码：</label>
+                    <input class="ui-text fn-w200 fnInput type="text" value="$!{insuranceContactLetterInfo.customerCertNo}"   disabled="true">
+                </div>
+
+                <h2 class="m-htitle fn-mb20 fn-mt20"><span>承保联系函信息</span></h2>
+		       	 <div class="m-item">
+		            <label class="m-label"><span class="m-required">*</span>投保日期：</label>
+		            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="insuranceDate" #if ($!info.businessBillId > 0) disabled #end   type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="insuranceDate" value="$dateUtil.simpleFormat($!{info.beginDate})"/></div>
+		        </div>
+		
+		
+		        <div class="m-item">
+		            <label class="m-label"><span class="m-required">*</span>保险起期：</label>
+		            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="beginDate" #if ($!info.businessBillId > 0) disabled #end   type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="beginDate" value="$dateUtil.simpleFormat($!{info.beginDate})"/></div>
+		        </div>
+
+		        <div class="m-item">
+		            <label class="m-label"><span class="m-required">*</span>保险止期：</label>
+		            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="endDate" #if ($!info.businessBillId > 0) disabled #end  type="text" onclick="laydate({istime: true,min: laydate.now(),format: 'YYYY-MM-DD'})" name="endDate" value="$dateUtil.simpleFormat($!{info.beginDate})"/></div>
+		        </div>
+		        
+		         <div class="m-item">
+		            <label class="m-label"><span class="m-required">*</span>保险产品：</label>
+		            <div> <input class="ui-text fn-w200" type="text" disabled value="$!{insuranceContactLetterInfo.productName}"/></div>
+		            <input type="hidden" value="$!{insuranceContactLetterInfo.productId}" id="productId"/>
+		        </div>
+
+                <div class="m-item">
+                    <label class="m-label"><span class="m-required">*</span>保障期限：</label>
+                    <input class="ui-text fn-w200 fn-validate" disabled type="text" value="$!{insuranceContactLetterInfo.guaranteePeriod}">
+                </div>
+                <div class="m-item">
+                    <label class="m-label"><span class="m-required">*</span>档次：</label>
+                    <div>
+                        <select class="ui-select fn-w200" disabled>
+                            <option value="$!{insuranceContactLetterInfo.productLevelId}">$!{insuranceContactLetterInfo.productLevelLevel}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="m-item">
+                    <label class="m-label"><span class="m-required">*</span>保费：</label>
+                    <input class="ui-text fn-w200 fnInput" type="text" value="$!{insuranceContactLetterInfo.premiumAmount}" disabled>
+                    <input type="hidden" value="$!{insuranceContactLetterInfo.premiumAmount}" name="premiumAmount">
+                </div>
+
+                <div class="m-item">
+                    <label class="m-label"><span class="m-required">*</span>是否随车销售：</label>
+                    <input type="radio" class="fn-validate" #if ($!insuranceContactLetterInfo.isCarSales == "YES") checked #end  disabled />是
+                    <input type="radio" class="fn-validate" #if ($!insuranceContactLetterInfo.isCarSales == "NO") checked #end  disabled/>否
+                </div>
+                
+                #if ($!insuranceContactLetterInfo.isCarSales == "YES")
+                 <div class="m-item">
+                    <label class="m-label"><span class="m-required">*</span>车牌号：</label>
+                    <input class="ui-text fn-w200 fnInput" type="text" value="$!{insuranceContactLetterInfo.plateNumber}" disabled>
+                </div>
+                #end
+	        </div>
+        </div>
+        <div class="commonInfo fn-hide">
+          #parse("/insurance/businessBill/commonInfo.vm")
+		</div>
+    </form>
+</div>
+
+#parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    seajs.use($_GLOBAL.zyw+'/businessBillCorrecting/addBusinessBillCorrecting');
+</script>
+
+</body>
+</html>

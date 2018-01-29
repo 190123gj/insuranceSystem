@@ -1,0 +1,26 @@
+{
+    "imageActionName": "upload", 
+    "imageMaxSize": 20480000, 
+    "imageAllowFiles": [".png", ".jpg", ".jpeg", ".bmp",".tiff"],
+    "imageUrlPrefix" : "", 
+                            
+    "scrawlActionName": "upload", 
+    "scrawlMaxSize": 20480000,
+    "scrawlUrlPrefix" : "", 
+
+    "videoActionName": "upload", 
+    "videoMaxSize": 1024000000, 
+    "videoAllowFiles": [
+        ".mp4", ".flv", ".mkv", ".mpg", ".mpeg", ".avi", ".3gp", ".mpg"],
+    "videoUrlPrefix" : "",
+ 
+    "fileActionName": "upload", 
+    "fileMaxSize": 512000000, 
+    "fileAllowFiles": [
+        ".png", ".jpg", ".jpeg", ".bmp",".tiff",
+        ".mp4", ".flv", ".mkv", ".mpg", ".mpeg", ".avi", ".3gp", ".mpg",
+        "apk",".rar", ".zip", ".tar", ".gz", ".7z", ".bz2", ".cab", ".iso",
+        ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf", ".txt", ".md", ".xml"
+    ],
+    "fileUrlPrefix" : ""
+}

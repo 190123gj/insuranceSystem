@@ -1,0 +1,107 @@
+<table sqlname="customer_bank_info">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO customer_bank_info(id,user_id,bank_card_name,bank_card_no,open_bank_name,bank_type,bank_province,bank_city,is_default,bank_order,remark,raw_add_time,is_del) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO customer_bank_info(id,user_id,bank_card_name,bank_card_no,open_bank_name,bank_type,bank_province,bank_city,is_default,bank_order,remark,raw_add_time,is_del) VALUES (#id#,#userId#,#bankCardName#,#bankCardNo#,#openBankName#,#bankType#,#bankProvince#,#bankCity#,#isDefault#,#bankOrder#,#remark#,#rawAddTime#,#isDel#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+		UPDATE customer_bank_info SET user_id=?,bank_card_name=?,bank_card_no=?,open_bank_name=?,bank_type=?,bank_province=?,bank_city=?,is_default=?,bank_order=?,remark=?,is_del=? WHERE id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			 	  SELECT  id ,user_id ,bank_card_name ,bank_card_no ,open_bank_name ,bank_type ,bank_province ,bank_city ,is_default ,bank_order ,remark ,raw_add_time ,raw_update_time ,is_del  FROM customer_bank_info WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM customer_bank_info WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+  <operation name="deleteByUserId" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM customer_bank_info WHERE user_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,user_id ,bank_card_name ,bank_card_no ,open_bank_name ,bank_type ,bank_province ,bank_city ,is_default ,bank_order ,remark ,raw_add_time ,raw_update_time ,is_del  FROM customer_bank_info  WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	       	SELECT  id ,user_id ,bank_card_name ,bank_card_no ,open_bank_name ,bank_type ,bank_province ,bank_city ,is_default ,bank_order ,remark ,raw_add_time ,raw_update_time ,is_del  FROM customer_bank_info  where 1=1
+
+             <dynamic>
+	           <isGreaterThan property="customerBankInfo.userId" compareValue="0"  prepend=" and ">
+				    user_id = #customerBankInfo.userId#
+			   </isGreaterThan>
+	        </dynamic>
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+              <isGreaterThan property="pageSize" compareValue="0"  prepend=" ">
+				LIMIT #limitStart#,#pageSize#
+			</isGreaterThan>
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM customer_bank_info WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM customer_bank_info  where 1=1
+	           <dynamic>
+	           <isGreaterThan property="customerBankInfo.userId" compareValue="0"  prepend=" and ">
+				    user_id = #customerBankInfo.userId#
+			   </isGreaterThan>
+	        </dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

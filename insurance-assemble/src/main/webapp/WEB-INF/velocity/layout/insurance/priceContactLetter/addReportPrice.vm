@@ -1,0 +1,76 @@
+<div class="m-item diyNameBox">
+    <input type="hidden" name="letterDemandId" value="$!info.demandInfos.get(0).id">
+    <label class="m-label"><span class="m-required">*</span>保险公司报价：</label>
+    <div class="fn-wp90 itemBox">
+        <table class="m-table m-table-list itemsList">
+            <tr>
+                <th class="fn-tac">公司名称</th>
+                <th class="fn-tac">险种</th>
+                <th class="fn-tac">保险费</th>
+                <th class="fn-tac">经纪费</th>
+                <th class="fn-tac">附件</th>
+                <th class="fn-tac">说明</th>
+                <th class="fn-tac">报价时间</th>
+                <th class="fn-tac">差异内容</th>
+                <th class="fn-tac">特别约定</th>
+                <th class="fn-tac">前提条件</th>
+                <th class="fn-tac">报价有效期</th>
+                <th class="fn-tac">操作</th>
+            </tr>
+
+            <tr diyname="detailOrders" class="itemLine">
+                <td class="fn-tac">
+                    <input class="text" type="hidden" name="customerUserId"
+                           id="customerUserId" value="">
+                    <input class="text" type="text" name="customerUserName"
+                           id="customerUserName" value="">
+                </td>
+
+                <td class="fn-tac">
+                    <input class="text" type="hidden" name="insuranceCatalogId"
+                           id="insuranceCatalogId" value="">
+                    <input class="text" type="text" name="insuranceCatalogName"
+                           id="insuranceCatalogName" value="">
+                </td>
+
+                <td class="fn-tac">
+                    <input class="text" type="text" name="premiumAmount" id="premiumAmount" value="">
+                </td>
+                <td class="fn-tac">
+                    <input class="text" type="text" name="brokerAmount" id="brokerAmount" value="">
+                </td>
+                <td class="fn-tac">
+                    <input class="text" type="text" name="attatch" id="attatch" value="">
+                </td>
+
+                <td class="fn-tac">
+                    <input class="text" type="text" name="remark" id="remark" value="">
+                </td>
+                <td class="fn-tac">
+                    <input class="text" type="text" name="createDate" id="createDate" value="">
+                </td>
+                <td class="fn-tac">
+                    <input class="text" type="text" name="differenceContent" id="differenceContent" value="">
+                </td>
+
+                <td class="fn-tac">
+                    <input class="text" name="specialAgreement" id="specialAgreement" value="">
+                </td>
+
+                <td class="fn-tac">
+                    <input class="text" name="quotationPrerequisite" id="quotationPrerequisite" >
+                </td>
+
+                <td class="fn-tac">
+                    <input class="text" type="text" name="expiryDate" id="expiryDate" value="">
+                </td>
+                <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+            </tr>
+
+        </table>
+        <div class="fn-tar fn-mt20">
+            <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_TELPHONE" tplID="t-tbodyZZZS"
+               cttID="tbodyZZZS" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+        </div>
+    </div>
+</div>

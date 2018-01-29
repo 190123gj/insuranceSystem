@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:jaxws="http://cxf.apache.org/jaxws"
+		xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+ 	
+ 	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	 
+
+	
+	<jaxws:endpoint implementor="#dateSeqService" address="/dateSeqService" />
+	<jaxws:endpoint implementor="#sysParameterService" address="/sysParameterService" />
+	<jaxws:endpoint implementor="#operationJournalService" address="/operationJournalService" />
+	
+	<jaxws:endpoint implementor="#formService" address="/formService" /> <!-- 表单公用service -->
+
+	
+
+
+	
+	<jaxws:endpoint implementor="#commonAttachmentService" address="/commonAttachmentService" />
+
+
+	<jaxws:endpoint implementor="#smsService" address="/smsService" />
+
+
+	<jaxws:endpoint implementor="#formRelatedUserService" address="/formRelatedUserService" />
+	
+	<jaxws:endpoint implementor="#sysWebAccessTokenService" address="/sysWebAccessTokenService" />
+	
+	<jaxws:endpoint implementor="#siteMessageService" address="/siteMessageService" /> <!-- 站内信 -->
+	
+	<jaxws:endpoint implementor="#mailService" address="/mailService" /> <!-- 邮件 -->
+	
+
+	<jaxws:endpoint implementor="#userExtraMessageService" address="/userExtraMessageService" /><!-- 用户额外信息 -->
+	
+
+	<jaxws:endpoint implementor="#sysDbBackupService" address="/sysDbBackupService" /><!-- 数据库备份 -->
+	
+
+
+</beans>

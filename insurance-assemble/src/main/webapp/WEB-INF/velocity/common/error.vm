@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<title>出错啦~</title>
+</head>
+<body>
+
+<div class="m-main ui-bg-fff">
+
+    <div class="ui-page-error">
+        <h1 class="title">对不起， 您访问的页面出错了</h1>
+        <p class="text">您可以通过以下方式继续访问……</p>
+        <p><a href="/" target="_top" class="ui-btn ui-btn-submit ui-btn-next">返回首页</a></p>
+    </div>
+    <!--
+			<div class="fn-container">
+			<div class="fn-clear">
+				<h1 class="fn-left"><a href="/"></a></h1>
+				<ul class="fn-clear fn-right list3-box">
+					<li class="icon1">
+						出错了！！</br></li>
+					<li class="icon1">
+						$!{ex.message}</br></li>
+					<li class="icon1">
+						$!{error.message}</li>	
+				
+				</ul>
+			</div>
+		</div>
+	-->
+</div>
+
+#parse("/layout/common/footer.vm")
+
+## #parse("/layout/common/commonjs.vm")
+
+<script>
+    //seajs.use($_GLOBAL.zyw+'/project/bfcg.cgnt.list');
+</script>
+
+</body>
+</html>

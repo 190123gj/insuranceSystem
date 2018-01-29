@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="insurance-dalgen" default="release" basedir=".">
+    <!-- define properties -->
+    <property name="name" value="insurance-dalgen" />
+    <property name="dal.name" value="insurance" />
+    <property environment="env"/>
+    <loadproperties srcFile="db.properties" />
+    <!-- properties for directory -->
+    <property name="dir.conf" value="${user.home}/.middlegen/conf" />
+    <property name="dir.lib" value="${user.home}/.middlegen/lib" />
+    <property name="dir.target" value="${basedir}/target" />
+    <property name="dir.deploy" value="${basedir}/../insurance-dal/src/main" />
+
+    <!-- properties for middlegen plugin -->
+    <property name="middlegen.templates" value="templates" />
+    <property name="middlegen.destination" value="${dir.deploy}" />
+    <property name="middlegen.config.file" value="${basedir}/dal-config-yrd.xml" />
+    <property name="middlegen.package" value="com.born.insurance.dal" />
+    <property name="middlegen.package.dir" value="com\born\insurance\dal" />
+
+
+    <!-- mysql -->
+    <property name="database.driver.file" value="${dir.lib}/mysql-connector-java-5.1.14.jar" />
+    <property name="database.driver.classpath" value="${database.driver.file}" />
+    <property name="database.driver" value="com.mysql.jdbc.Driver" />
+
+    <!-- classpath -->
+    <path id="classpath.main">
+        <pathelement path="${dir.conf}" />
+        <fileset dir="${dir.lib}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <!-- compile middlegen plugin -->
+    <target name="compile" depends="" description="">
+        <mkdir dir="${dir.lib}" />
+        <mkdir dir="${dir.conf}" />
+        <copy todir="${dir.lib}">
+            <fileset dir="${env.ANTX_HOME}/repository/alipay/thirdparty/dalgen_10">
+                <include name="**/*.jar" />
+                <exclude name="**/*src.jar" />
+                <exclude name="**/*doc.jar" />
+            </fileset>
+        </copy>
+        <unjar src="${dir.lib}/alipay-tools-dalgen-1.1.0.20100316.jar" dest="${dir.conf}" />
+        <copy file="${dir.conf}/middlegen-plugin.xml" todir="${dir.conf}/META-INF" />
+    </target>
+
+    <!-- sanity check (database driver must be available) -->
+    <target name="check-driver-present">
+        <available file="${database.driver.file}" type="file" property="driver.present" />
+    </target>
+    <target name="panic-if-driver-not-present" unless="driver.present">
+        <fail>
+            JDBC驱动程序"${database.driver.file}"不存在        </fail>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Run Middlegen                                                       -->
+    <!-- =================================================================== -->
+    <target name="middlegen" depends="compile,check-driver-present,panic-if-driver-not-present" description="">
+
+        <taskdef name="middlegen" classname="middlegen.MiddlegenTask" classpathref="classpath.main" />
+        <echo message="" />
+        <input message="请输入目标表名,多表以逗号分隔,全表生成请输入'*',只生成Sequence请输入'seq': " addproperty="tabs" />
+
+        <echo message="DAL配置文件：{middlegen.config.file}." />
+        <echo message="开始自动生成DAL..." />
+
+        <mkdir dir="${middlegen.destination}" />
+        <middlegen configfile="${middlegen.config.file}" runModel="SOFA" tabs="${tabs}" appname="${name}" databaseurl="${database.yrd.url}" driver="${database.driver}" username="${database.userid}" password="${database.password}" schema="${database.schema}" prefsdir="${dir.target}">
+
+            <iwallet destination="" mergedir="${middlegen.templates}/mergedir" package="${middlegen.package}">
+                <!-- 为每一张表生成一个数据对象类 -->
+                <fileproducer destination="${middlegen.destination}/java/${middlegen.package.dir}" template="${middlegen.templates}/do.vm" filename="dataobject/{0}DO.java" />
+
+                <!-- 为每一张表生成一个DAO接口 -->
+                <fileproducer destination="${middlegen.destination}/java/${middlegen.package.dir}" template="${middlegen.templates}/dao.vm" filename="daointerface/{0}DAO.java" />
+
+                <!-- 为每一张表生成ibatis DAO实现 -->
+                <fileproducer destination="${middlegen.destination}/java/${middlegen.package.dir}" template="${middlegen.templates}/ibatis.vm" filename="ibatis/Ibatis{0}DAO.java" />
+
+                <!-- 为每一张表生成一个sqlmapping文件 -->
+                <fileproducer destination="${middlegen.destination}/resources" template="${middlegen.templates}/table-sqlmap-mapping.vm" filename="sqlmap/{0}-sqlmap-mapping.xml" />
+
+                <!-- 生成公共的sqlmapping文件 
+                <fileproducer destination="${middlegen.destination}/resources" template="${middlegen.templates}/common-sqlmap-mapping.vm" filename="sqlmap/common-sqlmap-mapping.xml" />
+				-->
+				
+                <!-- 生成ibatis的配置文件 -->
+                <fileproducer destination="${middlegen.destination}/resources" template="${middlegen.templates}/sqlmap.vm" filename="sqlmap/sqlmap.xml" />
+
+                <!-- 生成DAO beans的Spring配置文件 -->
+                <fileproducer destination="${middlegen.destination}/resources/spring" template="${middlegen.templates}/beans-dal-dao.vm" filename="${dal.name}-common-dal-dao.xml" />
+            </iwallet>
+        </middlegen>
+        <echo message="DAL生成已成功!" />
+    </target>
+
+    <target name="clean-perf" depends="" description="">
+        <delete dir="${dir.target}/*.properties" />
+    </target>
+
+    <target name="clean-middlegen" depends="" description="">
+        <delete dir="${user.home}/.middlegen/lib" />
+        <delete dir="${user.home}/.middlegen/conf" />
+    </target>
+
+    <target name="clean" depends="clean-perf,clean-middlegen" description="clean all generated stuff" />
+
+    <!-- The default target to use -->
+    <target name="release" depends="clean,middlegen" description="" />
+</project>

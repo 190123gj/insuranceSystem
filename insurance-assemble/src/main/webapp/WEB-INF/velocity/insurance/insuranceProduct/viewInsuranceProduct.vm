@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title></title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;资源管理&nbsp;&gt;&nbsp;产品管理&nbsp;&gt;&nbsp;产品详情
+</div>
+<h2 class="m-h2-title">产品详情</h2>
+<div class="fn-blank20"></div>
+<div class="m-main border ui-bg-fff">
+		<div class="m-item">
+            <label class="m-label">产品名称：</label>
+           	<div>$!{info.productName}</div>
+        </div>
+        
+          <div class="m-item">
+            <label class="m-label">简称一：</label>
+            <div>$!{info.abbr1}
+                简称二：$!{info.abbr2}
+                简称三：$!{info.abbr3}
+            </div>
+        </div>
+        
+        <div class="m-item">
+            <label class="m-label">保险公司：</label>
+           	<div>$!{info.companyUserName}</div>
+        </div>
+        
+        <div class="m-item">
+            <label class="m-label">备案号：</label>
+           	<div>$!{info.recordNumber}</div>
+        </div>
+        
+        <div class="m-item">
+            <label class="m-label">所属险种：</label>
+           	<div>$!{info.catalogName}</div>
+        </div>
+        
+         <div class="m-item">
+		<label class="m-label">保险责任：</label>
+		<div>
+	        <table class="m-table m-table-list itemsList" width="50%">
+	            <tr>
+	                <th class="fn-tac">责任名称</th>
+	            </tr>
+	            #foreach ($catalogLiabilityInfos in $!{catalogLiabilityInfos})
+	             <tr>
+	                <td class="fn-tac">$catalogLiabilityInfos.liabilityName</td>
+	             </tr>
+	            #end
+	           
+	        </table>
+          </div>
+	</div>	
+	
+	   <div class="m-item">
+            <label class="m-label">是否寿险：</label>
+           	<div>#if ($!info.isLifeInsurance == "YES") 寿险  #else 非寿险 #end</div>
+        </div>
+		
+		#if ($!info.isLifeInsurance == "NO") 
+		 <div class="m-item">
+            <label class="m-label">是否定额：</label>
+           	<div>#if ($!info.isQuota == "YES") 是 #else 否 #end</div>
+        </div>
+		#end
+		
+		  <div class="m-item">
+            <label class="m-label">保险期限：</label>
+           	<div>
+           	#if ($!info.isLifeInsurance == "YES") 
+           		#if ($!info.insurancePeriodType == "终身") 终身 #end
+           		#if ($!info.insurancePeriodType == "年") $!{info.insurancePeriod}年 #end
+           		#if ($!info.insurancePeriodType == "岁") 到被保险人$!{info.insurancePeriod}岁 #end
+           	  #else
+           	   $!{info.insurancePeriod}年
+           #end
+           	  </div>
+        </div>
+        
+        #if ($!info.isLifeInsurance == "YES") 
+        <div class="m-item">
+            <label class="m-label">费率表：</label>
+            <div>
+            <a href="javascript:void(0)" class="ui-btn ui-btn-fill ui-btn-blue setingRatio">费率表</a>
+            <input type="hidden" name="charge" class="setingRatioArr" value='$!{info.charge}'>
+            ##定义选项
+            <input type="hidden" class="setingRatioOptinCode" value="0,1,5,10,15,20,25,30,DEFINED">
+            <input type="hidden" class="setingRatioOptinText" value="请选择,泵交,5年交,10年交,15年交,20年交,25年交,30年交,自定义">
+            </div>
+       </div>
+        #end
+
+        #if ($!info.isQuota == "YES")
+        <div class="m-item">
+            <label class="m-label">保险档次：</label>
+            <div>
+                <table class="m-table m-table-list itemsList" width="50%">
+                    <tr>
+                        <th class="fn-tac">档次</th>
+                        <th class="fn-tac">基本保额(元)</th>
+                        <th class="fn-tac">保费(元)</th>
+                    </tr>
+                    #foreach ($infoList in $!{infoList})
+                    <tr>
+                        <td class="fn-tac">$!{infoList.level}</td>
+                        <td class="fn-tac">$!{infoList.coverageAmount}</td>
+                        <td class="fn-tac">$!{infoList.premiumAmount}</td>
+                    </tr>
+                    #end
+                </table>
+            </div>
+        </div>
+        #end
+		
+		  <div class="m-item">
+            <label class="m-label">销售状态：</label>
+           	<div> #if ($!info.saleStatus == 0) 在售 #else 退市  #end </div>
+         </div>
+         
+                  <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>销售区域：</label>
+            <div class="salesAreasBox">
+                <div class="salesAreasCheckbox fn-hide">
+                    <dl class="level">
+                        <dt>
+                        <h2 class="m-htitle"><span>省/直辖市/自治区</span></h2></dt>
+                        <dd>
+                            <ul class="fn-clear fn-p15">##这里不用说了吧肯定要循环的
+                                #foreach($item in $provinceInfos)
+                                    <li class="fn-left fn-mr30">
+                                        <input class="fn-mr5" type="checkbox" value="$!{item.code}" toponymy="$!{item.name}" junior="$!{item.children}"  #foreach($item2 in $info.oneCityList) #if($!{item.code} =="$!item2.code") checked #end #end>
+                                        <a class="fn-blue fn-tdu" href="javascript:void(0)">$!{item.name}</a>
+                                    </li>
+                                #end
+                            </ul>
+                        </dd>
+                    </dl>
+                    <dl class="level" code="234">
+                        <dt>
+                        <h2 class="m-htitle"><span>市</span></h2></dt>
+                        <dd>
+                            <ul class="fn-clear fn-p15">
+
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <h2 class="m-htitle"><span>选择如下</span></h2>
+                <div class="salesAreasOutput fn-line-rl">
+                    <div class="levelOutput">##只选择了一级城市类
+                        <dl class="fn-clear">
+                            #foreach($item in $info.oneCityList)
+                                <dd class="fn-left fn-mr20" code="$!{item.code}">$!{item.name}</dd>##一级城市类的key和val
+                            #end
+                        ##
+                        </dl>
+                    </div>
+                    <div class="levelOutput">##选择了二级城市类
+                        #foreach($item in $info.twoCityList)
+                            <dl class="fn-clear" code="$!item.code">##一级城市类的key
+                                <dt class="fn-left">$!item.name：</dt>##一级城市类的val
+                                #foreach($item2 in $item.cityInfoList)
+                                    <dd class="fn-left fn-mr20" code="$!item2.code">$!item2.name</dd>##二级城市类的key和val
+                                #end
+                            </dl>
+                        #end
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+         
+         <div class="m-item">
+            <label class="m-label">可销售止日期：</label>
+           	<div>#if(!$listUtil.isEmpty($!{info.stopSaleDate})) $!dateUtil.formatDay($!{info.stopSaleDate}) #else 长期 #end</div>
+         </div>
+         
+        #if ($!info.isLifeInsurance == "YES") 
+         <div class="m-item">
+            <label class="m-label">缴费类型：</label>
+            <div>
+            #if ($!info.payType == 15) 月交  #end
+            #if ($!info.payType == 16) 季交  #end
+            #if ($!info.payType == 17) 半年交  #end
+            #if ($!info.payType == 18) 年交  #end
+            #if ($!info.payType == 19) 一次性  #end
+            </div>
+        </div>
+        #end
+        
+        ###if ($!info.isLifeInsurance == "NO")
+        ##  <div class="m-item">
+        ##    <label class="m-label">缴费年限：</label>
+        ##    #if ($stringUtil.isNotEmpty($!{info.payPeriod})) $!{info.payPeriod} #end
+        ##    </div>
+        ## </div>
+        ## #end
+         
+           <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>上传附件：</label>
+            <div class="fnUpAttach fn-mb10">
+                保险责任：
+                    #set($attachmentTitle="上传附件")
+                    #set($attachmentNameAttr="pathName_INSURANCE_PRODUCT__LIABILITY")
+                    #set($hiddenUrls = $!{hiddenUrls_INSURANCE_PRODUCT__LIABILITY})
+                    #set($attachments = $!{attaches_INSURANCE_PRODUCT__LIABILITY})
+                    #parse("/layout/common/uploadAttachment.vm")
+            </div>
+            <div class="fnUpAttach fn-mb10">
+                &nbsp&nbsp;&nbsp;费率表：
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="")
+                #set($attachmentNameAttr="pathName_INSURANCE_PRODUCT__CHARGE")
+                #set($hiddenUrls ="")
+                #set($hiddenUrls = $!{hiddenUrls_INSURANCE_PRODUCT__CHARGE})
+                #set($attachments = "")
+                #set($attachments = $!{attaches_INSURANCE_PRODUCT__CHARGE})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+            <div class="fnUpAttach fn-mb10">
+                &nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;其他：
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="pathName_INSURANCE_PRODUCT__OTHER")
+                #set($hiddenUrls ="")
+                #set($hiddenUrls = $!{hiddenUrls_INSURANCE_PRODUCT__OTHER})
+                #set($attachments = "")
+                #set($attachments=$!{attaches_INSURANCE_PRODUCT__OTHER})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </div>
+         
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <a href="/insurance/insuranceProduct/list.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+		
+		#parse("/layout/common/commonjs.vm")
+</div>
+
+<script type="text/html" id="setingRatioPopup">
+    <div class="newPopup">
+        <span class="close">×</span>
+        <dl>
+            <dt class="dt"><span>设置费用比例</span></dt>
+            <dd class="fn-mt10">
+                <div class="m-item" style="padding-left: 0;margin: 0 2%;"><span class="m-required">*</span>该表为每&nbsp;&nbsp;<input type="text" class="ui-text fn-w200 fnFloatNumber" value="$!{info.unitPrice}">元基本保障金额</div>
+                <table class="m-table" border="1">
+                    <thead>
+                    <tr class="thead1">
+                        <th class="fn-tac">性别</th>
+                        <th class="fn-tac trSexMan" colspan="{{itemsLen.colspanMan.length}}">男</th>
+                        <th class="fn-tac trSexWoman" colspan="{{itemsLen.colspanWoman.length}}">女</th>
+                    </tr>
+                    <tr class="thead2">
+                        <th style="padding:0;width:120px;height:45px;" class="onbreak">
+                            <div class="tableOut">
+                                <b style="font-size: 12px;">缴费年限</b>
+                                <em style="font-size: 12px;">投保年龄</em>
+                            </div>
+                        </th>
+                        ##男
+                        {{if itemsLen.colspanMan.length}}
+                            {{each itemsLen.colspanMan as value vlIndex}}
+                                    <td class="fn-p-reb fn-tac trSexMan">
+                                        <select class="ui-select fn-w100 paymentPeriodSelect {{if value.period == 'DEFINED'}} fn-hide {{/if}}" {{if value.period == 'DEFINED'}} disabled="true" {{/if}}>
+##                                        <option value="0">请选择</option>
+                                            {{each itemsLen.colspanManOptions.code as option opIndex}}
+                                                <option value="{{option}}" {{if value.period == option}} selected {{/if}}>{{itemsLen.colspanManOptions.text[opIndex]}}</option>
+                                            {{/each}}
+                                        </select>
+                                        <input type="text" class="fn-validate text paymentPeriodInput fnMakeNumber {{if value.period != 'DEFINED'}} fn-hide {{/if}}" {{if value.period != 'DEFINED'}} disabled="true" {{/if}} value="{{value.text}}">
+                                        {{if vlIndex>0}}
+                                        <span class="recordDelete rowDelete">━</span>
+                                        {{/if}}
+                                    </td>
+                            {{/each}}
+                        {{else}}
+                            <td class="fn-p-reb fn-tac trSexMan">
+                                <select class="ui-select fn-w100 paymentPeriodSelect">
+##                                    <option value="0">请选择</option>
+                                    {{each itemsLen.colspanManOptions.code as option opIndex}}
+                                        <option value="{{option}}" {{if value.period == option}} selected {{/if}}>{{itemsLen.colspanManOptions.text[opIndex]}}</option>
+                                    {{/each}}
+                                </select>
+                                <input type="text" class="fn-validate text paymentPeriodInput fnMakeNumber fn-hide" disabled="true">
+                            </td>
+                        {{/if}}
+                        ##女
+                        {{if itemsLen.colspanWoman.length}}
+                            {{each itemsLen.colspanWoman as value vlIndex}}
+                                <td class="fn-p-reb fn-tac trSexWoman">
+                                    <select class="ui-select fn-w100 paymentPeriodSelect {{if value.period == 'DEFINED'}} fn-hide {{/if}}" {{if value.period == 'DEFINED'}} disabled="true" {{/if}}>
+##                                        <option value="0">请选择</option>
+                                        {{each itemsLen.colspanWomanOptions.code as option opIndex}}
+                                            <option value="{{option}}" {{if value.period == option}} selected {{/if}}>{{itemsLen.colspanWomanOptions.text[opIndex]}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <input type="text" class="fn-validate text paymentPeriodInput fnMakeNumber {{if value.period != 'DEFINED'}} fn-hide {{/if}}" {{if value.period != 'DEFINED'}} disabled="true" {{/if}} value="{{value.text}}">
+                                    {{if vlIndex>0}}
+                                        <span class="recordDelete rowDelete">━</span>
+                                    {{/if}}
+                                </td>
+                            {{/each}}
+                        {{else}}
+                            <td class="fn-p-reb onbreak fn-tac trSexWoman">
+                                <select class="ui-select fn-w100 paymentPeriodSelect">
+##                                    <option value="0">请选择</option>
+                                    {{each itemsLen.colspanWomanOptions.code as option opIndex}}
+                                        <option value="{{option}}" {{if value.period == option}} selected {{/if}}>{{itemsLen.colspanWomanOptions.text[opIndex]}}</option>
+                                    {{/each}}
+                                </select>
+                                <input type="text" class="fn-validate text paymentPeriodInput fnMakeNumber fn-hide" disabled="true">
+                            </td>
+                        {{/if}}
+
+                    </tr>
+                    </thead>##{data: [{timeLimit: 1,periods: [123, 123, 123]}, {timeLimit: 3,periods: [321, 321]}],maxLength: 3}
+                    <tbody>
+                    {{if items.length}}
+                        {{each items as item i}}
+                            <tr {{if !!newly && newly[i]}} class="new" {{/if}}>
+                            <td class="fn-text-c fn-p-reb">
+                                <input type="text" class="text fnMakeNumber insureAge" value="{{item.year}}">
+##                                {{if !!newly && newly[i]}}
+##                                    <span class="recordDelete colDelete">━</span>
+##                                {{/if}}
+                            </td>
+                            ##男
+                            {{if itemsLen.colspanMan.length}}
+                                {{each itemsLen.colspanMan as tdItem j}}
+                                    <td class="fn-text-c trSexMan">
+                                        <input class="text fnMakePercent100 minZero" type="text" name="" value="{{item.man[j].charge?item.man[j].charge:''}}">
+                                    </td>
+                                {{/each}}
+                            {{/if}}
+                            ##女
+                            {{if itemsLen.colspanWoman.length}}
+                                {{each itemsLen.colspanWoman as tdItem j}}
+                                    <td class="fn-text-c trSexWoman">
+                                        <input class="text fnMakePercent100 minZero" type="text" name="" value="{{item.woman[j].charge?item.woman[j].charge:''}}">
+                                    </td>
+                                {{/each}}
+                            {{/if}}
+                            </tr>
+                        {{/each}}
+                    {{else}}
+                        <tr>
+                            <td class="fn-tac"><input class="text fnMakeNumber insureAge" type="text" name=""></td>
+                            <td class="fn-tac trSexMan"><input class="text fnMakePercent100 minZero" type="text" name=""></td>
+                            <td class="fn-tac trSexWoman"><input class="text fnMakePercent100 minZero" type="text" name=""></td>
+                        </tr>
+                    {{/if}}
+
+                    </tbody>
+                </table>
+            </dd>
+        </dl>
+    </div>
+</script>
+<script>
+ seajs.use($_GLOBAL.zyw+'/insuranceProduct/insuranceProductView');
+</script>
+</body>
+</html>

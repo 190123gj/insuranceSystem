@@ -1,0 +1,63 @@
+<div class="inquiryTemplate fn-mt20">
+        <div class="m-item">
+            <label class="m-label fn-font-b" style="font-size: 16px;">客户信息</label>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">关联超权限审批单名称：</label>
+            <input type="hidden" name="projectSetupId" id="projectSetupId" value="$!{info.projectSetupId}"/>
+            <input type="text" name="projectSetupName" id="projectSetupName" value="$!{info.projectSetupName}" class="ui-text fn-w200"/>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseProjectSetup">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToProjectSetupClear" style="color: #fff;">清除</a>
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>询价名称：</label>
+            <input type="text" class="ui-text fn-w200 fn-validate" name="name" value="$!{info.name}"/>
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>客户类型：</label>
+            <select class="ui-select fn-w200 fn-validate" name="customerType">
+                <option value="INDIVIDUAL_CUSTOMER" #if($!{info.customerType} == "INDIVIDUAL_CUSTOMER")    selected    #end>个人客户</option>
+                <option value="COMPANY_CUSTOMER" #if($!{info.customerType} == "COMPANY_CUSTOMER")    selected    #end>团体客户</option>
+            </select>
+        </div>
+        <div class="m-item customerUserParam">
+            <label class="m-label"><span class="m-required">*</span>客户名称：</label>
+            <input type="hidden"   name="customerUserId" id="customerUserId" value="$!{info.customerUserId}">
+            <input type="text" class="ui-text fn-w200 fn-validate" readonly  name="customerUserName" id="customerUserName" value="$!{info.customerUserName}">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseCostomerName">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClear" style="color: #fff;">清除</a>
+        </div>
+        <div class="m-item">
+            <label class="m-label">客户证件类型：</label>
+            <select class="ui-select fn-w200 customerUserCertType" name="customerCertType">
+                <option value="" certno="">请选择</option>
+                #foreach($!item in $!certTypes)
+                    <option certno="$!{item.certNo}" value="$!{item.certType}" #if($!info.customerCertType == $!item.certType) selected       #end>$!{item.certTypeName}</option>
+                #end
+            </select>
+        </div>
+        <div class="m-item">
+            <label class="m-label">客户证件号码：</label>
+            <input type="text" class="ui-text fn-w200 customerUserCertNo" name="customerCertNo" value="$!{info.customerCertNo}" readonly/>
+        </div>
+        <div class="m-item">
+            <label class="m-label">客户附件：</label>
+            <div class="fnUpAttach">
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="pathName_PRODUCT1_PROTOCOL")
+                #set($hiddenUrls = $!{hiddenUrls_PRODUCT1_PROTOCOL})
+                #set($attachments = $!{attaches_PRODUCT1_PROTOCOL})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>所属业务员：</label>
+            <input class="ui-text fn-w200 fnInput " type="text" name="businessUserName" id="businessUserName"  readonly value="$!{info.businessUserName}"/>
+            <input type="hidden" name="businessUserId" id="businessUserId" value="$!{info.businessUserId}"/>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseBusinessUserName" id="fnToChooseBusinessUserName" style="color: #fff;">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClearBusinessUserName" id="fnToClearBusinessUserName" style="color: #fff;">清除</a>
+        </div>
+</div>
+
+

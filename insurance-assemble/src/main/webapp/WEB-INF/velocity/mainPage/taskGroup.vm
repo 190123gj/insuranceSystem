@@ -1,0 +1,51 @@
+<div class="fn-ml20 fn-mr20">
+    <table class="m-table m-table-list fn-tac">
+        <thead>
+            <tr>
+                <th>流程</th>
+                <th>步骤名称</th>
+                <th>任务数</th>
+                <th width="100px">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            #foreach($!task in $!pageTaskGroup.result)
+                <tr>
+                    <td>$!task.processName</td>
+                    <td>$!task.name</td>
+                    <td><a href="javascript:toGroupDetail('$!task.processName','$!task.name')">$!task.total</a></td>
+                    <td>
+                       <a href="javascript:toGroupDetail('$!task.processName','$!task.name')">查看明细</a>
+                    </td>
+                </tr>
+               #set($i=$i+1)
+            #end
+        </tbody>
+    </table>
+#*    
+      #set($withOutJubmBtn = true)
+      #set($toPageCustomize = "toPageTaskGroup")
+      #set($pageCustomize = $!pageTaskGroup)
+	  #parse("/layout/common/pagesCustomize.vm")
+*#	  
+</div>
+
+<script>
+	toGroupDetail = function(processName,taskNodeName){
+        $('#taskGroupList').load("/userHome/taskGroupList.htm", {
+            'processName': processName,
+            'taskNodeName' : taskNodeName
+        }).show();
+        $('#taskGroup').hide();
+	}
+#*
+    toPageTaskGroup = function(totalPage, pageNo) {
+        if (totalPage < pageNo) {
+            return false;
+        }
+        $('#taskGroup').load("/userHome/taskGroup.htm", {
+            'pageNumber': pageNo
+        });	
+    }
+*#   
+</script>

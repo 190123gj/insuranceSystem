@@ -1,0 +1,104 @@
+<table sqlname="insurance_product_level">
+<column name="coverage_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="premium_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO insurance_product_level(level_id,level,coverage_amount,premium_amount,product_id) VALUES (?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO insurance_product_level(level_id,level,coverage_amount,premium_amount,product_id) VALUES (#levelId#,#level#,#coverageAmount#,#premiumAmount#,#productId#)
+		        <selectKey  resultClass ="long"  keyProperty ="levelId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE insurance_product_level SET level=?,coverage_amount=?,premium_amount=?,product_id=? WHERE level_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  level_id ,level ,coverage_amount ,premium_amount ,product_id  FROM insurance_product_level WHERE level_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_product_level WHERE level_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  level_id ,level ,coverage_amount ,premium_amount ,product_id  FROM insurance_product_level WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  level_id ,level ,coverage_amount ,premium_amount ,product_id  FROM insurance_product_level where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM insurance_product_level WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM insurance_product_level  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    <operation name="queryList" paramtype="long" multiplicity="many">
+        <sql>
+            <![CDATA[
+					SELECT  level_id ,level ,coverage_amount ,premium_amount ,product_id  FROM insurance_product_level WHERE product_id = ?
+	        ]]>
+        </sql>
+    </operation>
+    
+    <operation name="deleteByProductId" paramtype="long">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_product_level WHERE product_id = ?
+			]]>
+        </sql>
+    </operation>
+</table>

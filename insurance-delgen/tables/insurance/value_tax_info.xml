@@ -1,0 +1,116 @@
+<table sqlname="value_tax_info">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO value_tax_info(id,insurance_company_id,insurance_company_name,org_name,identify_number,customer_user_id,customer_user_name,mobile,org_address,open_bank_name,bank_card_no) VALUES (?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+
+        <sqlmap>
+            <![CDATA[
+				INSERT INTO value_tax_info(id,insurance_company_id,insurance_company_name,org_name,identify_number,customer_user_id,customer_user_name,mobile,org_address,open_bank_name,bank_card_no) VALUES (#id#,#insuranceCompanyId#,#insuranceCompanyName#,#orgName#,#identifyNumber#,#customerUserId#,#customerUserName#,#mobile#,#orgAddress#,#openBankName#,#bankCardNo#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+        </sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE value_tax_info SET insurance_company_id = ?,insurance_company_name=?,org_name=?,identify_number=?,customer_user_id=?,customer_user_name=?,mobile=?,org_address=?,open_bank_name=?,bank_card_no=? WHERE id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,insurance_company_id,insurance_company_name,org_name ,identify_number ,customer_user_id ,customer_user_name ,mobile ,org_address ,open_bank_name ,bank_card_no  FROM value_tax_info WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM value_tax_info WHERE id=?
+			]]>
+        </sql>
+    </operation>
+    
+    <operation name="deleteByUserId" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM value_tax_info WHERE customer_user_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,insurance_company_id,insurance_company_name,org_name ,identify_number ,customer_user_id ,customer_user_name ,mobile ,org_address ,open_bank_name ,bank_card_no  FROM value_tax_info WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id,insurance_company_id,insurance_company_name ,org_name ,identify_number ,customer_user_id ,customer_user_name ,mobile ,org_address ,open_bank_name ,bank_card_no  FROM value_tax_info where 1=1
+			<dynamic>
+	           <isGreaterThan property="valueTaxInfo.customerUserId" compareValue="0"  prepend=" and ">
+				    customer_user_id = #valueTaxInfo.customerUserId#
+			   </isGreaterThan>
+	        </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM value_tax_info WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM value_tax_info  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+        <operation name="findByCustomerUserId" paramtype="long" multiplicity="many">
+     
+  		 <sql>
+            <![CDATA[
+					SELECT  id ,insurance_company_id,insurance_company_name,org_name ,identify_number ,customer_user_id ,customer_user_name ,mobile ,org_address ,open_bank_name ,bank_card_no  FROM value_tax_info WHERE customer_user_id =  ?
+	        ]]>
+        </sql>
+    </operation>
+    
+      <operation name="findValueTaxInfo" paramtype="String">
+     
+  		 <sql>
+            <![CDATA[
+					SELECT  id ,insurance_company_id,insurance_company_name,org_name ,identify_number ,customer_user_id ,customer_user_name ,mobile ,org_address ,open_bank_name ,bank_card_no  FROM value_tax_info WHERE insurance_company_id =  ?
+	        ]]>
+        </sql>
+    </operation>
+</table>

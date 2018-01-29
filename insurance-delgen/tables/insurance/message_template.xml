@@ -1,0 +1,133 @@
+<table sqlname="message_template">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO message_template(id,notify_name,notify_type,end_day,notify_content,creator_id,creator_name,type,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO message_template(id,notify_name,notify_type,end_day,notify_content,creator_id,creator_name,type,raw_add_time) VALUES (#id#,#notifyName#,#notifyType#,#endDay#,#notifyContent#,#creatorId#,#creatorName#,#type#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE message_template SET notify_name=?,notify_type=?,end_day=?,notify_content=?,creator_id=?,creator_name=?,type=? WHERE id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,notify_name ,notify_type ,end_day ,notify_content ,creator_id ,creator_name ,type ,raw_add_time ,raw_update_time  FROM message_template WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM message_template WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+            <param name="startTime" javatype="java.util.Date" />
+			<param name="endTime" javatype="java.util.Date" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,notify_name ,notify_type ,end_day ,notify_content ,creator_id ,creator_name ,type ,raw_add_time ,raw_update_time  FROM message_template WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,notify_name ,notify_type ,end_day ,notify_content ,creator_id ,creator_name ,type ,raw_add_time ,raw_update_time  FROM message_template where 1=1
+			  <dynamic>
+			  	<isNotEmpty property="messageTemplate.notifyName" prepend=" and ">
+					notify_name=#messageTemplate.notifyName#
+				</isNotEmpty>
+				<isNotEmpty property="messageTemplate.notifyType" prepend=" and ">
+					notify_type=#messageTemplate.notifyType#
+				</isNotEmpty>
+				<isNotEmpty property="startTime" prepend=" and ">
+				    ${cdata-start}  raw_add_time >= #startTime#   ${cdata-end}
+				</isNotEmpty>
+				<isNotEmpty property="endTime" prepend=" and ">
+				 ${cdata-start}  raw_add_time <= #endTime#   ${cdata-end}
+				</isNotEmpty>
+			  </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+				$sortCol$
+				<isNotEmpty property="sortOrder">
+					$sortOrder$
+				</isNotEmpty>
+			</isNotEmpty>
+			<isGreaterThan property="pageSize" compareValue="0"
+				prepend="">
+				LIMIT #limitStart#,#pageSize#;
+			</isGreaterThan>
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    
+    
+    
+    
+    
+    
+    
+    	<operation name="findByConditionCount" paramtype="object">
+		<extraparams>
+			<param name="startTime" javatype="java.util.Date" />
+			<param name="endTime" javatype="java.util.Date" />
+		</extraparams>
+		<sql>
+            <![CDATA[
+	        SELECT  count(*) FROM message_template WHERE  1=1
+	        ]]>
+		</sql>
+		<sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM message_template WHERE  1=1
+	           <dynamic>
+				<isNotEmpty property="notifyName" prepend=" and ">
+					notify_name=#notifyName#
+				</isNotEmpty>
+				<isNotEmpty property="notifyType" prepend=" and ">
+					notify_type=#notifyType#
+				</isNotEmpty>
+				<isNotEmpty property="startTime" prepend=" and ">
+					${cdata-start} raw_add_time >= #startTime# ${cdata-end}
+				</isNotEmpty>
+				<isNotEmpty property="endTime" prepend=" and ">
+					${cdata-start} raw_add_time <= #endTime# ${cdata-end}
+				</isNotEmpty>
+			</dynamic>  	
+	        ]]>	
+		</sqlmap>
+	</operation>
+    
+    
+    
+    
+</table>

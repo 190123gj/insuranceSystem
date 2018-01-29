@@ -1,0 +1,107 @@
+<table sqlname="price_contact_letter_company_report_price">
+    <column name="premium_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <column name="broker_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <column name="expense_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+			INSERT INTO price_contact_letter_company_report_price(id,customer_user_id,customer_user_name,report_price_id,premium_amount,broker_amount,broker_amount_rate,create_date,expense_amount,difference_content,special_agreement,quotation_prerequisite,expiry_date,contactUserId,contactUserName,contactUserMobile,contactUserEmail,remark,version,ext) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO price_contact_letter_company_report_price(id,customer_user_id,customer_user_name,report_price_id,premium_amount,broker_amount,broker_amount_rate,create_date,expense_amount,difference_content,special_agreement,quotation_prerequisite,expiry_date,contactUserId,contactUserName,contactUserMobile,contactUserEmail,remark,version,ext) VALUES (#id#,#customerUserId#,#customerUserName#,#reportPriceId#,#premiumAmount#,#brokerAmount#,#brokerAmountRate#,#createDate#,#expenseAmount#,#differenceContent#,#specialAgreement#,#quotationPrerequisite#,#expiryDate#,#contactUserId#,#contactUserName#,#contactUserMobile#,#contactUserEmail#,#remark#,#version#,#ext#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE price_contact_letter_company_report_price SET customer_user_id=?,customer_user_name=?,report_price_id=?,premium_amount=?,broker_amount=?,broker_amount_rate=?,create_date=?,expense_amount=?,difference_content=?,special_agreement=?,quotation_prerequisite=?,expiry_date=?,contactUserId=?,contactUserName=?,contactUserMobile=?,contactUserEmail=?,remark=?,version=?,ext=? WHERE id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			 SELECT  id ,customer_user_id ,customer_user_name ,report_price_id ,premium_amount ,broker_amount ,broker_amount_rate ,create_date ,expense_amount ,difference_content ,special_agreement ,quotation_prerequisite ,expiry_date ,contactUserId ,contactUserName ,contactUserMobile ,contactUserEmail ,remark ,version ,ext  FROM price_contact_letter_company_report_price WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM price_contact_letter_company_report_price WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  *  FROM price_contact_letter_company_report_price WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  *  FROM price_contact_letter_company_report_price where 1=1
+            <dynamic>
+                  <isGreaterThan property="priceContactLetterCompanyReportPrice.reportPriceId"  compareValue="0" prepend=" and ">
+	                report_price_id = #priceContactLetterCompanyReportPrice.reportPriceId#
+	            </isGreaterThan>
+
+	            <isGreaterThan property="priceContactLetterCompanyReportPrice.customerUserId"  compareValue="0" prepend=" and ">
+	                customer_user_id = #priceContactLetterCompanyReportPrice.customerUserId#
+	            </isGreaterThan>
+
+			</dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM price_contact_letter_company_report_price WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM price_contact_letter_company_report_price  where 1=1
+	          <dynamic>
+                  <isGreaterThan property="reportPriceId"  compareValue="0" prepend=" and ">
+	                report_price_id = #reportPriceId#
+	            </isGreaterThan>
+
+	            <isGreaterThan property="customerUserId"  compareValue="0" prepend=" and ">
+	                customer_user_id = #customerUserId#
+	            </isGreaterThan>
+			</dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

@@ -1,0 +1,83 @@
+<table sqlname="customer_company_detail">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+										INSERT INTO customer_company_detail(customer_id,customer_name,enterprise_type,register_capital,actual_capital,established_time,scale,staff_num,contact_man,contact_man_id,contact_email,busi_scope,websit,legal_persion,legal_persion_cert_no,legal_persion_address,actual_control_man,actual_control_man_cert_no,actual_control_man_cert_type,actual_control_man_address,parent_id,parent_name,kind,company_type,company_nature) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+						INSERT INTO customer_company_detail(customer_id,customer_name,enterprise_type,register_capital,actual_capital,established_time,scale,staff_num,contact_man,contact_man_id,contact_email,busi_scope,websit,legal_persion,legal_persion_cert_no,legal_persion_address,actual_control_man,actual_control_man_cert_no,actual_control_man_cert_type,actual_control_man_address,parent_id,parent_name,kind,company_type,company_nature) VALUES (#customerId#,#customerName#,#enterpriseType#,#registerCapital#,#actualCapital#,#establishedTime#,#scale#,#staffNum#,#contactMan#,#contactManId#,#contactEmail#,#busiScope#,#websit#,#legalPersion#,#legalPersionCertNo#,#legalPersionAddress#,#actualControlMan#,#actualControlManCertNo#,#actualControlManCertType#,#actualControlManAddress#,#parentId#,#parentName#,#kind#,#companyType#,#companyNature#)
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+					UPDATE customer_company_detail SET customer_name=?,enterprise_type=?,register_capital=?,actual_capital=?,established_time=?,scale=?,staff_num=?,contact_man=?,contact_man_id=?,contact_email=?,busi_scope=?,websit=?,legal_persion=?,legal_persion_cert_no=?,legal_persion_address=?,actual_control_man=?,actual_control_man_cert_no=?,actual_control_man_cert_type=?,actual_control_man_address=?,parent_id=?,parent_name=?,kind=?,company_type=?,company_nature=? WHERE customer_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			      SELECT  customer_id ,customer_name ,enterprise_type ,register_capital ,actual_capital ,established_time ,scale ,staff_num ,contact_man ,contact_man_id ,contact_email ,busi_scope ,websit ,legal_persion ,legal_persion_cert_no ,legal_persion_address ,actual_control_man ,actual_control_man_cert_no ,actual_control_man_cert_type ,actual_control_man_address ,parent_id ,parent_name ,kind ,company_type ,company_nature  FROM customer_company_detail WHERE customer_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM customer_company_detail WHERE customer_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+								  SELECT  customer_id ,customer_name ,enterprise_type ,register_capital ,actual_capital ,established_time ,scale ,staff_num ,contact_man ,contact_man_id ,contact_email ,busi_scope ,websit ,legal_persion ,legal_persion_cert_no ,legal_persion_address ,actual_control_man ,actual_control_man_cert_no ,actual_control_man_cert_type ,actual_control_man_address ,parent_id ,parent_name ,kind ,company_type ,company_nature  FROM customer_company_detail WHERE 1=1
+							]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+			  SELECT  customer_id ,customer_name ,enterprise_type ,register_capital ,actual_capital ,established_time ,scale ,staff_num ,contact_man ,contact_man_id ,contact_email ,busi_scope ,websit ,legal_persion ,legal_persion_cert_no ,legal_persion_address ,actual_control_man ,actual_control_man_cert_no ,actual_control_man_cert_type ,actual_control_man_address ,parent_id ,parent_name ,kind ,company_type ,company_nature  FROM customer_company_detail WHERE 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM customer_company_detail WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM customer_company_detail  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

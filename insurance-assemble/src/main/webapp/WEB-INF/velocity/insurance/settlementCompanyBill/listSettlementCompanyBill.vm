@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>demo</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;结算管理&nbsp;&gt;&nbsp;经纪费结算
+</div>
+
+<form class="m-main border ui-bg-fff" action="" id="fnListSearchForm" method="POST">
+
+    
+    <div class="m-search fn-clear">
+
+        <div class="item item2">
+           保单号：
+            <input class="ui-text fn-w150" type="text" name="insuranceNo" value="$!{queryConditions.insuranceNo}">
+        </div>  
+          <div class="item item2">
+           投保人：
+            <input class="ui-text fn-w150" type="text" name="customerUserName" value="$!{queryConditions.customerUserName}">
+        </div>
+        
+        <div class="item item2 fn-top">
+            <span>保险公司：</span>
+            <select name="insuranceCompanyId" class="ui-select fn-w200 fn-validate" style="box-sizing: content-box;padding:0 5px;">
+                <option value="">请选择</option>
+                #foreach ($institution in $!{institutions})
+                    <option value="$!institution.customerId" #if ($institution.customerId == $!queryConditions.insuranceCompanyId) selected #end >$!{institution.customerName}</option>
+                #end
+            </select>
+        </div>
+        
+         <div class="item item2 fn-top">
+            <span>结算状态：</span>
+            <select name="status" class="ui-select fn-w200 fn-validate" style="box-sizing: content-box;padding:0 5px;">
+                <option value="">请选择</option>
+                #foreach ($settlementStatus in $!{settlementStatus})
+                    <option value="$!settlementStatus.code" #if($settlementStatus.message==$!queryConditions.message) selected #end >$!{settlementStatus.message}</option>
+                #end
+            </select>
+        </div>
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+  
+    <div class="fn-pl15 fn-pr15">
+          <div class="fn-mb20 fn-mt20">
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty checkAllItems" href="javascript:void(0);"><b>+</b>选择所有&nbsp;</a>
+            <div class="fn-right">
+                <span class="item-name fn-mr20 countCheckedItensData">
+                    <input type="hidden" class="settlementCompanyIds" name="settlementCompanyIds">
+                    <input type="hidden" class="insuranceCompanyId" name="insuranceCompanyId"/>
+                    <input type="hidden" class="brokerAmount" name="brokerAmount"/>
+                    共选择<label class="allItems fn-mr5 fn-ml5">0</label>条记录，
+                    合计：<label class="accountBalance fn-mr5">0</label>元
+                </span>
+                <a class="ui-btn ui-btn-fill ui-btn-green-empty updateStatus updateAllcheckedItems" href="javascript:void(0);"><b>+</b>去结算</a>
+            </div>
+        </div>
+        
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+            					   <th><input type="checkbox" class="checkAllItems"/></th>
+				 	                <th>序号</th>
+				 	                <th>保单号</th>
+				 	                <th>保单续缴编号</th>
+				 	                <th>险种</th>
+				 	                <th>投保人</th>
+				 	                <th>保险公司</th>
+				 	                <th>保费</th>
+				 	                <th>经纪费费率</th>
+				 	                <th>经纪费</th>
+				 	                <th>应收日期</th>
+				 	                <th>结算状态</th>
+				 	                <th>创建时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+                    			 <td><input type="checkbox" value="$!item.settlementCompanyId" class="checkItem"/></td>
+		 						 <td>	$!{velocityCount} </td>
+		 						 <td>	$!{item.insuranceNo} </td>
+		 						 <td>	$!{item.billNo} </td>
+		 						 <td>	$!{item.catalogNames}</td>
+		 						 <td>   $!{item.customerUserName} </td>
+		 						 <td>	$!{item.insuranceCompanyName} </td>
+		 						 <td>	$!{item.premiumAmount} </td>
+		 						 <td>	$!{item.rate} </td>
+		 						 <td class="brokerAmount">	$!{item.brokerAmount} </td>
+		 						  <td> $!dateUtil.formatDay($!{item.planPayDate})  </td>
+		 						 <td>	
+		 						 	#if ($!item.status == "untreated") 未处理  #end
+		 						 	#if ($!item.status == "processing") 处理中  #end
+		 						 	#if ($!item.status == "alreadySettled") 已结算  #end
+		 						  </td>
+		 						 <td>	$!dateUtil.simpleFormat($!{item.rawAddTime})</td>
+		 				     <input type="hidden" value="$!{item.insuranceCompanyId}" class="insuranceCompanyId" />
+                   			 <input type="hidden" value="$!{item.status}" class="status" />
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        
+        
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+ </form> 
+
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/settlementCompanyBill/settlementCompanyBill');
+</script>
+</body>
+</html>

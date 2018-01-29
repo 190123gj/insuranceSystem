@@ -1,0 +1,124 @@
+<table sqlname="person_commission">
+<column name="total_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="draw_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="applying_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO person_commission(commission_id,business_user_id,business_user_name,business_user_type,business_user_mobile,business_user_cert_no,total_amount,draw_amount,applying_amount,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+
+        <sqlmap>
+            <![CDATA[
+				INSERT INTO person_commission(commission_id,business_user_id,business_user_name,business_user_type,business_user_mobile,business_user_cert_no,total_amount,draw_amount,applying_amount,raw_add_time) VALUES (#commissionId#,#businessUserId#,#businessUserName#,#businessUserType#,#businessUserMobile#,#businessUserCertNo#,#totalAmount#,#drawAmount#,#applyingAmount#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="commissionId" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+        </sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE person_commission SET business_user_id=?,business_user_name=?,business_user_type=?,business_user_mobile=?,business_user_cert_no=?,total_amount=?,draw_amount=?,applying_amount=? WHERE commission_id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  commission_id ,business_user_id ,business_user_name ,business_user_type ,business_user_mobile ,business_user_cert_no ,total_amount ,draw_amount ,applying_amount ,raw_add_time ,raw_update_time  FROM person_commission WHERE commission_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM person_commission WHERE commission_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  commission_id ,business_user_id ,business_user_name ,business_user_type ,business_user_mobile ,business_user_cert_no ,total_amount ,draw_amount ,applying_amount ,raw_add_time ,raw_update_time  FROM person_commission WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  commission_id ,business_user_id ,business_user_name ,business_user_type ,business_user_mobile ,business_user_cert_no ,total_amount ,draw_amount ,applying_amount ,raw_add_time ,raw_update_time  FROM person_commission where 1=1
+			<dynamic>
+	            <isNotEmpty property="personCommission.businessUserName"   prepend=" and ">
+	                business_user_name like concat('%', #personCommission.businessUserName#, '%')
+	            </isNotEmpty>
+				<isNotEmpty property="personCommission.businessUserMobile" prepend=" and ">
+	                business_user_mobile like concat('%', #personCommission.businessUserMobile#, '%') 
+	            </isNotEmpty>
+	            <isNotEmpty property="personCommission.businessUserCertNo"  prepend=" and ">
+	                business_user_cert_no like concat('%', #personCommission.businessUserCertNo#, '%') 
+	            </isNotEmpty>
+	            <isNotEmpty property="personCommission.businessUserType"  prepend=" and ">
+	                business_user_type = #personCommission.businessUserType#
+	            </isNotEmpty>
+	        </dynamic>	
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM person_commission WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM person_commission  where 1=1
+	           <dynamic>
+	            <isNotEmpty property="businessUserName"   prepend=" and ">
+	                business_user_name like concat('%', #businessUserName#, '%')
+	            </isNotEmpty>
+				<isNotEmpty property="businessUserMobile" prepend=" and ">
+	                business_user_mobile like concat('%', #businessUserMobile#, '%') 
+	            </isNotEmpty>
+	            <isNotEmpty property="businessUserCertNo"  prepend=" and ">
+	                business_user_cert_no like concat('%', #businessUserCertNo#, '%') 
+	            </isNotEmpty>
+	             <isNotEmpty property="businessUserType"  prepend=" and ">
+	                business_user_type = #businessUserType#
+	            </isNotEmpty>
+	        </dynamic>	
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="findByUserId" >
+        <sql>
+            <![CDATA[
+			  SELECT  commission_id ,business_user_id ,business_user_name ,business_user_type ,business_user_mobile ,business_user_cert_no ,total_amount ,draw_amount ,applying_amount ,raw_add_time ,raw_update_time  FROM person_commission WHERE business_user_id=?
+			]]>
+        </sql>
+    </operation>
+</table>

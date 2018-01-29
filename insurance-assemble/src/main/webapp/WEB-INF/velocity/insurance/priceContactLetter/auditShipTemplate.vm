@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+    <title>船舶 - 审核</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;询价方案&nbsp;&gt;&nbsp;$!info.warningBillType
+</div>
+
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff">
+
+    <form class="fn-pt20 m-audit" id="auditForm">
+        #if($webNodeInfo.bpmButtonInfos && $webNodeInfo.bpmButtonInfos.size() > 0)
+            #parse("/layout/common/audit.vm")
+        #end
+    </form>
+    #parse("/layout/insurance/priceContactLetter/viewHeadDemand.vm")
+    #set($demandInfo=$!{info.demandInfos.get(0)})
+    #parse("/layout/insurance/priceContactLetter/viewShipDemand.vm")
+    #set($showPriceCompany = false)
+    #parse("/layout/insurance/priceContactLetter/viewPriceAskCompany.vm")
+
+    <div class="m-blank fn-mt20 fn-mb20"></div>
+
+    <div class="fn-tac fn-pt20 fn-pb20">
+        <a href="/insurance/demo/list.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+    </div>
+
+</div>
+
+
+    #parse("/layout/common/footer.vm")
+
+    #parse("/layout/common/commonjs.vm")
+
+<script>
+    seajs.use($_GLOBAL.zyw+'/priceContactLetter/addCarTemplate');
+</script>
+
+</body>
+</html>

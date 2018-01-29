@@ -1,0 +1,95 @@
+<table sqlname="commission_info">
+<column name="commission_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO commission_info(commission_info_id,business_bill_id,business_user_id,business_user_name,commission_catalog,commission_scale,commission_amount,raw_add_time,update_add_time) VALUES (?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO commission_info(commission_info_id,business_bill_id,business_user_id,business_user_name,commission_catalog,commission_scale,commission_amount,raw_add_time,update_add_time) VALUES (#commissionInfoId#,#businessBillId#,#businessUserId#,#businessUserName#,#commissionCatalog#,#commissionScale#,#commissionAmount#,#rawAddTime#,#updateAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="commissionInfoId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE commission_info SET business_bill_id=?,business_user_id = ?,business_user_name = ?,commission_catalog=?,commission_scale=?,commission_amount=?,update_add_time=? WHERE commission_info_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  commission_info_id ,business_bill_id ,business_user_id,business_user_name,commission_catalog ,commission_scale ,commission_amount ,raw_add_time ,update_add_time  FROM commission_info WHERE commission_info_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM commission_info WHERE commission_info_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  commission_info_id ,business_bill_id ,business_user_id,business_user_name,commission_catalog ,commission_scale ,commission_amount ,raw_add_time ,update_add_time  FROM commission_info WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  commission_info_id ,business_bill_id ,business_user_id,business_user_name,commission_catalog ,commission_scale ,commission_amount ,raw_add_time ,update_add_time  FROM commission_info where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM commission_info WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM commission_info  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="findCommissionInfoByBusinessBillId" >
+        <sql>
+            <![CDATA[
+			  SELECT  commission_info_id ,business_bill_id ,business_user_id,business_user_name,commission_catalog ,commission_scale ,commission_amount ,raw_add_time ,update_add_time  FROM commission_info WHERE business_bill_id=?
+			]]>
+        </sql>
+    </operation>
+</table>

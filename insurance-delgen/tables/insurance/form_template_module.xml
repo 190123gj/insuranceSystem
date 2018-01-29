@@ -1,0 +1,86 @@
+<table sqlname="form_template_module">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO form_template_module(id,tab_id,parent_module_id,name,code,sort_order,raw_add_time) VALUES (?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO form_template_module(id,tab_id,parent_module_id,name,code,sort_order,raw_add_time) VALUES (#id#,#tabId#,#parentModuleId#,#name#,#code#,#sortOrder#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE form_template_module SET tab_id=?,parent_module_id=?,name=?,code=?,sort_order=? WHERE id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,tab_id ,parent_module_id ,name ,code ,sort_order ,raw_add_time ,raw_update_time  FROM form_template_module WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM form_template_module WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,tab_id ,parent_module_id ,name ,code ,sort_order ,raw_add_time ,raw_update_time  FROM form_template_module WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,tab_id ,parent_module_id ,name ,code ,sort_order ,raw_add_time ,raw_update_time  FROM form_template_module where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM form_template_module WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM form_template_module  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

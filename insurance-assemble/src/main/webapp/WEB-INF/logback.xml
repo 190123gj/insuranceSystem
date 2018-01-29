@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<configuration scan="true" scanPeriod="180 seconds" debug="true">
+
+	<contextName>${CONTEXT_NAME}</contextName>
+
+	<property resource="spring/log/log.properties" />
+
+	<!-- ***************************************************************** -->
+	<!-- STDOUT APENDER -->
+	<!-- ***************************************************************** -->
+
+
+	<appender name="ROLLING-ESTATE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/insurance.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/insurance.log-%d{yyyy-MM-dd}</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L---/%n-/%msg%n%n</pattern>
+		</encoder>
+	</appender>
+	<if condition='property("os.name").toUpperCase().contains("WINDOWS")'>
+	    <then>
+	        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	            <encoder>
+	                <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36}:%L-%msg%n%n</pattern>
+	            </encoder>
+	        </appender>
+	        <root>
+	            <appender-ref ref="STDOUT" />
+	        </root>
+	    </then>
+	</if>
+	<appender name="async-ROLLING-ESTATE" class="com.yjf.common.log.LogbackAsyncAppender">
+        <appender-ref ref="ROLLING-ESTATE"/>
+    </appender>
+	<root level="INFO">
+		<appender-ref ref="async-ROLLING-ESTATE" />
+	</root>
+</configuration>

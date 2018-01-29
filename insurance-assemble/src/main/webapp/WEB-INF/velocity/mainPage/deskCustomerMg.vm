@@ -1,0 +1,90 @@
+## <div id="taskList">
+##     #parse("/mainPage/taskList.vm")
+## </div>
+<div class="fn-clear fn-mt20">
+
+    <div class="fn-left1 list-box1">
+
+        <ul class="fn-clear list-title">
+            <li class="active">
+                项目情况
+            </li>
+            <li>
+                <label class="fn-mr10 fn-csp fn-usn"><input type="radio" class="radio fnIsMyProject" name="isMyProject" value="IS" checked>我发起的</label>
+                <label class="fn-mr10 fn-csp fn-usn"><input type="radio" class="radio fnIsMyProject" name="isMyProject" value="NO">我参与的</label>
+            </li>
+            <li class="last">
+                #if($!isBusiManager == "yes")
+                    <a class="fn-mr10" href="/projectMg/index.htm?systemNameDefautUrl=/projectMg/setUp/apply.htm" target="_blank">新增立项申请单</a>
+                #end
+                ##<a id="isMyProjectAIS" href="/projectMg/index.htm?systemNameDefautUrl=/projectMg/list.htm?projectRelationship=my" target="_blank">&gt;&gt;More</a>
+                ##<a id="isMyProjectANO" class="fn-hide" href="/projectMg/index.htm?systemNameDefautUrl=/projectMg/list.htm?projectRelationship=participation" target="_blank">&gt;&gt;More</a>
+            </li>
+        </ul>
+		
+		<div id="isMyProjectIS" class="" >
+			#parse("/mainPage/myProjectList.vm")
+		</div>
+        <div id="isMyProjectNO" class="fn-hide" >
+          	#parse("/mainPage/relatedProjectList.vm")
+        </div>
+		<div class="fn-blank20"></div>        
+    </div>
+
+    ## <div class="fn-right list-box">
+
+    ##     <ul class="fn-clear list-title">
+    ##         <li class="active">
+    ##             客户情况
+    ##         </li>
+    ##         <li>
+    ##             <a href="/" target="_blank">新增客户</a>
+    ##         </li>
+    ##         <li class="last">
+    ##             <a href="/" target="_blank">&gt;&gt;More</a>
+    ##         </li>
+    ##     </ul>
+
+    ##     <div class="fn-ml20 fn-pr20">
+    ##         <table class="m-table m-table-list fn-tac">
+    ##             <thead>
+    ##                 <tr>
+    ##                     <th>项目编号</th>
+    ##                     <th>客户名称</th>
+    ##                     <th>业务品种</th>
+    ##                     <th>项目阶段</th>
+    ##                     <th width="50px">操作</th>
+    ##                 </tr>
+    ##             </thead>
+    ##              <tbody>
+    ##                     #if(!$page1.result || $!{page1.result.size()} == 0)
+    ##                         <tr>
+    ##                             <td colspan="5">您还没有客户，去增加客户吧！</td>
+    ##                         </tr>
+    ##                     #else
+    ##                         #foreach($!task in $!page1.result)
+    ##                             <tr>
+    ##                                 <td>
+    ##                                     #if($!task.subjectView)
+    ##                                         $!task.subjectView
+    ##                                     #else
+    ##                                         $!task.subject
+    ##                                     #end    
+    ##                                 </td>
+    ##                                 <td>$!dateUtil.simpleFormat($!task.createTime)</td>
+    ##                                 <td>$!task.processName</td>
+    ##                                 <td>$!task.creator</td>
+    ##                                 <td>
+    ##                                     <a href="/userHome/taskDistributor.htm?taskId=$!{task.id}&processInstanceId=$!{task.processInstanceId}&processDefinitionId=$!{task.processDefinitionId}&taskUrl=$!{task.taskUrl}">处理</a>
+    ##                                 </td>
+    ##                             </tr>
+    ##                             #set($i=$i+1)
+    ##                         #end
+    ##                     #end
+    ##                 </tbody>
+    ##         </table>
+    ##     </div>
+
+    ## </div>
+</div>
+<div class="fn-blank20"></div>

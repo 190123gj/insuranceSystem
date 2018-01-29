@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>费用结算清单列表</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;结算管理&nbsp;&gt;&nbsp;费用结算清单
+</div>
+
+<form class="m-main border ui-bg-fff" action="/insurance/billSettlementApply/list.htm" id="fnListSearchForm" method="POST">
+
+
+<div class="m-search fn-clear">
+
+      
+        <div class="item">
+           保单号：
+            <input class="ui-text fn-w150" type="text" name="insuranceNo" value="$!{queryConditions.insuranceNo}">
+        </div>
+        
+          <div class="item">
+           险种类别：
+            <input class="ui-text fn-w150" type="text" name="type" value="$!{queryConditions.type}">
+        </div>
+        
+          <div class="item">
+            审核状态：
+            <select name="formStatus" class="ui-select fn-w100">
+                <option value="">请选择</option>
+                #foreach ($status in  $!{status})
+                    <option value="$status.code" #if ($status.code == $!queryConditions.formStatus) selected #end>$status.message</option>
+                #end
+            </select>
+        </div>
+        
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    
+    <div class="m-search fn-clear"></div>
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+				 	                <th>结算单号</th>
+				 	                <th>关联的保单的编号</th>
+				 	                <th>保险类别</th>
+				 	                <th>审核状态</th>
+				 	                <th>申请时间</th>
+				                     <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+					 						 <td>	$!{item.settlementNo} </td>
+					 						 <td>	$!{item.insuranceNo} </td>
+					 						 <td>	$!{item.type} </td>
+					 						 <td>	$!{item.formStatus.message} </td>
+					 					   	 <td>   $dateUtil.simpleFormat($!{item.rowAddTime})  </td>
+					                         <td> 
+					                           <a href="/insurance/billSettlementApply/view.htm?formId=$item.formId">[ 查看详情 ]</a> 
+					                            #set($processUrl = "")
+						                      #if($!stringUtil.isNotBlank($item.taskUserData))
+						                            #set($processUrl = $!formUtil.getProcessUrl($!item.taskUserData,$!sessionLocal.userId))
+						                      #end
+						                       #if($!stringUtil.isNotBlank($processUrl))
+                                				<a href="$!processUrl">[ 处理 ]</a>
+                        					   #end
+				                     		    #if ($!item.formStatus.code == "DRAFT" && $!isRightOperate)
+				                     		    	<a href="/insurance/billSettlementApply/edit.htm?formId=$!{item.formId}">[ 编辑]</a>  <br />
+			                  				  	#end
+			                  				   #if ($!item.formStatus.code == "SUBMIT" && $!isRightOperate)
+			                           		  <a href="javascript:void(0);" formId="$!{item.formId}" class="revoke">[ 撤销 ] </a>
+			                          		  #end
+			                      		  	 #if ($!item.formStatus == "CANCEL" && $!isRightOperate)
+			                      	 	    	<a href="/insurance/billSettlementApply/edit.htm?formId=$!{item.formId}">[重新申请]</a><br />
+			                      	      	 #end
+					                           </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        #parse("/layout/common/pages.vm")
+
+    </div>
+
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/billSettlementApply/billSettlementApply.list.js');
+</script>
+</body>
+</html>

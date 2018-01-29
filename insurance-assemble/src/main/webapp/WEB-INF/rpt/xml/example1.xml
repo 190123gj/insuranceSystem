@@ -1,0 +1,33 @@
+<Report-Definition>
+       <Report-Header Report-Template="TEMP1" Report-Name="Annual Bonus Report" Page-Width="800" Page-Height=""/>
+       <Report-Body>
+       <Table>
+         <Table-Header>
+            <Table-Row>
+              <Table-Cell BgColor="#FFFFFF" Title="Agent Code" Width="20cm" />  
+              <Table-Cell BgColor="#FFFFFF" Title="Amount" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="Team Code" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="Agent Name" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="Agent Age" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="Appointment Date" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="Net Credit" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="Life Commission" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="Bonus Rate" Width="20cm" />
+            </Table-Row>
+         </Table-Header>
+         <Table-Body>
+           <Table-Row>
+	         <Table-Cell Data-Field="agent_code" Data-Type="STRING" Align="center" />
+	         <Table-Cell Data-Field="money" Data-Type="STRING" Align="right" />
+			 <Table-Cell Data-Field="dept_id" Data-Type="STRING" Align="center" />
+	         <Table-Cell Data-Field="real_name" Data-Type="STRING" Align="center" />	    
+			 <Table-Cell Data-Field="agent_age" Data-Type="STRING" Align="right" />
+			 <Table-Cell Data-Field="appointment_date" Data-Type="STRING" Align="right" />
+	         <Table-Cell Data-Field="stand_prem" Data-Type="STRING" Align="right" />
+	         <Table-Cell Data-Field="life_money" Data-Type="STRING" Align="right" />
+			 <Table-Cell Data-Field="bonus_rate" Data-Type="STRING" Align="right" />
+           </Table-Row>
+         </Table-Body>
+       </Table>
+   </Report-Body>	
+</Report-Definition>

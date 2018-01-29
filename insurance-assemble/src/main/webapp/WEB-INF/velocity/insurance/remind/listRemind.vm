@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>提醒设置</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;系统管理&nbsp;&gt;&nbsp;提醒设置
+</div>
+
+<form class="m-main border ui-bg-fff" action="/insurance/remind/list.htm" id="fnListSearchForm" method="POST">
+
+    
+    <div class="m-search fn-clear">
+		
+        <div class="item">
+            提醒名称：
+            <input class="ui-text fn-w90" type="text" name="notifyName" id="notifyName" value="$!{querykOrder.notifyName}">
+        </div>
+		 <div class="item">
+            提醒类型：
+			<select  name="notifyType" id="notifyType" class="ui-select fn-w200 fnChangeInput">
+            <option >全部</option>
+				#foreach($notifyType in $!{notifyTypes})
+					<option value="$!{notifyType.code}" #if( "$!{querykOrder.notifyType.code}"=="$!{notifyType.code}") selected="selected" #end >$!{notifyType.message}</option>
+				#end
+			</select>
+		</div>
+		 <div class="item">
+            发起时间：
+             <input class="ui-text fn-w200 laydate-icon fnChangeInput fn-validate" value="$!dateUtil.simpleFormat($!{querykOrder.startTime})" type="text" name="startTime" id="startTime" onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm:ss'})">
+             至
+              <input class="ui-text fn-w200 laydate-icon fnChangeInput fn-validate" value="$!dateUtil.simpleFormat($!{querykOrder.endTime})" type="text" name="endTime" id="endTime" onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm:ss'})">
+     </div>
+  <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+    </div>
+
+    
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/organization/add.htm"><b>+</b>新增提醒&nbsp;</a>
+
+        </div>
+
+        
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+				 	                <th>序号</th>
+				 	                <th>提醒名称</th>
+				 	                <th>提醒类型</th>
+									<th>设置人</th>
+				 	                <th>设置时间</th>
+				                    <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+					 				<td>	$!{velocityCount} </td>
+					 				<td>	$!{item.notifyName} </td>
+					 				<td>	$!{item.notifyType.message} </td>
+					 				<td>	$!{item.creatorName} </td>
+					 				<td>	$!dateUtil.simpleFormat($!{item.rawAddTime}) </td>
+                                    <td>
+								<a href="/insurance/remind/info.htm?id=$!{item.id}">[ 详情 ]</a><br/>
+								<a href="/insurance/remind/edit.htm?id=$!{item.id}">[ 修改 ]</a><br/>
+									</td>
+									
+                    </tr>
+                #end
+            </tbody>
+        </table>
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/customer/customerPerson');
+</script>
+</body>
+</html>

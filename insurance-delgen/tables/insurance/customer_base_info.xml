@@ -1,0 +1,215 @@
+<table sqlname="customer_base_info">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+
+							INSERT INTO customer_base_info(user_id,customer_id,customer_name,contact_mobile,cert_type,cert_no,cert_exp_date,long_time,country_code,country_name,province_code,province_name,city_code,city_name,county_code,county_name,address,email,mobile,telphone,fix,weixin,qq,status,business_user_id,business_user_name,creator_id,creator_name,customer_type,abbr1,abbr2,abbr3,owner_id,owner_user_name,out_user,remark,referee_id,referee_name,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+        <sqlmap>
+		<![CDATA[
+			INSERT INTO customer_base_info(user_id,customer_id,customer_name,contact_mobile,cert_type,cert_no,cert_exp_date,long_time,country_code,country_name,province_code,province_name,city_code,city_name,county_code,county_name,address,email,mobile,telphone,fix,weixin,qq,status,business_user_id,business_user_name,creator_id,creator_name,customer_type,abbr1,abbr2,abbr3,owner_id,owner_user_name,out_user,remark,referee_id,referee_name,raw_add_time) VALUES (#userId#,#customerId#,#customerName#,#contactMobile#,#certType#,#certNo#,#certExpDate#,#longTime#,#countryCode#,#countryName#,#provinceCode#,#provinceName#,#cityCode#,#cityName#,#countyCode#,#countyName#,#address#,#email#,#mobile#,#telphone#,#fix#,#weixin#,#qq#,#status#,#businessUserId#,#businessUserName#,#creatorId#,#creatorName#,#customerType#,#abbr1#,#abbr2#,#abbr3#,#ownerId#,#ownerUserName#,#outUser#,#remark#,#refereeId#,#refereeName#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="userId" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+                  	UPDATE customer_base_info SET customer_id=?,customer_name=?,contact_mobile=?,cert_type=?,cert_no=?,cert_exp_date=?,long_time=?,country_code=?,country_name=?,province_code=?,province_name=?,city_code=?,city_name=?,county_code=?,county_name=?,address=?,email=?,mobile=?,telphone=?,fix=?,weixin=?,qq=?,status=?,business_user_id=?,business_user_name=?,creator_id=?,creator_name=?,customer_type=?,abbr1=?,abbr2=?,abbr3=?,owner_id=?,owner_user_name=?,out_user=?,remark=?,referee_id=?,referee_name=? WHERE user_id=?
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+								  SELECT  user_id ,customer_id ,customer_name ,contact_mobile ,cert_type ,cert_no ,cert_exp_date ,long_time ,country_code ,country_name ,province_code ,province_name ,city_code ,city_name ,county_code ,county_name ,address ,email ,mobile ,telphone ,fix ,weixin ,qq ,status ,business_user_id ,business_user_name ,creator_id ,creator_name ,customer_type ,abbr1 ,abbr2 ,abbr3 ,owner_id ,owner_user_name ,out_user ,remark ,referee_id ,referee_name ,raw_add_time ,raw_update_time  FROM customer_base_info WHERE user_id=?
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findByOwnerId" >
+        <sql>
+            <![CDATA[
+								  SELECT  user_id ,customer_id ,customer_name ,contact_mobile ,cert_type ,cert_no ,cert_exp_date ,long_time ,country_code ,country_name ,province_code ,province_name ,city_code ,city_name ,county_code ,county_name ,address ,email ,mobile ,telphone ,fix ,weixin ,qq ,status ,business_user_id ,business_user_name ,creator_id ,creator_name ,customer_type ,abbr1 ,abbr2 ,abbr3 ,owner_id ,owner_user_name ,out_user ,remark ,referee_id ,referee_name ,raw_add_time ,raw_update_time  FROM customer_base_info WHERE owner_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				DELETE FROM customer_base_info WHERE user_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+        	<param name="companys" javatype="java.lang.String" ></param>
+            <param name="removeCompanys" javatype="java.lang.String" ></param>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+	       SELECT  * FROM customer_base_info WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT * from customer_base_info cu
+	            <isNotEmpty property="customerBaseInfo.certType">
+                   ${cdata-start}   JOIN (SELECT COUNT(*) rnum,cert.user_id FROM customer_cert_info cert
+                    WHERE cert.cert_type = #customerBaseInfo.certType#  GROUP BY cert.user_id) rl
+                    ON rl.user_id = cu.user_id AND rl.rnum > 0
+                    ${cdata-end}
+                </isNotEmpty>
+
+                <isNotEmpty property="customerBaseInfo.certNo">
+                     ${cdata-start}   JOIN (SELECT COUNT(*) rnum,cert.user_id FROM customer_cert_info cert
+                     WHERE cert.cert_no = #customerBaseInfo.certNo#  GROUP BY cert.user_id) rl2
+                    ON rl2.user_id = cu.user_id AND rl2.rnum > 0
+                    ${cdata-end}
+                 </isNotEmpty>
+	         where 1=1
+	        <dynamic>
+	        
+	            <isNotEmpty property="companys"   prepend=" and ">
+	                cu.user_id in ($companys$)
+	            </isNotEmpty>
+
+	            <isNotEmpty property="removeCompanys"   prepend=" and ">
+	                cu.user_id not in ($removeCompanys$)
+	            </isNotEmpty>
+
+	            <isNotEmpty property="customerBaseInfo.customerName"  prepend=" and ">
+	              cu.customer_name like concat('%',#customerBaseInfo.customerName#,'%')
+	            </isNotEmpty>
+
+	             <isNotEmpty property="customerBaseInfo.customerType"  prepend=" and ">
+	                <isNotEqual property="customerBaseInfo.customerType" compareValue="companyCustomer">
+	                  cu.customer_type = #customerBaseInfo.customerType#
+					</isNotEqual>
+					 <isEqual property="customerBaseInfo.customerType" compareValue="companyCustomer">
+					   cu.customer_type in ( 'COMPANY_CUSTOMER','INDIVIDUAL_CUSTOMER')
+					</isEqual>
+	            </isNotEmpty>
+	            
+	            <isNotEmpty property="customerBaseInfo.mobile"  prepend=" and ">
+	                cu.mobile = #customerBaseInfo.mobile#
+	            </isNotEmpty>
+
+
+
+	        </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#;
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+		<extraparams>
+        	<param name="companys" javatype="java.lang.String" ></param>
+            <param name="removeCompanys" javatype="java.lang.String" ></param>
+        </extraparams>
+        <sql>
+            <![CDATA[
+	       SELECT  count(*)  FROM customer_base_info WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  count(*)  FROM customer_base_info cu
+	               <isNotEmpty property="customerBaseInfo.certType">
+                     ${cdata-start}  JOIN (SELECT COUNT(*) rnum,cert.user_id FROM customer_cert_info cert
+                    WHERE cert.cert_type = #customerBaseInfo.certType#  GROUP BY cert.user_id) rl
+                    ON rl.user_id = cu.user_id AND rl.rnum > 0   ${cdata-end}
+                </isNotEmpty>
+
+                <isNotEmpty property="customerBaseInfo.certNo">
+                     ${cdata-start} JOIN (SELECT COUNT(*) rnum,cert.user_id FROM customer_cert_info cert
+                     WHERE cert.cert_no = #customerBaseInfo.certNo#  GROUP BY cert.user_id) rl2
+                    ON rl2.user_id = cu.user_id AND rl2.rnum > 0   ${cdata-end}
+                 </isNotEmpty>
+
+	           where 1=1
+	         <dynamic>
+	         
+	       	    <isNotEmpty property="companys"   prepend=" and ">
+	                cu.user_id in ($companys$)
+	            </isNotEmpty>
+
+	            <isNotEmpty property="removeCompanys"   prepend=" and ">
+	                cu.user_id not in ($removeCompanys$)
+	            </isNotEmpty>
+
+
+	           <isNotEmpty property="customerBaseInfo.customerName"  prepend=" and ">
+	              cu.customer_name like concat('%',#customerBaseInfo.customerName#,'%')
+	            </isNotEmpty>
+	            
+				<isNotEmpty property="customerBaseInfo.customerType"   prepend=" and ">
+	                 <isNotEqual property="customerBaseInfo.customerType" compareValue="companyCustomer">
+	                  cu.customer_type = #customerBaseInfo.customerType#
+					</isNotEqual>
+					 <isEqual property="customerBaseInfo.customerType" compareValue="companyCustomer">
+					   cu.customer_type in ( 'COMPANY_CUSTOMER','INDIVIDUAL_CUSTOMER')
+					</isEqual>
+	            </isNotEmpty>
+
+	            <isNotEmpty property="customerBaseInfo.mobile"  prepend=" and ">
+	                cu.mobile = #customerBaseInfo.mobile#
+	            </isNotEmpty>
+	        </dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="findByCustomerId">
+    	 <extraparams>
+            <param name="customerUserId" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+	        			  SELECT  user_id ,customer_id ,customer_name ,contact_mobile ,cert_type ,cert_no ,cert_exp_date ,long_time ,country_code ,country_name ,province_code ,province_name ,city_code ,city_name ,county_code ,county_name ,address ,email ,mobile ,telphone ,fix ,weixin ,qq ,status ,business_user_id ,business_user_name ,creator_id ,creator_name ,customer_type ,abbr1 ,abbr2 ,abbr3 ,owner_id ,owner_user_name ,out_user ,remark ,referee_id ,referee_name ,raw_add_time ,raw_update_time  FROM customer_base_info  WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	        	 		  SELECT  user_id ,customer_id ,customer_name ,contact_mobile ,cert_type ,cert_no ,cert_exp_date ,long_time ,country_code ,country_name ,province_code ,province_name ,city_code ,city_name ,county_code ,county_name ,address ,email ,mobile ,telphone ,fix ,weixin ,qq ,status ,business_user_id ,business_user_name ,creator_id ,creator_name ,customer_type ,abbr1 ,abbr2 ,abbr3 ,owner_id ,owner_user_name ,out_user ,remark ,referee_id ,referee_name ,raw_add_time ,raw_update_time  FROM customer_base_info   WHERE customer_id = #customerUserId#
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="findAgencyCompany" multiplicity="many">
+      	<extraparams>
+            <param name="customerType" javatype="java.lang.String" />
+        </extraparams>
+       		 <sql>
+            <![CDATA[
+					  SELECT  user_id ,customer_id ,customer_name ,contact_mobile ,cert_type ,cert_no ,cert_exp_date ,long_time ,country_code ,country_name ,province_code ,province_name ,city_code ,city_name ,county_code ,county_name ,address ,email ,mobile ,telphone ,fix ,weixin ,qq ,status ,business_user_id ,business_user_name ,creator_id ,creator_name ,customer_type ,abbr1 ,abbr2 ,abbr3 ,owner_id ,owner_user_name ,out_user ,remark ,referee_id ,referee_name ,raw_add_time ,raw_update_time  FROM customer_base_info  WHERE 1=1
+			]]>
+        </sql>
+			<sqlmap>
+            <![CDATA[
+	        	 		  SELECT  user_id ,customer_id ,customer_name ,contact_mobile ,cert_type ,cert_no ,cert_exp_date ,long_time ,country_code ,country_name ,province_code ,province_name ,city_code ,city_name ,county_code ,county_name ,address ,email ,mobile ,telphone ,fix ,weixin ,qq ,status ,business_user_id ,business_user_name ,creator_id ,creator_name ,customer_type ,abbr1 ,abbr2 ,abbr3 ,owner_id ,owner_user_name ,out_user ,remark ,referee_id ,referee_name ,raw_add_time ,raw_update_time  FROM customer_base_info   WHERE customer_type = #customerType#
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

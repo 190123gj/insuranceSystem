@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" class="m-body">
+<head>
+#parse("/layout/common/head.vm")
+<title>${systemName}</title>
+</head>
+<body class="m-body">
+
+#parse("/layout/common/header.vm")
+
+<div class="ui-body" id="fnMainBox">
+    <!-- sidebar start -->
+    <div class="m-sidebar fn-left fnTransitionAll">
+        <div class="ui-full-screen" id="fnFullScreen"></div>
+        <h3 class="s-title"><i class="icon icon-hd"></i>${systemName}<span class="sjx"></span></h3>
+        <div class="fn-usn fn-pt20 fn-pb20 m-ul" id="fnSidebar"></div>
+    </div>
+    <!-- sidebar end -->
+    <!-- main start -->
+    <div class="m-main-box">
+        <div class="m-main-in fnTransitionAll">
+
+            <iframe id="fnIfame" frameborder="0" allowtransparency="yes" scrolling="auto" name="main" width="100%" height="100%" basesrc="${systemNameDefautUrl}"></iframe>
+            
+        </div>
+    </div>
+    <!-- main end -->
+</div>
+
+#parse("/layout/common/commonjs.vm")
+<script>
+    seajs.use('${scriptPath}');
+</script>
+</body>
+</html>

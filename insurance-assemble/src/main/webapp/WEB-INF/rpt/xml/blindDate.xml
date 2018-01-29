@@ -1,0 +1,31 @@
+<Report-Definition>
+    <Report-Header Report-Template="TEMP1" Report-Name="报名人员" Page-Width="800" Page-Height="" Align="center"/>
+    <Report-Body>
+        <Table>
+            <Table-Header>
+                <Table-Row>
+                    <Table-Cell BgColor="#FFFFFF" Title="序号" Width="10cm" Align="center"/>
+                    <Table-Cell BgColor="#FFFFFF" Title="真实姓名" Width="10cm" Align="center"/>
+                    <Table-Cell BgColor="#FFFFFF" Title="性别" Width="10cm" Align="center"/>
+                    <Table-Cell BgColor="#FFFFFF" Title="职业" Width="20cm" Align="center"/>
+                    <Table-Cell BgColor="#FFFFFF" Title="出生年月" Width="20cm" Align="center"/>
+                    <Table-Cell BgColor="#FFFFFF" Title="联系方式" Width="20cm" Align="center"/>
+                    <Table-Cell BgColor="#FFFFFF" Title="居住地址" Width="50cm" Align="center"/>
+                    <Table-Cell BgColor="#FFFFFF" Title="报名时间" Width="20cm" Align="center"/>
+                </Table-Row>
+            </Table-Header>
+            <Table-Body>
+                <Table-Row>
+                    <Table-Cell Data-Field="序号" Data-Type="STRING" Align="center" />
+                    <Table-Cell Data-Field="真实姓名" Data-Type="STRING" Align="center" />
+                    <Table-Cell Data-Field="性别" Data-Type="STRING" Align="center" />
+                    <Table-Cell Data-Field="职业" Data-Type="STRING" Align="center" />
+                    <Table-Cell Data-Field="出生年月" Data-Type="STRING" Align="center" />
+                    <Table-Cell Data-Field="联系方式" Data-Type="STRING" Align="left" />
+                    <Table-Cell Data-Field="居住地址" Data-Type="STRING" Align="left" />
+                    <Table-Cell Data-Field="报名时间" Data-Type="STRING" Align="center" />
+                </Table-Row>
+            </Table-Body>
+        </Table>
+    </Report-Body>
+</Report-Definition>

@@ -1,0 +1,102 @@
+<table sqlname="settlement_invoice_information">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO settlement_invoice_information(invoice_id,bill_no,invoice_no,invoice_issuing_time,logistics_company_name,logistics_number,remark,raw_add_time,row_update_time) VALUES (?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO settlement_invoice_information(invoice_id,bill_no,invoice_no,invoice_issuing_time,logistics_company_name,logistics_number,remark,raw_add_time,row_update_time) VALUES (#invoiceId#,#billNo#,#invoiceNo#,#invoiceIssuingTime#,#logisticsCompanyName#,#logisticsNumber#,#remark#,#rawAddTime#,#rowUpdateTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="invoiceId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE settlement_invoice_information SET bill_no=?,invoice_no=?,invoice_issuing_time=?,logistics_company_name=?,logistics_number=?,remark=?,row_update_time=? WHERE invoice_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  invoice_id ,bill_no ,invoice_no ,invoice_issuing_time ,logistics_company_name ,logistics_number ,remark ,raw_add_time ,row_update_time  FROM settlement_invoice_information WHERE invoice_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM settlement_invoice_information WHERE invoice_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  invoice_id ,bill_no ,invoice_no ,invoice_issuing_time ,logistics_company_name ,logistics_number ,remark ,raw_add_time ,row_update_time  FROM settlement_invoice_information WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  invoice_id ,bill_no ,invoice_no ,invoice_issuing_time ,logistics_company_name ,logistics_number ,remark ,raw_add_time ,row_update_time  FROM settlement_invoice_information where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM settlement_invoice_information WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM settlement_invoice_information  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="getSettlementInvoiceInformation">
+        <extraparams>
+            <param name="billNo" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  invoice_id ,bill_no ,invoice_no ,invoice_issuing_time ,logistics_company_name ,logistics_number ,remark ,raw_add_time ,row_update_time  FROM settlement_invoice_information WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  invoice_id ,bill_no ,invoice_no ,invoice_issuing_time ,logistics_company_name ,logistics_number ,remark ,raw_add_time ,row_update_time  FROM settlement_invoice_information where bill_no = #billNo#
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

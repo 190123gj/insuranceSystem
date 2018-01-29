@@ -1,0 +1,28 @@
+##需要在父元素中添加class="fnUpAttach"
+##需要set以下信息
+##set($attachmentTitle="授信客户意见扫描件上传")
+##set($attachmentNameAttr="pathName_CUSTOMER_OPINION")
+##set($hiddenUrls = $!{hiddenUrls_CUSTOMER_OPINION})
+##set($attachments = $!{attaches_CUSTOMER_OPINION})
+##<a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn"><i class="icon icon-add"></i>$!attachmentTitle</a>
+<input class="fnUpAttachVal" type="hidden" name="$!attachmentNameAttr" value="$!hiddenUrls">
+<div class="m-attach fnUpAttachUl">
+    #foreach($item in $!{attachments})
+        #if($!item.fileName.endsWith(".jpg") || $!item.fileName.endsWith(".JPG") ||
+            $!item.fileName.endsWith(".png") || $!item.fileName.endsWith(".PNG") ||
+            $!item.fileName.endsWith(".jpeg") || $!item.fileName.endsWith(".JPEG") ||
+            $!item.fileName.endsWith(".tiff") || $!item.fileName.endsWith(".TIFF") ||
+            $!item.fileName.endsWith(".bmp") || $!item.fileName.endsWith(".BMP"))
+        #set($fullStr = $!item.fileName + "," + $!item.filePhysicalPath + "," + $!item.requestPath)
+            <span class="attach-item fnAttachItem" val="$!fullStr">
+                <span class="fnAttachView fn-csp fileItems" title="$!{item.fileName}"><i class="icon icon-img"></i>$!{item.fileName}</span>
+            </span>
+        #else
+            <a title="点击下载" href="/baseDataLoad/downLoad.htm?id=$!item.attachmentId">
+                <span class="attach-item fnAttachItem">
+                    <span class="fn-csp fileItems" title="$!{item.fileName}"><i class="icon icon-file"></i>$!{item.fileName}</span>
+                </span>
+            </a>
+        #end
+    #end
+</div>

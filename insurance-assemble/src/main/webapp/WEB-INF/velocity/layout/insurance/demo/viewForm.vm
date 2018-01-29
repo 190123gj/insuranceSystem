@@ -1,0 +1,14 @@
+<div class="fn-blank20"></div>
+
+<div class="fn-clear">
+    <div class="m-item m-item-half fn-left">
+        <label class="m-label">报销金额：</label>
+        ${info.amount.toStandardString()}
+    </div>
+
+</div>
+
+
+
+
+    

@@ -1,0 +1,115 @@
+<table sqlname="insurance_protocol_info">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+						INSERT INTO insurance_protocol_info(protocol_info_id,catalog_name,catalog_id,product_name,protocol_user_name,contracting_agency_name,type,product_id,protocol_id,firstPeriod) VALUES (?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+
+        <sqlmap>
+            <![CDATA[
+				INSERT INTO insurance_protocol_info(protocol_info_id,catalog_name,catalog_id,product_name,protocol_user_name,contracting_agency_name,type,product_id,protocol_id,firstPeriod) VALUES (#protocolInfoId#,#catalogName#,#catalogId#,#productName#,#protocolUserName#,#contractingAgencyName#,#type#,#productId#,#protocolId#,#firstPeriod#)
+		        <selectKey  resultClass ="long"  keyProperty ="protocolInfoId" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+        </sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+		UPDATE insurance_protocol_info SET catalog_name=?,catalog_id=?,product_name=?,protocol_user_name=?,contracting_agency_name=?,type=?,product_id=?,protocol_id=?,firstPeriod=? WHERE protocol_info_id=?
+
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  protocol_info_id ,catalog_name ,catalog_id ,product_name ,protocol_user_name ,contracting_agency_name ,type ,product_id ,protocol_id ,firstPeriod FROM insurance_protocol_info WHERE protocol_info_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_protocol_info WHERE protocol_info_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteByProtocolId" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_protocol_info WHERE protocol_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  protocol_info_id ,catalog_name ,catalog_id ,product_name ,protocol_user_name ,contracting_agency_name ,type ,product_id ,protocol_id ,firstPeriod  FROM insurance_protocol_info WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	        SELECT  protocol_info_id ,catalog_name ,catalog_id ,product_name ,protocol_user_name ,contracting_agency_name ,type ,product_id ,protocol_id,firstPeriod  FROM insurance_protocol_info WHERE 1=1
+             <dynamic>
+	            <isNotEmpty property="insuranceProtocolInfo.type"   prepend=" and ">
+	                type =#insuranceProtocolInfo.type#
+	            </isNotEmpty>
+
+	            <isGreaterThan property="insuranceProtocolInfo.protocolId"  compareValue="0" prepend=" and ">
+	                protocol_id =#insuranceProtocolInfo.protocolId#
+	            </isGreaterThan>
+
+	        </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM insurance_protocol_info WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM insurance_protocol_info  where 1=1
+	        <dynamic>
+	           <isGreaterThan property="protocolId"  compareValue="0" prepend=" and ">
+	                protocol_id =#protocolId#
+	            </isGreaterThan>
+
+	            <isNotEmpty property="type"   prepend=" and ">
+	                type =#type#
+	            </isNotEmpty>
+
+	        </dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

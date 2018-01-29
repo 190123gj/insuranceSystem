@@ -1,0 +1,132 @@
+<table sqlname="commission_info_detail">
+<column name="receivable_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO commission_info_detail(commission_info_detail_id,commission_info_id,appserial_period,plan_pay_date,receivable_amount,raw_add_time,update_add_time) VALUES (?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO commission_info_detail(commission_info_detail_id,commission_info_id,appserial_period,plan_pay_date,receivable_amount,raw_add_time,update_add_time) VALUES (#commissionInfoDetailId#,#commissionInfoId#,#appserialPeriod#,#planPayDate#,#receivableAmount#,#rawAddTime#,#updateAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="commissionInfoDetailId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE commission_info_detail SET commission_info_id=?,appserial_period=?,plan_pay_date=?,receivable_amount=?,update_add_time=? WHERE commission_info_detail_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  commission_info_detail_id ,commission_info_id ,appserial_period ,plan_pay_date ,receivable_amount ,raw_add_time ,update_add_time  FROM commission_info_detail WHERE commission_info_detail_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM commission_info_detail WHERE commission_info_detail_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  commission_info_detail_id ,commission_info_id ,appserial_period ,plan_pay_date ,receivable_amount ,raw_add_time ,update_add_time  FROM commission_info_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  commission_info_detail_id ,commission_info_id ,appserial_period ,plan_pay_date ,receivable_amount ,raw_add_time ,update_add_time  FROM commission_info_detail where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM commission_info_detail WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM commission_info_detail  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    <operation name="findCommissionInfoDetails" multiplicity="many" >
+        <sql>
+            <![CDATA[
+			  SELECT  commission_info_detail_id ,commission_info_id ,appserial_period ,plan_pay_date ,receivable_amount ,raw_add_time ,update_add_time  FROM commission_info_detail WHERE commission_info_id=?
+			]]>
+        </sql>
+    </operation>
+    
+    
+    <operation name="getCommissionInfo">
+        <extraparams>
+            <param name="businessBillId" javatype="long" />
+            <param name="appserialPeriod" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  commission_info_detail_id ,commission_info_id ,appserial_period ,plan_pay_date ,receivable_amount ,raw_add_time ,update_add_time  FROM commission_info_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+           <![CDATA[
+				 select b.* from commission_info a LEFT JOIN commission_info_detail b on a.commission_info_id = b.commission_info_id
+where a.business_bill_id = #businessBillId# and b.appserial_period = #appserialPeriod#
+			]]>
+        </sqlmap>
+    </operation>
+    
+     
+    <operation name="getCommissionInfoDetails" multiplicity="many" >
+        <extraparams>
+            <param name="businessBillId" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  commission_info_detail_id ,commission_info_id ,appserial_period ,plan_pay_date ,receivable_amount ,raw_add_time ,update_add_time  FROM commission_info_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+           <![CDATA[
+				 select b.* from commission_info a LEFT JOIN commission_info_detail b on a.commission_info_id = b.commission_info_id
+where a.business_bill_id = #businessBillId#
+			]]>
+        </sqlmap>
+    </operation>
+</table>

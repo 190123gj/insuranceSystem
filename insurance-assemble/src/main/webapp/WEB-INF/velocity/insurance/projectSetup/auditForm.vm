@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>demo - 审核</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;超权限申请&nbsp;&gt;&nbsp;审批&nbsp;&gt;&nbsp;$!info.projectSetupName
+</div>
+
+<h2 class="m-h2-title">$!info.projectSetupName</h2>
+
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff">
+
+    <form class="fn-pt20 m-audit" id="auditForm">
+        #if($webNodeInfo.bpmButtonInfos && $webNodeInfo.bpmButtonInfos.size() > 0)
+            #parse("/layout/common/audit.vm")
+        #end
+    </form>
+
+    #parse("/layout/insurance/projectSetup/viewForm.vm")
+
+    <div class="m-blank fn-mt20 fn-mb20"></div>
+
+    <div class="fn-tac fn-pt20 fn-pb20">
+        <a href="/insurance/projectSetup/list.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+    </div>
+
+</div>
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+
+<script>
+seajs.use($_GLOBAL.zyw+'/projectSetup/projectSetup');
+</script>
+	
+</body>
+</html>

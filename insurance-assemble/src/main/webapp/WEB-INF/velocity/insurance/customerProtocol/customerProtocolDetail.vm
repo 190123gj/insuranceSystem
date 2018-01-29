@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title>保险协议</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;客户管理&nbsp;&gt;&nbsp;客户协议&nbsp;&gt;&nbsp;客户协议详情
+</div>
+<h2 class="m-h2-title">客户协议详情</h2>
+<div class="fn-blank20"></div>
+<div class="m-main border ui-bg-fff">
+
+		<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>协议名称：</label>
+           	<div>$!{info.name}</div>
+        </div>
+        
+		<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>客户名称：</label>
+           		 	<div>$!{info.customerUserName}</div>	
+        </div>
+        
+        <div class="m-item">
+            <label class="m-label">客户证件类型：</label>
+           		 	<div>$!{info.certType}</div>	
+        </div>
+        
+           <div class="m-item">
+            <label class="m-label">客户证件号码：</label>
+           		 	<div>$!{info.certNo}</div>	
+        </div>
+        
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>协议期：</label>
+            <div>$!dateUtil.formatDay($!info.beginDate) 至 $!dateUtil.formatDay($!info.endDate)</div>
+        </div>
+        
+         <div class="m-item">
+         <label class="m-label"><span class="m-required">*</span>客户附件：</label>
+            <div class="fnUpAttach">
+                #set($attachmentTitle="客户附件")
+                #set($attachmentNameAttr="pathName_CUSTOMER_PROTOCOL")
+                #set($hiddenUrls = $!{hiddenUrls_CUSTOMER_PROTOCOL})
+                #set($attachments = $!{attaches_CUSTOMER_PROTOCOL})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">关联编码：</label>
+          	<div>$!{relationProtocol.no}</div>
+        </div>     
+        <div class="m-item">
+            <label class="m-label">关联名称：</label>
+           <div>$!{relationProtocol.name}</div>
+        </div>     
+	  	<div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <a href="/insurance/customerProtocol/queryCustomerProtocol.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+</div>
+#parse("/layout/common/commonjs.vm")
+<script>
+  seajs.use($_GLOBAL.zyw+'/customer/customerProtocol');
+</script>
+</body>
+</html>

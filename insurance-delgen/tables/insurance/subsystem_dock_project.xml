@@ -1,0 +1,113 @@
+<table sqlname="subsystem_dock_project">
+
+	<operation name="insert" paramtype="object">
+		<sql>
+			<![CDATA[
+				INSERT INTO subsystem_dock_project
+					(project_code,
+						dock_form_type,
+						raw_add_time) 
+				VALUES (?,?,?)
+			]]>
+		</sql>
+	</operation>
+	<operation name="update" paramtype="object">
+		<sql>
+			<![CDATA[
+				UPDATE subsystem_dock_project 
+				   SET project_code=?,
+						dock_form_type=?
+				  WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="findById">
+		<sql>
+			<![CDATA[
+				SELECT  * FROM subsystem_dock_project WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	<operation name="findByProjectCodeAndDockFormType">
+		<sql>
+			<![CDATA[
+				SELECT  * FROM subsystem_dock_project WHERE project_code=? and dock_form_type=?
+			]]>
+		</sql>
+	</operation>
+	<operation name="deleteById">
+		<sql>
+			<![CDATA[
+				DELETE FROM subsystem_dock_project WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	<operation name="deleteByProjectCodeAndDockFormType">
+		<sql>
+			<![CDATA[
+				DELETE FROM subsystem_dock_project WHERE project_code=? and dock_form_type=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="findByCondition" paramtype="object" multiplicity="many">
+		<extraparams>
+			<param name="limitStart" javatype="long" />
+			<param name="pageSize" javatype="long" />
+			<param name="sortCol" javatype="java.lang.String" />
+			<param name="sortOrder" javatype="java.lang.String" />
+		</extraparams>
+	    <sql>
+	        <![CDATA[
+	       SELECT  * FROM subsystem_dock_project WHERE 1=1
+	        ]]>
+	    </sql>
+	    <sqlmap>
+	        <![CDATA[
+	         SELECT * from subsystem_dock_project where 1=1
+	        <dynamic>
+	            <isGreaterThan property="subsystemDockProject.id"  compareValue="0" prepend=" and ">
+	                id = #subsystemDockProject.id#
+	            </isGreaterThan>
+	             <isNotEmpty property="subsystemDockProject.projectCode" prepend=" and ">
+	               	project_code = #subsystemDockProject.projectCode#
+	            </isNotEmpty>
+	            <isNotEmpty property="subsystemDockProject.dockFormType" prepend=" and ">
+	               	dock_form_type = #subsystemDockProject.dockFormType#
+	            </isNotEmpty>
+	        </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#;
+	        ]]>
+	    </sqlmap>
+	</operation>
+	<operation name="findByConditionCount" paramtype="object" >
+	    <sql>
+	        <![CDATA[
+	       SELECT  count(*)  FROM subsystem_dock_project WHERE  1=1
+	        ]]>
+	    </sql>
+	    <sqlmap>
+	        <![CDATA[
+	         SELECT  count(*)  FROM subsystem_dock_project  where 1=1
+	        <dynamic>
+	            <isGreaterThan property="id"  compareValue="0" prepend=" and ">
+	                id = #id#
+	            </isGreaterThan>
+	             <isNotEmpty property="projectCode" prepend=" and ">
+	               	project_code = #projectCode#
+	            </isNotEmpty>
+	            <isNotEmpty property="dockFormType" prepend=" and ">
+	               	dock_form_type = #dockFormType#
+	            </isNotEmpty>            
+	        </dynamic>
+	        ]]>
+	    </sqlmap>
+	</operation>
+</table>

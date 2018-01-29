@@ -1,0 +1,23 @@
+#parse("copyright.vm")
+package ${plugin.seqIbatisPackage};
+
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+#if ($plugin.sequences.size() > 0)
+import org.springframework.dao.DataAccessException;
+#end
+import ${plugin.qualifiedSeqDAOClassName};
+
+/**
+ * An ibatis based implementation of dao interface <tt>${plugin.qualifiedSeqDAOClassName}</tt>.
+ *
+#parse("description-java.vm")
+ */
+public class ${plugin.seqIbatisClassName} extends SqlMapClientDaoSupport implements ${plugin.seqDAOClassName}{
+#foreach ($seq in ${plugin.sequences})
+#parse("seq-description.vm")
+    public long ${seq.operationName}() throws DataAccessException {
+        return ((Long) getSqlMapClientTemplate().queryForObject("$seq.mappedStatementId", null)).longValue();
+    }
+
+#end
+}

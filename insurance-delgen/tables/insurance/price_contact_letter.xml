@@ -1,0 +1,109 @@
+<table sqlname="price_contact_letter">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+			INSERT INTO price_contact_letter(id,price_type,price_template,catalog_id,catalog_name,business_condition_id,business_conditions,business_user_id,business_user_name,project_setup_id,project_setup_name,name,bill_no,customer_type,customer_user_id,customer_user_name,customer_cert_type,customer_cert_no,creator_id,creator_name,form_id,status,raw_add_time,special_req,ask_date,version,ext) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+
+        <sqlmap>
+            <![CDATA[
+				INSERT INTO price_contact_letter(id,price_type,price_template,catalog_id,catalog_name,business_condition_id,business_conditions,business_user_id,business_user_name,project_setup_id,project_setup_name,name,bill_no,customer_type,customer_user_id,customer_user_name,customer_cert_type,customer_cert_no,creator_id,creator_name,form_id,status,raw_add_time,special_req,ask_date,version,ext) VALUES (#id#,#priceType#,#priceTemplate#,#catalogId#,#catalogName#,#businessConditionId#,#businessConditions#,#businessUserId#,#businessUserName#,#projectSetupId#,#projectSetupName#,#name#,#billNo#,#customerType#,#customerUserId#,#customerUserName#,#customerCertType#,#customerCertNo#,#creatorId#,#creatorName#,#formId#,#status#,#rawAddTime#,#specialReq#,#askDate#,#version#,#ext#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+        </sqlmap>
+
+    </operation>
+
+
+    <operation name="findByFormId" >
+        <sql>
+            <![CDATA[
+			SELECT  id ,price_type ,price_template ,catalog_id ,catalog_name ,business_condition_id ,business_conditions ,business_user_id ,business_user_name ,project_setup_id ,project_setup_name ,name ,bill_no ,customer_type ,customer_user_id ,customer_user_name ,customer_cert_type ,customer_cert_no ,creator_id ,creator_name ,form_id ,status ,raw_add_time ,raw_update_time ,version ,ext,special_req,ask_date  FROM price_contact_letter WHERE form_id=?
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE price_contact_letter SET price_type=?,price_template=?,catalog_id=?,catalog_name=?,business_condition_id=?,business_conditions=?,business_user_id=?,business_user_name=?,project_setup_id=?,project_setup_name=?,name=?,bill_no=?,customer_type=?,customer_user_id=?,customer_user_name=?,customer_cert_type=?,customer_cert_no=?,creator_id=?,creator_name=?,form_id=?,status=?,special_req=?,ask_date=?,version=?,ext=? WHERE id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  	  SELECT  id ,price_type ,price_template ,catalog_id ,catalog_name ,business_condition_id ,business_conditions ,business_user_id ,business_user_name ,project_setup_id ,project_setup_name ,name ,bill_no ,customer_type ,customer_user_id ,customer_user_name ,customer_cert_type ,customer_cert_no ,creator_id ,creator_name ,form_id ,status ,raw_add_time ,raw_update_time ,special_req ,ask_date ,version ,ext  FROM price_contact_letter WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM price_contact_letter WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+							SELECT  id ,price_type ,price_template ,catalog_id ,catalog_name ,business_condition_id ,business_conditions ,business_user_id ,business_user_name ,project_setup_id ,project_setup_name ,name ,bill_no ,customer_type ,customer_user_id ,customer_user_name ,customer_cert_type ,customer_cert_no ,creator_id ,creator_name ,form_id ,status ,raw_add_time ,raw_update_time ,special_req ,ask_date ,version ,ext  FROM price_contact_letter WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         		SELECT  id ,price_type ,price_template ,catalog_id ,catalog_name ,business_condition_id ,business_conditions ,business_user_id ,business_user_name ,project_setup_id ,project_setup_name ,name ,bill_no ,customer_type ,customer_user_id ,customer_user_name ,customer_cert_type ,customer_cert_no ,creator_id ,creator_name ,form_id ,status ,raw_add_time ,raw_update_time ,special_req ,ask_date ,version ,ext  FROM price_contact_letter WHERE 1=1
+
+              <dynamic>
+				<isNotEmpty property="priceContactLetter.status" prepend=" and ">
+					status=#priceContactLetter.status#
+				</isNotEmpty>
+
+			</dynamic>
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM price_contact_letter WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM price_contact_letter  where 1=1
+	           <dynamic>
+				<isNotEmpty property="status" prepend=" and ">
+					status=#status#
+				</isNotEmpty>
+
+			</dynamic>
+
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

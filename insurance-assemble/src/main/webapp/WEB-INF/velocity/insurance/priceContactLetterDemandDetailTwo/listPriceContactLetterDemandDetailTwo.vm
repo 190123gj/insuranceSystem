@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>demo</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;demo&nbsp;&gt;&nbsp;
+</div>
+
+<form class="m-main border ui-bg-fff" action="" id="fnListSearchForm" method="POST">
+
+    
+    <div class="m-search fn-clear">
+
+        <div class="item">
+            姓名
+            <input class="ui-text fn-w90" type="text" name="customerName" value="\$!{queryConditions.realName}">
+        </div>
+
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/demo/edit.htm"><b>+</b>新增&nbsp;</a>
+
+        </div>
+
+        
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+				 	                <th>建造日期</th>
+				 	                <th>标id</th>
+				 	                <th>车位/载客</th>
+				 	                <th>车牌号</th>
+				 	                <th>行驶证车主</th>
+				 	                <th>初次登记日期</th>
+				 	                <th>船舶类型</th>
+				 	                <th>船名</th>
+				 	                <th>车架号</th>
+				 	                <th>危险货物名称</th>
+				 	                <th>扩展字段</th>
+				 	                <th>单次航程</th>
+				 	                <th>版本</th>
+				 	                <th>id</th>
+				 	                <th>厂牌型号</th>
+				 	                <th>发动机号</th>
+				 	                <th>航行区域</th>
+				 	                <th>总吨\吨位</th>
+				 	                <th>改建日期</th>
+				                     <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+					 						 <td>	$!{item.constructionDate} </td>
+					 						 <td>	$!{item.letterDemandId} </td>
+					 						 <td>	$!{item.parking} </td>
+					 						 <td>	$!{item.licensePlateNumber} </td>
+					 						 <td>	$!{item.drivingLicenseOwner} </td>
+					 						 <td>	$!{item.initialRegistrationDate} </td>
+					 						 <td>	$!{item.shipType} </td>
+					 						 <td>	$!{item.shipName} </td>
+					 						 <td>	$!{item.frameNumber} </td>
+					 						 <td>	$!{item.dangerousGoodsName} </td>
+					 						 <td>	$!{item.ext} </td>
+					 						 <td>	$!{item.singleVoyage} </td>
+					 						 <td>	$!{item.version} </td>
+					 						 <td>	$!{item.id} </td>
+					 						 <td>	$!{item.brandModel} </td>
+					 						 <td>	$!{item.engineNumber} </td>
+					 						 <td>	$!{item.navigationArea} </td>
+					 						 <td>	$!{item.grossTonnage} </td>
+					 						 <td>	$!{item.alterationDate} </td>
+					                          <td>
+                            <a href="">[ 查看详情 ]</a>
+                           
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        
+        
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+  //  seajs.use($_GLOBAL.zyw+'/project/rkct.rkwn.list');
+</script>
+</body>
+</html>

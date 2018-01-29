@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title>xxxx - 新增</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;xxxx&nbsp;&gt;&nbsp;xxxx&nbsp;&gt;&nbsp;xxxx
+</div>
+
+<h2 class="m-h2-title">xxxx</h2>
+
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff">
+    
+    <form id="form" action="/insurance/xxxx.json" method="POST">
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>保单号：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="insuranceNo" id="insuranceNo" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>管理津贴：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="manageGrant" id="manageGrant" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>原保费：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="premiumAmount" id="premiumAmount" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>团险佣金：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="groupInsuranceCommission" id="groupInsuranceCommission" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>部门：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="depart" id="depart" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>经纪人编号：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="insuranceBrokerNo" id="insuranceBrokerNo" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>费用支付：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="payFee" id="payFee" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>记录新增时间：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="rowAddTime" id="rowAddTime" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>寿险佣金：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="lifeInsuranceCommission" id="lifeInsuranceCommission" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>继续率奖金：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="persistencyRateWard" id="persistencyRateWard" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="id" id="id" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>记录更新时间：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="rowUpdateTime" id="rowUpdateTime" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>应收金额：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="recievableFee" id="recievableFee" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>经纪人姓名：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="insuranceBrokerName" id="insuranceBrokerName" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>流程的formId：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="formId" id="formId" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>业务编号：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="billNo" id="billNo" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>险种类别名称：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="insuranceTypeName" id="insuranceTypeName" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>团队：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="team" id="team" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>日期：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="noticeDate" id="noticeDate" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>已收：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="recievedFee" id="recievedFee" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>关联的保单的id：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="businessBillId" id="businessBillId" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>费用预留比率：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="reservedScale" id="reservedScale" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>方案费：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="packageFee" id="packageFee" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>单号：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="noticeNo" id="noticeNo" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>其他：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="insuranceOther" id="insuranceOther" value="" maxlength="20">
+        </div>
+			 	<div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>承包人简称：</label>
+            <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="billCustomerName" id="billCustomerName" value="" maxlength="20">
+        </div>
+		      
+        
+
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submit" type="button" value="提交">
+            <a href="/insurance/xxxx.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+
+    </form>
+
+</div>
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+#parse("/layout/common/commonue.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    //seajs.use($_GLOBAL.zyw+'/project/rkct.rkwn.add');
+</script>
+
+</body>
+</html>

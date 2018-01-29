@@ -1,0 +1,86 @@
+<table sqlname="sys_param">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO sys_param(param_name,param_value,extend_attribute_one,extend_attribute_two,raw_add_time,description) VALUES (?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO sys_param(param_name,param_value,extend_attribute_one,extend_attribute_two,raw_add_time,description) VALUES (#paramName#,#paramValue#,#extendAttributeOne#,#extendAttributeTwo#,#rawAddTime#,#description#)
+		        <selectKey  resultClass ="long"  keyProperty ="paramName" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE sys_param SET param_value=?,extend_attribute_one=?,extend_attribute_two=?,description=? WHERE param_name=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  param_name ,param_value ,extend_attribute_one ,extend_attribute_two ,raw_add_time ,raw_update_time ,description  FROM sys_param WHERE param_name=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM sys_param WHERE param_name=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  param_name ,param_value ,extend_attribute_one ,extend_attribute_two ,raw_add_time ,raw_update_time ,description  FROM sys_param WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  param_name ,param_value ,extend_attribute_one ,extend_attribute_two ,raw_add_time ,raw_update_time ,description  FROM sys_param where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM sys_param WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM sys_param  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

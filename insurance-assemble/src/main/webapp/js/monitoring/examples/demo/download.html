@@ -1,0 +1,1035 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Demo-download</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<link rel="stylesheet" type="text/css" href="../../utility/mini-easyui/themes/gray/easyui.css"  />
+	<link rel="stylesheet" type="text/css" href="../../utility/mini-easyui/themes/icon.css"  />
+	<link rel="stylesheet" type="text/css" href="demo.css" />
+	<link rel="stylesheet" type="text/css" href="gray/c.css" />
+	
+	<script src="../conf.js" type="text/javascript"></script>
+	
+	<script src="../../lib/plugin.iface.js" type="text/javascript"></script> 
+	<script src="../../lib/plugin.layer.js" type="text/javascript"></script>
+	
+	<script src="../../utility/json2.js" type="text/javascript"></script>
+	<script src="../../utility/mini-easyui/jquery.min.js" type="text/javascript"></script>
+	<script src="../../utility/mini-easyui/jquery.easyui.min.js" type="text/javascript"></script>
+	<script src="../../utility/mini-easyui/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+	
+</head>
+<body>
+	<div><a id="connect_btn" class="easyui-linkbutton" onclick="connect()">连接平台</a><br /><br />	<div>
+	
+	<div id="vod_layout" class="easyui-layout" tabPosition="left" fit="true" style="width:auto;height:800px">
+	<div id="vod_region_west" data-options="region:'west',border:true" style="width:240px;padding:2px;" >
+		<div id="vod_west_tabs" class="easyui-tabs" tabPosition="top" data-options="" fit="true" style="width:240px">
+			<div title="查询下载">
+			
+			<div class="easyui-layout" fit="true" style="width:100%;height:800px;" >
+			<div data-options="region:'north',border:false" title="查询条件" style="padding:5px;height:150px;">
+		    	<table>
+		    	<tr><td>存储类型:</td><td><input type=radio name="storage_type" id="storage_type_cloud" checked   /><label for="storage_type_cloud" >云存储</label>&nbsp;<input type=radio  name="storage_type" id="storage_type_local"  /></label for="storage_type_local" >前端存储<label></td></tr>
+		    	<tr><td>开始时间:</td><td><input id="vod_record_begintime" class="easyui-datetimespinner" data-options="showSeconds:true" value="P_Utils.DateFormat(yyyy/MM/dd 00:00:00)" style="width:148px;"></td></tr>
+		    	<tr><td>结束时间:</td><td><input id="vod_record_endtime" class="easyui-datetimespinner" data-options="showSeconds:true" value="P_Utils.DateFormat(yyyy/MM/dd 23:59:59)" style="width:148px;"></td></tr>
+		    	
+		    	<tr><td>查询类别:</td><td><input type=radio name="query_type" id="type_record" checked   /><label>录像</label>&nbsp;<input type=radio  name="query_type" id="type_snapshot"  /></label>图片<label></td></tr>
+		    	</table>
+		    
+			</div>
+			<div data-options="region:'center',border:false" title="资源列表">
+					<div id="vod_record_cameratree"  fit="true" ></div>
+			</div>
+			</div>
+		    
+			</div>
+		</div>	
+	
+	</div>
+	<div id="vod_region_center" data-options="region:'center',border:true"  style="width:800px;height:800px;" >
+	<div id="vod_tabs" class="easyui-tabs" tabPosition="top" fit="true" style="width:auto;height:800px;"></div>
+	</div>
+	</div>
+
+	
+</body>
+</html>
+<script>
+var connectId = null;
+
+// 初始化插件对象，必须初始化成功后才可以调用所有接口
+function load(){	
+		//初始化插件
+		try{
+			var rv = P_LY.Init(new P_LY.Struct.InitParamStruct(
+				true, 
+				function(msg)
+				{
+					log(JSON.stringify(msg));
+				}
+			));
+			if(rv.rv != P_Error.SUCCESS)
+			{
+				return false;
+			}
+			// 加载默认的连接参数			
+	        return true;
+		}
+		catch(e){
+			$("#msg_bar").html(e.name + ","+ e.message);
+			return false;
+		}
+	
+	
+
+	
+}
+
+// 释放插件对象，网页退出必须释放插件，否则会出现浏览器异常的错误
+function unload(){
+	P_LY.UnLoad();
+}
+	
+function connect(){	
+		
+	//创建连接,并记录在P_LY.Connections中
+	var ip = _cf.connParams.ip;
+	var port = _cf.connParams.port;
+	var epId = _cf.connParams.epId;
+	var uid = _cf.connParams.uid;
+	var pwd = _cf.connParams.pwd; 
+	var bfix = _cf.connParams.bfix;
+
+	// 构造连接对象
+	var param = new P_IF.Struct.ConnParamStruct(ip,port,uid,epId,pwd,bfix || 0);
+	log("登录参数:"+JSON.stringify(param));
+			
+	// 连接平台
+	var conn = P_LY.Connect(param);
+	
+	if(conn.rv == P_Error.SUCCESS){
+		connectId = conn.response;// 连接成功，返回connectId，此参数很重要，后面很多操作都需要
+		log("连接成功:connectId="+connectId);
+		$('#connect_btn').hide();
+		$('#disconnect_btn').show();
+		
+		fetch_resource();
+		
+		// 开接收流状态事件
+		P_LY.NCNotifyManager.Add(P_LY.Enum.NCObjectNotify.stream_status_notify,notify);
+
+	}else{
+		log(P_Error.Detail(conn.rv));
+	}
+}
+
+function disconnect(){
+	stop();
+	var rv = P_LY.DisConnection(connectId);
+	if(rv.rv == P_Error.SUCCESS){
+		log("断开成功");		
+		connectId = null;
+		$('#connect_btn').show();
+		$('#disconnect_btn').hide();
+		$('#res_tree').tree('loadData',[]);
+	}else{
+		log(P_Error.Detail(rv.rv));
+	}
+}
+
+function fetch_resource(){
+	var offset = 0;
+	var cnt = 100;// 这里demo只查询100个资源，实际应用，可以根据需求，如果返回的节点数等于要查询的数，说明可能还有资源，可以继续获取	
+	var rv = P_LY. ForkResource(connectId,P_LY.Enum.ForkResourceLevel.nppForkPUInfo, offset,cnt, "","");
+	//console.log(rv);
+	var nodes = new Array();
+	
+	$('#vod_record_cameratree').tree({
+		onExpand:function(node){
+			
+			var childs = $(this).tree('getChildren', node.target);
+			
+			if (childs.length == 1) {
+			    var l = node.children[0];
+			    if (l.text == "正在查询资源……") {
+					var rv = P_LY. ForkResource(connectId,P_LY.Enum.ForkResourceLevel.nppForkPUResourceInfo, 0,120, "",{puid:node.attributes.pu.puid,_HANDLE:node.id});
+					if(rv.rv == P_Error.SUCCESS){
+						var nodes = new Array();
+						for(var j = 0;j < rv.response.length;j++){
+							var pures = rv.response[j];
+							
+							// 这里只列出视频输入资源
+							if(pures.type == P_LY.Enum.PuResourceType.VideoIn){
+								nodes.push({id:pures._HANDLE,text:pures.name,attributes:{pu:node.attributes.pu,self:pures}});	
+							}
+							
+						}
+						
+                        if (nodes.length > 0) {
+                            // 删除那个load节点
+                            for (var i = 0; i < childs.length; i++) {
+                                $('#vod_record_cameratree').tree('remove', childs[i].target);
+                            }
+
+                            $('#vod_record_cameratree').tree('append', {
+                                parent: node.target,
+                                data: nodes
+                            });
+                        }
+                        
+					}else{
+						l.text = "没有可用的资源";
+					}
+			    }
+			}
+		},
+		onCollapse:function(node){
+			//console.log(node)
+		},
+		onDblClick:function(node){
+			var attr = node.attributes;
+		//	if(attr.pu.online != "1"){
+		//		log(pu.name+"不在线");
+		//		return;
+		//	}
+			query_record(attr.pu,attr.self);
+			return true;
+		}
+	});
+	if(rv.rv == P_Error.SUCCESS){
+		for(var i =0;i <rv.response.length;i++){
+			var pu = rv.response[i];
+			if(pu.modelType == "ENC" || pu.modelType == "WENC"){
+				nodes.push({id:pu._HANDLE,text:pu.name,attributes:{pu:pu},state:"closed",children:[{text:'正在查询资源……'}]});
+			}
+		}
+	{
+			$('#vod_record_cameratree').tree('loadData',nodes);
+			
+		}
+	}else{
+		log("没有获取资源,rv="+rv.rv);
+	}
+}
+
+function query_record(pu,pures)
+{
+	open_record_file_tab("录像文件",pu,pures);
+}
+
+function query_record_file(pu,pures){
+	console.log(pu,pures)
+	var beginTime = "",endTime="",puid="",idx="",reasons="";
+	var files = new Array();
+	
+	beginTime = $('#vod_record_begintime').datetimespinner('getValue');
+	endTime = $('#vod_record_endtime').datetimespinner('getValue');
+
+	beginTime = parseInt(P_Utils.DTStrToTimestamp(beginTime).getTime()/1000);
+	endTime = parseInt(P_Utils.DTStrToTimestamp(endTime)/1000);
+	
+	puid = pu.puid;
+	idx = pures.idx;
+	
+	var type = 0; // 查询录像
+	
+	if($('#type_snapshot').prop("checked") == true){
+		type = 1; // 查询图片
+	}
+	
+	if($('#storage_type_local').prop("checked") == true){
+	
+	
+		var paramAttrs =' Idx="'+idx+'" Offset="0" Count="1000" Type="'+type+'" Begin="'+beginTime+'" End="'+endTime+'" LogicMode="AND"  ';
+		
+		var rv = P_LY.Control.CommonGet(
+		connectId,
+		{
+			puid:puid,
+			resType:"SG",
+			resIdx:idx,
+			controlID:'C_SG_QueryRecordFiles',
+			xmlObjSets:'',
+			param:'<Param '+paramAttrs+' />'
+		}
+		).response;
+		
+		if(rv.M && rv.M.C && rv.M.C.Res && rv.M.C.Res.Param && rv.M.C.Res.Param.File){
+			var f = rv.M.C.Res.Param.File;
+			if($.isArray(f)){
+				for(var i = 0;i <f.length;i++){
+					files.push({type:'local',offset:0,szId:null,puid:puid,idx:idx,name:f[i].Name,size:f[i].Size,beginTime:f[i].Begin,endTime:f[i].End,reason:f[i].Reason,path:f[i].Path});
+				}
+			}else{
+				files.push({type:'local',offset:0,szId:null,puid:puid,idx:idx,name:f.Name,size:f.Size,beginTime:f.Begin,endTime:f.End,reason:f.Reason,path:f.Path});
+			}
+		}
+		
+	}else{
+	
+		var paramAttrs = 'Offset="0" Count="1000" Type="'+type+'" Begin="'+beginTime+'" End="'+endTime+'" Type="0" ';
+		
+    	xmlOSets = "";
+    	xmlOSets += "<OSets>";
+    		xmlOSets += '<Res OType="201" OID="'+puid+'" Type="IV" Idx="'+idx+'"  />';	    		
+    	xmlOSets += "</OSets>";
+    	
+    	var rv = P_LY.Control.CommonGet(
+		connectId,
+		{
+			puid:puid,
+			resType:"ST",
+			resIdx:idx,
+			controlID:'C_CSS_QueryStorageFiles',
+			xmlObjSets:xmlOSets,
+			param:'<Param '+paramAttrs+' />'
+		}
+		).response;	
+		console.log(rv)
+		if(rv.M && rv.M.C && rv.M.C.Res && rv.M.C.Res.Param && rv.M.C.Res.Param.File){
+			var f = rv.M.C.Res.Param.File;
+			if($.isArray(f)){
+				for(var i = 0;i <f.length;i++){
+					files.push({type:'cloud',offset:0,szId:f[i].ID,name:f[i].Name,size:f[i].Size,beginTime:f[i].Begin,endTime:f[i].End,reason:f[i].Reason,path:f[i].Path,puid:f[i].PUID,idx:0});
+				}
+			}else{
+				files.push({type:'cloud',offset:0,szId:f.ID,name:f.Name,size:f.Size,beginTime:f.Begin,endTime:f.End,reason:f.Reason,path:f.Path,puid:f.PUID,idx:0});
+			}
+		}
+   	}
+   	
+   		$('#record_file_dr').datagrid("loadData",files);
+		$('#wait_dlg').dialog('close');
+
+}
+function open_record_file_tab(tabTitle,pu,pures){
+
+	var exists = $('#vod_tabs').tabs("exists",tabTitle);
+
+	if(!exists){
+		$('#vod_tabs').tabs('add',{
+		    title:tabTitle,
+            href: "vod_record_file.html",
+		    fit:true,
+		    closable:false,
+            onLoad: function (pp) {
+				
+        		$('#record_file_dr').datagrid({
+        			singleSelect:true,
+        		    columns:[[
+        		        {field:'name',title:'文件名',width:200},
+        		        {field:'size',title:'大小',width:100,formatter:record_file_sizemap},
+        		        {field:'beginTime',title:'开始时间',width:150,formatter:function(v){var dd = new Date();dd.setTime(parseInt(v*1000));return  P_Utils.DateFormat("yyyy-MM-dd HH:mm:ss",dd);}},
+        		        {field:'endTime',title:'结束时间',width:150,formatter:function(v){var dd = new Date();dd.setTime(parseInt(v*1000));return  P_Utils.DateFormat("yyyy-MM-dd HH:mm:ss",dd);}},
+        		        {field:'reason',title:'原因',width:400},
+        		        {field:'path',title:'路径',width:300},
+        		        {field:'op',title:'操作',width:200,formatter:record_file_opmap}
+        		    ]]
+        		});
+        		
+        		$('#record_file_download_dr').datagrid({
+        			singleSelect:true,
+        		    columns:[[
+        		        {field:'handler',title:'handler',width:0,hidden:true},
+        		        {field:'puid',title:'',width:0,hidden:true},
+        		        {field:'path',title:'路径',width:0,hidden:true},
+        		        {field:'beginTime',width:0,hidden:true},
+        		        {field:'endTime',width:0,hidden:true},
+        		        {field:'downloadTime',width:0,hidden:true},
+        		        {field:'name',title:'文件名',width:200},
+        		        {field:'size',title:'大小',width:100,formatter:record_file_sizemap},
+        		        {field:'savePath',title:'保存地址',width:200},
+        		        {field:'status',title:'状态',width:150,formatter:download_record_file_statusmap},
+        		        {field:'process',title:'进度',width:100,formatter:download_record_file_processmap},
+        		        {field:'op',title:'操作',width:400,formatter:download_record_file_opmap}
+        		    ]]
+        		});
+	        	query_record_file(pu,pures);
+            }
+		});
+	}else{
+		var tab = $('#vod_tabs').tabs('getSelected');
+		var index = $('#vod_tabs').tabs('getTabIndex',tab);
+		
+		var t2 = $('#vod_tabs').tabs('getTab',tabTitle);
+		var index2 = $('#vod_tabs').tabs('getTabIndex',t2);
+		
+		if(index == index2){
+    		$('#wait_dlg').dialog({
+    			title:"提示",
+    		    width:280,
+    		    height:100,
+    		    closable:false,
+    		    content:'<div style="width:100%;text-align:center;line-height:40px;">正在查询录像文件......</div>'
+    		});
+    		
+        	setTimeout(function(){query_record_file(pu,pures);},10);
+			return;
+		}			
+		$('#vod_tabs').tabs('select',tabTitle);
+	}
+}
+
+function record_file_sizemap(v,r,i){
+	if(v <1024){
+		return v+"(B)";
+	}else if(v <(1024*1024)){
+		return (parseInt(v)/1024).toFixed(2)+"(KB)";
+	}else{
+		return (parseInt(v)/(1024*1024)).toFixed(2)+"(MB)";	
+	}	
+}
+
+function download_record_file_statusmap(v,r,i){
+	if(v == 0){
+		return '正在缓冲';
+	}else if(v == 2){
+		return '正在下载';
+	}else if(v == 4){
+		return '完成';
+	}else if(v == -1){
+		return '流断开';
+	}else{
+		return '';
+	}
+}
+
+function download_record_file_processmap(v,r,i){
+	if(r.status == 4){			
+		return "100%";
+	}else if(r.status == 2){
+		var total = parseInt(r.endTime)-parseInt(r.beginTime);
+		var p = parseInt(r.downloadTime/total*100);
+		return p+"%";	
+	}else if(r.status == 0){
+		return "0%";
+	}else{
+		return "";
+	}
+}
+
+function record_file_opmap(v,r,i){
+	var btns = '';
+	if($('#type_snapshot').prop("checked") == true){
+		btns += '<a href="javascript:void(0)" onclick="download_snapshot_file(\''+i+'\',\''+r.puid+'\')">下载</a>';	
+	}
+	else{
+		btns += '<a href="javascript:void(0)" onclick="download_record_file(\''+i+'\',\''+r.puid+'\')">下载</a>&nbsp;<a href="javascript:void(0)" onclick="replayer_record_file(\''+i+'\')">回放</a>';
+	}
+
+	return btns;
+}
+
+function download_record_file_opmap(v,r,i){
+	var btns = '';
+	if(r.status == -1 || r.status == 4){
+		btns += '<a href="javascript:void(0)" onclick="del_download_record_row(\''+i+'\')">删除下载记录</a>&nbsp;';
+	}
+	return btns;
+}
+
+function download_record_file(rowIndex,puid){
+	var rows = $('#record_file_dr').datagrid('getRows');
+
+	// 插入到下载列表
+	if(rows[rowIndex]){
+		var f = rows[rowIndex];
+	
+		var rv = download_record_files(connectId,f.type,f.szId,f.puid,f.path+f.name,f.name,f.idx);
+
+		if(rv.rv == 0){
+			$('#record_file_download_dr').datagrid('appendRow',{
+				path:f.path,
+				name:f.name,
+				puid:f.puid,
+				idx:f.idx,
+				type:f.type,
+				size:f.size,
+				szId:f.szId,
+				offset:0,
+				beginTime:f.beginTime,
+				endTime:f.endTime,
+				savePath:'C:/TSLFile/Download',
+				handler:rv.response,
+				status:'0',
+				process:0
+			});
+		}else{
+			// stop
+            $.messager.show({
+                title:"提示",
+                msg:'下载失败，errorcode:'+rv.rv,
+                timeout:4000,
+                showType:'slide'
+            });
+		}
+	}
+}
+
+function download_record_files(connectId,type,szId,puid,remoteFile,fileName,idx){
+
+	var saveFilePath = "C:/TSLFile/Download/"+fileName.split(".")[0]+".avi";
+	if(type == "local"){
+		return P_LY.Download.StartCEFSVodFileDownload(connectId,puid,0,remoteFile,saveFilePath,0);
+	}else{
+		return P_LY.Download.StartCloudFileDownload(connectId,szId,remoteFile,saveFilePath,0);
+	}
+
+}
+
+function del_download_record_row(rowIndex){
+	$('#record_file_download_dr').datagrid('deleteRow',rowIndex);
+}
+
+
+function notify_downloadfile(notify){
+	if(notify.eventName != "stream_status_notify" ){
+		return;
+	}
+	try{
+		var downloadLength = notify.keyData.download_length;
+		var downloadTime = notify.keyData.download_time;
+		var rows = $('#record_file_download_dr').datagrid('getRows');
+		var type = "local";
+		var flag = false;
+		
+		for(var i = 0;i < rows.length;i++){
+			var r = rows[i];
+			type = r.type;
+			if(r.handler == notify._HANDLE){
+				$('#record_file_download_dr').datagrid('updateRow',{
+					index: i,
+					row: {
+						status:notify.status,
+						downloadTime:downloadTime,
+						handler:(notify.status == 4? '':r.handler)
+					}
+				});
+				if(notify.status == -1 || notify.status == 4){
+					stop_download_record_file(connectId,r.type,notify._HANDLE);
+				}
+				flag = true;
+
+				break;
+			}
+		}
+
+	
+		
+		if(flag == false){
+			
+			for(var i = 0;i < vodList.length;i++){
+				var v = vodList[i];
+				
+				if(typeof v.replayerHandler != "undefined" && v.replayerHandler == notify._HANDLE){
+					replayer_update_status(notify);
+				}
+			}
+		}
+	}catch(e){	
+	}finally{
+		return;
+	}
+}
+
+function stop_download_record_file(connectId,type,downloadHandler){
+	if(type == "local"){
+    	return P_LY.Download.StopCEFSFileDownload(connectId,downloadHandler);	
+	}else{
+    	return P_LY.Download.StopCloudFileDownload(connectId,downloadHandler);
+	}
+}
+
+var vod_wnd_opened = false;
+var vodList = new Array();
+
+function replayer_record_file(rowIndex){
+	
+	var rows = $('#record_file_dr').datagrid('getRows');
+	if(rows[rowIndex]){
+		//$("#replayer_wnd").window();
+		//$('#replayer_wnd').window('close');
+	
+		var windowId = "replayer_"+rowIndex;
+		var windowTbarId = "replayer_tb_"+rowIndex;
+		if(vod_wnd_opened){
+			$('#replayer_wnd').window('close');
+		}
+		$('#replayer_wnd').window({
+			width:420,
+			height:395,
+			title:rows[rowIndex].name,
+			href:'replayer_wnd.html',
+			minimizable:false,
+			maximizable:true,
+			collapsible:false,
+			onLoad:function(){
+				if($('#replayerwnd').length > 0){
+					$('#replayerwnd').attr("id",windowId);
+					$('#repayerwnd_tb').attr("id",windowTbarId);
+				}
+				$(this).window('resize',{width:420,height:395});
+				//$('#'+windowTbarId+" .easyui-slider").slider('setValue',200);					
+				//return;
+				playvod(rowIndex);
+			},
+			onOpen:function(){
+				vod_wnd_opened = true;
+			},
+			onClose:function(){
+				vod_wnd_opened = false;
+				//alert(rowIndex+","+windowId)
+				stopvod(rowIndex,windowId);
+			},
+			
+			onResize:function(width,height){
+				if(width<400 ){
+					$(this).window('resize',{width:420,height:height});
+					return;
+				}
+				if(height<395){
+					$(this).window('resize',{width:width,height:395});
+					return;
+				}
+				$(this).find(".windowbox").height(height-72);
+				$(this).find(".windowbox").width(width-16);
+				$(this).find(".windowtoolbar").width(width-15);
+					
+				$(this).find(".easyui-slider").slider({
+					width:(width-170-40),
+					showTip:false
+				});
+			}
+		});
+	}
+}
+
+function playvod(rowIndex){
+	var rows = $('#record_file_dr').datagrid('getRows');
+	if(rows[rowIndex]){
+		var windowId = "replayer_"+rowIndex;
+		var windowTbarId = "replayer_tb_"+rowIndex;
+		
+		var f = rows[rowIndex];
+		
+		if($("#"+windowId)){
+			if(typeof f.replayerHandler != "undefined" && f.replayerHandler != null){
+				resumevod(connectId,windowId);
+				$('#'+windowTbarId+" .player_icon_play").hide();
+				$('#'+windowTbarId+" .player_icon_pause").show();
+				return;
+			}
+				
+			stopvod(rowIndex,windowId);
+			$("#"+windowId+'_wnd').css("visibility","visible");
+			var rv = playvods(connectId,windowId,{type:($('#storage_type_cloud').prop("checked") == true? "cloud" : "local"),szId:f.szId,puid:f.puid,beginTime:f.offset,endTime:f.endTime,path:f.path,name:f.name,speed:0,direction:1,duration:0});
+			
+			if(rv.rv !== 0){
+				$('#'+windowTbarId+" .player_icon_play").show();
+				$('#'+windowTbarId+" .player_icon_pause").hide();
+	            $.messager.show({
+	                title:"提示",
+	                msg:'点播失败，errorcode:'+rv.rv,
+	                timeout:4000,
+	                showType:'slide'
+	            });
+			}else{
+				$('#'+windowTbarId+" .easyui-slider").slider({disabled:false});
+				f.replayerHandler = rv.response;
+			
+				vodList.push(f);
+				var total = parseInt(f.endTime-f.beginTime);
+				//
+				var t = format_secord(f.offset)+"/"+format_secord(total);
+				$("#"+windowTbarId+" .playtime").html(t);
+
+			try{
+
+				$('#'+windowTbarId+" .player_icon_stop").unbind().bind("click",function(){
+					//console.log(rowIndex,windowId);
+					fire_stopvod(windowId);return;
+					
+					stopvod(rowIndex,windowId);
+					f.offset = 0;
+					$('#'+windowTbarId+" .easyui-slider").slider("setValue",0);
+					$('#'+windowTbarId+" .player_icon_play").show();
+					$('#'+windowTbarId+" .player_icon_pause").hide();
+				});
+
+				$('#'+windowTbarId+" .player_icon_play").unbind().bind("click",function(){
+					playvod(rowIndex);
+				});
+				
+				$('#'+windowTbarId+" .player_icon_pause").unbind().bind("click",function(){
+					pausevod(connectId,windowId);
+					//.stopod(windowId);
+					//var offset = $('#'+windowTbarId+" .easyui-slider").slider("getValue");
+					//f.offset = offset;
+					$('#'+windowTbarId+" .player_icon_play").show();
+					$('#'+windowTbarId+" .player_icon_pause").hide();
+				});
+
+				$('#'+windowTbarId+" .player_icon_play").hide();
+				$('#'+windowTbarId+" .player_icon_pause").show();
+
+			}catch(e){
+			}
+				$('#'+windowTbarId+" .easyui-slider").slider({
+					"max":total,
+					"min":0,
+					"onComplete":function(newValue,oldValue){
+						var rows = $('#record_file_dr').datagrid('getRows');
+						if(!rows[rowIndex]) return;
+						
+						if(typeof f.replayerHandler != "undefined" && f.replayerHandler != null){
+							stopvod(rowIndex,windowId);
+							f.offset = newValue;
+							$('#'+windowTbarId+" .easyui-slider").slider({disabled:true});
+							playvod(rowIndex,windowId);
+							return;
+						}
+						
+					}
+					/*
+					"onChange":function(newValue,oldValue){
+					
+						var t = format_secord(newValue)+"/"+format_secord(parseInt(total));
+						$("#"+windowTbarId+" .playtime").html(t);
+						
+					},
+					onSlideStart:function(value){
+						//var opts = $(this).slider("options");
+						//opts.showTip = true;
+						$('#'+windowTbarId+" .player_icon_pause").trigger('click');
+					},
+					onSlideEnd:function(value){
+					}*/
+				});
+			}
+		}
+	}
+}	
+
+function playvods(connectId,wndId,options){
+
+	if($("#"+wndId)[0]){
+		var windowAttachEvent = new P_LY.Struct.WindowEventStruct();
+		windowAttachEvent.lbtn_click.status = true;
+		windowAttachEvent.lbtn_click.callback = function(){
+			if(_cf.debug) console.log("鼠标左键单击响应回调函数")
+			//$("#replayerwindowtitle0")[0].innerHTML = "鼠标左键单击响应回调函数,";
+		}
+		windowAttachEvent.select_rect.status = false;
+		windowAttachEvent.select_rect.callback = function(){
+			//$("#loginMsg")[0].innerHTML = "鼠标拉选响应回调函数,";
+		}
+		windowAttachEvent.ptz_control.status = true;
+		windowAttachEvent.fsw_show.status = true;
+		windowAttachEvent.fsw_show.callback = function(){
+			if(_cf.debug) console.log("窗口全屏后的回调函数")
+			//$("#replayerwindowtitle0")[0].innerHTML = "窗口全屏后的回调函数,";
+		}
+		windowAttachEvent.fsw_hide.status = true;
+		windowAttachEvent.fsw_hide.callback = function(){
+			if(_cf.debug) console.log("窗口全屏恢复后的回调函数")
+			//$("#replayerwindowtitle0")[0].innerHTML = "窗口全屏恢复后的回调函数,";
+		}
+		windowAttachEvent.menu_command.status = false;
+		windowAttachEvent.menu_command.menu = [
+			{key:"stopvod",text:"停止"},
+			{key:"-",text:"split"},
+			{key:"playvodaudio",text:"静音"},
+			
+		]
+		windowAttachEvent.menu_command.callback = function(key){
+			switch(key){
+				case "stopvod":
+					//WebClient.StopVod();
+					fire_stopvod(wndId);
+					break;
+				case "playvodaudio":
+					fire_stopvod_audio(wndId);
+					break;
+			}
+		}
+		// - 创建窗口
+		
+
+	//	_p.set_wnd_conatiner(wndId,P_LY.Enum.WindowType.VOD);
+		P_LY.WindowContainers.set(wndId, new P_LY.Struct.WindowContainerStruct(wndId, P_LY.Enum.WindowType.VOD));
+		var window = create_window(connectId, wndId, P_LY.Enum.WindowType.VOD,"")
+		
+		//var window = P_LY.CreateWindow(connectId, wndId, "VOD", windowAttachEvent);
+		//var wnd = window.response;
+		
+		P_LY.WindowContainers.get(wndId).window = window;
+		
+		//WebClient.wnd = wnd;
+		// - 播放录像
+		var PlayVodOptions = {type:(options.type == "local" ? P_LY.Enum.StorageFileType.CEFS :  P_LY.Enum.StorageFileType.Cloud),szId:options.szId,puid:options.puid,sgIndex:0,filePath:options.path+options.name,beginTime:options.beginTime,endTime:options.endTime,speed:options.speed,direction:options.direction,duration:options.duration,ivIndex:0}
+		console.log(PlayVodOptions)
+		var operator = P_LY.PlayVod(connectId,window,PlayVodOptions);
+		console.log(operator)
+				
+		return operator;
+	}
+}
+
+function create_window(connectId, wndId, type,wndEvent)
+{
+	try
+	{
+		if(type == null || type == undefined) type = P_LY.Enum.WindowType.VIDEO;
+		
+		if(connectId && P_LY.Connections.get(connectId))
+		{
+			var operator = P_LY.CreateWindow(connectId, wndId, type, wndEvent);
+			console.log(operator);
+			if(operator.rv != P_Error.SUCCESS)
+			{
+				return false;
+			}
+			return operator.response;
+		}
+		else
+		{
+			if(_cf.debug) console.log("connectId error");
+			return false;
+		}
+	}
+	catch(e)
+	{
+		if(_cf.debug) console.log(e)
+	}
+}
+function format_secord(sec){
+	
+	if(parseInt(sec) > 0){
+		if(sec <60){
+			return (sec > 9 ? "00:"+sec : "00:0"+sec);
+		}else if(sec < 3600){
+			var m = parseInt(sec/60);
+			var s = (sec%60);
+			return (m > 9 ? m : "0"+m)+":"+(s > 9 ? s : "0"+s);
+		}else{
+			var h = parseInt(sec/3600);// 不可以转为小时的秒数
+			var mm = (sec%3600);// 不可以转为小时的秒数
+			var s = (mmm%60);
+			var m = parseInt(mm/60);
+			return h+":"+(m > 9 ? m : "0"+m)+":"+(s > 9 ? s : "0"+s);
+		}
+	}else{
+		return "00:00";
+	}
+}
+function fire_stopvod(windowId){
+	
+	var rowIndex = windowId.split('_')[1];
+	
+	var rows = $('#record_file_dr').datagrid('getRows');
+	if(!rows[rowIndex]) return;
+					
+	stopvod(rowIndex,windowId);
+	//var windowId = "replayer_"+rowIndex;
+	var windowTbarId = "replayer_tb_"+rowIndex;
+	$('#'+windowTbarId+" .easyui-slider").slider("setValue",0);
+	$('#'+windowTbarId+" .player_icon_play").show();
+	$('#'+windowTbarId+" .player_icon_pause").hide();
+	rows[rowIndex].offset = 0;
+	
+}
+
+
+function resumevod(connectId,wndId){
+	if(!P_LY.WindowContainers.get(wndId) || !P_LY.WindowContainers.get(wndId).window){
+		return;
+	}
+	var operator = P_LY.ResumeVod(P_LY.WindowContainers.get(wndId).window);
+}
+    
+function pausevod(connectId,wndId){
+	if(!P_LY.WindowContainers.get(wndId) || !P_LY.WindowContainers.get(wndId).window){
+		return;
+	}
+	var operator = P_LY.PauseVod(P_LY.WindowContainers.get(wndId).window);
+}
+	
+function stopvod(rowIndex,windowId){
+	var rows = $('#record_file_dr').datagrid('getRows');
+	if(!rows[rowIndex]) return;
+	
+	var f = rows[rowIndex];
+	
+	if(!P_LY.WindowContainers.get(windowId) || !P_LY.WindowContainers.get(windowId).window){
+		return false;
+	}
+	var operator = P_LY.StopVod(P_LY.WindowContainers.get(windowId).window);
+
+	f.replayerHandler = null;
+	$("#"+windowId+'_wnd').css("visibility","hidden");
+	$("#"+windowId.replace("replayer_","replayer_tb_")+" .playtime").html("00:00/00:00");
+	vodList.splice( $.inArray(f, vodList), 1 );
+}
+	
+function replayer_update_status(status){
+
+	var rows = $('#record_file_dr').datagrid('getRows');
+	for(var i =0;i < rows.length;i++){
+		var f = rows[i];
+
+		if(f.replayerHandler == status._HANDLE){
+		
+			var windowId = "replayer_"+i;
+			var windowTbarId = "replayer_tb_"+i;
+			
+			if(status.status == 4){
+				fire_stopvod(windowId);
+				return;
+			}
+			if(status.keyData == undefined || status.keyData.play_time == undefined) status.keyData.play_time = "0";
+			
+			//var t = .format_secord(status.keyData.play_time)+"/"+.format_secord(parseInt(f.endTime-f.beginTime));
+			var b = f.offset + parseInt(status.keyData.play_time);
+			
+			var t = format_secord(b)+"/"+format_secord(parseInt(f.endTime-f.beginTime));
+			$("#"+windowTbarId+" .playtime").html(t);
+			try{
+				$('#'+windowTbarId+" .easyui-slider").slider("setValue",b);
+			}catch(e){
+				//console.log(e)
+			}
+			break;
+		}
+	}
+}
+function format_secord(sec){
+		
+		if(parseInt(sec) > 0){
+			if(sec <60){
+				return (sec > 9 ? "00:"+sec : "00:0"+sec);
+			}else if(sec < 3600){
+				var m = parseInt(sec/60);
+				var s = (sec%60);
+				return (m > 9 ? m : "0"+m)+":"+(s > 9 ? s : "0"+s);
+			}else{
+				var h = parseInt(sec/3600);// 不可以转为小时的秒数
+				var mm = (sec%3600);// 不可以转为小时的秒数
+				var s = (mmm%60);
+				var m = parseInt(mm/60);
+				return h+":"+(m > 9 ? m : "0"+m)+":"+(s > 9 ? s : "0"+s);
+			}
+		}else{
+			return "00:00";
+		}
+	}	
+
+function notify(notify){
+
+	if(typeof notify_downloadfile == "function"){
+		notify_downloadfile(notify);    		
+	}
+	
+	var container = P_LY.WindowContainers.get('windowbox');
+	if(container){
+		if(container.window.status.playvideoing){
+			//console.log(container.window,notify);
+			if(notify.eventName == "stream_status_notify" &&  notify._HANDLE == container.window.params.ivStreamHandle){
+				var ivName = container.window.customParams.cameraName;
+				var status = "";
+				
+				switch(Number(notify.status)){//-1表示流已断开，0表示正在缓冲，1表示正在播放,2表示正在下载，3表示下载完成
+				case -1:
+					status = "流已断开"
+					break;
+				case 0:
+					status = "正在缓冲"
+					break;
+				case 1:
+					status = "正在播放"
+					break;
+				}
+				var _bite = function(bite){
+					return (bite / 1000).toFixed(0) + "KB/s"; 
+				}
+				var bitrate = notify.keyData.bit_rate;
+				var bite = _bite(bitrate)
+				var framerate = notify.keyData.frame_rate;
+				var frame = framerate;
+				var recStr = "";
+				if(container.window.status.recording){
+					status += ",正在录像"
+				}
+				
+				var audStr = "";
+				if(container.window.status.playaudioing){
+					status += ",正在播放声音"
+				}
+				
+				var upaudStr = "";
+				if(container.window.status.calling){
+					status += ",正在喊话"
+				}
+
+				var talkStr ="";
+				if(container.window.status.talking){
+					status += ",正在对讲"
+				}
+				
+				var fb = "帧率："+frame+"，码率："+bite;
+				$("#windowtitle").html(ivName+","+ fb +","+ status);
+				//log($("#windowtitle")[0].innerHTML);
+			}
+		}
+	}
+}
+
+function log(str){
+	var html = $("#msg_bar").html()+"<li><nobr>"+str+"</nobr></li>";
+	$("#msg_bar").html(html);
+}
+
+if(window.attachEvent){
+	window.attachEvent(
+		"onload",
+		function() {
+			load();  
+		} 
+	);
+	window.attachEvent(
+		"onunload",
+		function(){
+			unload();
+		}
+	);
+	window.attachEvent(
+		"onbeforeunload",
+		function(){
+			unload();
+		}
+	);
+}else{
+	window.addEventListener (
+        "load",
+        function() {
+			load();  
+        },
+        false
+    );
+	window.addEventListener (
+        "unload",
+        function() {
+			unload();
+        },
+        false
+    );
+	window.addEventListener (
+        "beforeunload",
+        function() {
+			unload();
+        },
+        false
+    );
+}
+
+</script>

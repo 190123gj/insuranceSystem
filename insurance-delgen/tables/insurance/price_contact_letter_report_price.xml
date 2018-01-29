@@ -1,0 +1,111 @@
+<table sqlname="price_contact_letter_report_price">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO price_contact_letter_report_price(report_price_id,form_id,contact_letter_id,remark) VALUES (?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO price_contact_letter_report_price(report_price_id,form_id,contact_letter_id,remark) VALUES (#reportPriceId#,#formId#,#contactLetterId#,#remark#)
+		        <selectKey  resultClass ="long"  keyProperty ="reportPriceId" >
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE price_contact_letter_report_price SET form_id=?,contact_letter_id=?,remark=? WHERE report_price_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findByReportPriceId" >
+        <sql>
+            <![CDATA[
+			  SELECT  report_price_id ,form_id ,contact_letter_id,remark  FROM price_contact_letter_report_price WHERE report_price_id=?
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findByContactLetterId" >
+        <sql>
+            <![CDATA[
+			  SELECT  report_price_id ,form_id ,contact_letter_id ,remark FROM price_contact_letter_report_price WHERE contact_letter_id=?
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findByFormId" >
+        <sql>
+            <![CDATA[
+			  SELECT  report_price_id ,form_id ,contact_letter_id ,remark FROM price_contact_letter_report_price WHERE form_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteByReportPriceId" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM price_contact_letter_report_price WHERE report_price_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  report_price_id ,form_id ,contact_letter_id ,remark FROM price_contact_letter_report_price WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  report_price_id ,form_id ,contact_letter_id,remark  FROM price_contact_letter_report_price where 1=1
+            <dynamic>
+                  <isGreaterThan property="priceContactLetterReportPrice.contactLetterId"  compareValue="0" prepend=" and ">
+	                contact_letter_id = #priceContactLetterReportPrice.contactLetterId#
+	            </isGreaterThan>
+			</dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM price_contact_letter_report_price WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM price_contact_letter_report_price  where 1=1
+	            <dynamic>
+                  <isGreaterThan property="contactLetterId"  compareValue="0" prepend=" and ">
+	                contact_letter_id = #contactLetterId#
+	            </isGreaterThan>
+			</dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

@@ -1,0 +1,10 @@
+*{
+	font-size:12px;
+}
+body {
+    font-family:verdana,helvetica,arial,sans-serif;
+    padding:20px;
+    font-size:12px;
+    margin:0;
+}
+.msg_bar li{list-style:decimal-leading-zero outside none; white-space:nowrap; }

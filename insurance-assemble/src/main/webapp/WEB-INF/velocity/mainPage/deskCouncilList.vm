@@ -1,0 +1,83 @@
+<div class="fn-clear fn-mt20">
+    <div class="fn-left1 list-box1">
+        <ul class="fn-clear list-title">
+            <li class="active">
+              	待参加的会议
+            </li>
+            <li>
+				#if($!dataPermissionUtil.isRiskSecretary()||$!dataPermissionUtil.isManagerSecretary()||$!dataPermissionUtil.isManagerSecretaryXH())
+                <a href="/projectMg/index.htm?systemNameDefautUrl=/projectMg/meetingMg/toAddCouncil.htm" target="_blank">新增会议</a>
+				#end
+            </li>
+            <li class="last">
+                ##<a href="/projectMg/index.htm?systemNameDefautUrl=/projectMg/list.htm" target="_blank">&gt;&gt;More</a>
+            </li>
+        </ul>
+        <div class="fn-ml20 fn-mr20">
+            <table class="m-table m-table-list fn-tac" id="list">
+            <thead>
+               <thead>
+                <tr id="fnListSearchTh">
+                    <th width="100px" sortcol="">会议编号</th>
+                    <th width="100px">会议类型</th>
+                    <th width="150px">会议开始时间</th>
+                    <th>参会项目/事项</th>
+                    <th width="60px">会议状态</th>
+                    <th width="100px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($!item in $!pageCouncil.result)
+                    <tr formid="$!item.summaryForm.formId" formname="$!item.councilCode" councilid="$!item.councilId">
+                        <td>$!item.councilCode</td>
+                        <td>$!item.councilTypeCode.message</td>
+                        <td>$!dateUtil.simpleFormat($!item.startTime)</td>
+                        <td #if($!item.status.code == "NOT_BEGIN" && ( $!isRiskSecretary || $!dataPermissionUtil.isManagerSecretary() || $!dataPermissionUtil.isManagerSecretaryXH() ) ) class="fn-csp canEdit" #end val="$!item.applyIds" typecode="$!item.councilTypeCode.code" councilid="$!item.councilId" projectskey="$!{item.projectsKey}" projectsName="$!{item.projectsName}" projectcode="$!{item.projectsCode}" typeId="$!{item.councilType}">
+                            $!item.projectsName 
+                        </td>
+                        <td>
+                           $!item.status.message
+                        </td>
+                        <td>
+                            ## 会议中展示2个
+                            #if($!permissionUtil.checkPermission("/projectMg/meetingMg/showCouncil.htm"))
+                            	<a href="/projectMg/meetingMg/showCouncil.htm?councilId=$!item.councilId">[ 查看详情 ]</a>
+                            #end
+                            #if($!item.status.code == "IN_PROGRESS")
+                                ## 项目评审会/风险处置会才有评委表决‘
+                                #if($!item.councilTypeCode.code == "PROJECT_REVIEW" || $!item.councilTypeCode.code == "RISK_HANDLE")
+                                    ## 自身是评委才展示评委表决，风控委也可以看 评委表决
+                                    #if($!viewShowUtil.findJusgeIn($!item.judges,${sessionLocal.userId}) || $!isRiskSecretary )
+                                        ## 添加判断，会议投票都结束的时候  展示评委表决详情
+                                        #if($!viewShowUtil.checkVoteAllDown($!item.projects))
+                                            ##<br><a href="/projectMg/meetingMg/allCouncilProjectList.htm?councilId=$!item.councilId">[ 评委表决详情 ]</a>
+                                        #else
+                                            <br><a href="/projectMg/index.htm?systemNameDefautUrl=/projectMg/meetingMg/allCouncilProjectList.htm&councilId=$!item.councilId" target="_blank">[ 去投票  ]</a>
+                                        #end
+                                    #end
+                                #end
+                            #end
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+            #set($withOutJubmBtn = true)
+            #set($toPageCustomize = "toPageCouncil")
+            #set($pageCustomize = $!pageCouncil)
+    		#parse("/layout/common/pagesCustomize.vm")
+        </div>
+    </div>
+</div>
+<div class="fn-blank20"></div>
+<script>
+//会议分页
+    toPageCouncil = function(totalPage, pageNo) {
+        if (totalPage < pageNo) {
+            return false;
+        }
+        $('#councilList').load("/userHome/deskCouncilList.htm", {
+            'pageNumber': pageNo
+        });
+    }
+</script>

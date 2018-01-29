@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+    <title>询价方案</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;业务管理&nbsp;&gt;&nbsp;询价方案&nbsp;&gt;&nbsp;询价方案列表
+</div>
+
+<form class="m-main border ui-bg-fff"  action="/insurance/priceContactLetter/list.htm" id="fnListSearchForm" method="POST">
+
+
+    <div class="m-search fn-clear">
+
+        <div class="item">
+            客户名称
+            <input class="ui-text fn-w200" type="text" name="customerName" value="$!{queryConditions.realName}">
+        </div>
+
+        <div class="item">
+             客户类型
+            <select class="ui-select fn-w200 fnChangeInput" name="customerType">
+                  <option value="">请选择</option>
+                <option class="INDIVIDUAL_CUSTOMER" value="INDIVIDUAL_CUSTOMER">个人客户</option>
+                <option class="COMPANY_CUSTOMER" value="COMPANY_CUSTOMER">团体客户</option>
+            </select>
+        </div>
+
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+
+    <div class="fn-pl15 fn-pr15">
+
+        <div class="fn-mb20 fn-mt20">
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/priceContactLetter/add.htm"><b>+</b>创建询报价单&nbsp;
+            </a>
+        </div>
+
+
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+            <tr id="fnListSearchTh">
+                <th>询价单编号</th>
+                <th>询价单名称</th>
+                <th>客户名称</th>
+##                <th>保险分类</th>
+                <th>制作人</th>
+                <th>制作时间</th>
+                <th>状态</th>
+                <th width="200px">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                <tr>
+                    <td>    $!{item.billNo}</td>
+                    <td>    $!{item.name}</td>
+                    <td>    $!{item.customerUserName}</td>
+##                    <td></td>
+                    <td> $!{item.creatorName}   </td>
+                    <td>  $dateUtil.simpleFormat($!{item.rawAddTime})  </td>
+                    <td>  $!{item.formStatus.message}  </td>
+                    <td>
+                        <a href="/insurance/priceContactLetter/view.htm?id=$!{item.id}">[ 查看详情 ]
+                            <br>
+                            #if( $!{item.formStatus}=="APPROVAL" && $!{item.status} != "REPORT_END")
+                            <a href="/insurance/priceContactLetter/reportPrice.htm?id=$!{item.id}">[报价]
+                            #elseif($!{item.status} == "REPORT_END")
+                            <a href="/insurance/priceContactLetter/reportPriceDetail.htm?id=$!{item.id}">[查看报价]<br>
+                            <a href="/insurance/priceContactLetter/reportAnalyse.htm?id=$!{item.id}">[报价分析]<br>
+                            <a href="/insurance/insuranceContactLetter/edit.htm?priceContactId=$!{item.id}">[投保申请]
+                            #end
+
+                            #if ($!item.formStatus.code == "DRAFT")
+                                <a href="/insurance/priceContactLetter/edit.htm?formId=$!{item.formId}">[ 编辑 ] </a> <br>
+                            #end
+
+                            #set($processUrl = "")
+                            #if($!stringUtil.isNotBlank($item.taskUserData))
+                                #set($processUrl = $!formUtil.getProcessUrl($!item.taskUserData,$!sessionLocal.userId))
+                            #end
+
+
+                            #if($!stringUtil.isNotBlank($processUrl))
+                                <a href="$!processUrl">[ 处理 ]</a>
+                            #end
+                        </a>
+
+                    </td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+
+
+
+        #parse("/layout/common/pages.vm")
+
+
+    </div>
+
+</form>
+
+
+
+    #parse("/layout/common/footer.vm")
+
+    #parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/priceContactLetter/listPriceContactLetter');
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+#macro ( enumMessageByList $enumName $codeList )
+    #set($enumList = $!enumUtil.getEnumList($enumName))
+
+    #foreach($code in $codeList)
+        #foreach($enum in $enumList)
+            #if($enum.code==$code)
+                
+                $enum.message
+            #end
+            
+        #end
+    #end
+#end
+
+#macro ( showTextMessageByEnum $enumName $compareValue)
+    #set($enumList = $!enumUtil.getEnumList($enumName))
+    #foreach($enum in $enumList)
+    	#if($compareValue && $compareValue==$enum.code)
+        	$enum.message
+        #end
+    #end
+#end
+
+#macro ( enumMessageIterator $enumName $compareValue)
+    #set($enumList = $!enumUtil.getEnumList($enumName))
+    #foreach($enum in $enumList)
+        <option value="$enum.message" #if($compareValue && $compareValue==$enum.message)selected#end>$enum.message</option>
+    #end
+#end
+
+#macro ( enumCodeIterator $enumName $compareValue)
+    #set($enumList = $!enumUtil.getEnumList($enumName))
+    #foreach($enum in $enumList)
+        <option value="$enum.code" #if($compareValue && $compareValue==$enum.code)selected#end>$enum.message</option>
+    #end
+#end
+
+#macro ( enumIterator $enumName $compareValue)
+    #set($enumList = $!enumUtil.getEnumList($enumName))
+    #foreach($enum in $enumList)
+        <option value="$enum" #if($compareValue && $compareValue==$enum)selected#end>$enum.message</option>
+    #end
+#end
+
+#macro ( enumIteratorI18n $enumMap $compareValue)
+    #foreach($enum in $enumMap)
+        <option value="$enum.code" #if($compareValue && $compareValue==$enum.code)selected#end>$enum.message</option>
+    #end
+#end
+
+#macro ( enumIteratorByList $enumName $codeList)
+    #set($enumList = $!enumUtil.getEnumList($enumName))
+
+    #foreach($enum in $enumList)
+        #set($selected = "")
+        #foreach($code in $codeList)
+            #if($enum.code==$code)
+                #set($selected = "selected")
+            #end
+        #end
+        <option value="$enum.code" $selected>$enum.message</option>
+    #end
+#end
+
+#macro ( enumIteratorByListForChecked $codeList $checkCode)
+    #foreach($code in $codeList)
+        #if($checkCode==$code)
+            checked##
+        #end
+    #end
+#end
+
+#macro ( enumCheckboxIterator $enumName $inputName $compareValue $isAllChecked )
+    #set($enumList = $!enumUtil.getEnumList($enumName))
+    #foreach($enum in $enumList)
+        <input type="checkbox" name="$inputName" value="$enum.code" id="${enumName}_${velocityCount}" #if(($compareValue && $compareValue==$enum.code) || $isAllChecked) checked #end/><label for="${enumName}_${velocityCount}">$enum.message</label>
+    #end
+#end
+
+#macro ( enumCheckboxIteratorContains $enumName $inputName $compareValues )
+    #set($enumList = $!enumUtil.getEnumList($enumName))
+    #foreach($enum in $enumList)
+        #set($checked = '')
+        #foreach($compare in $compareValues)
+            #if($compare == $enum)
+                #set($checked = 'checked')
+            #end
+        #end
+        <input type="checkbox" name="$inputName" id="${enumName}_${velocityCount}" $!checked value="$enum.code"/><label for="${enumName}_${velocityCount}">$enum.message</label>
+    #end
+#end
+
+#macro ( enumCheckboxIteratorContainsDisabled $enumName $inputName $compareValues )
+    #set($enumList = $!enumUtil.getEnumList($enumName))
+    
+    #foreach($compare in $compareValues)
+        #foreach($enum in $enumList)
+            #if($compare == $enum)
+                <input type="checkbox" name="$inputName" id="${enumName}_${velocityCount}" #if($compare == $enum) checked disabled #end /><label for="${enumName}_${velocityCount}">$enum.message</label>
+            #end
+        #end
+    #end
+#end
+
+#macro ( enumMessageOutput $enumName $compareValue )
+    #set($enumList = $!enumUtil.getEnumList($enumName))
+    #foreach($enum in $enumList)
+        #if($compareValue && $compareValue==$enum.code)$enum.message#end
+    #end
+#end
+
+#macro ( foreachJoin $iteratorStr $join )
+    #foreach($str in $iteratorStr)
+        $str$join##
+    #end
+#end

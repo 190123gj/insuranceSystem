@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>操作日志列表</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;系统管理&nbsp;&gt;&nbsp;登录日志列表
+</div>
+
+<form class="m-main border ui-bg-fff" action="/systemMg/operationJournal/loginLog.htm" id="fnListSearchForm" method="POST">
+
+    ## search start
+
+    <div class="m-search fn-clear">
+		<div class="item">
+            登录用户名：
+            <input class="ui-text fn-w200" type="text" name="loginName" value="$!{queryOrder.loginName}">
+        </div>
+		#*
+		<div class="item">
+      IP地址
+            <input class="ui-text fn-w200" type="text" name="loginIp" value="$!{queryOrder.loginIp}">
+        </div>
+       *#
+		<div class="item fnListSearchDateItem">
+          登录时间起止:
+            <input class="ui-text fn-w100 laydate-icon fnListSearchDateS" type="text" name="startLoginDate" onclick="laydate()" value="$!queryOrder.startLoginDate">
+         ##   -
+           <input class="ui-text fn-w100 laydate-icon fnListSearchDateE" type="text" name="endLoginDate" onclick="laydate()" value="$!queryOrder.endLoginDate">
+       </div>
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    ## search end
+
+    <div class="fn-pl15 fn-pr15 fn-mt20">
+        
+        ## list start
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+                    <th  width="60px">用户名</th>
+                    <th  width="100px">IP地址</th>
+                    <th  width="150px">状态</th>
+					<th  width="150px">操作时间</th>
+                </tr>
+            </thead>
+            <tbody>
+           
+                #foreach($info in $result.dataList)
+                    <tr>
+                        <td>$!{info.login_name}</td>
+                        <td>$!{info.login_ip}</td>
+                        <td>$!{info.login_des}</td>
+                        <td>
+                          $!{viewShowUtil.long2Date($!{info.login_time.time})}
+                        </td>
+                    </tr>
+                #end
+
+            </tbody>
+        </table>
+
+        ## list end
+
+        ## page start
+
+        #parse("/layout/common/pages.vm")
+        ## page end
+
+    </div>
+
+</form>
+<script src="/js/laydate/laydate.js"></script>
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+<script type="text/javascript">
+    seajs.use('zyw/publicPage');
+</script>
+</body>
+</html>

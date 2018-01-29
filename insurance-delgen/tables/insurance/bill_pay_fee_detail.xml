@@ -1,0 +1,111 @@
+<table sqlname="bill_pay_fee_detail">
+<column name="generation_fee" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="service_fee" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="pay_fee" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="withhold_taxes" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="actual_pay_fee" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO bill_pay_fee_detail(id,settlement_apply_id,business_bill_id,receiver_name,insurance_broker_no,generation_fee,service_fee,pay_fee,withhold_taxes,actual_pay_fee,row_add_time,row_update_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO bill_pay_fee_detail(id,settlement_apply_id,business_bill_id,receiver_name,insurance_broker_no,generation_fee,service_fee,pay_fee,withhold_taxes,actual_pay_fee,row_add_time,row_update_time) VALUES (#id#,#settlementApplyId#,#businessBillId#,#receiverName#,#insuranceBrokerNo#,#generationFee#,#serviceFee#,#payFee#,#withholdTaxes#,#actualPayFee#,#rowAddTime#,#rowUpdateTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE bill_pay_fee_detail SET settlement_apply_id=?,business_bill_id=?,receiver_name=?,insurance_broker_no=?,generation_fee=?,service_fee=?,pay_fee=?,withhold_taxes=?,actual_pay_fee=?,row_add_time=?,row_update_time=? WHERE id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,settlement_apply_id ,business_bill_id ,receiver_name ,insurance_broker_no ,generation_fee ,service_fee ,pay_fee ,withhold_taxes ,actual_pay_fee ,row_add_time ,row_update_time  FROM bill_pay_fee_detail WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM bill_pay_fee_detail WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,settlement_apply_id ,business_bill_id ,receiver_name ,insurance_broker_no ,generation_fee ,service_fee ,pay_fee ,withhold_taxes ,actual_pay_fee ,row_add_time ,row_update_time  FROM bill_pay_fee_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,settlement_apply_id ,business_bill_id ,receiver_name ,insurance_broker_no ,generation_fee ,service_fee ,pay_fee ,withhold_taxes ,actual_pay_fee ,row_add_time ,row_update_time  FROM bill_pay_fee_detail where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM bill_pay_fee_detail WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM bill_pay_fee_detail  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    <operation name="findBySettlementApplyId" multiplicity="many">
+    
+     <sql>
+            <![CDATA[
+				 SELECT  id ,settlement_apply_id ,business_bill_id ,receiver_name ,insurance_broker_no ,generation_fee ,service_fee ,pay_fee ,withhold_taxes ,actual_pay_fee ,row_add_time ,row_update_time  FROM bill_pay_fee_detail WHERE settlement_apply_id = ?
+	        ]]>
+        </sql>
+   		
+    </operation>
+    
+    
+     <operation name="deleteBysettlementApplyId" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM bill_pay_fee_detail WHERE settlement_apply_id=?
+			]]>
+        </sql>
+    </operation>
+    
+</table>

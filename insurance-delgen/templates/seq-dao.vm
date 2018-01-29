@@ -1,0 +1,19 @@
+#parse("copyright.vm")
+package ${plugin.seqDAOPackage};
+
+#if ($plugin.sequences.size() > 0)
+import org.springframework.dao.DataAccessException;
+#end
+
+/**
+ * A dao interface provides methods to access all <tt>SEQUENCE</tt> objects.
+ *
+#parse("description-java.vm")
+ */
+public interface ${plugin.seqDAOClassName} {
+#foreach ($seq in ${plugin.sequences})
+#parse("seq-description.vm")
+    public long ${seq.operationName}() throws DataAccessException;
+
+#end
+}

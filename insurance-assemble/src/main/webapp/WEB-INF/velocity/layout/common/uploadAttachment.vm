@@ -1,0 +1,40 @@
+##需要在父元素中添加class="fnUpAttach"
+##需要set以下信息
+##set($attachmentTitle="授信客户意见扫描件上传")
+##set($attachmentNameAttr="pathName_CUSTOMER_OPINION")
+##set($hiddenUrls = $!{hiddenUrls_CUSTOMER_OPINION})
+##set($attachments = $!{attaches_CUSTOMER_OPINION})
+##filetype="$!filetype"
+<a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn" style="color:#fff;"><i class="icon icon-add"></i>$!attachmentTitle</a>
+<input class="fnUpAttachVal fnChangeInput" type="hidden" name="$!attachmentNameAttr" value="$!hiddenUrls">
+<div class="fn-blank5"></div>
+
+<div class="m-attach fnUpAttachUl">
+    #foreach($item in $!{attachments})
+        #set($pic = false)
+        #if($!item.fileName.endsWith(".jpg") || $!item.fileName.endsWith(".JPG") ||
+            $!item.fileName.endsWith(".png") || $!item.fileName.endsWith(".PNG") ||
+            $!item.fileName.endsWith(".jpeg") || $!item.fileName.endsWith(".JPEG") ||
+            $!item.fileName.endsWith(".tiff") || $!item.fileName.endsWith(".TIFF") ||
+            $!item.fileName.endsWith(".bmp") || $!item.fileName.endsWith(".BMP"))
+            #set($pic = true)
+        #end
+        #set($fullStr = $!item.fileName + "," + $!item.filePhysicalPath + "," + $!item.requestPath)
+        #if(!$pic)
+            <a title="点击下载" href="/baseDataLoad/downLoad.htm?id=$!item.attachmentId">
+                <span class="attach-item fnAttachItem" val="$!{fullStr}">
+                    <i class="icon icon-file"></i>
+                    <span class="fileItems" title="$!{item.fileName}">$!{item.fileName}</span>
+                    <span class="attach-del fn-csp fn-usn fnUpAttachDel">&times;</span>
+                </span>
+            </a>
+        #else
+            <span class="attach-item fnAttachItem" val="$!{fullStr}">
+                <i class="icon icon-img "></i>
+                <span class="fnAttachView fn-csp fileItems" title="$!{item.fileName}">$!{item.fileName}</span>
+                <span class="attach-del fn-csp fn-usn fnUpAttachDel">&times;</span>
+            </span>
+        #end
+
+    #end
+</div>

@@ -1,0 +1,52 @@
+<div class="m-pages">
+
+    #if(!$toPageCustomize)
+        #set($toPageCustomize = "toPage")
+    #end
+    
+    #if(!$pageCustomize)
+        #set($pageCustomize = $!page)
+    #end
+    
+    #set($start = ($pageCustomize.currentPageNo - 1)* $pageCustomize.pageSize + 1)
+    #set($end = ($start - 1)+ $pageCustomize.result.size())
+
+    #if ($!{pageCustomize.totalCount} > 0)
+
+        #if($!{pageCustomize.totalCount} > 0)第$!{pageCustomize.currentPageNo}页，#end共$!{pageCustomize.totalPageCount}页，合计 $!{pageCustomize.totalCount}条&nbsp;|&nbsp;
+        #if(1< $!{pageCustomize.currentPageNo})
+            <a class="fnInternal" href="javaScript:$!toPageCustomize($!{pageCustomize.totalPageCount},1)">首页</a>
+        #else
+            <span>首页</span>
+        #end
+        #if($pageCustomize.hasPreviousPage())
+            <a class="fnInternal" href="javaScript:$!toPageCustomize($!{pageCustomize.totalPageCount},$!{pageCustomize.previosPageNo})">上一页</a>
+        #else
+            <span>上一页</span>
+        #end
+        #if($pageCustomize.hasNextPage())
+        <a class="fnInternal" href="javaScript:$!toPageCustomize($!{pageCustomize.totalPageCount},$!{pageCustomize.nexPagetNo})">下一页</a>
+        #else
+            <span>下一页</span>
+        #end
+        #if($!{pageCustomize.totalPageCount} > $!{pageCustomize.currentPageNo})
+        <a class="fnInternal" href="javaScript:$!toPageCustomize($!{pageCustomize.totalPageCount},$!{pageCustomize.totalPageCount})">尾页</a>
+        #else
+            <span>尾页</span>
+        #end
+        #if(!$withOutJubmBtn)
+        <input class="text fnMakeNumber" type="text" id="fnListSearchInput">
+        <input class="btn" type="button" value="GO" id="fnListSearchGo" maxitem="$!{pageCustomize.totalPageCount}">
+        #end
+        ## <input class="btn" type="button" onclick="var pageNum = jQuery(this).parent().parent().find('.page_input_num').val();if(!(/^[1-9]\d*$/).test(pageNum)) return;toPage($!{pageCustomize.totalPageCount},pageNum)" value="GO">
+
+    #else
+        <p class="fn-tac fn-fs20">暂无数据</p>
+    #end
+    ## 分页数据
+    <input type="hidden" name="pageNumber" value="$!pageCustomize.currentPageNo" id="fnPageNumber">
+    <input type="hidden" name="pageSize" value="$!pageCustomize.pageSize" id="fnPageSize">
+    ## 排序
+    <input type="hidden" name="sortOrder" value="$!pageCustomize.sortOrder" id="fnSortOrder">
+    <input type="hidden" name="sortCol" value="$!pageCustomize.sortCol" id="fnSortCol">
+</div>

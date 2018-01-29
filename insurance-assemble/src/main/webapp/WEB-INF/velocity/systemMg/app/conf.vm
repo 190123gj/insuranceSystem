@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title>关于我们</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;APP管理&nbsp;&gt;&nbsp;关于我们
+</div>
+
+<h2 class="m-h2-title">关于我们</h2>
+
+<div class="fn-blank20"></div>
+
+<form class="m-main border ui-bg-fff configApp" action="/systemMg/saveAppConf.json" id="form" method="POST">
+	<input type="hidden" name="confId" value="$!conf.confId"/>
+    <h2 class="m-htitle fn-mt30 fn-mb30"><span class="fn-pl10">关于我们</span></h2>
+    <div class="fn-clear fn-mt20">
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>是否上线：</label>
+            <input type="radio" class="radio fn-validate" name="online" value="YES" #if($!conf.online == "YES")checked="checked"#end>是
+            <input type="radio" class="radio fn-validate" name="online" value="NO" #if($!conf.online == "NO")checked="checked"#end>否
+        </div>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>关于我们：</label>
+            <textarea class="ui-textarea fn-validate fnMakeUE" wordCount="true" name="content" maxlength="50000">$!conf.content</textarea>
+        </div>
+        <div class="m-item">
+            <label class="m-label">logo上传：</label>
+            <div class="fnUpAttach">
+                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn" filetype="jpg;png;jpeg" targetId="logoUpUrl"><i class="icon icon-add"></i>上传附件</a>
+                <input class="fnUpAttachVal" type="hidden"  value="">
+                <div class="fn-blank5"></div>
+                <div class="m-attach fnUpAttachUl"></div>
+            </div>
+        </div>
+        <div class="m-item">
+            <label class="m-label">上传路径：</label>
+            <input class="ui-text fn-w200" type="text" name="logo" value="$!conf.logo" id="logoUpUrl">
+            #if($!conf.logo)
+            	<div class="fn-mt20 logoPreArea">
+                    <p class="fn-mb10">当前logo预览：</p>
+                    <img src="$!conf.logo"></img>
+                </div>
+            #end
+        </div>
+    </div>
+    <h2 class="m-htitle fn-mt30 fn-mb30"><span class="fn-pl10">版本更新</span></h2>
+    <div class="fn-clear fn-mt20">
+        <div class="fn-mb20 apply-step fn-ml20">
+##            <label class="m-label">版本选择：</label>
+##            <span class="fn-dib versionChange on" mod="Android_mod">Android</span>
+##            <span class="fn-dib versionChange" mod="IOS_mod">IOS</span>
+            <ul class="ul fn-clear">
+                <li class="item icon-s11 active versionChange" mod="Android_mod">
+                    <a href="javascript:void(0)">
+                        <i class="andriod_icon"></i>
+                        <p>Android</p>
+                        <div class="step-line"></div>
+                        <div class="step-line2"></div>
+                    </a>
+                </li>
+                <li class="item icon-s11 versionChange" mod="IOS_mod">
+                    <a href="javascript:void(0)">
+                        <i class="apple_icon"></i>
+                        <p>IOS</p>
+                        <div class="step-line"></div>
+                        <div class="step-line2"></div>
+                    </a>
+                </li>
+            </ul>
+##            <input type="radio" class="radio versionChange" name="sys" mod="Android_mod" checked>Android
+##            <input type="radio" class="radio versionChange" name="sys" mod="IOS_mod">IOS
+        </div>
+        <div class="version_mod Android_mod">
+            <div class="m-item">
+                <label class="m-label">上传APP：</label>
+                <div class="fnUpAttach">
+                    <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn" filetype="apk;APK" targetId="appUpUrl"><i class="icon icon-add"></i>上传附件</a>
+                    <input class="fnUpAttachVal" type="hidden" name="">
+                    <div class="fn-blank5"></div>
+                    <div class="m-attach fnUpAttachUl"></div>
+                </div>
+            </div>
+            <div class="m-item">
+                <label class="m-label">上传路径：</label>
+                <input class="ui-text fn-w200" type="text" name="androidPath" value="$!conf.androidPath" id="appUpUrl">
+                #if($!conf.androidPath)
+                <a class="fn-dib downloadCrnVer" href="$!conf.androidPath" download>下载当前版本</a>
+                #end
+            </div>
+
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>版本号：</label>
+                <input class="ui-text fn-w200 fn-validate" type="text" name="androidVersion" value="$!conf.androidVersion">
+            </div>
+            <div class="m-item">
+                <label class="m-label">强制升级：</label>
+                <input class="ui-text fn-w200" type="text" name="androidForceUpdate" value="$!conf.androidForceUpdate">
+            </div>
+            <div class="m-item">
+                <label class="m-label">可选升级：</label>
+                <input class="ui-text fn-w200" type="text" name="androidOptionUpdate" value="$!conf.androidOptionUpdate">
+            </div>
+            <div class="m-item">
+                <label class="m-label">更新内容：</label>
+                <textarea class="ui-textarea ui-textarea2" name="androidChangeLog" maxlength="50000">$!conf.androidChangeLog</textarea>
+            </div>
+        </div>
+        <div class="version_mod IOS_mod fn-hide">
+            <div class="m-item">
+                <label class="m-label">上传路径：</label>
+                <input class="ui-text fn-w200" type="text" name="iosPath" value="$!conf.iosPath">
+            </div>
+
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>版本号：</label>
+                <input class="ui-text fn-w200 fn-validate" type="text" name="iosVersion" value="$!conf.iosVersion">
+            </div>
+            <div class="m-item">
+                <label class="m-label">强制升级：</label>
+                <input class="ui-text fn-w200" type="text" name="iosForceUpdate" value="$!conf.iosForceUpdate">
+            </div>
+            <div class="m-item">
+                <label class="m-label">可选升级：</label>
+                <input class="ui-text fn-w200" type="text" name="iosOptionUpdate" value="$!conf.iosOptionUpdate">
+            </div>
+            <div class="m-item">
+                <label class="m-label">更新内容：</label>
+                <textarea class="ui-textarea ui-textarea2" name="iosChangeLog" maxlength="50000">$!conf.iosChangeLog</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-blank fn-mt20 fn-mb20"></div>
+    <div class="fn-tac fn-pt20 fn-pb20">
+        <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5" type="button" id="submitBtn" value="保存并更新">
+##        <a href="javascript:history.go(-1);" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+    </div>
+
+</form>
+
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+#parse("/layout/common/commonue.vm")
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/system/conf');
+</script>
+</body>
+</html>

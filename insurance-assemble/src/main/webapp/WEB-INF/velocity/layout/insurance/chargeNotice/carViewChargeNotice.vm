@@ -1,0 +1,71 @@
+
+<input type="hidden" name="id" value="$!{info.id}"/>
+<input type="hidden" name="formId" value="$!{info.formId}"/>
+<style>
+    .tabContent{
+        width: 90%;
+        margin: 0 auto;
+        overflow-x: auto;
+    }
+    table{
+        width: 100%;
+        margin: 20px auto;
+        border: 1px solid #d1d1d1;
+    }
+    th,td{
+        padding: 8px;
+        border: 1px solid #d1d1d1;
+    }
+    .data>td{
+
+        text-align: left;
+    }
+    
+    td>input{
+        width: 60px;
+        border: 0;
+        border-bottom: 1px solid #b9e2d4;
+        outline:none;
+    }
+</style>
+
+<div class="tabContent">
+    <table>
+        <tr>
+            <th colspan="10" style="font-size: 24px">$!{info.insuranceTypeName}费用结算通知单</th>
+        </tr>
+        <tr class="data">
+            <td colspan="2">部门:$!{info.depart}</td>
+            <td colspan="2">团队:$!{info.team}</td>
+            <td colspan="3">日期:$dateUtil.simpleFormat($!{info.rowAddTime})</td>
+            <td colspan="3">单号:$!{info.noticeNo}</td>
+        </tr>
+        <tr>
+            <th rowspan="2">业务编号</th>
+            <th rowspan="2">经纪人工号</th>
+            <th rowspan="2">经纪人姓名</th>
+            <th rowspan="2">保单号</th>
+            <th rowspan="2">承保人</th>
+            <th rowspan="2">原保费</th>
+            <th colspan="2">费用收取(元)</th>
+            <th  rowspan="2">费用支付</th>
+            <th  rowspan="2">预留比率(%)</th>
+        </tr>
+         <tr>
+            <th>应收(元)</th>
+            <th>已收(元)</th>
+        </tr>
+     	<tr>
+     		<td>$!{info.billNo}</td>
+     		<td>$!{info.insuranceBrokerNo}</td>
+     		<td>$!{info.insuranceBrokerName}</td>
+     		<td>$!{info.insuranceNo}</td>
+     		<td>$!{info.billCustomerName}</td>
+     		<td>$!{info.premiumAmount}</td>
+     		<td>$!{info.recievableFee}</td>
+     		<td>#if($!edit)<input class="text fn-w100 fnMakeMoney" type="text" name="recievedFee"value="$!info.recievedFee"> #else $!{info.recievedFee} #end</td>
+     		<td>$!{info.payFee}</td>
+     		<td>$!{info.reservedScale}</td>
+     	</tr>
+    </table>
+</div>

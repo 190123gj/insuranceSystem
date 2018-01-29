@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+<Category NameCN="设备信息" NameEN="Info.">
+	<ID>F_ST_Model</ID>
+	<ID>F_ST_SoftwareVersion</ID>
+	<ID>F_OV_SupportedVideoDecoderSets</ID>
+	<ID>F_ST_HardwareModel</ID>
+	<ID>F_ST_HardwareVersion</ID>
+	<ID>F_ST_ProducerID</ID>
+	<ID>F_ST_DeviceID</ID>
+	<ID>F_IDL_CountBeginTime</ID>
+</Category>
+<Category NameCN="通道配置" NameEN="Channels">
+	<ID>F_ST_AnalogChannelNum</ID>
+	<ID>F_ST_IPChannelSets</ID>
+	<ID>F_ST_TotalCodeCapability</ID>
+	<ID>F_ST_UsedCodeCapability</ID>
+	<ID>F_ST_AnalogCodeCapability</ID>
+	<ID>F_ST_TotalBandwidth</ID>
+	<ID>F_ST_UsedBandwidth</ID>
+	<ID>F_ST_AnalogBandwidth</ID>
+</Category>
+<Category NameCN="平台接入" NameEN="Platform">
+	<Category NameCN="接入参数" NameEN="Platform">
+		<ID>F_ST_EnablePlatform</ID>
+		<ID>F_ST_PUID</ID>
+		<ID>F_ST_RegPsw</ID>
+		<ID>F_ST_PlatformAddrList</ID>
+		<ID>F_ST_RegPlatformStatusList</ID>
+		<ID>F_ST_EnableMultiPlatform</ID>
+		<ID>F_ST_EnableNetKeeper</ID>
+		<ID>F_ST_EnablePasswordProtect</ID>
+		<ID>F_ST_POSTExtUserData</ID>
+		<ID>F_ST_TransmitMode</ID>
+		<ID>F_ST_OEMData</ID>
+	</Category>
+	<Category NameCN="代理参数" NameEN="Proxy">
+		<ID>F_ST_ConnectPlatformByProxy</ID>
+		<ID>F_ST_ProxyType</ID>
+		<ID>F_ST_ProxyAddr</ID>
+		<ID>F_ST_ProxyNeedPsw</ID>
+		<ID>F_ST_ProxyUserName</ID>
+		<ID>F_ST_ProxyUserPsw</ID>
+	</Category>
+</Category>
+<Category NameCN="本地网口" NameEN="LAN">
+	<Category NameCN="IP设置" NameEN="IP Setting">
+		<ID>F_ST_EnableDHCP</ID>
+		<ID>F_ST_IP</ID>
+		<ID>F_ST_SubnetMask</ID>
+		<ID>F_ST_GatewayIP</ID>
+		<ID>F_ST_DHCPIP</ID>
+		<ID>F_ST_DHCPSubnetMask</ID>
+		<ID>F_ST_DHCPGatewayIP</ID>
+	</Category>
+	<Category NameCN="PPPoE设置" NameEN="PPPoE Setting">
+		<ID>F_ST_EnablePPPoE</ID>
+		<ID>F_ST_PPPoEUserName</ID>
+		<ID>F_ST_PPPoEUserPsw</ID>
+		<ID>F_ST_PPPoEStatus</ID>
+		<ID>F_ST_PPPoEIP</ID>
+	</Category>
+</Category>
+<Category NameCN="网络配置" NameEN="Network">
+	<Category NameCN="DNS配置" NameEN="DNS Setting">
+		<ID>F_ST_ObtainDNSDynamic</ID>
+		<ID>F_ST_DNSIP</ID>
+		<ID>F_ST_CurrentDNSSets</ID>
+	</Category>
+	<Category NameCN="首选网络" NameEN="Prefer Network">
+		<ID>F_ST_IFPriority</ID>
+		<ID>F_ST_CurrentIF</ID>
+		<ID>F_ST_WiFiSignalSwitchToWiFi</ID>
+		<ID>F_ST_WiFiSignalSwitchTo3G</ID>
+		<ID>F_ST_EnableNetGuard</ID>
+	</Category>
+	<Category NameCN="路由设置" NameEN="Route Setting">
+		<ID>F_ST_RouteMode</ID>
+	</Category>
+	<Category NameCN="上线模式" NameEN="Online Mode">
+		<ID>F_ST_SupportedOnlineModeSets</ID>
+		<ID>F_ST_OnlineMode</ID>
+		<ID>F_ST_OnlineSMSets</ID>
+		<ID>F_ST_OnlineSchedule</ID>
+		<ID>F_ST_OnlineDuration</ID>
+		<ID>F_ST_OfflineDelay</ID>
+		<ID>F_ST_OfflineRemainTime</ID>
+	</Category>
+</Category>
+<Category NameCN="直连配置" NameEN="Login">
+	<Category NameCN="基本参数" NameEN="Basic Setting">
+		<ID>F_ST_HTTPPort</ID>
+		<ID>F_ST_DCPort</ID>
+		<ID>F_ST_AdminPassword</ID>
+		<ID>F_ST_EnableAntiAttack</ID>
+	</Category>
+	<Category NameCN="端口映射设置" NameEN="NAT Setting">
+		<ID>F_ST_NATMode</ID>
+		<ID>F_ST_ManualNATExternalIP</ID>
+		<ID>F_ST_ManualNATExternalHttpPort</ID>
+		<ID>F_ST_ManualNATExternalDCPort</ID>
+		<ID>F_ST_UPnPNATBeginExternalPort</ID>
+		<ID>F_ST_NATExternalIP</ID>
+		<ID>F_ST_NATExternalHttpPort</ID>
+		<ID>F_ST_NATExternalDCPort</ID>
+	</Category>
+	<Category NameCN="动态域名" NameEN="DDNS">
+		<ID>F_ST_RegDynamicDNS</ID>
+		<ID>F_ST_DynamicDNSProvider</ID>
+		<ID>F_ST_DynamicDNSServiceAddr</ID>
+		<ID>F_ST_DynamicDNSRegisterUserName</ID>
+		<ID>F_ST_DynamicDNSRegisterUserPsw</ID>
+		<ID>F_ST_DynamicDNS</ID>
+	</Category>
+</Category>
+<Category NameCN="时间配置" NameEN="Time">
+	<ID>F_ST_TZ</ID>
+	<ID>F_ST_EnableNTP</ID>
+	<ID>F_ST_NTPServerAddr</ID>
+	<ID>F_ST_NTPSSyncInterval</ID>
+</Category>
+<Category NameCN="前端联动" NameEN="Linkage">
+	<ID>F_ST_SupportedEventSets</ID>
+	<ID>F_ST_SupportedActionSets</ID>
+	<ID>F_ST_DeviceLinkActions</ID>
+	<ID>F_ST_LinkActionTipVoiceSetsSummary</ID>
+	<ID>F_ST_LinkActionTipVoiceIDSets</ID>
+</Category>
+<Category NameCN="其他配置" NameEN="Other">
+	<Category NameCN="定时重启设置" NameEN="Auto Reboot">
+		<ID>F_ST_EnableAutoReboot</ID>
+		<ID>F_ST_AutoRebootClock</ID>
+	</Category>
+	<Category NameCN="音视频设置" NameEN="VA Setting">
+		<ID>F_ST_AnalogFormat</ID>
+		<ID>F_ST_AudioIOBindedVOChanNo</ID>
+	</Category>
+</Category>
+<F_ST_Model>
+	<Attr
+	NameCN="设备型号"
+	NameEN="Model"
+	Setable="0"
+	Type="string"
+	MaxLen="63" />
+</F_ST_Model>
+<F_ST_EnablePlatform>
+<Attr
+NameCN="启用平台接入"
+NameEN="Enable Platform"
+Setable="1"
+Type="bool" />
+</F_ST_EnablePlatform>
+<F_ST_PUID>
+<Attr
+	NameCN="PUID"
+	NameEN="PUID"
+	Setable="1"
+	Type="string"
+	MaxLen="63" />
+</F_ST_PUID>
+<F_ST_HardwareVersion>
+<Attr
+	NameCN="硬件版本"
+	NameEN="Hard Version"
+	Setable="0"
+	Type="string"
+	MaxLen="63" />
+</F_ST_HardwareVersion>
+<F_ST_ProducerID><Attr	NameCN="厂商ID"	NameEN="Producer ID"	Setable="0"	Type="string"	MaxLen="63" /></F_ST_ProducerID>
+<F_ST_DeviceID><Attr
+	NameCN="设备ID"
+	NameEN="Device ID"
+	Setable="0"
+	Type="string"
+	MaxLen="63" /></F_ST_DeviceID>
+<F_ST_AnalogChannelNum><Attr	NameCN="模拟通道数"
+	NameEN="Analog Chan. Num"
+	Setable="1"
+	Type="int"
+	Min="0"
+	Max="8" />
+</F_ST_AnalogChannelNum>
+<F_ST_EnableMultiPlatform>
+<Attr
+	NameCN="同时接入多个平台"
+	NameEN="Enable Multi-Platform"
+	Setable="1"
+	Type="bool" />
+</F_ST_EnableMultiPlatform>
+
+<F_ST_TransmitMode>
+<Attr
+	NameCN="流传输方式"
+	NameEN="VA Trans. Mode"
+	Setable="1"
+	Type="enum"
+	MaxLen="63">
+		<its>
+			<it v="TCP" />
+			<it v="UDP" />
+		</its>
+</Attr>
+</F_ST_TransmitMode>
+
+
+<F_ST_ConnectPlatformByProxy>
+<Attr 	NameCN="启用代理接入"
+	NameEN="Enable Proxy"
+	Setable="1"
+	Type="bool" />
+</F_ST_ConnectPlatformByProxy>
+
+<F_ST_ProxyType><Attr
+	NameCN="代理类型"
+	NameEN="Proxy Type"
+	Setable="1"
+	Type="enum"
+	MaxLen="63">
+		<its>
+			<it v="HTTP" />
+			<it v="SOCKET4" />
+			<it v="SOCKET5" />
+		</its>
+</Attr>
+</F_ST_ProxyType>
+<F_ST_ConnectPlatformByProxy><Attr
+	NameCN="启用代理接入"
+	NameEN="Enable Proxy"
+	Setable="1"
+	Type="bool" />
+</F_ST_ConnectPlatformByProxy>
+
+<F_ST_PPPoEUserPsw>
+<Attr
+	NameCN="PPPoE密码"
+	NameEN="PPPoE Password"
+	Setable="1"
+	Type="psw"
+	MaxLen="63" />
+</F_ST_PPPoEUserPsw>
+
+<F_IDL_CountBeginTime>
+<Attr
+	NameCN="计数开始时间"
+	NameEN="Count Begin Time"
+	Setable="0"
+	Type="utc" />
+</F_IDL_CountBeginTime>
+<F_ST_AutoRebootClock>
+<Attr
+	NameCN="定时重启时刻"
+	NameEN="Auto Reboot Clock"
+	Setable="1"
+	Type="clock" />
+</F_ST_AutoRebootClock>
+<F_OV_SupportedVideoDecoderSets >
+<Attr 
+	NameCN="支持的视频解码算法"
+	NameEN="支持的视频解码算法" Setable="0" Type="list" />
+</F_OV_SupportedVideoDecoderSets>
+
+<F_ST_RegPsw>
+<Attr 
+	NameCN="接入密码"
+	NameEN="接入密码" Setable="1" Type="hashpsw" />
+</F_ST_RegPsw>
+</root>
+
+
+

@@ -1,0 +1,425 @@
+@CHARSET "UTF-8";
+#login_dlg .fitem{margin:10px 4px;}
+#login_dlg .fitem input{ vertical-align:middle;}
+
+.textbox{
+    height:20px;
+    margin:0;
+    padding:0 2px;
+    box-sizing:content-box;
+}
+
+/*先暂时这样，disabled后设置一下背景颜色*/
+.textbox input:disabled,.textbox textarea:disabled{
+	color: rgb(30,30,30);
+	background-color:rgb(220, 220, 220);
+}
+
+.download_a{
+	color:#fff;
+}
+/* 点播模块列表里操作下载链接样式*/
+#vod_region_center a{
+	color: #fff;
+}
+
+
+.logo{width:0;height:0;}
+		
+.icon_map{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(map-ico.png); background-repeat:no-repeat; background-position:0px top;}
+.icon_st{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-16px top;}
+.icon_sg{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-32px top;}
+.icon_iv{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-80px top;}
+.icon_wm{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-48px top;}
+.icon_ia{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-64px top;}
+.icon_oa{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-48px top;}
+.icon_ptz{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-160px top;}
+.icon_sp{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-128px top;}
+.icon_idl{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-192px top;}
+.icon_odl{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-208px top;}
+.icon_wifi{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-368px top;}
+.icon_dp{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-16px top;}
+.icon_gps{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-16px top;}
+.icon_ov{ cursor:pointer; width:16px; height:16px;  border:0px; background-color:Transparent; background-image:url(icolist.png); background-repeat:no-repeat; background-position:-304px top;}
+
+
+
+
+.icon_ptz_up{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:0px top;}
+
+.icon_ptz_up{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz1.png); background-repeat:no-repeat; background-position:0px top;}
+
+.icon_ptz_down{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-16px top;}
+.icon_ptz_left{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-32px top;}
+.icon_ptz_right{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-48px top;}
+.icon_ptz_center{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-128px top;}
+.icon_ptz_leftup{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-64px top;}
+.icon_ptz_rightup{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-80px top;}
+.icon_ptz_leftdown{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-96px top;}
+.icon_ptz_rightdown{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-111px top;}
+.icon_ptz_add{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-144px top;}
+.icon_ptz_sub{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-160px top;}
+.icon_ptz_focus{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-176px top;}
+.icon_ptz_aperture{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-192px top;}
+.icon_ptz_zoom{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:-208px top;}
+
+.icon_ptz_up{cursor:pointer;width:16px; height:16px;border:0px; background-color:Transparent;background-image:url(ptz.png); background-repeat:no-repeat; background-position:0px top;}
+
+.player_icon_stop{width:32px;height:32px;background-color:transparent;background-image:url(icon_stop4.png);background-repeat:no-repeat;border:0px;padding:0px;margin:0px;}
+.player_icon_play{width:32px;height:32px;background-color:transparent;background-image:url(icon_play4.png);background-repeat:no-repeat;border:0px;padding:0px;margin:0px;}
+.player_icon_pause{width:32px;height:32px;background-color:transparent;background-image:url(icon_pause4.png);background-repeat:no-repeat;border:0px;padding:0px;margin:0px;}
+
+.windowbox{width:0px;height:0px;background-color:#9bcaf3;border:0px solid red;margin-left:1px !important; margin-left:1px;margin-right:0px !important; margin-right:0px;float:left;cursor:pointer;display:inline;}
+.windowbox .wnd{background-color:#000000;background-position:center;width:100%;height:100%;border:0px solid blue;}
+
+.windowbox .ActiveWindowTitleBgColor {background-color:#9DBDD8;}
+.windowtitle {cursor:pointer;border:0px red solid;height:18px;line-height:18px;vertical-align:middle;color:#fff;}
+.windowtitle .title1{height:16px;line-height:16px;float:left; display:block;text-overflow:ellipsis;overflow:hidden; white-space:nowrap; vertical-align:middle; font-size:12px;border:0px black solid;}
+.windowtitle .title2{color:#FFFFFF;width:65px;text-align:right;float:right;display:block;border:0px solid red;height:18px;padding:0px;border:0px black solid;}
+.windowtitle .title2 input{height:18px;vertical-align:middle;padding:0px; margin:0px;}
+
+.tree-node {
+  padding: 4px 0;
+  height: 18px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.snapshot{
+	display: inline-block;
+	zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+	*display: inline;
+	vertical-align: baseline;
+	margin: 1 2px;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	padding: 0;
+}
+.snapshot {
+	width:16px; height:16px; background-image:url(windowtitle_iconlist_1.png) !important; background-image:url(windowtitle_iconlist_1.gif); background-position:-16px top; background-repeat:no-repeat; background-color:Transparent; border:0px;
+}
+.snapshot:hover {
+	width:16px; height:16px; background-image:url(windowtitle_iconlist_2.png) !important; background-image:url(windowtitle_iconlist_2.gif); background-position:-16px top; background-repeat:no-repeat; background-color:Transparent; border:0px;
+}
+.snapshot:active {
+	width:16px; height:16px; background-image:url(windowtitle_iconlist_3.png) !important; background-image:url(windowtitle_iconlist_3.gif); background-position:-16px top; background-repeat:no-repeat; background-color:Transparent; border:0px;
+}
+
+
+.record{
+	display: inline-block;
+	zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+	*display: inline;
+	vertical-align: baseline;
+	margin: 1 1px;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	padding: 0;
+}
+.record {
+	width:15px; height:16px; background-image:url(windowtitle_iconlist_1.png) !important; background-image:url(windowtitle_iconlist_1.gif); background-position:0px top; background-repeat:no-repeat; background-color:Transparent; border:0px;
+}
+.record:hover {
+	width:15px; height:16px; background-image:url(windowtitle_iconlist_2.png) !important; background-image:url(windowtitle_iconlist_2.gif); background-position:0px top; background-repeat:no-repeat; background-color:Transparent; border:0px;
+}
+.record:active {
+	width:15px; height:16px; background-image:url(windowtitle_iconlist_3.png) !important; background-image:url(windowtitle_iconlist_3.gif); background-position:0px top; background-repeat:no-repeat; background-color:Transparent; border:0px;
+}
+
+.audio{
+	display: inline-block;
+	zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+	*display: inline;
+	vertical-align: baseline;
+	margin: 1 2px;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	text-align: center;
+	text-decoration: none;
+	padding: 0;
+}
+.audio {
+	width:16px; height:16px; background-image:url(windowtitle_iconlist_1.png) !important; background-image:url(windowtitle_iconlist_1.gif); background-position:-32px top; background-repeat:no-repeat; background-color:Transparent; border:0px;
+}
+.audio:hover {
+	width:16px; height:16px; background-image:url(windowtitle_iconlist_2.png) !important; background-image:url(windowtitle_iconlist_2.gif); background-position:-32px top; background-repeat:no-repeat; background-color:Transparent; border:0px;
+}
+.audio:active {
+	width:16px; height:16px; background-image:url(windowtitle_iconlist_3.png) !important; background-image:url(windowtitle_iconlist_3.gif); background-position:-32px top; background-repeat:no-repeat; background-color:Transparent; border:0px;
+}
+
+#iv_region_north td{text-align:center;}
+
+/*
+#ptzspeed_container .l-btn {
+  text-decoration: none;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+  vertical-align: middle;
+}
+#ptzspeed_container .l-btn-plain {
+  border: 0;
+  padding: 1px;
+}
+#ptzspeed_container .l-btn-left {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+}
+#ptzspeed_container .l-btn-text {
+  display: inline-block;
+  vertical-align: top;
+  width: auto;
+  line-height: 24px;
+  font-size: 12px;
+  padding: 0;
+  margin: 0 4px;
+}
+#ptzspeed_container .l-btn-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  font-size: 1px;
+}
+#ptzspeed_container .l-btn span span .l-btn-empty {
+  display: inline-block;
+  margin: 0;
+  width: 16px;
+  height: 24px;
+  font-size: 1px;
+  vertical-align: top;
+}
+#ptzspeed_container .l-btn span .l-btn-icon-left {
+  padding: 0 0 0 20px;
+  background-position: left center;
+}
+#ptzspeed_container .l-btn span .l-btn-icon-right {
+  padding: 0 20px 0 0;
+  background-position: right center;
+}
+#ptzspeed_container .l-btn-icon-left .l-btn-text {
+  margin: 0 4px 0 24px;
+}
+#ptzspeed_container .l-btn-icon-left .l-btn-icon {
+  left: 4px;
+}
+#ptzspeed_container .l-btn-icon-right .l-btn-text {
+  margin: 0 24px 0 4px;
+}
+#ptzspeed_container .l-btn-icon-right .l-btn-icon {
+  right: 4px;
+}
+#ptzspeed_container .l-btn-icon-top .l-btn-text {
+  margin: 20px 4px 0 4px;
+}
+#ptzspeed_container .l-btn-icon-top .l-btn-icon {
+  top: 4px;
+  left: 50%;
+  margin: 0 0 0 -8px;
+}
+#ptzspeed_container .l-btn-icon-bottom .l-btn-text {
+  margin: 0 4px 20px 4px;
+}
+#ptzspeed_container .l-btn-icon-bottom .l-btn-icon {
+  top: auto;
+  bottom: 4px;
+  left: 50%;
+  margin: 0 0 0 -8px;
+}
+#ptzspeed_container .l-btn-left .l-btn-empty {
+  margin: 0 4px;
+  width: 16px;
+}
+#ptzspeed_container .l-btn-plain:hover {
+  padding: 0;
+}
+#ptzspeed_container .l-btn-focus {
+  outline: #0000FF dotted thin;
+}
+#ptzspeed_container .l-btn-large .l-btn-text {
+  line-height: 40px;
+}
+#ptzspeed_container .l-btn-large .l-btn-icon {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  margin-top: -16px;
+}
+#ptzspeed_container .l-btn-large .l-btn-icon-left .l-btn-text {
+  margin-left: 40px;
+}
+#ptzspeed_container .l-btn-large .l-btn-icon-right .l-btn-text {
+  margin-right: 40px;
+}
+#ptzspeed_container .l-btn-large .l-btn-icon-top .l-btn-text {
+  margin-top: 36px;
+  line-height: 24px;
+  min-width: 32px;
+}
+#ptzspeed_container .l-btn-large .l-btn-icon-top .l-btn-icon {
+  margin: 0 0 0 -16px;
+}
+#ptzspeed_container .l-btn-large .l-btn-icon-bottom .l-btn-text {
+  margin-bottom: 36px;
+  line-height: 24px;
+  min-width: 32px;
+}
+#ptzspeed_container .l-btn-large .l-btn-icon-bottom .l-btn-icon {
+  margin: 0 0 0 -16px;
+}
+#ptzspeed_container .l-btn-large .l-btn-left .l-btn-empty {
+  margin: 0 4px;
+  width: 32px;
+}
+#ptzspeed_container .l-btn {
+  color: #444;
+  background: #fafafa;
+  background-repeat: repeat-x;
+  border: 1px solid #555;
+  background: -webkit-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+  background: -moz-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+  background: -o-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+  background: linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#eeeeee,GradientType=0);
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+#ptzspeed_container .l-btn:hover {
+  background: #e2e2e2;
+  color: #000000;
+  border: 1px solid #555;
+  filter: none;
+}
+#ptzspeed_container .l-btn-plain {
+  background: transparent;
+  border: 0;
+  filter: none;
+}
+#ptzspeed_container .l-btn-plain:hover {
+  background: #e2e2e2;
+  color: #000000;
+  border: 1px solid #ccc;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+#ptzspeed_container .l-btn-disabled,
+#ptzspeed_container .l-btn-disabled:hover {
+  opacity: 0.5;
+  cursor: default;
+  background: #fafafa;
+  color: #444;
+  background: -webkit-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+  background: -moz-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+  background: -o-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+  background: linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#eeeeee,GradientType=0);
+}
+#ptzspeed_container .l-btn-disabled .l-btn-text,
+#ptzspeed_container .l-btn-disabled .l-btn-icon {
+  filter: alpha(opacity=50);
+}
+#ptzspeed_container .l-btn-plain-disabled,
+#ptzspeed_container .l-btn-plain-disabled:hover {
+  background: transparent;
+  filter: alpha(opacity=50);
+}
+#ptzspeed_container .l-btn-selected,
+#ptzspeed_container .l-btn-selected:hover {
+  background: #ddd;
+  filter: none;
+}
+#ptzspeed_container .l-btn-plain-selected,
+#ptzspeed_container .l-btn-plain-selected:hover {
+  background: #ddd;
+}
+*/
+
+#ptzspeed_container td{text-align: left;}
+
+.datagrid-row-selected {
+  background: #555555;
+  color: #fff;
+}
+.ptz_bar{display:inline-block;border-left:0px solid red;margin-left:12px;}
+.ptz_btn{width:27px;height:27px;float:left;text-align:left;margin-right:10px;}
+.ptz_btn1{width:27px;height:27px;float:left;text-align:left;margin-right:0px;}
+.ptz_btn2{width:27px;height:27px;float:left;text-align:left;margin-right:1px;}
+.ptz_btn3{width:27px;height:27px;float:left;text-align:left;margin-left:12px;}
+.ptz_speedbar{height:27px;width:148px;float:left;text-align: left;}
+.ptz_combo{height:27px;line-height:27px;float:left;text-align: left;margin-right:1px;}
+
+/* 定义自定义信息窗体样式 */
+div.info {
+	position: relative;
+	z-index: 100;
+	border: 1px solid #BCBCBC;
+	box-shadow: 0 0 10px #B7B6B6;
+	border-radius: 8px;
+	background-color: rgba(255,255,255,0.9);
+	transition-duration: 0.25s;
+}
+div.info:hover {
+	box-shadow: 0px 0px 15px #0CF;
+}
+
+div.info-top {
+	position: relative;
+	background: none repeat scroll 0 0 #F9F9F9;
+	border-bottom: 1px solid #CCC;
+	border-radius:5px 5px 0 0;
+}
+div.info-top div {
+	display: inline-block;
+	color: #333333;
+	font-size:14px;
+	font-weight:bold;
+	line-height:31px;
+	padding:0 10px;
+}
+div.info-top img {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	transition-duration: 0.25s;
+}
+div.info-top img:hover{
+	box-shadow: 0px 0px 5px #000;
+}
+div.info-middle {
+	font-size:12px;
+	padding:10px;
+	line-height:21px;
+	color:#333;
+}
+div.info-bottom {
+	height:0px;
+	width:100%;
+	clear:both;
+	text-align:center;
+}
+div.info-bottom img{
+	position: relative;
+	z-index:104;
+}

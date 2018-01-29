@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>操作日志列表</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;系统管理&nbsp;&gt;&nbsp;操作日志列表列表
+</div>
+
+<form class="m-main border ui-bg-fff" action="/systemMg/operationJournal/list.htm" id="fnListSearchForm" method="POST">
+
+    ## search start
+
+    <div class="m-search fn-clear">
+
+        <div class="item">
+            模块名
+            <input class="ui-text fn-w200" type="text" name="permissionName" value="$!{queryOrder.permissionName}">
+        </div>
+		<div class="item">
+            操作员
+            <input class="ui-text fn-w200" type="text" name="operatorName" value="$!{queryOrder.operatorName}">
+        </div>
+		<div class="item">
+      IP地址
+            <input class="ui-text fn-w200" type="text" name="operatorIp" value="$!{queryOrder.operatorIp}">
+        </div>
+		##<div class="item fnListSearchDateItem">
+         ## 发件时间起止
+          ##  <input class="ui-text fn-w100 laydate-icon fnListSearchDateS" type="text" name="beginMessageSendDate" onclick="laydate()" value="$!dateUtil.dtSimpleFormat($!queryMessageOrder.beginMessageSendDate)">
+         ##   -
+       ##     <input class="ui-text fn-w100 laydate-icon fnListSearchDateE" type="text" name="endMessageSendDate" onclick="laydate()" value="$!dateUtil.dtSimpleFormat($!queryMessageOrder.endMessageSendDate)">
+     ##   </div>
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    ## search end
+
+    <div class="fn-pl15 fn-pr15 fn-mt20">
+        
+        ## list start
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+                    <th sortCol="permission_name" width="100px">模块名</th>
+                    <th sortCol="operation_content" width="150px">操作内容</th>
+                    <th sortCol="operator_name" width="100px">操作员</th>
+                    <th sortCol="operator_ip" width="150px">IP地址</th>
+					<th sortCol="raw_add_time" width="150px">操作时间</th>
+                </tr>
+            </thead>
+            <tbody>
+           
+                #foreach($info in $page.result)
+                    <tr>
+                        <td>$!{info.permissionName}</td>
+                        <td>$!{info.operationContent}</td>
+                        <td>$!{info.operatorName}</td>
+                        <td>$!{info.operatorIp}</td>
+                        <td>
+                          $!dateUtil.simpleFormat($!{info.operatorTime})
+                        </td>
+                    </tr>
+                #end
+
+            </tbody>
+        </table>
+
+        ## list end
+
+        ## page start
+
+        #parse("/layout/common/pages.vm")
+        ## page end
+
+    </div>
+
+</form>
+<script src="/js/laydate/laydate.js"></script>
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+<script type="text/javascript">
+    seajs.use('zyw/publicPage');
+</script>
+</body>
+</html>

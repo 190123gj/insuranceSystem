@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+    <title>客户协议</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;客户管理&nbsp;&gt;&nbsp;客户协议&nbsp;&gt;&nbsp;客户协议列表
+</div>
+
+<form class="m-main border ui-bg-fff" action="/insurance/customerProtocol/queryCustomerProtocol.htm" id="fnListSearchForm" method="POST">
+
+    <div class="m-search fn-clear">
+        <div class="item">
+            协议名称：
+            <input class="ui-text fn-w200 fnInput" type="text" name="name" value="$!{checkOrder.name}" placeholder="协议名称">
+        </div>
+        <div class="item">
+            客户名称：
+            <input class="ui-text fn-w200 fnInput" type="text" name="customerUserName" value="$!{checkOrder.customerUserName}" placeholder="客户名称">
+        </div>
+        <div class="item">
+            客户类别：
+            <select  name="customerType" id="certType" class="ui-select fn-w200 fnChangeInput">
+                <option value="">全部</option>
+                <option value="INDIVIDUAL_CUSTOMER" #if ($!checkOrder.customerType == "INDIVIDUAL_CUSTOMER") selected #end>个人客户</option>
+                <option value="COMPANY_CUSTOMER" #if ($!checkOrder.customerType == "COMPANY_CUSTOMER") selected #end>团体客户</option>
+            </select>
+        </div>
+        <br />
+        <div class="item">
+            证件类型：
+            <select  name="certType" id="certType" class="ui-select fn-w200 fnChangeInput">
+                <option value="">全部</option>
+                #foreach($certType in $!{certTypeList})
+                    <option value="$!{certType.code}" #if($!certType.code == $!checkOrder.certType) selected  #end>$!{certType.message}</option>
+                #end
+            </select>
+        </div>
+        <div class="item">
+            证件号码：
+            <input class="ui-text fn-w200 fnInput" type="text" name="certNo" id="certNo" value="$!{checkOrder.certNo}" placeholder="证件号码">
+        </div>
+        <div class="item">
+            协议状态：
+            <select  name="status" id="status" class="ui-select fn-w200 fnChangeInput">
+                <option value="">全部</option>
+                #foreach ($statusType in $!{statusList})
+                    <option value="$!{statusType.code}" #if($!statusType.code == $!checkOrder.status) selected #end>$!{statusType.message}</option>
+                #end
+            </select>
+        </div>
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+
+    </div>
+
+
+    <div class="fn-pl15 fn-pr15">
+
+        <div class="fn-mb20 fn-mt20">
+
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/customerProtocol/editCustomerProtocol.htm?id=0"><b>+</b>新增客户协议&nbsp;</a>
+             <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/customerProtocol/exportCustomerProtocol.htm">下载协议模板</a>
+
+        </div>
+
+
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+            <tr id="fnListSearchTh">
+                <th>协议编码</th>
+                <th>协议名称</th>
+                <th>客户类别</th>
+                <th>客户名称</th>
+                <th>证件类型</th>
+                <th>证件号码</th>
+                <th>协议状态</th>
+                <th>创建时间</th>
+                <th>协议期</th>
+                <th width="200px">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                <tr>
+                    <td>	$!{item.no} </td>
+                    <td>	$!{item.name} </td>
+                    <td>	$!{item.customerType} </td>
+                    <td>	$!{item.customerUserName} </td>
+                    <td>	$!{item.certType} </td>
+                    <td>	$!{item.certNo} </td>
+                    <td>	#if($!item.status == "NORMAL") 有效 #else 失效 #end </td>
+                    <td>	$!dateUtil.simpleFormat($!{item.rawAddTime}) </td>
+                    <td>$!dateUtil.formatDay($!{item.beginDate})-$!dateUtil.formatDay($!{item.endDate})</td>
+                    <td>
+                        <a href="/insurance/customerProtocol/editCustomerProtocol.htm?id=$!item.id">[ 编辑 ]</a><br/>
+                        <a href="/insurance/customerProtocol/lookCustomerProtocolDetail.htm?id=$!item.id">[查看详情 ]</a>
+                    </td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+
+
+
+        #parse("/layout/common/pages.vm")
+
+
+    </div>
+
+</form>
+
+
+
+    #parse("/layout/common/footer.vm")
+
+    #parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/customer/customerProtocol');
+</script>
+</body>
+</html>

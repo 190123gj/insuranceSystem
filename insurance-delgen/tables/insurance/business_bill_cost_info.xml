@@ -1,0 +1,86 @@
+<table sqlname="business_bill_cost_info">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO business_bill_cost_info(cost_info_id,proportion,charge_amount,collect_date,actual_collect_date) VALUES (?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO business_bill_cost_info(cost_info_id,proportion,charge_amount,collect_date,actual_collect_date) VALUES (#costInfoId#,#proportion#,#chargeAmount#,#collectDate#,#actualCollectDate#)
+		        <selectKey  resultClass ="long"  keyProperty ="costInfoId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE business_bill_cost_info SET proportion=?,charge_amount=?,collect_date=?,actual_collect_date=? WHERE cost_info_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  cost_info_id ,proportion ,charge_amount ,collect_date ,actual_collect_date  FROM business_bill_cost_info WHERE cost_info_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM business_bill_cost_info WHERE cost_info_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  cost_info_id ,proportion ,charge_amount ,collect_date ,actual_collect_date  FROM business_bill_cost_info WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  cost_info_id ,proportion ,charge_amount ,collect_date ,actual_collect_date  FROM business_bill_cost_info where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM business_bill_cost_info WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM business_bill_cost_info  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

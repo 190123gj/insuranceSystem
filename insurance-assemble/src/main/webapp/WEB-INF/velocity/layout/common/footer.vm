@@ -1,0 +1,36 @@
+#if($!footer != "no" && $!request.getParameter("footer") != "no")
+    <div class="ui-footer ui-footer-bg fn-tac fn-mt20">
+        <input type="hidden" name="hddUserName" id="hddUserName" value="$!sessionScope.userName" />
+        #if($form)
+            #if($!form.actInstId>0)
+                <input type="hidden" name="examineRecordId" id="examineRecordId" value="$!form.actInstId" />
+                <input type="hidden" name="hddFooterFormActDefId" id="hddFooterFormActDefId" value="$!form.actInstId" />
+            #end
+            <input type="hidden" name="amendRecordId" id="amendRecordId" value="$!form.formId" />
+            #if($!sessionLocal.userId == $!form.userId && ($!form.status == "DRAFT" || $!form.status == "CANCEL" || $!form.status == "BACK"))
+            
+				#if($!request.getServletPath() == $!form.formCode.getViewUrl())
+            		<input type="hidden" name="editUrl" id="editUrl" value="$!form.formCode.getEditUrl()?formId=$!form.formId" />
+            	#end
+            	
+            	#if(!$showNoEndForm && ($!form.status == "BACK" || $!form.status == "CANCEL") && $!request.getServletPath() == $!form.formCode.getEditUrl())
+            	    <input type="hidden" sysname="$!form.sysName" name="endTaskFormId" id="endTaskFormId" value="$!form.formId" />
+            	#end
+            #end
+            #if($!form.status == "APPROVAL" && $!form.formCode.getPrintUrl() != "")
+            	##<input type="hidden" name="printUrl" id="printUrl" value="$!form.formCode.getPrintUrl()?formId=$!form.formId" />
+            	<input type="hidden" name="printUrl" id="printUrl" value="" />
+            #end            
+        #end
+        #if($!approvalCode)
+            <input type="hidden" name="projectApprovalId" id="projectApprovalId" value="$!approvalCode" />
+        #elseif($!project && $!project.isApproval == "IS")
+            <input type="hidden" name="projectApprovalId" id="projectApprovalId" value="$!project.spCode" />
+        #end
+        <p>2010-2020 版权所有 &copy; <a href="http://www.miitbeian.gov.cn/" target="_blank">备案号码 渝ICP备17003029号-1</a> 地址：重庆市渝北区黄杨路5号渝兴广场B7幢9楼1.2.3号</p>
+        <p>东润保险经纪有限公司</p>
+    </div>
+#end
+<input type="hidden" id="currentLoginUserId" value="$!sessionLocal.userId"/>
+<input type="hidden" id="currentLoginUserAccount" value="$!sessionLocal.userName"/>
+<input type="hidden" id="currentLoginUserName" value="$!sessionLocal.realName"/>

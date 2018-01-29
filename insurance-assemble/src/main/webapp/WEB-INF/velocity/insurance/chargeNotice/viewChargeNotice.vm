@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title></title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;结算管理&nbsp;&gt;&nbsp;结算通知单&nbsp;&gt;&nbsp;$!{info.insuranceTypeName}结算通知单详情
+</div>
+<div class="m-main border ui-bg-fff">
+ 	  #parse("/layout/insurance/chargeNotice/viewChargeNotice.vm")
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <a href="/insurance/businessBill/list.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+</div>
+
+  #parse("/layout/common/footer.vm")
+
+    #parse("/layout/common/commonjs.vm")
+<script>
+    seajs.use($_GLOBAL.zyw+'/businessBill/addBusinessBill');
+</script>
+
+</body>
+</html>

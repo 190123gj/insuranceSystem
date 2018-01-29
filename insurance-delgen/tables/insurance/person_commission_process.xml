@@ -1,0 +1,134 @@
+<table sqlname="person_commission_process">
+<column name="apply_draw_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO person_commission_process(commission_process_id,settlement_number,business_user_id,business_user_name,business_user_mobile,business_user_cert_no,apply_draw_amount,status,reason,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO person_commission_process(commission_process_id,settlement_number,business_user_id,business_user_name,business_user_mobile,business_user_cert_no,apply_draw_amount,status,reason,raw_add_time) VALUES (#commissionProcessId#,#settlementNumber#,#businessUserId#,#businessUserName#,#businessUserMobile#,#businessUserCertNo#,#applyDrawAmount#,#status#,#reason#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="commissionProcessId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE person_commission_process SET business_user_id=?,settlement_number = ?,business_user_name=?,business_user_mobile=?,business_user_cert_no = ?,apply_draw_amount=?,status=?,reason=? WHERE commission_process_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  commission_process_id ,settlement_number ,business_user_id ,business_user_name ,business_user_mobile,business_user_cert_no,apply_draw_amount ,status ,reason ,raw_add_time ,raw_update_time  FROM person_commission_process WHERE commission_process_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM person_commission_process WHERE commission_process_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  commission_process_id ,settlement_number ,business_user_id ,business_user_name ,business_user_mobile,business_user_cert_no,apply_draw_amount ,status ,reason ,raw_add_time ,raw_update_time  FROM person_commission_process WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  commission_process_id ,settlement_number ,business_user_id ,business_user_name ,business_user_mobile,business_user_cert_no,apply_draw_amount ,status ,reason ,raw_add_time ,raw_update_time  FROM person_commission_process where 1=1
+			<dynamic>
+				<isNotEmpty property="personCommissionProcess.businessUserName" prepend="and">
+	             business_user_name like concat('%',#personCommissionProcess.businessUserName#,'%')
+	         	</isNotEmpty>
+	         	<isNotEmpty property="personCommissionProcess.businessUserMobile" prepend="and">
+	             business_user_mobile like concat('%',#personCommissionProcess.businessUserMobile#,'%')
+	         	</isNotEmpty>
+	         	<isNotEmpty property="personCommissionProcess.businessUserCertNo" prepend="and">
+	             business_user_cert_no like concat('%',#personCommissionProcess.businessUserCertNo#,'%')
+	         	</isNotEmpty>
+	         	<isNotEmpty property="personCommissionProcess.status" prepend="and">
+	         	 status = #personCommissionProcess.status#
+	         	</isNotEmpty>
+			</dynamic>	
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM person_commission_process WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM person_commission_process  where 1=1
+	           <dynamic>
+				<isNotEmpty property="businessUserName" prepend="and">
+	             business_user_name like concat('%',#businessUserName#,'%')
+	         	</isNotEmpty>
+	         	<isNotEmpty property="businessUserMobile" prepend="and">
+	             business_user_mobile like concat('%',#businessUserMobile#,'%')
+	         	</isNotEmpty>
+	         	<isNotEmpty property="businessUserCertNo" prepend="and">
+	             business_user_cert_no like concat('%',#businessUserCertNo#,'%')
+	         	</isNotEmpty>
+	         	<isNotEmpty property="status" prepend="and">
+	         	 status = #status#
+	         	</isNotEmpty>
+			</dynamic>	
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    
+   <operation name="updateStatus">
+        <extraparams>
+            <param name="commissionProcessIds" javatype="java.lang.String" />
+             <param name="settleNo" javatype="java.lang.String" />
+            <param name="status" javatype="java.lang.String" />
+            <param name="reason" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+			   UPDATE person_commission_process SET business_user_id=?,settlement_number = ?,business_user_name=?,business_user_mobile=?,business_user_cert_no = ?,apply_draw_amount=?,status=?,reason=? WHERE commission_process_id=?
+			]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           UPDATE person_commission_process SET settlement_number=#settleNo#, status=#status#,reason=#reason# WHERE commission_process_id in ($commissionProcessIds$)
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

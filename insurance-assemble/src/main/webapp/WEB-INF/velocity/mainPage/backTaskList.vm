@@ -1,0 +1,48 @@
+## <ul class="fn-clear list-title">
+##     <li class="active">被驳回事项</li>
+## </ul>
+<div class="fn-ml20 fn-mr20">
+    <table class="m-table m-table-list fn-tac">
+        <thead>
+            <tr>
+                <th>任务名称</th>
+                <th>步骤名称</th>
+                <th width="80px">发起人</th>
+                <th width="150PX">接收时间</th>
+                <th width="150PX">持续时间</th>
+                <th width="50px">操作</th>
+            </tr>
+        </thead>
+        #if($!listUtil.isNotEmpty($!backTaskList))
+         <tbody>
+               #foreach($!task in $!backTaskList)
+                        <tr>
+                            <td>
+                                #if($!task.subjectView)
+                                    $!task.subjectView
+                                #else
+                                    $!task.subject
+                                #end    
+                            </td>
+                            <td>$!task.name</td>
+                            <td>$!task.creator</td>
+                            <td>$!dateUtil.simpleFormat($!task.createTime)</td>
+                            <td>$!dateUtil.getDurationTime($!task.createTime)</td>
+                            <td>
+                                #if($!stringUtil.isNotBlank($!{task.taskUrl}))
+                                	<a href="$!{task.taskUrl}">处理</a>
+                                #end
+                            </td>
+                        </tr>
+                        #set($i=$i+1)
+                #end
+         </tbody>
+        #end     
+    </table>
+    #if($!listUtil.isEmpty($!backTaskList))
+    	<div class="m-pages">
+    		<p class="fn-tac fn-fs20">暂无数据</p>
+    	</div>
+    #end  
+    #set($withOutJubmBtn = true)
+</div>

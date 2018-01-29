@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>备份配置</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;系统管理&nbsp;&gt;&nbsp;数据库备份管理&nbsp;&gt;&nbsp;配置列表
+</div>
+
+<form class="m-main border ui-bg-fff" action="/systemMg/dbbackup/config/list.htm" id="fnListSearchForm" method="POST">
+
+    ## search start
+
+    <div class="m-search fn-clear">
+
+        <div class="item">
+         	数据库
+            <input class="ui-text fn-w200" type="text" name="schemeName" value="$!queryOrder.schemeName">
+        </div>
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+        
+    </div>
+
+    ## search end
+
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="form.htm" id="addParam"><b>+</b>新增备份配置&nbsp;</a>
+        </div>
+
+        ## list start
+
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+                    <th sortCol="db_host"  width="200px">地址</th>
+                    <th sortCol="scheme_name" width="200px">数据库</th>
+                    <th sortCol="backup_folder">备份目录</th>
+                    <th sortCol="backup_time_begin" width="100px">备份时间</th>
+                    <th sortCol="backup_inverval_minute" width="100px">备份频率</th>
+                    <th width="220px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr configId="$!item.configId" schemeName="$!item.schemeName">
+                        <td>
+                            $!item.dbHost
+                        </td>
+                        <td>
+                            $!item.schemeName
+                        </td>
+                        <td>
+                            $!item.backupFolder
+                        </td>
+                        <td>
+                            $!item.backupTimeBegin - $!item.backupTimeEnd
+                        </td>
+                        <td>
+                        	$!dateUtil.getTimeDescByMinutes($!item.backupInvervalMinute)
+                        </td>
+                        <td>
+                        	<a href="form.htm?configId=$!item.configId" class="edit">[ 编辑 ]</a>
+                        	#if($!item.inUse.code == "YES")
+                        		<a href="javascript:void(0);" class="backup">[ 立即备份 ]</a>
+                        		<a href="javascript:void(0);" class="del changeInUse">[ 禁用 ]</a>
+                        	#else
+                        		<a href="javascript:void(0);" class="edit changeInUse">[ 启用 ]</a>
+                        	#end
+
+                            <a href="javascript:void(0);" class="del delete">[ 删除 ]</a>
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        ## list end
+
+        ## page start
+
+        #parse("/layout/common/pages.vm")
+
+        ## page end
+
+    </div>
+
+</form>
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+
+<script src="/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/system/dbbackup');
+</script>
+</body>
+</html>

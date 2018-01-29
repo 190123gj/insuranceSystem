@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="specialmer">
+	
+
+
+	
+	
+    <!--驳回的代办任务-->
+	<resultMap id="RM-BUSI-BACK-TASK" class="com.born.insurance.dataobject.BackTaskDO">
+		<result property="formId" column="form_id" javaType="long" jdbcType="BIGINT" nullValue="0"/>
+		<result property="formCode" column="form_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="subject" column="subject" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="taskName" column="taskName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="creator" column="creator" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="createTime" column="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="taskStartTime" column="taskStartTime" javaType="java.util.Date" jdbcType="DATETIME"/>
+	</resultMap>	
+	
+	<!-- 驳回的代办任务列表 -->
+    <select id="MS-BUSI-BACK-TASK" resultMap="RM-BUSI-BACK-TASK">
+		 SELECT
+		  f.form_id,
+		  f.form_code,
+		  f.form_name subject,
+		  u.task_name taskName,
+		  u.user_name creator,
+		  f.raw_update_time createTime,
+		  u.task_start_time taskStartTime 
+		FROM form f
+		  JOIN form_related_user u
+		    ON f.form_id = u.form_id
+		WHERE f.STATUS = 'BACK'
+		AND u.user_type = 'FLOW_SUBMIT_MAN'
+		AND u.user_id = #value# order by form_id desc
+    </select>
+
+</sqlMap>

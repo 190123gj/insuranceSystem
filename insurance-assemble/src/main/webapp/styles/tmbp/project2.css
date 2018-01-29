@@ -1,0 +1,420 @@
+/*申请-tab*/
+.apply-step .item{ height:92px; float: left; text-align: center; cursor: pointer; color: #161717; padding: 0 20px; position: relative; margin-bottom:10px; }
+.apply-step .item a{ display:block; width:100%; height:100%; }
+.apply-step .icon{ width: 32px; height: 32px; margin-top: 20px; background-image: url(img/project/apply_step_icon2.png); background-repeat: no-repeat;}
+.apply-step .icon-s1 i{ background-position: 0 0; }
+.apply-step .icon-s2 i{ background-position: 0 -32px; }
+.apply-step .icon-s3 i{ background-position: 0 -64px; }
+.apply-step .icon-s4 i{ background-position: 0 -96px; }
+.apply-step .icon-s5 i{ background-position: 0 -128px; }
+.apply-step .icon-s6 i{ background-position: 0 -160px; }
+.apply-step .icon-s7 i{ background-position: 0 -192px; }
+.apply-step .icon-s8 i{ background-position: 0 -224px; }
+.apply-step .icon-s9 i{ background-position: 0 -256px; }
+.apply-step .icon-s10 i{ background-position: 0 -288px; }
+.apply-step .icon-s11 i{ background-position: 0 -320px; }
+.apply-step .icon-s12 i{ background-position: 0 -352px; }
+.apply-step .step-line{ position: absolute; top: 0; right: 0; width: 0px; height: 60px; border-right: 1px solid #d6d0d0;}
+.apply-step .step-line2{ position: absolute; height: 3px; width: 100%; left: 0; }
+.apply-step .item.active .step-line{ width: 10px; border-right: 0; background: url(img/project/apply_step_line.jpg) 50% 50% no-repeat; right: -10px;}
+.apply-step .item.active.icon-s1 .step-line2{ background-color: #61a0a8; margin-top: -78px;}
+.apply-step .item.active.icon-s2 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step .item.active.icon-s3 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step .item.active.icon-s4 .step-line2{ background-color: #a2b699; margin-top: -78px;}
+.apply-step .item.active.icon-s5 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step .item.active.icon-s6 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step .item.active.icon-s7 .step-line2{ background-color: #a2b699; margin-top: -78px;}
+.apply-step .item.active.icon-s8 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step .item.active.icon-s9 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step .item.active.icon-s10 .step-line2{ background-color: #61a0a8; margin-top: -78px;}
+.apply-step .item.active.icon-s11 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step .item.active.icon-s12 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+
+.apply-step .item.active.icon-s1 p{ color: #61a0a8; }
+.apply-step .item.active.icon-s2 p{ color: #efa18d; }
+.apply-step .item.active.icon-s3 p{ color: #d7ab82; }
+.apply-step .item.active.icon-s4 p{ color: #a2b699; }
+.apply-step .item.active.icon-s5 p{ color: #efa18d; }
+.apply-step .item.active.icon-s6 p{ color: #d7ab82; }
+.apply-step .item.active.icon-s7 p{ color: #a2b699; }
+.apply-step .item.active.icon-s8 p{ color: #efa18d; }
+.apply-step .item.active.icon-s9 p{ color: #d7ab82; }
+.apply-step .item.active.icon-s10 p{ color: #61a0a8; }
+.apply-step .item.active.icon-s11 p{ color: #efa18d; }
+.apply-step .item.active.icon-s12 p{ color: #d7ab82; }
+.apply-step .item.active{ color: #77c188; font-weight: 700;}
+.operation_icon{ background: url(img/project/operation_icon.png) no-repeat 10px center; text-indent: 1.5em;}
+h3.m-invndt b{ color:#000; font-size:16px; }
+h4.m-invndt b{ color:#000; font-size:14px; }
+.m-invndt a{ font-weight:100; }
+.m-invndd{ width:800px; margin-left:100px; border:1px solid #e5e1e1; }
+.m-invndd-font{ position: relative; }
+.m-invndd-font a{ position:absolute; right:5px; top: 8px; }
+.m-invndd-font span{ position: absolute; right: 5px; top: 0px; height: 100%; line-height: 50px; background: #fff; padding: 0 5px; }
+.m-table th{ position:relative; text-align:center; }
+.m-table th{ /*width:10.5em;*/ word-break: keep-all; white-space:nowrap; }
+.m-table td{ word-break: break-all; white-space: normal; position:relative; }
+
+.newPopup{ border-radius:5px; background:#fff; padding:50px 25px 30px; margin-top:-30px; position:relative;}
+.newPopup dl{ border: solid 1px #9d9d9d; padding:20px 20px; }
+.newPopup dl dt{ text-align:center; margin-top:-35px; }
+.newPopup dl dt span{ color:#4b4a4a; font-size:18px; background:#fff; padding:0 20px; }
+.newPopup dl dd.hint{ font-size:24px; color:#000; margin-top:0; }
+.newPopup span.close{ font-size:50px; position:absolute; top:-10px; right:10px; cursor:pointer; }
+.newPopup dl dd a.disabled{ color:#aaa; }
+
+.dimInquireUl{position: absolute;top: 38px;left: 0; z-index: 11;  border-top:none; width:100%; background:#fff; }
+.dimInquireUl ul{ border:solid 2px #6db97e; margin:0 4px; max-height:200px; overflow-y:auto; }
+.dimInquireUl ul li{ line-height:30px; cursor:pointer; }
+.dimInquireUl ul li:hover{ background:#6db97e; color:#fff; }
+
+.m-invnAll dt{ color:#161717; font-size:16px; text-align:center; line-height:50px; font-weight:bold; }
+.m-invn dt{ color:#4b4949; }
+
+input:read-only{ background-color: #eee;}
+input:-moz-read-only{ background-color: #eee; }
+
+.newPopupMeat{width:885px; color:#161717; margin-top:-50px; }
+.newPopupMeat li{ text-indent:2em; line-height:35px; }
+
+.packBtn{ width:28px; height:28px; background:url(img/project/pack_icon.png); cursor:pointer; margin-top:20px; }
+.packBtn.reversal{ background-position: 0 -28px; }
+.bac1,.bac1 input{ background:#d9ecd2; }
+.bac2,.bac2 input{ background:#98d8a7; }
+.bac3,.bac3 input,.bac3 td{ background:#ff8863; color:#fff; }
+.bac4,.bac4 input{ background:#fde9c3; }
+.bac5,.bac5 input{ background:#daeef3; }
+
+
+
+dd td em.error-tip,dd th em.error-tip{position:absolute; margin-left:0; bottom:0; white-space: nowrap; z-index: 1;}
+p em.error-tip{margin:0 5px;}
+dd em.error-tip{display:block; margin-left:30px;}
+em.error-tip{ color:red; }
+.m-table em.error-tip2{ position:absolute; margin-left:0; bottom:0; left: 8px; white-space: nowrap;z-index: 1;}
+.m-table em.error-tip{ position:absolute; margin-left:0; bottom:0; left: 8px; white-space: nowrap;z-index: 1;}
+.m-table strong em.error-tip2{ top:12px; }
+
+.spanActual em.error-tip{left: 230px;}
+
+td p.error-tip,th p.error-tip { position: absolute; color: red !important; padding: 1px; z-index:11; margin-left: 0px !important;}
+dd p.error-tip,dt p.error-tip{ color: red !important; margin-left: 30px; }
+span p.error-tip{  color: red; margin-left:10px; font-weight:bold; }
+dt span p.error-tip{ color: red !important; margin-left: 30px; float:right; }
+b.error-tip { color: red !important; }
+td b.error-tip { color: red !important; position: absolute; left:0; bottom:0;}
+
+dd span.error-tip{ color:red; margin-right:10px; }
+dd td span.error-tip{ position:absolute; left:2px; bottom:0; white-space: nowrap; z-index: 1; }
+
+em.error-tip2{ color:red; }
+
+.ui-btn-vip.fn-p-abs{ top:210px; right:20px; }
+span.radioSpan{ color:red; margin-left:30px; }
+
+.upLoad{ cursor:pointer; }
+.upLoad .icon{ height: 28px;width: 29px;margin-right: 5px; vertical-align: middle;background-repeat: no-repeat;background-image: url(img/ico-attach.gif);}
+.upLoad .icon-img { background-position: 0 0; }
+.upLoad span{ margin-left:5px; }
+.upLoad b{ position:absolute; top:2px; right:7px; font-size:18px; }
+
+.active.addDemand .headmanCover .xlsTop,.headmanCover.active .xlsTop{ top:0; left:0; width:100%; height:2px; background:#000;
+	background-size: 30px 30px;
+
+	background-image: -webkit-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: -o-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: -moz-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: linear-gradient(to top right, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+
+	-webkit-animation:xlsTL 0.5s linear infinite;
+	-o-animation:xlsTL 0.5s linear infinite;
+	-moz-animation:xlsTL 0.5s linear infinite;
+	animation:xlsTL 0.5s linear infinite;
+
+	-o-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	-moz-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	-webkit-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+
+}
+
+.active.addDemand .headmanCover .xlsLeft,.headmanCover.active .xlsLeft{ top:0; left:0; width:2px; height:100%; background:#000;
+	background-size: 30px 30px;
+
+	background-image: -webkit-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: -o-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: -moz-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: linear-gradient(to top right, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+
+	-webkit-animation:xlsTL 0.5s linear infinite;
+	-o-animation:xlsTL 0.5s linear infinite;
+	-moz-animation:xlsTL 0.5s linear infinite;
+	animation:xlsTL 0.5s linear infinite;
+
+	-o-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	-moz-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	-webkit-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+
+}
+
+.active.addDemand .headmanCover .xlsBottom,.headmanCover.active .xlsBottom{ bottom:0; left:0; width:100%; height:2px; background:#000;
+	background-size: 30px 30px;
+
+	background-image: -webkit-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: -o-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: -moz-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: linear-gradient(to top right, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+
+	-webkit-animation:xlsBR 0.5s linear infinite;
+	-o-animation:xlsBR 0.5s linear infinite;
+	-moz-animation:xlsBR 0.5s linear infinite;
+	animation:xlsBR 0.5s linear infinite;
+
+	-o-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	-moz-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	-webkit-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+}
+
+.active.addDemand .headmanCover .xlsRight,.headmanCover.active .xlsRight{ top:0; right:0; width:2px; height:100%; background:#000;
+	background-size: 30px 30px;
+
+	background-image: -webkit-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: -o-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: -moz-linear-gradient(bottom left, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+	background-image: linear-gradient(to top right, rgba(255,255,255,.9) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.9) 75%, transparent 75%, transparent);
+
+	-webkit-animation:xlsBR 0.5s linear infinite;
+	-o-animation:xlsBR 0.5s linear infinite;
+	-moz-animation:xlsBR 0.5s linear infinite;
+	animation:xlsBR 0.5s linear infinite;
+
+	-o-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	-moz-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	-webkit-transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+	transition:width 1.2s cubic-bezier(.41,.25,.01,.99);
+}
+
+.headmanCover{ position:absolute; left:0; top:0; width:100%; height:100%; cursor:pointer; z-index:999;  background: url(img/opacityBg.png); }
+
+
+.classDelete{ background:red; color:#fff; line-height: 15px; width: 15px; text-align: center; border-radius: 100%; position:absolute; top: 5px; right: 5px; cursor: pointer; display:none;
+	animation:fear 0.1s;
+	-moz-animation:fear 0.1s; /* Firefox */
+	-webkit-animation:fear 0.1s; /* Safari and Chrome */
+	-o-animation:fear 0.1s; /* Opera */
+	animation-iteration-count:10;
+	-moz-animation-iteration-count:10;
+	-webkit-animation-iteration-count:10;
+	-o-animation-iteration-count:10;
+}
+.headmanCover:hover .classDelete{ display:block; }
+
+.subitemDeleteHover{ text-align:center; position:relative !important; height:20px; }
+.subitemDeleteHover .classDelete{ top:-5px !important; }
+
+@keyframes fear{
+	0%   { margin:0 }
+	50%  { margin:1px 1px 0 0 }
+}
+@-moz-keyframes fear{
+	0%   { margin:0 }
+	50%  { margin:1px 1px 0 0 }
+}
+@-webkit-keyframes fear{
+	0%   { margin:0 }
+	50%  { margin:1px 1px 0 0 }
+}
+@-o-keyframes fear{
+	0%   { margin:0 }
+	50%  { margin:1px 1px 0 0 }
+}
+
+@keyframes xlsTL{
+	from{background-position: 0 0;}
+  	to{background-position: 30px 0;}
+}
+@-moz-keyframes fear{
+	from{background-position: 0 0;}
+  	to{background-position: 30px 0;}
+}
+@-webkit-keyframes fear{
+	from{background-position: 0 0;}
+  	to{background-position: 30px 0;}
+}
+@-o-keyframes fear{
+	from{background-position: 0 0;}
+  	to{background-position: 30px 0;}
+}
+
+@keyframes xlsBR{
+	from{background-position: 30px 0;}
+  	to{background-position: 0 0;}
+}
+@-moz-keyframes fear{
+	from{background-position: 30px 0;}
+  	to{background-position: 0 0;}
+}
+@-webkit-keyframes fear{
+	from{background-position: 30px 0;}
+  	to{background-position: 0 0;}
+}
+@-o-keyframes fear{
+	from{background-position: 30px 0;}
+  	to{background-position: 0 0;}
+}
+
+.moneyHint{top:-30px; left:0; text-align:center; background:#ffc; border:solid 1px #f93; color:#c00; line-height:30px; font-size:16px; word-break: keep-all !important; white-space: nowrap; }
+
+td .hint{ position: absolute; bottom:0; right:5px; }
+/*
+.m-tableBorderNone{ margin:0 25px;}
+.m-tableBorderNone td{ border:none; }
+.m-tableBorderNone td.fn-font-b2{ text-align:left; }
+*/
+
+/*签报*/
+.report-old2new { position: fixed; right: 0; top: 0; }
+.report-old2new li{ cursor: pointer; width: 60px; line-height: 30px; margin-top: 5px; text-align: center; background-color: #e15450; color: #fff; border: 1px solid #e15450; }
+.report-old2new li.active,.report-old2new li:hover{ background-color: #fff; color: #e15450; }
+
+/*目录*/
+.catalogue{ position: absolute; top:30px; left: -1px; z-index: 1; min-width: 100%; max-height: 200px; overflow: auto; background: #fff; border:solid 1px #a5a5a5; line-height:25px; padding:0.8em 0; display: none;}
+.catalogue dl,.catalogue p{ margin: 0 1em; cursor: pointer; border: none; padding:0;  word-break: keep-all !important; white-space:nowrap; }
+.catalogue dt{ background: url(/styles/tmbp/img/project/catalogueTriangle.png) no-repeat left -13px; text-indent: 1em; text-align: left !important; margin-top:0 !important;}
+.catalogue dl dd{ display: none; }
+.catalogueSelect{ background: url(/styles/tmbp/img/project/catalogueTriangle.png) no-repeat 98% -112px; cursor: pointer; min-width: 150px; position: relative; border: 1px solid #ccc;height: 22px;line-height: 22px;padding: 2px 5px; border-radius: 2px; }
+
+.toTrigger{ border: 1px solid #fff !important;appearance:none;-moz-appearance:none;-webkit-appearance:none;}
+input.toTrigger[disabled],input.toTrigger:disabled{background-color:#fff;}
+
+* html input.toTrigger.disabled{background-color:#fff;}
+
+.recordDelete,.recordAdd{background:red; color:#fff; line-height: 15px; width: 15px; text-align: center; border-radius: 100%; position:absolute; top: 15px; right: 5px; cursor: pointer;}
+
+.signBackground{ background: #b9e2d4;  color: #fff; }
+
+.errorClassConfirms{color: red;}
+
+.tooltip{ position: relative;}
+.tooltip em{background: #FDC766; color:#fff; font-size: 18px; line-height: 30px; padding:0 6px; border-radius: 100%; font-weight: bold; cursor: pointer; margin-left:5px;}
+.hoverTooltip{ position: absolute; width: 170px;  background: #fff; border: solid 1px #FDC766; z-index: 111111; line-height: 30px; left:-50px; top:50px; text-indent: 1em; padding:10px;}
+
+.fnWhich{margin-right:10px;}
+
+
+.apply-step-grade.apply-step .item{ height:92px; float: left; text-align: center; cursor: pointer; color: #161717; padding: 0 20px; position: relative; margin-bottom:10px; }
+.apply-step-grade.apply-step .icon{ width: 32px; height: 32px; margin-top: 20px; background-image: url(img/customerMg/grade-img.png); background-repeat: no-repeat;}
+.apply-step-grade.apply-step .icon-s1 i{ background-position: 0 0; }
+.apply-step-grade.apply-step .icon-s2 i{ background-position: 0 -32px; }
+.apply-step-grade.apply-step .icon-s3 i{ background-position: 0 -64px; }
+.apply-step-grade.apply-step .icon-s4 i{ background-position: 0 -96px; }
+.apply-step-grade.apply-step .icon-s5 i{ background-position: 0 -128px; }
+.apply-step-grade.apply-step .icon-s6 i{ background-position: 0 -160px; }
+.apply-step-grade.apply-step .icon-s7 i{ background-position: 0 -192px; }
+.apply-step-grade.apply-step .icon-s8 i{ background-position: 0 -224px; }
+.apply-step-grade.apply-step .icon-s9 i{ background-position: 0 -256px; }
+.apply-step-grade.apply-step .icon-s10 i{ background-position: 0 -288px; }
+.apply-step-grade.apply-step .icon-s11 i{ background-position: 0 -320px; }
+.apply-step-grade.apply-step .icon-s12 i{ background-position: 0 -352px; }
+.apply-step-grade.apply-step .step-line{ position: absolute; top: 0; right: 0; width: 0px; height: 60px; border-right: 1px solid #d6d0d0;}
+.apply-step-grade.apply-step .step-line2{ position: absolute; height: 3px; width: 100%; left: 0; }
+.apply-step-grade.apply-step .item.active .step-line{ width: 10px; border-right: 0; background: url(img/project/apply_step_line.jpg) 50% 50% no-repeat; right: -10px;}
+.apply-step-grade.apply-step .item.active.icon-s1 .step-line2{ background-color: #61a0a8; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s2 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s3 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s4 .step-line2{ background-color: #a2b699; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s5 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s6 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s7 .step-line2{ background-color: #a2b699; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s8 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s9 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s10 .step-line2{ background-color: #61a0a8; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s11 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step-grade.apply-step .item.active.icon-s12 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+
+.apply-step-grade.apply-step .item.active.icon-s1 p{ color: #61a0a8; }
+.apply-step-grade.apply-step .item.active.icon-s2 p{ color: #efa18d; }
+.apply-step-grade.apply-step .item.active.icon-s3 p{ color: #d7ab82; }
+.apply-step-grade.apply-step .item.active.icon-s4 p{ color: #a2b699; }
+.apply-step-grade.apply-step .item.active.icon-s5 p{ color: #efa18d; }
+.apply-step-grade.apply-step .item.active.icon-s6 p{ color: #d7ab82; }
+.apply-step-grade.apply-step .item.active.icon-s7 p{ color: #a2b699; }
+.apply-step-grade.apply-step .item.active.icon-s8 p{ color: #efa18d; }
+.apply-step-grade.apply-step .item.active.icon-s9 p{ color: #d7ab82; }
+.apply-step-grade.apply-step .item.active.icon-s10 p{ color: #61a0a8; }
+.apply-step-grade.apply-step .item.active.icon-s11 p{ color: #efa18d; }
+.apply-step-grade.apply-step .item.active.icon-s12 p{ color: #d7ab82; }
+.apply-step-grade.apply-step .item.active{ color: #77c188; font-weight: 700;}
+
+
+
+.apply-step-finance.apply-step .item{ height:92px; float: left; text-align: center; cursor: pointer; color: #161717; padding: 0 20px; position: relative; margin-bottom:10px; }
+.apply-step-finance.apply-step .icon{ width: 32px; height: 32px; margin-top: 20px; background-image: url(img/customerMg/finance-img.png); background-repeat: no-repeat;}
+.apply-step-finance.apply-step .icon-s1 i{ background-position: 0 0; }
+.apply-step-finance.apply-step .icon-s2 i{ background-position: 0 -32px; }
+.apply-step-finance.apply-step .icon-s3 i{ background-position: 0 -64px; }
+.apply-step-finance.apply-step .icon-s4 i{ background-position: 0 -96px; }
+.apply-step-finance.apply-step .icon-s5 i{ background-position: 0 -128px; }
+.apply-step-finance.apply-step .icon-s6 i{ background-position: 0 -160px; }
+.apply-step-finance.apply-step .icon-s7 i{ background-position: 0 -192px; }
+.apply-step-finance.apply-step .icon-s8 i{ background-position: 0 -224px; }
+.apply-step-finance.apply-step .icon-s9 i{ background-position: 0 -256px; }
+.apply-step-finance.apply-step .icon-s10 i{ background-position: 0 -288px; }
+.apply-step-finance.apply-step .icon-s11 i{ background-position: 0 -320px; }
+.apply-step-finance.apply-step .icon-s12 i{ background-position: 0 -352px; }
+.apply-step-finance.apply-step .step-line{ position: absolute; top: 0; right: 0; width: 0px; height: 60px; border-right: 1px solid #d6d0d0;}
+.apply-step-finance.apply-step .step-line2{ position: absolute; height: 3px; width: 100%; left: 0; }
+.apply-step-finance.apply-step .item.active .step-line{ width: 10px; border-right: 0; background: url(img/project/apply_step_line.jpg) 50% 50% no-repeat; right: -10px;}
+.apply-step-finance.apply-step .item.active.icon-s1 .step-line2{ background-color: #61a0a8; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s2 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s3 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s4 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s5 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s6 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s7 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s8 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s9 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s10 .step-line2{ background-color: #61a0a8; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s11 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step-finance.apply-step .item.active.icon-s12 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+
+.apply-step-finance.apply-step .item.active.icon-s1 p{ color: #61a0a8; }
+.apply-step-finance.apply-step .item.active.icon-s2 p{ color: #efa18d; }
+.apply-step-finance.apply-step .item.active.icon-s3 p{ color: #d7ab82; }
+.apply-step-finance.apply-step .item.active.icon-s4 p{ color: #d7ab82; }
+.apply-step-finance.apply-step .item.active.icon-s5 p{ color: #efa18d; }
+.apply-step-finance.apply-step .item.active.icon-s6 p{ color: #d7ab82; }
+.apply-step-finance.apply-step .item.active.icon-s7 p{ color: #d7ab82; }
+.apply-step-finance.apply-step .item.active.icon-s8 p{ color: #efa18d; }
+.apply-step-finance.apply-step .item.active.icon-s9 p{ color: #d7ab82; }
+.apply-step-finance.apply-step .item.active.icon-s10 p{ color: #61a0a8; }
+.apply-step-finance.apply-step .item.active.icon-s11 p{ color: #efa18d; }
+.apply-step-finance.apply-step .item.active.icon-s12 p{ color: #d7ab82; }
+.apply-step-finance.apply-step .item.active{ color: #77c188; font-weight: 700;}
+
+
+
+
+.apply-step-clientRate.apply-step .item{ height:92px; float: left; text-align: center; cursor: pointer; color: #161717; padding: 0 20px; position: relative; margin-bottom:10px; }
+.apply-step-clientRate.apply-step .icon{ width: 32px; height: 32px; margin-top: 20px; background-image: url(img/customerMg/clientRate-img.png); background-repeat: no-repeat;}
+.apply-step-clientRate.apply-step .icon-s1 i{ background-position: 0 0; }
+.apply-step-clientRate.apply-step .icon-s2 i{ background-position: 0 -32px; }
+.apply-step-clientRate.apply-step .icon-s3 i{ background-position: 0 -64px; }
+.apply-step-clientRate.apply-step .icon-s4 i{ background-position: 0 -96px; }
+.apply-step-clientRate.apply-step .icon-s5 i{ background-position: 0 -128px; }
+.apply-step-clientRate.apply-step .item.active.icon-s1 .step-line2{ background-color: #61a0a8; margin-top: -78px;}
+.apply-step-clientRate.apply-step .item.active.icon-s2 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+.apply-step-clientRate.apply-step .item.active.icon-s3 .step-line2{ background-color: #d7ab82; margin-top: -78px;}
+.apply-step-clientRate.apply-step .item.active.icon-s4 .step-line2{ background-color: #61a0a8; margin-top: -78px;}
+.apply-step-clientRate.apply-step .item.active.icon-s5 .step-line2{ background-color: #efa18d; margin-top: -78px;}
+
+.apply-step-clientRate.apply-step .item.active.icon-s1 p{ color: #61a0a8; }
+.apply-step-clientRate.apply-step .item.active.icon-s2 p{ color: #efa18d; }
+.apply-step-clientRate.apply-step .item.active.icon-s3 p{ color: #d7ab82; }
+.apply-step-clientRate.apply-step .item.active.icon-s4 p{ color: #61a0a8; }
+.apply-step-clientRate.apply-step .item.active.icon-s5 p{ color: #efa18d; }
+
+.maxterm{ margin:30px 30px 0 30px; padding-bottom: 30px; border:solid 1px #eee; position: relative;}
+.maxterm .maxtermFnDelLine1{ position: absolute; right: 0px; top:-30px; }

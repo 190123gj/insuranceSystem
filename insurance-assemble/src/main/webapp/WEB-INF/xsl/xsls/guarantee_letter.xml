@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntryDailyListReport>
+	<PageList><!-- 报表主体  //-->
+		<ReportBody><!-- 报表数据,表格形式,可以定义多个表格 //-->
+			<Blank />
+			<Blank />
+	
+		<TableBegin>
+			<LETTERNO>00000048703258</LETTERNO> <!-- 编号 -->
+			<ENTERPRISE>
+			   <![CDATA[重庆三峡担保]]>
+			</ENTERPRISE>
+			<COMADDRESS><![CDATA[重庆渝北区黄山大道中段2#楼 ]]></COMADDRESS>
+			<ZIPCODE>400074</ZIPCODE>
+			<LEGALNAME>张三李四王麻子</LEGALNAME>  <!-- 法定代表人 -->
+		</TableBegin>	
+		
+		
+		<TableLetter>
+			<DMONEY>50</DMONEY> <!-- 投资权益  （单位万元）-->
+			<PER>10.2 </PER><!--年化收益率  xx.0%-->
+			
+			<SYYYY>2014</SYYYY><!-- 投资期间 -->
+			<SMM>01</SMM>
+			<SDD>31</SDD>
+			
+			<EYYYY>2015</EYYYY><!-- 投资期间 -->
+			<EMM>12</EMM>
+			<EDD>31</EDD>
+			<CONTRACTNO>渝00000048703258号</CONTRACTNO><!-- 合同编号 -->
+		</TableLetter>
+	
+		<TableEnd>
+			<ENTERPRISE>
+			   <![CDATA[重庆三峡担保]]>
+			</ENTERPRISE>
+			<PYYYY>2014</PYYYY><!-- 打印日期 -->
+			<PMM>05</PMM>
+			<PDD>20</PDD>
+		</TableEnd>	
+		
+		
+		</ReportBody><!-- 报表尾 //-->
+		<ReportFooter></ReportFooter>
+	</PageList>
+	
+	
+	
+	
+</EntryDailyListReport>

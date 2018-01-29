@@ -1,0 +1,99 @@
+
+<ul class="fn-clear operationBtn">
+	<li class="fn-left"><a class="ui-btn ui-btn-fill ui-btn-green fn-ml20 fn-mt20 fn-mb20" Popup="branchN">通过</a></li>
+	<li class="fn-left"><a class="ui-btn ui-btn-fill ui-btn-green fn-ml20 fn-mt20 fn-mb20" Popup="branchY">通过</a></li>
+	<li class="fn-left"><a class="ui-btn ui-btn-fill ui-btn-green fn-ml20 fn-mt20 fn-mb20" Popup="branchN">提交</a></li>
+	<li class="fn-left"><a class="ui-btn ui-btn-fill ui-btn-green fn-ml20 fn-mt20 fn-mb20" Popup="branchY">提交</a></li>
+	<li class="fn-left"><a class="ui-btn ui-btn-fill ui-btn-green fn-ml20 fn-mt20 fn-mb20" Popup="branchN">不通过</a></li>
+	<li class="fn-left"><a class="ui-btn ui-btn-fill ui-btn-green fn-ml20 fn-mt20 fn-mb20" Popup="save">保存单据</a></li>
+	##<li class="fn-left"><a class="ui-btn ui-btn-fill ui-btn-green fn-ml20 fn-mt20 fn-mb20">交办</a></li>
+	<li class="fn-left"><a class="ui-btn ui-btn-fill ui-btn-green fn-ml20 fn-mt20 fn-mb20" Popup="reject">驳回到指定人</a></li>
+</ul>
+
+<script type="text/html" id="branchN">
+	<form class="fnStep" action="" method="post" id="form">
+		<div class="newPopup">
+		    <span class="close">×</span>
+		    <dl>
+		        <dt><span>审核意见</span></dt>
+		        <dd>
+		        	<p>你选择了<b class="sign"></b>,请填写<em class="remind">*</em>审批意见</p>
+		        	<textarea class="ui-textarea2 fn-mt10" name="sss" placeholder="请控制在1000文字之内"></textarea>
+		        </dd>
+		        <dd class="btnBox fn-text-c fn-mt10">
+			   		<input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 fnNext fn-size16" type="submit" value="确定">
+		            <input class="ui-btn ui-btn-submit ui-btn-blue fn-ml5 fn-mr5 fnNext fn-size16 close" type="button" value="取消">
+		        </dd>
+		   </dl>
+		</div>
+	</form>
+</script>
+
+<script type="text/html" id="branchY">
+	<form class="fnStep" action="" method="post" id="form">
+		<div class="newPopup">
+		    <span class="close">×</span>
+		    <dl>
+		        <dt><span>审核意见</span></dt>
+		        <dd>
+		        	<p class="fn-size16">您选择了<b class="sign fn-color-520"></b></p>
+		        	<p class="fn-mt10"><em class="remind">*</em>执行路径</p>
+		        	<p class="fn-mt10">
+		        		<input type="radio" name="name">用户任务1
+		        		<input class="fn-ml10" type="radio" name="name">用户任务1
+		        		<input class="fn-ml10" type="radio" name="name">用户任务1
+		        		<input class="fn-ml10" type="radio" name="name">用户任务1
+		        	</p>
+		        	<p class="fn-mt10"><em class="remind">*</em>审批意见</p>
+		        	<p><textarea class="ui-textarea2 fn-mt10" name="" placeholder="请控制在1000文字之内"></textarea></p>
+		        </dd>
+		        <dd class="btnBox fn-text-c fn-mt10">
+			   		<input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 fnNext fn-size16" type="submit" value="确定">
+		            <input class="ui-btn ui-btn-submit ui-btn-blue fn-ml5 fn-mr5 fnNext fn-size16 close" type="button" value="取消">
+		        </dd>
+		   </dl>
+		</div>
+	</form>
+</script>
+
+<script type="text/html" id="reject">
+	<form class="fnStep" action="" method="post" id="form">
+		<div class="newPopup">
+		    <span class="close">×</span>
+		    <dl>
+		        <dt><span>审核意见</span></dt>
+		        <dd>
+		        	<p class="fn-size16">请选择执驳回到指定节点</p>
+		        	<p class="fn-mt10">
+		        		<input type="radio" name="name">用户任务1
+		        		<input class="fn-ml10" type="radio" name="name">用户任务1
+		        		<input class="fn-ml10" type="radio" name="name">用户任务1
+		        		<input class="fn-ml10" type="radio" name="name">用户任务1
+		        	</p>
+		        </dd>
+		        <dd class="btnBox fn-text-c fn-mt10">
+			   		<input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 fnNext fn-size16" type="submit" value="确定">
+		            <input class="ui-btn ui-btn-submit ui-btn-blue fn-ml5 fn-mr5 fnNext fn-size16 close" type="button" value="取消">
+		        </dd>
+		   </dl>
+		</div>
+	</form>
+</script>
+
+<script type="text/html" id="save">
+	<form class="fnStep" action="" method="post" id="form">
+		<div class="newPopup">
+		    <span class="close">×</span>
+		    <dl>
+		        <dt><span>审核意见</span></dt>
+		        <dd>
+		        	<p class="fn-size16"><b>您对单据进行了修改，是否确定要保存？</b></p>
+		        </dd>
+		        <dd class="btnBox fn-text-c fn-mt10">
+			   		<input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 fnNext fn-size16" type="submit" value="确定">
+		            <input class="ui-btn ui-btn-submit ui-btn-blue fn-ml5 fn-mr5 fnNext fn-size16 close" type="button" value="取消">
+		        </dd>
+		   </dl>
+		</div>
+	</form>
+</script>

@@ -1,0 +1,672 @@
+<input type="hidden" name="itype" value="$!itype"  class="cancel" />
+<input type="hidden" id="coucilSummaryProjectCode" value="$!coucilSummaryProjectCode"   class="cancel"/>
+<div class="fnChangeApplys">
+    <label class="fnChangeLabel fn-hide">抵押</label>
+    <dl>
+        <dt class="fn-pl30 fn-lh60 fn-clear">
+            1、抵押
+            <span class="calculate fn-ml20">
+            <b class="fn-ml20">合计：</b>
+                评估价格：<em class="assessPrice fn-mr20">$!info.pledgeAssessPrice</em>元
+                抵押价格：<em class="pledgePrice pledgeTotal">$!info.pledgePrice</em>元
+            </span>
+            <a class="ui-btn ui-btn-fill ui-btn-green fn-mr30 fn-mt20 fn-right addNewPopup" orderName="pledgeOrders" itype="PLEDGE"><i class="icon icon-add"></i>添加抵押资产</a>
+        </dt>
+        <dd class="fn-p-reb">
+            <table class="m-table fnDelLineBox">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>抵押物类型</th>
+                        <th>所有权人</th>
+                        <th><em class="remind">*</em>抵押顺位</th>
+                        <th><em class="remind">*</em>是否后置抵押</th>
+                        <th>已抵债金额（元）</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="test">
+                    #foreach($item in $!info.pledges)
+                        <tr class="fnNewLine fnChangeItem" ordername="pledgeOrders" ids="$!item.assetsId">
+                            <td class="testNum fn-text-c">
+                                $velocityCount
+                            </td>
+                            <td class="fn-text-c fnChangeLabels">
+                                <input type="hidden" name="id" value="$!item.id">
+                                <input type="hidden" name="assetsId" value="$!item.assetsId">
+                                <label class="fnChangeLabel fn-hide">抵押物类型</label>
+                                <input class="text fnChangeInput" type="hidden" name="assetType" value="$!item.assetType">$!item.assetType
+                            </td>
+                            <td class="fn-text-c fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">所有权人</label>
+                                <input class="text fnChangeInput" type="hidden" name="ownershipName" value="$!item.ownershipName">$!item.ownershipName
+                            </td>
+                            <td class="fn-text-c fnChangeLabels fn-hide">
+                                <label class="fnChangeLabel fn-hide">评估价格（元）</label>
+                                <input class="text fnChangeInput amountStr" type="hidden" name="evaluationPrice" value="$!item.evaluationPrice">$!item.evaluationPrice
+                            </td>
+                            <td class="fn-text-c fnChangeLabels fn-hide">
+                                <label class="fnChangeLabel fn-hide">抵押率（%）</label>
+                                <input class="text fnChangeInput ratio" type="hidden" name="pledgeRate" value="$!item.pledgeRate">$!rateUtil.formatRate($!item.pledgeRate)
+                            </td>
+                            <td class="fn-text-c fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">* 抵押顺位</label>
+                                ##<input class="text fnChangeInput" type="hidden" name="synPosition" value="$!item.synPosition">$!item.synPosition
+                                <select class="text fnChangeInput" name="synPosition">
+                                    <option value="">请选择</option>
+                                    <option value="FIRST" #if($!item.synPosition=="FIRST") selected="selected" #end >第一顺位</option>
+                                    <option value="SECOND" #if($!item.synPosition=="SECOND") selected="selected" #end >第二顺位</option>
+                                </select>
+                            </td>
+                            <td class="fn-text-c fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">* 是否后置抵押</label>
+                                ##<input class="text fnChangeInput amountStr" type="hidden" name="postposition" value="$!item.postposition">$!item.postposition
+                                <select class="text fnChangeInput" name="postposition">
+                                    <option value="">请选择</option>
+                                    <option value="YES" #if($!item.postposition=="YES") selected="selected" #end >是</option>
+                                    <option value="NO" #if($!item.postposition=="NO") selected="selected" #end >否</option>
+                                </select>
+                            </td>
+                            <td class="fn-text-c fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">已抵债金额（元）</label>
+                                ##<input class="text fnChangeInput ratio debtedAmount" type="hidden" name="debtedAmount" value="$!item.debtedAmount">$!item.debtedAmount
+                                <input class="text fnChangeInput debtedAmount" type="text" name="debtedAmountStr" value="$!item.debtedAmount">
+                            </td>
+                            <td class="fn-text-c">
+                                ##<a class="fn-mr10" href="/assetMg/toAdd.htm?id=$!item.assetsId&isEdit=true&disReturn" target="_blank">查看</a>
+                                <a class="fn-mr10" href="/assetMg/toAdd.htm?id=$!item.assetsId&isView=true&disReturn" target="_blank">查看详情</a>
+                                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-green fnDelLine" parentsClass="fnNewLine">删除</a>
+                            </td>
+                        </tr>
+                    #end
+                </tbody>
+            </table>
+        </dd>
+    </dl>
+</div>
+
+<div class="fnChangeApplys">
+    <label class="fnChangeLabel fn-hide">质押</label>
+    <dl>
+        <dt class="fn-pl30 fn-lh60 fn-clear">
+            2、质押
+            <span class="calculate fn-ml20">
+                <b class="fn-ml20">合计：</b>
+                评估价格：<em class="assessPrice fn-mr20">$!info.mortgageAssessPrice</em>元
+                质押价格：<em class="pledgePrice pledgeTotal">$!info.mortgagePrice</em>元
+            </span>
+            <a class="ui-btn ui-btn-fill ui-btn-green fn-mr30 fn-mt20 fn-right addNewPopup" orderName="mortgageOrders" itype="MORTGAGE"><i class="icon icon-add"></i>添加质押资产</a>
+        </dt>
+        <dd class="fn-p-reb">
+            <table class="m-table fnDelLineBox">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>质押物类型</th>
+                        <th>所有权人</th>
+                        <th><em class="remind">*</em>质押顺位</th>
+                        <th><em class="remind">*</em>是否后置质押</th>
+                        <th>已抵债金额（元）</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="test22">
+                    #foreach($item in $!info.mortgages)
+                        <tr class="fnNewLine fnChangeItem" ordername="mortgageOrders" ids="$!item.assetsId">
+                            <td class="testNum fn-text-c">
+                                $velocityCount
+                            </td>
+                            <td class="fn-text-c fnChangeLabels">
+                                <input type="hidden" name="id" value="$!item.id">
+                                <input type="hidden" name="assetsId" value="$!item.assetsId">
+                                <label class="fnChangeLabel fn-hide">质押物类型</label>
+                                <input class="text fnChangeInput" type="hidden" name="assetType" value="$!item.assetType">$!item.assetType
+                            </td>
+                            <td class="fn-text-c fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">所有权人</label>
+                                <input class="text fnChangeInput" type="hidden" name="ownershipName" value="$!item.ownershipName">$!item.ownershipName
+                            </td>
+                            <td class="fn-text-c fn-hide">
+                                <label class="fnChangeLabel fn-hide">评估价格（元）</label>
+                                <input class="text fnChangeInput amountStr" type="hidden" name="evaluationPrice" value="$!item.evaluationPrice">$!item.evaluationPrice
+                            </td>
+                            <td class="fn-text-c fn-hide">
+                                <label class="fnChangeLabel fn-hide">质押率（%）</label>
+                                <input class="text fnChangeInput ratio" type="hidden" name="pledgeRate" value="$!item.pledgeRate">$!rateUtil.formatRate($!item.pledgeRate)
+                            </td>
+                            <td class="fn-text-c fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">* 抵押顺位</label>
+                                ##<input class="text fnChangeInput" type="hidden" name="synPosition" value="$!item.synPosition">$!item.synPosition
+                                <select class="text fnChangeInput" name="synPosition">
+                                    <option value="">请选择</option>
+                                    <option value="FIRST" #if($!item.synPosition=="FIRST") selected="selected" #end >第一顺位</option>
+                                    <option value="SECOND" #if($!item.synPosition=="SECOND") selected="selected" #end >第二顺位</option>
+                                </select>
+                            </td>
+                            <td class="fn-text-c fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">* 是否后置抵押</label>
+                                ##<input class="text fnChangeInput amountStr" type="hidden" name="postposition" value="$!item.postposition">$!item.postposition
+                                <select class="text fnChangeInput" name="postposition">
+                                    <option value="">请选择</option>
+                                    <option value="YES" #if($!item.postposition=="YES") selected="selected" #end >是</option>
+                                    <option value="NO" #if($!item.postposition=="NO") selected="selected" #end >否</option>
+                                </select>
+                            </td>
+                            <td class="fn-text-c fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">已抵债金额（元）</label>
+                                ##<input class="text fnChangeInput ratio" type="hidden" name="debtedAmount" value="$!item.debtedAmount">$!item.debtedAmount
+                                <input class="text fnChangeInput debtedAmount" type="text" name="debtedAmountStr" value="$!item.debtedAmount">
+                            </td>
+                            <td class="fn-text-c">
+                                ##<a class="fn-mr10" href="/assetMg/toAdd.htm?id=$!item.assetsId&isEdit=true&disReturn" target="_blank">查看</a>
+                                <a class="fn-mr10" href="/assetMg/toAdd.htm?id=$!item.assetsId&isView=true&disReturn" target="_blank">查看详情</a>
+                                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-green fnDelLine" parentsClass="fnNewLine">删除</a>
+                            </td>
+                        </tr>
+                    #end
+                </tbody>
+            </table>
+        </dd>
+    </dl>
+</div>
+
+<script type="text/html" id="newPopupScript">
+    <div class="newPopup">
+        <span class="close">×</span>
+        <dl>
+            <dt class="dt"><span>选择<em class="replaceText">抵质押</em>物</span></dt>
+            <dd class="fn-mt10">
+                <div id="PopupFrom" class="fn-mb10 fn-clear fn-lh28">
+                    <span class="fn-left"><em class="replaceText">抵押</em>物类型：</span>
+                    <div class="catalogueSelect fn-left">
+                        <div class="catalogue">
+                            #foreach($Lv1 in $!types)
+                            <dl>
+                                <dt>$!Lv1.levelDesc</dt>
+                                <dd>
+                                #foreach($Lv2 in $!Lv1.subLevels)
+                                    <dl>
+                                        <dt>$!Lv2.levelDesc</dt>
+                                        <dd>
+                                        #foreach($Lv3 in $!Lv2.subLevels)
+                                            <p typeId="$!{Lv3.typeId}">$!{Lv3.levelDesc}</p>
+                                        #end
+                                        </dd>
+                                    </dl>
+                                #end
+                                </dd>
+                            </dl>
+                            #end
+                        </div>
+                        <input class="ui-text fn-mr5 fn-p-abs pledgeType" type="text" name="pledgeType" style="width:130px;top:0;left:0; border:none;">
+                        <p class="fn-p-abs" style="height:28px;width:100%;"></p>
+                        <input class="text typeId" type="hidden" name="typeId">
+                    </div>
+                    <span class="fn-left fn-ml20">所有权人：</span>
+                    <input class="ui-text fn-w90 fn-left" type="text" name="ownershipName">
+                    <a class="ui-btn ui-btn-fill ui-btn-seek fn-left fn-ml20 PopupSubmit">搜索</a>
+                    <a class="ui-btn ui-btn-fill ui-btn-danger fn-left fn-ml20 PopupSubmit">刷新</a>
+					#if(!$coucilSummaryProjectCode)
+                    	<a class="ui-btn ui-btn-fill ui-btn-blue fn-left fn-ml20" target="_blank" href="/assetMg/toAdd.htm?disReturn">新增</a>
+					#end
+                </div>
+                <div class="fn-mb10">
+                    已选择<b class="number">0</b>项
+                    评估价格总金额：<em class="amountStrSum">0.00</em>元
+                    <em class="replaceText">抵押</em>价格总金额：<em class="amountStrRateSum">0.00</em>元
+                </div>
+                <table class="m-table" style="width:100%;margin:0;" border="1">
+                    <thead>
+                        <tr>
+                            <th>选择</th>
+                            <th><em class="replaceText">抵押</em>物类型</th>
+                            <th>所有权人</th>
+                            <th>评估价格（元）</th>
+                            <th><em class="replaceText">抵押</em>率（%）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {{if success}}
+                            {{if data.pageList.length}}
+                                {{each data.pageList as value i}}
+                                        <tr class="fnNewLine fnChangeItem" orderName="pledgeOrders" ids="{{value.assetsId}}">
+                                            <td class="fn-text-c">
+                                                <input type="checkbox">
+                                            </td>
+                                            <td class="fn-text-c">
+                                                <input type="hidden" name="assetsId" value="{{value.assetsId}}">
+                                                <input class="text fnChangeInput" type="hidden" name="assetType" value="{{value.assetType}}">{{value.assetType}}
+                                            </td>
+                                            <td class="fn-text-c"><input class="text fnChangeInput" type="hidden" name="x[{{i}}].ownershipName" value="{{value.ownershipName}}">{{value.ownershipName}}</td>
+                                            <td class="fn-text-c"><input class="text fnChangeInput amountStr" type="hidden" name="evaluationPrice" value="{{value.evaluationPrice}}">{{value.evaluationPrice}}</td>
+                                            <td class="fn-text-c"><input class="text fnChangeInput ratio" type="hidden" name="pledgeRate" value="{{value.pledgeRate}}">{{value.pledgeRate}}</td>
+                                        </tr>
+                                {{/each}}
+                            {{else}}
+                                        <td class="fn-text-c" colspan="6">暂无记录</td>
+                            {{/if}}
+
+                        {{else}}
+
+                            <tr>
+                                <td class="fn-text-c" colspan="6">{{message.split('：')[0]}}</td>
+                            </tr>
+
+                        {{/if}}
+
+                    </tbody>
+                </table>
+
+                <div class="fn-clear">
+
+                    {{if success}}
+
+                    <div class="pageBox fn-mt10 fn-left">
+
+                        第{{data.pageNumber}}页，共{{data.pageCount}}页，合计{{data.totalCount}}条&nbsp;|&nbsp;
+
+                        {{if data.pageNumber<2}}
+                            <a class="disabled">首页</a>
+                            <a class="disabled">上一页</a>
+                        {{else}}
+                            <a class="btn" page="1" href="javascript:void(0);">首页</a>
+                            <a class="btn" page="{{data.pageNumber-1}}" href="javascript:void(0);">上一页</a>
+                        {{/if}}
+
+                        {{if data.pageNumber+1>data.pageCount}}
+                            <a class="disabled">下一页</a>
+                            <a class="disabled">尾页</a>
+                        {{else}}
+                            <a class="btn" page="{{data.pageNumber+1}}" href="javascript:void(0);">下一页</a>
+                            <a class="btn" page="{{data.pageCount}}" href="javascript:void(0);">尾页</a>
+                        {{/if}}
+
+                    </div>
+
+                    {{/if}}
+
+                    <div id="newPopupBtn" class="fn-mt10 fn-right">
+                        <a class="ui-btn ui-btn-fill ui-btn-green fn-mr20 okBtn">确认并添加</a>
+                        <a class="ui-btn ui-btn-fill ui-btn-gray close">取消</a>
+                    </div>
+
+                </div>
+
+           </dd>
+       </dl>
+    </div>
+</script>
+
+<dl>
+    <dt class="fn-pl30 fn-lh60 fn-mt20">3、保证<span class="fn-ml20 guaranteeTotal"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计：</b>保证额度：$!{info.guarantorAmount}元</span></dt>
+</dl>
+
+<dl class="overflowY1">
+    <dd class="fn-p-reb fnChangeApplys">
+        <label class="fnChangeLabel fn-hide">保证</label>
+        <table class="m-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th><em class="remind">*</em>保证类型</th>
+                    <th><em class="remind">*</em>保证人名称</th>
+                    <th><em class="remind">*</em>保证额度</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="test2">
+                #set($guarantorList = $!{info.guarantors})
+                #if($!{guarantors})
+                    #set($guarantorList = $!{guarantors})
+                #end
+                #if($listUtil.isNotEmpty($!{guarantorList}))
+                    #set($index = 1)
+                    #foreach($item in $!{guarantorList})
+                        <tr class="fnNewLine fnChangeItem" orderName="guarantorOrders">
+                            <td class="testNum fn-text-c">$velocityCount</td>
+                            <td class="fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">保证类型</label>
+                                <select class="text fnChangeInput" name="guarantorType">
+                                    <option value="">请选择</option>
+                                    #foreach($type in $!guarantorTypeList)
+                                        <option value="$!type.code" #if($!type.code==$!item.guarantorType.code) selected="selected" #end >$!type.message</option>
+                                    #end
+                                </select>
+                            </td>
+                            <td class="fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">保证人名称</label>
+                                <input class="text fnChangeInput" type="text" name="guarantor" value="$!{item.guarantor}">
+                            </td>
+                            <td class="m-invndd-font fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">保证额度</label>
+                                <input class="text fnMakeMoney guaranteeFun fnChangeInput" type="text" name="guaranteeAmountStr" value="$!{item.guaranteeAmount}"><span>元</span>
+                            </td>
+                            <td class="fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">担保方式</label>
+                                <input class="text fnChangeInput" type="text" name="guaranteeWay" value="$!{item.guaranteeWay}">
+                            </td>
+                            <td class="fn-text-c"><a class="ui-btn ui-btn-fill ui-btn-green fnDelLine" parentsClass="fnNewLine"><i class="icon icon-del"></i>删除</a></td>
+                        </tr>
+                        #set($index = $index + 1)
+                    #end
+                #else
+                    #*
+                        <tr class="fnChangeItem" orderName="guarantorOrders">
+                            <td class="testNum fn-text-c">1</td>
+                            <td class="fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">保证类型</label>
+                                <select class="text fnChangeInput" name="guarantorType">
+                                    <option value="">请选择</option>
+                                    #foreach($type in $!guarantorTypeList)
+                                    <option value="$!type.code">$!type.message</option>
+                                    #end
+                                </select>
+                            </td>
+                            <td class="fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">保证人名称</label>
+                                <input class="text fnChangeInput" type="text" name="guarantor">
+                            </td>
+                            <td class="m-invndd-font fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">保证额度</label>
+                                <input class="text fnMakeMoney guaranteeFun fnChangeInput" type="text" name="guaranteeAmountStr"><span>元</span>
+                            </td>
+                            <td class="fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">担保方式</label>
+                                <input class="text fnChangeInput" type="text" name="guaranteeWay">
+                            </td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                    *#
+                #end
+            </tbody>
+        </table>
+    </dd>
+</dl>
+
+<a class="ui-btn ui-btn-fill ui-btn-green fnAddLine fn-ml30 fn-mt20" tplID="t-test2" cttID="test2"><i class="icon icon-add"></i>增加一行</a>
+
+<script type="text/html" id="t-test2">
+    <tr class="fnNewLine fnChangeItem" orderName="guarantorOrders">
+        <td class="testNum fn-text-c">1</td>
+        <td class="fnChangeLabels">
+            <label class="fnChangeLabel fn-hide">保证类型</label>
+            <select class="text fnChangeInput" name="guarantorType">
+                <option value="">请选择</option>
+                #foreach($type in $!guarantorTypeList)
+                    <option value="$!type.code">$!type.message</option>
+                #end
+            </select>
+        </td>
+        <td class="fnChangeLabels">
+            <label class="fnChangeLabel fn-hide">保证人名称</label>
+            <input class="text fnChangeInput" type="text" name="guarantor">
+        </td>
+        <td class="m-invndd-font fnChangeLabels">
+            <label class="fnChangeLabel fn-hide">保证额度</label>
+            <input class="text fnMakeMoney guaranteeFun fnChangeInput" type="text" name="guaranteeAmountStr"><span>元</span>
+        </td>
+        <td class="fnChangeLabels">
+            <label class="fnChangeLabel fn-hide">担保方式</label>
+            <input class="text fnChangeInput" type="text" name="guaranteeWay">
+        </td>
+        <td class="fn-text-c"><a class="ui-btn ui-btn-fill ui-btn-green fnDelLine" parentsClass="fnNewLine"><i class="icon icon-del"></i>删除</a></td>
+    </tr>
+</script>
+
+<dl class="fn-mt20">
+    <dt class="fn-ml30">其他</dt>
+    <dd class="fn-p-reb fn-mt10">
+        <div class="fnChangeApply">
+            <label class="fnChangeLabel fn-hide">其他-文字描述</label>
+            <div class="fn-mr20 fn-ml20">
+                <textarea class="ui-textarea2 fn-w500 fn-ml30 fnMakeUE cancel fnChangeInput" maxlength="9999999" name="other" placeholder="请控制在10000文字之内" maxlength="10000">$!{info.other}</textarea>
+            </div>
+        </div>
+        <div class="fn-mt20 fnUpAttach fnChangeApply fn-ml30">
+            <label class="fnChangeLabel fn-hide">其他-上传附件</label>
+            <label class="m-label">上传附件：</label>
+            #set($attachmentTitle="上传附件")
+            #set($attachmentNameAttr="pathName_COUNTER_GUARANTEE")
+            #set($hiddenUrls = "")
+            #set($hiddenUrls = $!{hiddenUrls_COUNTER_GUARANTEE})
+            #set($attachments = "")
+            #set($attachments = $!{attaches_COUNTER_GUARANTEE})
+            #parse("/layout/common/uploadAttachment.vm")
+        </div>
+    </dd>
+</dl>
+
+<dl id="courseSelect">
+    <dt class="fn-pl30 fn-lh60 fn-mt20 fnChangeApply">
+        <label class="fnChangeLabel fn-hide">过程控制</label>
+        4、过程控制
+        <label class="fn-csp"><input class="fn-mr10 fn-ml20 fn-H11 cancel fnChangeInput" name="processFlag" value="C" type="checkbox" #if($!{info.processFlag.contains("C")}) checked #end>客户信用等级</label>
+        <label class="fn-csp"><input class="fn-mr10 fn-ml20 fn-H11 cancel fnChangeInput" name="processFlag" value="D" type="checkbox" #if($!{info.processFlag.contains("D")}) checked #end>资产负债率</label>
+        <label class="fn-csp"><input class="fn-mr10 fn-ml20 fn-H11 cancel fnChangeInput" name="processFlag" value="O" type="checkbox" #if($!{info.processFlag.contains("O")}) checked #end>其他</label>
+    </dt>
+    <dd class="fn-p-reb fnChangeApplys">
+        <label class="fnChangeLabel fn-hide">过程控制-客户信用等级</label>
+        <div class="overflowY1 fnCourseSelectitem fn-mb45">
+            <b class="fn-ml30 fn-mb10">
+                <label class="fnChangeLabel fn-hide fn-lh60">客户信用等级：</label>
+                <em class="remind fn-lh60">*</em>
+                <span class="fn-lh60">客户信用等级：</span>
+                <select class="ui-select fn-w200 fnChangeInput cancel fn-lh60" name="creditLevel">
+                    <option value="">请选择</option>
+                    #foreach($clevel in $creditLevelList)
+                        <option value="$!{clevel.code}" #if($!{clevel.code}==$!{info.creditLevel.code}) selected="selected" #end >$!{clevel.message}</option>
+                    #end
+                </select>
+            </b>
+            <table class="m-table">
+                #if($listUtil.isNotEmpty($!{info.customerGrades}))
+                    #foreach($item in $!{info.customerGrades})
+                        <tbody id="test31" orderName="customerGrades">
+                            <input type="hidden" name="id" value="$!item.id" />
+                            <tr class="fnChangeItem" >
+                                <td width="50" class="fn-text-c" colspan="2">每下降</td>
+                                <td width="160" class="fn-text-c">一个子级，则费率下调</td>
+                                <td class="fnChangeLabels">
+                                    <label class="fnChangeLabel fn-hide">一个子级，则费率上升</label>
+                                    <input class="text fnChangeInput" type="text" name="downBp" value="$!rateUtil.formatRateStr($!{item.downBp})">
+                                </td>
+                                <td>BP，直至恢复原有担保费率</td>
+                            </tr>
+                            <tr class="fnChangeItem" >
+                                <td width="50" class="fn-text-c" colspan="2">每回升</td>
+                                <td width="160" class="fn-text-c">一个子级，则费率上升</td>
+                                <td class="fnChangeLabels">
+                                    <label class="fnChangeLabel fn-hide">一个子级，则费率上升</label>
+                                    <input class="text fnChangeInput" type="text" name="upBp" value="$!rateUtil.formatRateStr($!{item.upBp})">
+                                </td>
+                                <td>BP，上升后</td>
+                            </tr>
+                        </tbody>
+                    #end
+                #else
+                    <tbody id="test31" orderName="customerGrades">
+                        <tr class="fnChangeItem" >
+                            <td width="50" class="fn-text-c" colspan="2">每下降</td>
+                            <td width="160" class="fn-text-c">一个子级，则费率下调</td>
+                            <td class="fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">一个子级，则费率上升</label>
+                                <input class="text fnChangeInput" type="text" name="downBp" >
+                            </td>
+                            <td>BP，直至恢复原有担保费率</td>
+                        </tr>
+                        <tr class="fnChangeItem" >
+                            <td width="50" class="fn-text-c" colspan="2">每回升</td>
+                            <td width="160" class="fn-text-c">一个子级，则费率上升</td>
+                            <td class="fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">一个子级，则费率上升</label>
+                                <input class="text fnChangeInput" type="text" name="upBp" >
+                            </td>
+                            <td>BP，上升后</td>
+                        </tr>
+                    </tbody>
+                #end
+            </table>
+        </div>
+    </dd>
+    <dd class="fn-p-reb fn-mb45 fnChangeApplys">
+        <div class="fnCourseSelectitem">
+            <div class="overflowY1 fn-p-reb">
+                <label class="fnChangeLabel fn-hide">过程控制-资产负债率</label>
+                <b class="fn-ml30 fn-mb10">
+                    <em class="remind fn-lh60">*</em>
+                    <span class="fn-lh60">资产负债率</span>
+                    <span class="fn-ml20 fn-lh60">警戒：</span>
+                    <label class="fnChangeLabel fn-hide fn-lh60">警戒：</label>
+                    <input class="ui-text fn-w200 fn-mr5 fn-lh60 fnChangeInput" type="text" name="assetLiabilityRatio" value="$!rateUtil.formatRateStr($!{info.assetLiabilityRatio})">
+                </b>
+                <span class="fn-p-abs" style="top:22px;left:400px;">%</span>
+                <table class="m-table" id="test32">
+                    #if($listUtil.isNotEmpty($!{info.debtRatios}))
+                        #foreach($item in $!{info.debtRatios})
+                            <tbody class="fnNewLine" orderName="debtRatios">
+                                <input type="hidden" name="id" value="$!item.id" />
+                                <tr class="fnChangeItem">
+                                    <td width="50" class="fn-text-c" colspan="2">每上升</td>
+                                    <td class="fn-text-c"><input class="text fnChangeInput" type="text" name="upRate" value="$!rateUtil.formatRateStr($!{item.upRate})"></td>
+                                    <td width="100" class="fn-text-c onbreaks">%，则费率上升</td>
+                                    <td class="fnChangeLabels">
+                                        <label class="fnChangeLabel fn-hide">%，则费率上升</label>
+                                        <input class="text fnChangeInput" type="text" name="upBp" value="$!rateUtil.formatRateStr($!{item.upBp})">
+                                    </td>
+                                    <td class="onbreaks">BP，上升后</td>
+                                    <td rowspan="2" class="fn-text-c">
+                                        #if($foreach.index!=0)
+                                        <a class="ui-btn ui-btn-fill ui-btn-green fnDelLine" parentsclass="fnNewLine"><i class="icon icon-del"></i>删除</a>
+                                        #end
+                                    </td>
+                                </tr>
+                                <tr class="fnChangeItem">
+                                    <td width="50" class="fn-text-c" colspan="2">每下降</td>
+                                    <td class="fn-text-c"><input class="text fnChangeInput" type="text" name="downRate" value="$!rateUtil.formatRateStr($!{item.downRate})"></td>
+                                    <td width="100" class="fn-text-c onbreaks">%，则费率下调</td>
+                                    <td class="fnChangeLabels">
+                                        <label class="fnChangeLabel fn-hide onbreaks">%，则费率上升</label>
+                                        <input class="text fnChangeInput" type="text" name="downBp" value="$!rateUtil.formatRateStr($!{item.downBp})">
+                                    </td>
+                                    <td class="onbreaks">BP，直至恢复原有担保费率</td>
+                                </tr>
+                            </tbody>
+                        #end
+                    #else
+                        <tbody class="fnNewLine" orderName="debtRatios">
+                            <tr class="fnChangeItem">
+                                <td width="50" class="fn-text-c" colspan="2">每上升</td>
+                                <td class="fn-text-c"><input class="text fnChangeInput" type="text" name="upRate" ></td>
+                                <td width="100" class="fn-text-c onbreaks">%，则费率上升</td>
+                                <td class="fnChangeLabels">
+                                    <label class="fnChangeLabel fn-hide">%，则费率上升</label>
+                                    <input class="text fnChangeInput" type="text" name="upBp">
+                                </td>
+                                <td class="onbreaks">BP，上升后</td>
+                                <td rowspan="2" class="fn-text-c"></td>
+                            </tr>
+                            <tr class="fnChangeItem">
+                                <td width="50" class="fn-text-c" colspan="2">每下降</td>
+                                <td class="fn-text-c"><input class="text fnChangeInput" type="text" name="downRate" ></td>
+                                <td width="100" class="fn-text-c onbreaks">%，则费率下调</td>
+                                <td class="fnChangeLabels">
+                                    <label class="fnChangeLabel fn-hide onbreaks">%，则费率上升</label>
+                                    <input class="text fnChangeInput" type="text" name="downBp" >
+                                </td>
+                                <td class="onbreaks">BP，直至恢复原有担保费率</td>
+                            </tr>
+                        </tbody>
+                    #end
+                </table>
+            </div>
+            <a class="ui-btn ui-btn-fill ui-btn-green fnAddLine fn-ml30 fn-mt20" tplID="t-test32" cttID="test32"><i class="icon icon-add"></i>增加一项</a>
+        </div>
+        <script type="text/html" id="t-test32">
+            <tbody class="fnNewLine" orderName="debtRatios">
+                <tr class="fnChangeItem">
+                    <td width="50" class="fn-text-c" colspan="2">每上升</td>
+                    <td class="fn-text-c"><input class="text fnChangeInput" type="text" name="upRate" ></td>
+                    <td width="100" class="fn-text-c onbreaks">%，则费率上升</td>
+                    <td class="fnChangeLabels">
+                        <label class="fnChangeLabel fn-hide">%，则费率上升</label>
+                        <input class="text fnChangeInput" type="text" name="upBp" >
+                    </td>
+                    <td class="onbreaks">BP，上升后</td>
+                    <td rowspan="2" class="fn-text-c"><a class="ui-btn ui-btn-fill ui-btn-green fnDelLine" parentsclass="fnNewLine"><i class="icon icon-del"></i>删除</a></td>
+                </tr>
+                <tr class="fnChangeItem" orderName="debtRatios">
+                    <td width="50" class="fn-text-c" colspan="2">每下降</td>
+                    <td class="fn-text-c"><input class="text fnChangeInput" type="text" name="downRate"></td>
+                    <td width="100" class="fn-text-c onbreaks">%，则费率下调</td>
+                    <td class="fnChangeLabels">
+                        <label class="fnChangeLabel fn-hide onbreaks">%，则费率上升</label>
+                        <input class="text fnChangeInput" type="text" name="downBp">
+                    </td>
+                    <td class="onbreaks">BP，直至恢复原有担保费率</td>
+                </tr>
+            </tbody>
+        </script>
+    </dd>
+
+    <dd class="fn-p-reb fn-mb45 fnChangeApplys">
+        <label class="fnChangeLabel fn-hide">过程控制-其他</label>
+        <div class="overflowY1 fnCourseSelectitem">
+            <div class="fn-ml30 fn-lh60"><em class="remind">*</em><b>其他</b></div>
+            <table class="m-table fn-tac">
+                <thead>
+                    <tr>
+                        <td width="50px">序号</td>
+                        <td>过程控制内容</td>
+                        <td width="100px">操作</td>
+                    </tr>
+                </thead>
+                <tbody id="test33">
+                    #if($listUtil.isNotEmpty($!{info.others}))
+                        #set($index = 1)
+                        #foreach($item in $!{info.others})
+                            <tr class="#if($index!=1) fnNewLine #end fnChangeItem" orderName="others">
+                                <input type="hidden" name="id" value="$!item.id" />
+                                <td class="testNum">$index</td>
+                                <td class="fnChangeLabels">
+                                    <label class="fnChangeLabel fn-hide">过程控制内容</label>
+                                    ## <input class="text fnChangeInput" type="text" name="content" value="$item.content">
+                                    <textarea name="content" class="text fnChangeInput" maxlength="20000">$item.content</textarea>
+                                </td>
+                                #if($index==1)
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                #else
+                                <td class="fn-text-c"><a class="ui-btn ui-btn-fill ui-btn-green fnDelLine" parentsClass="fnNewLine"><i class="icon icon-del"></i>删除</a></td>
+                                #end
+                            </tr>
+                            #set($index = $index + 1)
+                        #end
+                    #else
+                        <tr orderName="others" class="fnChangeItem">
+                            <td class="testNum">1</td>
+                            <td class="fnChangeLabels">
+                                <label class="fnChangeLabel fn-hide">过程控制内容</label>
+                                ## <input class="text fnChangeInput" type="text" name="content">
+                                <textarea name="content" class="text fnChangeInput" maxlength="20000"></textarea>
+                            </td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        </tr>
+                    #end
+                </tbody>
+            </table>
+            <a class="ui-btn ui-btn-fill ui-btn-green fnAddLine fn-ml30 fn-mt20" tplID="t-test33" cttID="test33"><i class="icon icon-add"></i>增加一行</a>
+        </div>
+        <script type="text/html" id="t-test33">
+            <tr class="fnNewLine fnChangeItem" orderName="others">
+                <td class="testNum">1</td>
+                <td class="fnChangeLabels">
+                    <label class="fnChangeLabel fn-hide">过程控制内容</label>
+                    ## <input class="text fnChangeInput" type="text" name="content">
+                    <textarea name="content" class="text fnChangeInput" maxlength="20000"></textarea>
+                </td>
+                <td class="fn-text-c"><a class="ui-btn ui-btn-fill ui-btn-green fnDelLine" parentsClass="fnNewLine"><i class="icon icon-del"></i>删除</a></td>
+            </tr>
+        </script>
+    </dd>
+</dl>

@@ -1,0 +1,90 @@
+<table sqlname="message_template_way">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO message_template_way(id,message_template_id,notify_way,sort_order,notify_object,hour,minute) VALUES (?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO message_template_way(id,message_template_id,notify_way,sort_order,notify_object,hour,minute) VALUES (#id#,#messageTemplateId#,#notifyWay#,#sortOrder#,#notifyObject#,#hour#,#minute#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE message_template_way SET message_template_id=?,notify_way=?,sort_order=?,notify_object=?,hour=?,minute=? WHERE id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,message_template_id ,notify_way ,sort_order ,notify_object ,hour ,minute  FROM message_template_way WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM message_template_way WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,message_template_id ,notify_way ,sort_order ,notify_object ,hour ,minute  FROM message_template_way WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,message_template_id ,notify_way ,sort_order ,notify_object ,hour ,minute  FROM message_template_way where 1=1
+			 <dynamic>
+	           <isGreaterThan property="messageTemplateWay.messageTemplateId" compareValue="0"  prepend=" and ">
+				    message_template_id = #messageTemplateWay.messageTemplateId#
+			   </isGreaterThan>
+	        </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM message_template_way WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM message_template_way  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

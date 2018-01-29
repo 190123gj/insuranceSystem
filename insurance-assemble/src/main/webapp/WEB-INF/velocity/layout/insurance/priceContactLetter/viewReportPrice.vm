@@ -1,0 +1,78 @@
+#if($!info.status=='REPORT_END')
+<div class="m-item">
+    <label class="m-label"><span class="m-required">*</span>保险公司报价：</label>
+    <div class="fn-wp90 itemBox">
+        <table class="m-table m-table-list itemsList">
+            <tr>
+                <th class="fn-tac">公司名称</th>
+                <th class="fn-tac">险种</th>
+                <th class="fn-tac">保险费</th>
+                <th class="fn-tac">经纪费</th>
+                <th class="fn-tac">附件</th>
+                <th class="fn-tac">说明</th>
+                <th class="fn-tac">报价时间</th>
+                <th class="fn-tac">差异内容</th>
+                <th class="fn-tac">特别约定</th>
+                <th class="fn-tac">前提条件</th>
+                <th class="fn-tac">报价有效期</th>
+                <th class="fn-tac">操作</th>
+            </tr>
+
+            #foreach($item in $!info.demandInfos.get(0).reportPriceInfo.detailInfoList)
+                <tr class="itemLine">
+                    <td class="fn-tac">
+                        $!{item.customerUserName}
+                    </td>
+
+                    <td class="fn-tac">
+                        $!{item.insuranceCatalogName}
+                    </td>
+
+                    <td class="fn-tac">
+                        $!{item.premiumAmount}
+                    </td>
+                    <td class="fn-tac">
+                        $!{item.brokerAmount}
+                    </td>
+                    <td class="fn-tac">
+                        $!{item.attatch}
+                    </td>
+
+                    <td class="fn-tac">
+                        $!{item.remark}
+                    </td>
+                    <td class="fn-tac">
+                        $!{item.createDate}
+                    </td>
+                    <td class="fn-tac">
+                        $!{item.differenceContent}
+                    </td>
+
+                    <td class="fn-tac">
+                        $!{item.specialAgreement}
+                    </td>
+
+                    <td class="fn-tac">
+                        $!{item.quotationPrerequisite}
+                    </td>
+
+                    <td class="fn-tac">
+                        $!{item.expiryDate}
+                    </td>
+
+                    <td class="fn-tac">
+                      <a href="/insurance/insuranceContactLetter/edit.htm">投标申请</a>
+                    </td>
+
+                </tr>
+            #end
+
+        </table>
+    </div>
+</div>
+
+#end
+
+
+
+

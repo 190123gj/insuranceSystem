@@ -1,0 +1,86 @@
+<table sqlname="operation_journal">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO operation_journal(identity,base_module_name,permission_name,operation_content,memo,operator_id,operator_name,operator_ip,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO operation_journal(identity,base_module_name,permission_name,operation_content,memo,operator_id,operator_name,operator_ip,raw_add_time) VALUES (#identity#,#baseModuleName#,#permissionName#,#operationContent#,#memo#,#operatorId#,#operatorName#,#operatorIp#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="identity" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE operation_journal SET base_module_name=?,permission_name=?,operation_content=?,memo=?,operator_id=?,operator_name=?,operator_ip=? WHERE identity=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  identity ,base_module_name ,permission_name ,operation_content ,memo ,operator_id ,operator_name ,operator_ip ,raw_add_time ,raw_update_time  FROM operation_journal WHERE identity=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM operation_journal WHERE identity=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  identity ,base_module_name ,permission_name ,operation_content ,memo ,operator_id ,operator_name ,operator_ip ,raw_add_time ,raw_update_time  FROM operation_journal WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  identity ,base_module_name ,permission_name ,operation_content ,memo ,operator_id ,operator_name ,operator_ip ,raw_add_time ,raw_update_time  FROM operation_journal where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM operation_journal WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM operation_journal  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

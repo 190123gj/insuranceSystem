@@ -1,0 +1,83 @@
+<table sqlname="customer_person_detail">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO customer_person_detail(customer_id,sex,customer_name,org_id,nation,birthDay,marital_status,company,dept,job) VALUES (?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO customer_person_detail(customer_id,sex,customer_name,org_id,nation,birthDay,marital_status,company,dept,job) VALUES (#customerId#,#sex#,#customerName#,#orgId#,#nation#,#birthDay#,#maritalStatus#,#company#,#dept#,#job#)
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE customer_person_detail SET sex=?,customer_name=?,org_id=?,nation=?,birthDay=?,marital_status=?,company=?,dept=?,job=? WHERE customer_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  customer_id ,sex,customer_name ,org_id ,nation ,birthDay ,marital_status ,company ,dept ,job  FROM customer_person_detail WHERE customer_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM customer_person_detail WHERE customer_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  customer_id,sex ,customer_name ,org_id ,nation ,birthDay ,marital_status ,company ,dept ,job  FROM customer_person_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  customer_id ,sex,customer_name ,org_id ,nation ,birthDay ,marital_status ,company ,dept ,job  FROM customer_person_detail where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM customer_person_detail WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM customer_person_detail  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

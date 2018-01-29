@@ -1,0 +1,115 @@
+<input type="hidden" name="id" value="$!{info.id}"/>
+<input type="hidden" name="type" value="$!{info.type}"/>
+<input type="hidden" name="formId" value="$!{info.formId}"/>
+<input type="hidden" name="businessBillId" value="$!{info.businessBillId}"/>
+
+<style>
+    .tabContent{
+        width: 90%;
+        margin: 0 auto;
+        overflow-x: auto;
+    }
+    table{
+        width: 100%;
+        margin: 20px auto;
+        border: 1px solid #d1d1d1;
+    }
+    th,td{
+        padding: 8px;
+        border: 1px solid #d1d1d1;
+    }
+    .data>td{
+
+        text-align: center;
+    }
+    .data>td>input{
+        width: 60px;
+        border: 0;
+        border-bottom: 1px solid #b9e2d4;
+        outline:none;
+    }
+</style>
+
+<div class="tabContent">
+    <table>
+        <tr>
+            <th colspan="14" style="font-size: 24px">产险(车险)费用结算清单</th>
+        </tr>
+        <tr>
+            <td colspan="3">部门:$!{businessBillInfo.insuranceDepart}</td>
+            <td colspan="2">团队:$!{businessBillInfo.insuranceTeam}</td>
+            <td colspan="4">日期:$dateUtil.simpleFormat($!{info.rowAddTime})</td>
+            <td colspan="5">通知单单号:$!{chargeNoticeInfo.noticeNo}</td>
+        </tr>
+        <tr>
+            <th rowspan="3">业务编号</th>
+            <th rowspan="3">经纪人工号</th>
+            <th rowspan="3">经纪人姓名</th>
+            <th rowspan="3">保单号</th>
+            <th rowspan="3">承保人</th>
+            <th rowspan="3">原保费</th>
+            <th colspan="3">费用收取</th>
+            <th colspan="5">费用支付</th>
+        </tr>
+        <tr>
+            <th rowspan="2">应收费用(元)</th>
+            <th rowspan="2">已收(元)</th>
+            <th rowspan="2">预留比率(%)</th>
+            <th rowspan="2">合计(元)</th>
+            <th colspan="3">经代费(元)</th>
+            <th rowspan="2">服务费(元)</th>
+        </tr>
+        <tr>
+            <th>应付</th>
+            <th>个税</th>
+            <th>实付</th>
+        </tr>
+        <tr class="data">
+            <td>$!{businessBillInfo.billNo}</td>
+            <td>$!{businessBillInfo.insuranceBrokerNo}</td>
+            <td>$!{businessBillInfo.insuranceBrokerName}</td>
+            <td>$!{businessBillInfo.insuranceNo}</td>
+            <td>$!{businessBillInfo.insuranceCompanyName}</td>
+            <td>$!{businessBillInfo.premiumAmount}</td>
+            <td>$!{businessBillInfo.brokerVal}</td>
+            <td>$!{chargeNoticeInfo.recievedFee} </td>
+            <td>$!{businessBillInfo.grossRate}</td>
+            <td>$!{businessBillInfo.commonVal}</td>
+            <input type="hidden" value="$!{businessBillInfo.commonVal}" id="commonVal" />
+            <td>
+                #if ($!edit)
+                    <input class="text fn-w100 fn-validate fnMakeMoney shouldPayFee" type="text" name="billSettlementApplyDetailOrder.shouldPayFee"
+                           value="$!billSettlementApplyDetailInfo.shouldPayFee"/>
+                #else
+                    $!detailInfo.shouldPayFee
+                #end
+            </td>
+            <td>
+                #if ($!edit)
+                    <input class="text fn-w100 fn-validate fnMakeMoney individualTax" type="text" name="billSettlementApplyDetailOrder.individualTax"
+                           value="$!billSettlementApplyDetailInfo.individualTax"/>
+
+                #else
+                    $!detailInfo.individualTax
+                #end
+            </td>
+            <td>
+                #if ($!edit)
+                    <input class="text fn-w100 fn-validate fnMakeMoney actualPayFee" type="text" name="billSettlementApplyDetailOrder.actualPayFee"
+                           value="$!billSettlementApplyDetailInfo.actualPayFee" readonly/>
+
+                #else
+                    $!detailInfo.actualPayFee
+                #end
+            </td>
+            <td>
+                #if ($!edit)
+                    <input class="text fn-w100 fn-validate fnMakeMoney serviceFee" type="text" name="billSettlementApplyDetailOrder.serviceFee"
+                           value="$!billSettlementApplyDetailInfo.serviceFee" readonly/>
+                #else
+                    $!detailInfo.serviceFee
+                #end
+            </td>
+        </tr>
+    </table>
+</div>

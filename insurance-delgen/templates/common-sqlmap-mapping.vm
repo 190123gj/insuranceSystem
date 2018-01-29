@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<!-- ==========================================================  -->
+<!-- Configuration for ibatis sqlmap mapping.                    -->
+<!-- ==========================================================  -->
+
+#parse("description-xml.vm")
+
+<sqlMap namespace="ppm">
+    <!-- ============================================= -->
+    <!-- RESULT MAPS                                   -->
+    <!-- ============================================= -->
+
+    <!-- result map for Money class 
+    <resultMap id="${plugin.moneyResultMapId}" class="$plugin.moneyClass">
+        <result property="cent" columnIndex="1" jdbcType="NUMBER" nullValue="0"/>
+    </resultMap>-->
+
+    <!-- result map for Money class -->
+    <resultMap id="RM-MONEY" class="com.yjf.common.lang.util.money.Money">
+        <result property="cent" columnIndex="1" jdbcType="NUMBER" nullValue="0"/>
+    </resultMap>
+	
+   <select id="COMMON-GETPRIMARYKEY" resultClass="long">
+    <![CDATA[  
+    SELECT LAST_INSERT_ID();
+     ]]>
+  </select>
+  
+  <select id="COMMON-GENERATEUSERNAME" resultClass="java.lang.String" parameterClass="int">
+   <![CDATA[
+    UPDATE user_name SET user_name = user_name + #value# WHERE id = 1;
+    SELECT user_name FROM user_name WHERE id = 1;
+   ]]>
+  </select>
+    <!-- ============================================= -->
+    <!-- mapped statements for SEQUENCE                -->
+    <!-- ============================================= -->
+#foreach ($seq in ${plugin.sequences})
+    <!-- mapped statement for ${plugin.seqIbatisClassName}.${seq.operationName} -->
+    <select id="${seq.mappedStatementId}" resultClass="long">
+    <![CDATA[
+        ${seq.mappedStatementSql}
+    ]]>
+    </select>
+#end
+</sqlMap>

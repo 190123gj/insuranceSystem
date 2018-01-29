@@ -1,0 +1,5 @@
+<script src="/js/ueditor/ueditor.config.js"></script>
+<script src="/js/ueditor/ueditor.all.min.js"></script>
+<script src="/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="/js/ueditor/setUE.js"></script>

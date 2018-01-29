@@ -1,0 +1,26 @@
+/*打印样式调整*/
+@media print {
+	@page { margin: 1cm 2cm; size: A4; }
+	body { color: #000; background: #fff; font-size: 16px; }
+	h1, h2, h3, h4, h5 { page-break-after: avoid; }
+	table, figure { page-break-inside: avoid; }
+	img { max-width: 100% !important; }
+	ul, img { page-break-inside: avoid; }
+
+	/**/
+	.fnPrintBody { border: 0 !important; background-color: #fff; }
+	/**/
+	.m-item { padding-top: 10px; padding-bottom: 10px; }
+	.m-item.m-item-half { width: 20%; }
+	/**/
+	.m-blank { display: none; }
+	/**/
+	.m-attach .icon{ display: inline;}
+	.m-attach .attach-item { border: 0; background-color: #fff; padding: 0; color: #666; }
+	.m-attach .attach-item a{ color: #666;}
+	/**/
+	.m-htitle{ padding: 0; font-size: 20px; padding-top: 20px;}
+	.m-htitle span:after{ border-width: 0;}
+
+	table.m-table{ width: 90%;}
+}

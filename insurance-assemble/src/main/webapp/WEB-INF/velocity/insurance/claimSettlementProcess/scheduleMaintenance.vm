@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+    <title>业务管理</title>
+</head>
+<body>
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;业务管理&nbsp;&gt;&nbsp;理赔进度维护
+</div>
+
+<h2 class="m-h2-title">理赔进度维护</h2>
+
+<div class="fn-blank20"></div>
+<div class="m-main border ui-bg-fff fn-clear fn-pb20">
+    <form action="/insurance/claimSettlementProcess/addCheduleMaintenance.json" id="form" method="POST" callbackhref="" >
+        <input class="ui-text fn-w200 fnInput" type="hidden" name="claimSettlementId" id="claimSettlementId" value="$!{claimSettlementId}"  />
+        <h2 class="m-htitle fn-mt30 fn-mb30 modTitle"><span>保单报案信息</span></h2>
+        <div class="m-item">
+            <label class="m-label">保单号：</label>
+            $!{claimSettlementInfo.insuranceNo}
+        </div>
+        <div class="m-item">
+            <label class="m-label">报案人：</label>
+            $!{claimSettlementInfo.informant}
+        </div>
+        <div class="m-item">
+            <label class="m-label">联系电话：</label>
+            $!{claimSettlementInfo.mobile}
+        </div>
+        <div class="m-item">
+            <label class="m-label">出险地点：</label>
+            $!{claimSettlementInfo.dangerPlace}
+        </div>
+        <div class="m-item">
+            <label class="m-label">出险时间：</label>
+            $!{dateUtil.simpleFormat($!{claimSettlementInfo.rawAddTime})}
+        </div>
+        <div class="m-item">
+            <label class="m-label">报案内容描述：</label>
+            $!{claimSettlementInfo.remark}
+        </div>
+        
+         <div class="m-item">
+            <label class="m-label">附件上传：</label>
+            <div class="fnUpAttach">
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="pathName_CLAIMSETTLEMENT")
+                #set($hiddenUrls = $!{hiddenUrls_CLAIMSETTLEMENT})
+                #set($attachments = $!{attaches_CLAIMSETTLEMENT})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </div>
+
+        <h2 class="m-htitle fn-mt30 fn-mb30 modTitle"><span>理赔进度记录</span></h2>
+        <table class="m-table fn-tac">
+            <thead>
+            <tr id="fnListSearchTh">
+                <th>理赔结点</th>
+                <th>内容描述</th>
+                <th>作业时间</th>
+                <th>联系人及联系电话</th>
+                <th>估损金额</th>
+				<th>定损金额</th>
+				<th>赔付金额</th>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                <tr>
+                    <td>
+                        #if($!{item.type}=="FILING")立案
+                        #elseif($!{item.type}=="CONFIRMLOSS")定损
+                        #elseif($!{item.type}=="SETTLEACCOUNTS")结算
+                        #elseif($!{item.type}=="PAYMENT")支付
+                        #else 回访
+                        #end
+                    </td>
+                    <td>	$!{item.remark} </td>
+                    <td>	$!dateUtil.simpleFormat($!{item.processDate}) </td>
+                    <td>
+						$!{item.contactorName}:$!{item.contactorMobile1};$!{item.contactorMobile2}</td>
+					</td>
+					<!--
+					#if("$!{item.contactorName1}"!="" && "$!{item.contactorMobile1}"!="")
+							$!{item.contactorName1}:$!{item.contactorMobile1}
+						#end
+						#if("$!{item.contactorName1}"!="" && "$!{item.contactorName2}"!="")
+							;
+						#end
+						#if("$!{item.contactorName2}"!="" && "$!{item.contactorMobile2}"!="")
+							$!{item.contactorName2}:$!{item.contactorMobile2}
+						#end
+					</td>
+					-->
+                    <td>$!{item.estimateAmount}</td>
+					<td>$!{item.damageAmount}</td>
+					<td>$!{item.paymentAmount}</td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+        #parse("/layout/common/pages.vm")
+        <h2 class="m-htitle fn-mt30 fn-mb30 modTitle"><span>理赔进度维护</span></h2>
+        <div class="fn-clear">
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>理赔类型：</label>
+                <select  name="type" id="type" class="ui-select fn-w200 fnChangeInput">
+                    <option value="">请选择</option>
+                    <option value="FILING">立案</option>
+                    <option value="CONFIRMLOSS">定损</option>
+                    <option value="SETTLEACCOUNTS">结算</option>
+                    <option value="PAYMENT">支付</option>
+                    <option value="VISIT">回访</option>
+                </select>
+            </div>
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>作业时间：</label>
+                <input class="ui-text fn-w200 laydate-icon fn-validate" type="text" name="processDate" id="processDate" value="$!dateUtil.formatDay($!info.certExpDate)" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+            </div>
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>联系人：</label>
+                <input class="ui-text fn-w200 fn-validate" type="text" name="contactorName" id="contactorName" />
+                <label>联系电话1：</label>
+                <input class="ui-text fn-w200" type="text" name="contactorMobile1" id="contactorMobile1" />
+				<label>联系电话2：</label>
+                <input class="ui-text fn-w200" type="text" name="contactorMobile2" id="contactorMobile2" />
+            </div>
+		<!--
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>联系人2：</label>
+                <input class="ui-text fn-w200 fn-validate" type="text" name="contactorName2" id="contact1" />
+                <label><span class="m-required">*</span>联系电话：</label>
+                <input class="ui-text fn-w200 fn-validate" type="text" name="contactorMobile2" id="contactMonile" />
+            </div>
+		-->
+			 <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>估损金额：</label>
+                <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="estimateAmount" id="estimateAmount" />元
+            </div>
+			<div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>定损金额：</label>
+                <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="damageAmount" id="damageAmount" />元
+            </div>
+			<div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>赔付金额：</label>
+                <input class="ui-text fn-w200 fnInput fnRequired" type="text" name="paymentAmount" id="paymentAmount" />元
+            </div>
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>跟踪内容描述：</label>
+                <textarea name="remark" class="ui-textarea audit-textarea"></textarea>
+            </div>
+        </div>
+</div>
+<div class="fn-blank20"></div>
+<div class="m-blank fn-mt20 fn-mb20"></div>
+<div class="fn-tac fn-pt20 fn-pb30">
+    <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn" type="button" value="确定">
+    <a href="javascript:void(0)" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5 toCanleOpt">返回</a>
+</div>
+</form>
+</div>
+    #parse("/layout/common/footer.vm")
+    #parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/claimSettlement/scheduleMaintenance');
+</script>
+</body>
+</html>

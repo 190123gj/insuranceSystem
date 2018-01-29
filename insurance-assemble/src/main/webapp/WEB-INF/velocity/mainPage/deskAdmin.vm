@@ -1,0 +1,54 @@
+## <div id="taskList">
+##     #parse("/mainPage/taskList.vm")
+## </div>
+<div class="fn-clear fn-mt20" style="min-width: 1050px;">
+
+    <div class="fn-left list-box" style="width:320px;">
+
+        <ul class="fn-clear list-title">
+            <li class="active">
+                项目总览
+            </li>
+        </ul>
+
+        <div class="fn-ml20 fn-clear">
+            <input type="hidden" value="$!countJson" id="fnCountJson">
+            <div class="fn-left" style="width: 100%">
+                <div id="projectInfo" style="width: 100%;height: 350px; line-height: 350px;" class="fn-tac"></div>
+            </div>
+            <!-- 
+            <div class="fn-right" style="width: 39%">
+                <div id="moneyInfo" style="width: 100%;height: 350px;"></div>
+            </div>
+            -->
+        </div>
+    </div>
+
+    <div class="fn-right list-box fn-pb20" style="min-width: 720px">
+
+        <ul class="fn-clear list-title">
+            <li class="active">
+                客户情况
+            </li>
+            <li>
+                <a href="/customerMg/index.htm" target="_blank">新增客户</a>
+            </li>
+        </ul>
+
+        <div class="fn-ml20 fn-clear">
+            <div class="fn-left" style="width: 300px">
+                <div id="departmentInfo" style="width: 100%;height: 350px;"></div>
+                <div id="departmentInfoJson" class="fn-hide">$!customerDeptJson</div>
+            </div>
+
+            <div class="fn-right" style="min-width: 400px">
+                <div id="regionalInfo" style="width: 100%;height: 350px;"></div>
+                <div id="regionalInfoJson" class="fn-hide">$!customerRegionJson</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="fn-blank20"></div>        

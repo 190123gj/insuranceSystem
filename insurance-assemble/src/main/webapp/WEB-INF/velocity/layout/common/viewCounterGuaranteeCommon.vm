@@ -1,0 +1,287 @@
+<div class="fnChangeApplys">
+    <label class="fnChangeLabel fn-hide">抵押</label>
+    <dl>
+        <dt class="fn-pl30 fn-lh60 fn-clear">
+            <span class="#if($!cmp.pledges) isModificationNoTd #end">1、抵押</span>
+            <span class="calculate fn-ml20">
+            <b class="fn-ml20">合计：</b>
+                评估价格：<em class="assessPrice fn-mr20">$!info.pledgeAssessPrice.toStandardString()</em>元
+                抵押价格：<em class="pledgePrice">$!info.pledgePrice.toStandardString()</em>元
+            </span>
+        </dt>
+        <dd class="fn-p-reb fnChangeItem">
+            <table class="m-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>抵押物类型</th>
+                        <th>所有权人</th>
+                        <th>抵押顺位</th>
+                        <th>是否后置抵押</th>
+                        <th>已抵债金额（元）</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="test">
+                    #foreach($item in $!info.pledges)
+                    <tr class="fnNewLine" ordername="pledgeOrders" ids="$!info.pledgeIds">
+                        <input type="hidden" name="id" value="$!item.id" />
+                        <input type="hidden" name="assetsId" value="$!item.assetsId" />
+                        <td class="testNum fn-text-c">$velocityCount</td>
+                        <td class="fn-text-c">$!item.assetType</td>
+                        <td class="fn-text-c">$!item.ownershipName</td>
+                        <td class="fn-text-c">
+                            #if($!item.synPosition=="FIRST")
+                                第一顺位
+                            #elseif($!item.synPosition=="SECOND")
+                                第二顺位
+                            #end
+                        </td>
+                        <td class="fn-text-c">
+                            #if($!item.postposition=="YES")
+                                是
+                            #elseif($!item.postposition=="NO")
+                                否
+                            #end
+                        </td>
+                        <td class="fn-text-c fnChangeLabels">$!item.debtedAmount.toStandardString()</td>
+                        <td class="fn-text-c">
+                            <a class="fn-mr10" href="/assetMg/toAdd.htm?id=$!item.assetsId&isView=true&disReturn" target="_blank">查看详情</a>
+                        </td>
+                    </tr>
+                    #end
+                </tbody>
+            </table>
+        </dd>
+    </dl>
+</div>
+
+<div class="fnChangeApplys">
+    <label class="fnChangeLabel fn-hide">质押</label>
+    <dl>
+        <dt class="fn-pl30 fn-lh60 fn-clear">
+            <span class="#if($!cmp.mortgages) isModificationNoTd #end">2、质押</span>
+            <span class="calculate fn-ml20">
+                <b class="fn-ml20">合计：</b>
+                评估价格：<em class="assessPrice fn-mr20">$!info.mortgageAssessPrice.toStandardString()</em>元
+                质押价格：<em class="pledgePrice">$!info.mortgagePrice.toStandardString()</em>元
+            </span>
+        </dt>
+        <dd class="fn-p-reb fnChangeItem">
+            <table class="m-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>质押物类型</th>
+                        <th>所有权人</th>
+                        <th>抵押顺位</th>
+                        <th>是否后置抵押</th>
+                        <th>已抵债金额（元）</th>                       
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="test22">
+                    #foreach($item in $!info.mortgages)
+                    <tr class="fnNewLine" ordername="mortgageOrders" ids="$!info.mortgageIds">
+                        <input type="hidden" name="id" value="$!item.id" />
+                        <input type="hidden" name="assetsId" value="$!item.assetsId" />
+                        <td class="testNum fn-text-c">$velocityCount</td>
+                        <td class="fn-text-c">$!item.assetType</td>
+                        <td class="fn-text-c">$!item.ownershipName</td>
+                        <td class="fn-text-c">
+                            #if($!item.synPosition=="FIRST")
+                                第一顺位
+                            #elseif($!item.synPosition=="SECOND")
+                                第二顺位
+                            #end
+                        </td>
+                        <td class="fn-text-c">
+                            #if($!item.postposition=="YES")
+                                是
+                            #elseif($!item.postposition=="NO")
+                                否
+                            #end
+                        </td>
+                        <td class="fn-text-c fnChangeLabels">$!item.debtedAmount.toStandardString()</td>                    
+                        <td class="fn-text-c">
+                            <a class="fn-mr10" href="/assetMg/toAdd.htm?id=$!item.assetsId&isView=true&disReturn" target="_blank">查看详情</a>
+                        </td>
+                    </tr>
+                    #end
+                </tbody>
+            </table>
+        </dd>
+    </dl>
+</div>
+
+<dl>
+<dt class="fn-pl30 fn-lh60 fn-mt20">
+    <span class="#if($!cmp.guarantors) isModificationNoTd #end">3、保证</span>
+    <span class="fn-ml20 pledgeTotal #if($!cmp.guarantorAmount) isModificationNoTd #end">
+        <b class="fn-mr20">合计:</b>保证额度:&nbsp;&nbsp;&nbsp;$!{info.guarantorAmount.toStandardString()}元
+    </span>
+</dt>
+</dl>
+<dl class="overflowY1">
+    <dd class="fn-p-reb">
+        <table class="m-table" border="1">
+            <thead>
+                <tr>
+                    <th>保证类型</th>
+                    <th>保证人名称</th>
+                    <th>保证额度</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody id="test2">
+                #set($guarantorList = $!{info.guarantors})
+                #if($!{guarantors})
+                    #set($guarantorList = $!{guarantors})
+                #end
+                #set($index = 1)
+                #foreach($item in $!{guarantorList})
+                    <tr #if($index!=1) class="fnNewLine" #end orderName="guarantorOrders">
+                        <td>$!{item.guarantorType.message}</td>
+                        <td>$!{item.guarantor}</td>
+                        <td>$!{item.guaranteeAmount.toStandardString()}元</td>
+                        <td>$!{item.guaranteeWay}</td>
+                    </tr>
+                    #set($index = $index + 1)
+                #end
+            </tbody>
+        </table>
+    </dd>
+</dl>
+
+<dl>
+  <dt class="fn-ml30 fn-mt20"><span class="#if($!cmp.other) isModificationNoTd #end">其他</span></dt>
+    <dd class="fn-p-reb fn-mt10">
+        <div class="contract-text">
+            $!{info.other}
+        </div>
+    </dd>
+    <dd class="fn-ml30 fn-mt20">
+        <div class="fnUpAttach">
+             <label class="m-label">
+				<span class="#if($!cmp.hiddenUrls_COUNTER_GUARANTEE) isModificationNoTd #end">
+				附件：
+                </span>
+			 </label>
+            #set($attachmentTitle="相关附件")
+            #set($attachmentNameAttr="pathName_COUNTER_GUARANTEE")
+            #set($hiddenUrls = "")
+            #set($hiddenUrls = $!{hiddenUrls_COUNTER_GUARANTEE})
+            #set($attachments = "")
+            #set($attachments = $!{attaches_COUNTER_GUARANTEE})
+            #parse("/layout/common/viewAttachment.vm")
+        </div>
+    </dd>
+</dl>
+
+<dl id="courseSelect">
+    <dt class="fn-pl30 fn-lh60 fn-mt20">
+        4、过程控制
+        <input class="fn-mr10 fn-ml20 fn-H11 cancel" name="cancel" type="checkbox" #if($!{info.processFlag.contains("C")}) checked #end disabled>
+            <span class="#if($!cmp.customerGrades) isModificationNoTd #end">客户信用等级</span>
+        <input class="fn-mr10 fn-ml20 fn-H11 cancel" name="cancel" type="checkbox" #if($!{info.processFlag.contains("D")}) checked #end disabled>
+            <span class="#if($!cmp.debtRatios) isModificationNoTd #end">资产负债率</span>
+        <input class="fn-mr10 fn-ml20 fn-H11 cancel" name="cancel" type="checkbox" #if($!{info.processFlag.contains("O")}) checked #end disabled>
+            <span class="#if($!cmp.others) isModificationNoTd #end">其他</span>
+    </dt>
+    #if($!{info.processFlag.contains("C")})
+    <dd class="fn-p-reb fnChangeApplys">
+        <label class="fnChangeLabel fn-hide">过程控制-客户信用等级</label>
+        <div class="overflowY1 fnCourseSelectitem fn-mb45">
+            <b class="fn-ml30 fn-mb10">
+                <span class="fn-lh60 #if($!cmp.customerGrades) isModificationNoTd #end">客户信用等级：</span>$!{info.creditLevel.message}
+            </b>
+            <table class="m-table">
+                #if($listUtil.isNotEmpty($!{info.customerGrades}))
+                    #foreach($item in $!{info.customerGrades})
+                    <tbody id="test31" orderName="customerGrades">
+                        <input type="hidden" name="id" value="$!item.id" />
+                        <tr class="fnChangeItem" >
+                            <td width="50" colspan="2">每下降</td>
+                            <td width="160">一个子级，则费率下调</td>
+                            <td class="fnChangeLabels">$!rateUtil.formatRateStr($!{item.downBp})</td>
+                            <td>BP，直至恢复原有担保费率</td>
+                        </tr>
+                        <tr class="fnChangeItem" >
+                            <td width="50" colspan="2">每回升</td>
+                            <td width="160">一个子级，则费率上升</td>
+                            <td class="fnChangeLabels">$!rateUtil.formatRateStr($!{item.upBp})</td>
+                            <td>BP，上升后</td>
+                        </tr>
+                    </tbody>
+                    #end
+                #end
+            </table>
+        </div>
+    </dd>
+    #end
+    #if($!{info.processFlag.contains("D")})
+    <dd class="fn-p-reb fn-mb45 fnChangeApplys">
+        <div class="fnCourseSelectitem">
+            <div class="overflowY1">
+                <label class="fnChangeLabel fn-hide">过程控制-资产负债率</label>
+                <b class="fn-ml30 fn-mb10">
+                    <span class="fn-lh60 #if($!cmp.debtRatios) isModificationNoTd #end">资产负债率</span>
+                    <span class="fn-ml20 fn-lh60">警戒：$!rateUtil.formatRateStr($!{info.assetLiabilityRatio}) %</span>
+                </b>
+                <table class="m-table" id="test32">
+                    #if($listUtil.isNotEmpty($!{info.debtRatios}))
+                        #foreach($item in $!{info.debtRatios})
+                        <tbody class="fnNewLine" orderName="debtRatios">
+                            <input type="hidden" name="id" value="$!item.id" />
+                            <tr class="fnChangeItem">
+                                <td width="50" colspan="2">每上升</td>
+                                <td>$!rateUtil.formatRateStr($!{item.upRate})</td>
+                                <td width="100" class="onbreaks">%，则费率上升</td>
+                                <td class="fnChangeLabels">$!rateUtil.formatRateStr($!{item.upBp})</td>
+                                <td class="onbreaks">BP，上升后</td>
+                            </tr>
+                            <tr width="50">
+                                <td class="fnChangeLabels" colspan="2">每下降</td>
+                                <td>$!rateUtil.formatRateStr($!{item.downRate})</td>
+                                <td width="100" class="onbreaks">%，则费率下调</td>
+                                <td class="fnChangeLabels">$!rateUtil.formatRateStr($!{item.downBp})</td>
+                                <td class="onbreaks">BP，直至恢复原有担保费率</td>
+                            </tr>
+                        </tbody>
+                        #end
+                    #end
+                </table>
+            </div>
+        </div>
+    </dd>
+    #end
+    #if($!{info.processFlag.contains("O")})
+    <dd class="fn-p-reb fn-mb45">
+        <div class="overflowY1">
+            <div class="fn-ml30 fn-lh60">
+                <b>
+                    <span class="#if($!cmp.others) isModificationNoTd #end">其他</span>
+                </b>
+            </div>
+            <table class="m-table" border="1">
+                <thead>
+                    <tr>
+                        <td class="fn-font-b3">序号</td>
+                        <td class="fn-font-b3">过程控制内容</td>
+                    </tr>
+                </thead>
+                <tbody id="test33">
+                    #set($index = 1)
+                    #foreach($item in $!{info.others})
+                        <tr #if($index!=1) class="fnNewLine" #end orderName="others">
+                            <td class="testNum">$index</td>
+                            <td>$item.content</td>
+                        </tr>
+                        #set($index = $index + 1)
+                    #end
+                </tbody>
+            </table>
+        </div>
+    </dd>
+    #end
+</dl>

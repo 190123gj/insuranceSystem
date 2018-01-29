@@ -1,0 +1,143 @@
+<table sqlname="person_commission_detail">
+<column name="commission_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="balance" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO person_commission_detail(settlement_person_id,serial_number,business_user_id,business_user_name,business_user_type,business_bill_id,insurance_no,commission_amount,commission_time,commission_type,balance,remark,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO person_commission_detail(settlement_person_id,serial_number,business_user_id,business_user_name,business_user_type,business_bill_id,insurance_no,commission_amount,commission_time,commission_type,balance,remark,raw_add_time) VALUES (#settlementPersonId#,#serialNumber#,#businessUserId#,#businessUserName#,#businessUserType#,#businessBillId#,#insuranceNo#,#commissionAmount#,#commissionTime#,#commissionType#,#balance#,#remark#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="settlementPersonId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE person_commission_detail SET serial_number=?,business_user_id=?,business_user_name=?,business_user_type=?,business_bill_id=?,insurance_no=?,commission_amount=?,commission_time=?,commission_type=?,balance=?,remark=? WHERE settlement_person_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  settlement_person_id ,serial_number ,business_user_id ,business_user_name ,business_user_type ,business_bill_id,insurance_no,commission_amount ,commission_time ,commission_type ,balance ,remark ,raw_add_time ,raw_update_time  FROM person_commission_detail WHERE settlement_person_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM person_commission_detail WHERE settlement_person_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+            <param name="businessUserId" javatype="long" />
+            <param name="beginDate" javatype="java.util.Date" />
+            <param name="endDate" javatype="java.util.Date" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  settlement_person_id ,serial_number ,business_user_id ,business_user_name ,business_user_type ,business_bill_id,insurance_no,commission_amount ,commission_time ,commission_type ,balance ,remark ,raw_add_time ,raw_update_time  FROM person_commission_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  settlement_person_id ,serial_number ,business_user_id ,business_user_name ,business_user_type ,business_bill_id,insurance_no,commission_amount ,commission_time ,commission_type ,balance ,remark ,raw_add_time ,raw_update_time  FROM person_commission_detail where 1=1
+			<dynamic>
+	            <isGreaterThan property="businessUserId"  compareValue="0" prepend=" and ">
+	                business_user_id = #businessUserId#
+	            </isGreaterThan>
+	            <isNotEmpty property="beginDate"   prepend=" and ">
+	              ${cdata-start}  commission_time >= #beginDate#  ${cdata-end}
+	            </isNotEmpty>
+	            <isNotEmpty property="endDate"   prepend=" and ">
+	               ${cdata-start} commission_time <= #endDate#  ${cdata-end} 
+	            </isNotEmpty>
+	        </dynamic>		
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+		 <extraparams>
+            <param name="businessUserId" javatype="long" />
+            <param name="beginDate" javatype="java.util.Date" />
+            <param name="endDate" javatype="java.util.Date" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM person_commission_detail WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM person_commission_detail  where 1=1
+	           <dynamic>
+	            <isGreaterThan property="businessUserId"  compareValue="0" prepend=" and ">
+	                business_user_id = #businessUserId#
+	            </isGreaterThan>
+	            <isNotEmpty property="beginDate"   prepend=" and ">
+	              ${cdata-start}  commission_time >= #beginDate# ${cdata-end} 
+	            </isNotEmpty>
+	            <isNotEmpty property="endDate"   prepend=" and ">
+	               ${cdata-start} commission_time <= #endDate#  ${cdata-end} 
+	            </isNotEmpty>
+	          </dynamic>	
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    
+    <operation name="getCommissionInfoDetails" multiplicity="many">
+        <sql>
+            <![CDATA[
+			  SELECT  settlement_person_id ,serial_number ,business_user_id ,business_user_name ,business_user_type ,business_bill_id,insurance_no,commission_amount ,commission_time ,commission_type ,balance ,remark ,raw_add_time ,raw_update_time  FROM person_commission_detail WHERE business_user_id=?
+			]]>
+        </sql>
+    </operation>
+    
+    <operation name="getPersonCommissionDetail" multiplicity="many">
+		 <extraparams>
+            <param name="businessUserId" javatype="long" />
+            <param name="commissionType" javatype="java.lang.String" />
+            <param name="commissionTime" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+           <![CDATA[
+			  SELECT  settlement_person_id ,serial_number ,business_user_id ,business_user_name ,business_user_type ,business_bill_id,insurance_no,commission_amount ,commission_time ,commission_type ,balance ,remark ,raw_add_time ,raw_update_time  FROM person_commission_detail WHERE 1=1
+			]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT * from person_commission_detail where business_user_id = #businessUserId# and commission_type= #commissionType#  and DATE_FORMAT(commission_time,'%Y-%m-%d') = #commissionTime#
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

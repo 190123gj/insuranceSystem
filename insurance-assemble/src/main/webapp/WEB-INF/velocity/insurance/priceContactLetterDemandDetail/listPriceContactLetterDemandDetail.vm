@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>demo</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;demo&nbsp;&gt;&nbsp;
+</div>
+
+<form class="m-main border ui-bg-fff" action="" id="fnListSearchForm" method="POST">
+
+    
+    <div class="m-search fn-clear">
+
+        <div class="item">
+            姓名
+            <input class="ui-text fn-w90" type="text" name="customerName" value="\$!{queryConditions.realName}">
+        </div>
+
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/demo/edit.htm"><b>+</b>新增&nbsp;</a>
+
+        </div>
+
+        
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+				 	                <th>标id</th>
+				 	                <th>运输区域</th>
+				 	                <th>型号</th>
+				 	                <th>销售额</th>
+				 	                <th>包装条件</th>
+				 	                <th>业务对象</th>
+				 	                <th>车辆类型</th>
+				 	                <th>行驶区域</th>
+				 	                <th>运输方式\船舶种类</th>
+				 	                <th>产品名称</th>
+				 	                <th>单次限额</th>
+				 	                <th>货物名称</th>
+				 	                <th>年预计货值</th>
+				 	                <th>车辆用途</th>
+				 	                <th>频次</th>
+				 	                <th>业务收入</th>
+				 	                <th>运输路线</th>
+				 	                <th>扩展字段</th>
+				 	                <th>版本</th>
+				 	                <th>货物种类</th>
+				 	                <th>id</th>
+				 	                <th>数量</th>
+				 	                <th>销售区域</th>
+				 	                <th>座位数</th>
+				 	                <th>平均总吨/车位/载客/吨位</th>
+				                     <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+					 						 <td>	$!{item.letterDemandId} </td>
+					 						 <td>	$!{item.transportationArea} </td>
+					 						 <td>	$!{item.model} </td>
+					 						 <td>	$!{item.salesVolume} </td>
+					 						 <td>	$!{item.packingCondition} </td>
+					 						 <td>	$!{item.businessObject} </td>
+					 						 <td>	$!{item.vehicleType} </td>
+					 						 <td>	$!{item.travelArea} </td>
+					 						 <td>	$!{item.shippingType} </td>
+					 						 <td>	$!{item.productName} </td>
+					 						 <td>	$!{item.oneLimit} </td>
+					 						 <td>	$!{item.goodsName} </td>
+					 						 <td>	$!{item.expectedValue} </td>
+					 						 <td>	$!{item.vehicleUse} </td>
+					 						 <td>	$!{item.frequency} </td>
+					 						 <td>	$!{item.businessIncome} </td>
+					 						 <td>	$!{item.transportRoute} </td>
+					 						 <td>	$!{item.ext} </td>
+					 						 <td>	$!{item.version} </td>
+					 						 <td>	$!{item.goodsTypes} </td>
+					 						 <td>	$!{item.id} </td>
+					 						 <td>	$!{item.num} </td>
+					 						 <td>	$!{item.salesArea} </td>
+					 						 <td>	$!{item.seatsNum} </td>
+					 						 <td>	$!{item.tonnage} </td>
+					                          <td>
+                            <a href="">[ 查看详情 ]</a>
+                           
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        
+        
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+  //  seajs.use($_GLOBAL.zyw+'/project/rkct.rkwn.list');
+</script>
+</body>
+</html>

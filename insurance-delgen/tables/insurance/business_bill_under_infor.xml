@@ -1,0 +1,95 @@
+<table sqlname="business_bill_under_infor">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO business_bill_under_infor(under_info_id,product_id,product_name,insurance_amount,permium_rate,premium_amount,money_type,business_bill_id) VALUES (?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO business_bill_under_infor(under_info_id,product_id,product_name,insurance_amount,permium_rate,premium_amount,money_type,business_bill_id) VALUES (#underInfoId#,#productId#,#productName#,#insuranceAmount#,#permiumRate#,#premiumAmount#,#moneyType#,#businessBillId#)
+		        <selectKey  resultClass ="long"  keyProperty ="underInfoId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE business_bill_under_infor SET product_id=?,product_name=?,insurance_amount=?,permium_rate=?,premium_amount=?,money_type=?,business_bill_id=? WHERE under_info_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  under_info_id ,product_id ,product_name ,insurance_amount ,permium_rate ,premium_amount ,money_type ,business_bill_id  FROM business_bill_under_infor WHERE under_info_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM business_bill_under_infor WHERE under_info_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  under_info_id ,product_id ,product_name ,insurance_amount ,permium_rate ,premium_amount ,money_type ,business_bill_id  FROM business_bill_under_infor WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  under_info_id ,product_id ,product_name ,insurance_amount ,permium_rate ,premium_amount ,money_type ,business_bill_id  FROM business_bill_under_infor where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM business_bill_under_infor WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM business_bill_under_infor  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="findBusinessBillUnderInfo" paramtype="long" multiplicity="many">
+     
+  		 <sql>
+            <![CDATA[
+					SELECT  under_info_id ,product_id ,product_name ,insurance_amount ,permium_rate ,premium_amount ,money_type ,business_bill_id  FROM business_bill_under_infor  WHERE business_bill_id =  ?
+	        ]]>
+        </sql>
+    </operation>
+</table>

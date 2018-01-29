@@ -1,0 +1,98 @@
+<table sqlname="price_contact_letter_scheme_detail">
+    <column name="insurance_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <column name="expect_premium_amount" javatype="com.yjf.common.lang.util.money.Money" />
+
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO price_contact_letter_scheme_detail(id,letter_scheme_id,parent_catalog_id,parent_catalog_name,catalog_id,catalog_name,liability_name_id,responsibility_scope,property_category,insurance_amount,insurance_way,deductible_rate,premium_rate,limit_amount_type,limit_amount,expect_premium_amount,intention_broker_rate,non_deductible,name,packing_quantity,sign,job,age_group,person_num,programme,goods,target,version,ext) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+										]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+					INSERT INTO price_contact_letter_scheme_detail(id,letter_scheme_id,parent_catalog_id,parent_catalog_name,catalog_id,catalog_name,liability_name_id,responsibility_scope,property_category,insurance_amount,insurance_way,deductible_rate,premium_rate,limit_amount_type,limit_amount,expect_premium_amount,intention_broker_rate,non_deductible,name,packing_quantity,sign,job,age_group,person_num,programme,goods,target,version,ext) VALUES (#id#,#letterSchemeId#,#parentCatalogId#,#parentCatalogName#,#catalogId#,#catalogName#,#liabilityNameId#,#responsibilityScope#,#propertyCategory#,#insuranceAmount#,#insuranceWay#,#deductibleRate#,#premiumRate#,#limitAmountType#,#limitAmount#,#expectPremiumAmount#,#intentionBrokerRate#,#nonDeductible#,#name#,#packingQuantity#,#sign#,#job#,#ageGroup#,#personNum#,#programme#,#goods#,#target#,#version#,#ext#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+				UPDATE price_contact_letter_scheme_detail SET letter_scheme_id=?,parent_catalog_id=?,parent_catalog_name=?,catalog_id=?,catalog_name=?,liability_name_id=?,responsibility_scope=?,property_category=?,insurance_amount=?,insurance_way=?,deductible_rate=?,premium_rate=?,limit_amount_type=?,limit_amount=?,expect_premium_amount=?,intention_broker_rate=?,non_deductible=?,name=?,packing_quantity=?,sign=?,job=?,age_group=?,person_num=?,programme=?,goods=?,target=?,version=?,ext=? WHERE id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			    SELECT  id ,letter_scheme_id ,parent_catalog_id ,parent_catalog_name ,catalog_id ,catalog_name ,liability_name_id ,responsibility_scope ,property_category ,insurance_amount ,insurance_way ,deductible_rate ,premium_rate ,limit_amount_type ,limit_amount ,expect_premium_amount ,intention_broker_rate ,non_deductible ,name ,packing_quantity ,sign ,job ,age_group ,person_num ,programme ,goods ,target ,version ,ext  FROM price_contact_letter_scheme_detail WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM price_contact_letter_scheme_detail WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+				SELECT  id ,letter_scheme_id ,parent_catalog_id ,parent_catalog_name ,catalog_id ,catalog_name ,liability_name_id ,responsibility_scope ,property_category ,insurance_amount ,insurance_way ,deductible_rate ,premium_rate ,limit_amount_type ,limit_amount ,expect_premium_amount ,intention_broker_rate ,non_deductible ,name ,packing_quantity ,sign ,job ,age_group ,person_num ,programme ,goods ,target ,version ,ext  FROM price_contact_letter_scheme_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,letter_scheme_id ,parent_catalog_id ,parent_catalog_name ,catalog_id ,catalog_name ,liability_name_id ,responsibility_scope ,property_category ,insurance_amount ,insurance_way ,deductible_rate ,premium_rate ,limit_amount_type ,limit_amount ,expect_premium_amount ,intention_broker_rate ,non_deductible ,name ,packing_quantity ,sign ,job ,age_group ,person_num ,programme ,goods ,target ,version ,ext  FROM price_contact_letter_scheme_detail WHERE 1=1
+             <dynamic>
+                  <isGreaterThan property="priceContactLetterSchemeDetail.letterSchemeId"  compareValue="0" prepend=" and ">
+	                letter_scheme_id = #priceContactLetterSchemeDetail.letterSchemeId#
+	            </isGreaterThan>
+			</dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM price_contact_letter_scheme_detail WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM price_contact_letter_scheme_detail  where 1=1
+	             <dynamic>
+                  <isGreaterThan property="letterSchemeId"  compareValue="0" prepend=" and ">
+	                letter_scheme_id = #letterSchemeId#
+	            </isGreaterThan>
+			</dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

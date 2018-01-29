@@ -1,0 +1,112 @@
+<table sqlname="insurance_catalog_liability">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO insurance_catalog_liability(id,liability_id,liability_name,owner_id,type) VALUES (?,?,?,?,?)
+			]]>
+        </sql>
+
+        <sqlmap>
+            <![CDATA[
+				INSERT INTO insurance_catalog_liability(id,liability_id,liability_name,owner_id,type) VALUES (#id#,#liabilityId#,#liabilityName#,#ownerId#,#type#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+        </sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE insurance_catalog_liability SET liability_id=?,liability_name=?,owner_id=?,type=? WHERE id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,liability_id ,liability_name ,owner_id ,type  FROM insurance_catalog_liability WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_catalog_liability WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,liability_id ,liability_name ,owner_id ,type  FROM insurance_catalog_liability WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,liability_id ,liability_name ,owner_id ,type  FROM insurance_catalog_liability where 1=1
+             <dynamic>
+	            <isNotEmpty property="insuranceCatalogLiability.ownerId"  prepend=" and ">
+	                owner_id = #insuranceCatalogLiability.ownerId#
+	            </isNotEmpty>
+
+	            <isNotEmpty property="insuranceCatalogLiability.type"  prepend=" and ">
+	                type = #insuranceCatalogLiability.type#
+	            </isNotEmpty>
+	        </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM insurance_catalog_liability WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM insurance_catalog_liability  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    <operation name="queryList" paramtype="long" multiplicity="many">
+        <sql>
+            <![CDATA[
+					SELECT  id ,liability_id ,liability_name ,owner_id ,type  FROM insurance_catalog_liability WHERE owner_id = ?
+	        ]]>
+        </sql>
+    </operation>
+    
+    
+        
+    <operation name="deleteCalalogLiability" paramtype="long">
+        <sql>
+            <![CDATA[
+				 DELETE FROM insurance_catalog_liability WHERE owner_id=?
+			]]>
+        </sql>
+    </operation>
+</table>

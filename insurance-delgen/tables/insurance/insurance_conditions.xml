@@ -1,0 +1,103 @@
+<table sqlname="insurance_conditions">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO insurance_conditions(condition_id,business_conditions,price_template,price_template_name,owner_id,type) VALUES (?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO insurance_conditions(condition_id,business_conditions,price_template,price_template_name,owner_id,type) VALUES (#conditionId#,#businessConditions#,#priceTemplate#,#priceTemplateName#,#ownerId#,#type#)
+		        <selectKey  resultClass ="long"  keyProperty ="conditionId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE insurance_conditions SET business_conditions=?,price_template=?,price_template_name=?,owner_id=?,type=? WHERE condition_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  condition_id ,business_conditions ,price_template ,price_template_name ,owner_id ,type  FROM insurance_conditions WHERE condition_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_conditions WHERE condition_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  condition_id ,business_conditions ,price_template ,price_template_name ,owner_id ,type  FROM insurance_conditions WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  condition_id ,business_conditions ,price_template ,price_template_name ,owner_id ,type  FROM insurance_conditions where 1=1
+             <dynamic>
+	            <isNotEmpty property="insuranceCondition.ownerId"  prepend=" and ">
+	                owner_id = #insuranceCondition.ownerId#
+	            </isNotEmpty>
+
+	            <isNotEmpty property="insuranceCondition.type"  prepend=" and ">
+	                type = #insuranceCondition.type#
+	            </isNotEmpty>
+	        </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM insurance_conditions WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM insurance_conditions  where 1=1
+	        <dynamic>
+	            <isNotEmpty property="ownerId"  prepend=" and ">
+	                owner_id = #ownerId#
+	            </isNotEmpty>
+
+	            <isNotEmpty property="type"  prepend=" and ">
+	                type = #type#
+	            </isNotEmpty>
+	        </dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

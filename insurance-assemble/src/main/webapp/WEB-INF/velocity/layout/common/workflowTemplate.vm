@@ -1,0 +1,70 @@
+<div class="fn-right close">&times;</div>
+<ul class="mark-list">
+    <li><i class="icon complete"></i>已完成</li>
+    <li><i class="icon cando"></i>当前可做</li>
+    <li><i class="icon repeat"></i>重复可做</li>
+    <li><i class="icon cannotdo"></i>当前不可做</li>
+</ul>
+## <p class="fn-pl20 fn-pb10 fn-pr30 fn-fwb fn-f0">{{message}}</p>
+<ul class="fn-clear ul">
+    <li class="start first">
+        开始
+    </li>
+    {{each list1 as item i}}
+        <li class="{{if item.feed}} line-feed{{/if}}">
+            <a href="/projectMg/index.htm?systemNameDefautUrl={{item.url}}" target="_blank" class="main {{=getState(item.active)}}">{{item.name}}</a>
+        </li>
+    {{/each}}
+</ul>
+
+<div class="line" style="width: {{150*(list1.length - 1)}}px"></div>
+
+<ul class="fn-clear ul">
+    {{each list2 as item i}}
+        <li class="{{if i == 0}}first{{/if}}{{if item.feed}} line-feed{{/if}}">
+            <a href="/projectMg/index.htm?systemNameDefautUrl={{item.url}}" target="_blank" class="main {{=getState(item.active)}}">{{item.name}}</a>
+            {{if item.sub}}({{each item.sub as sitem i}}
+                <a href="/projectMg/index.htm?systemNameDefautUrl={{sitem.url}}{{if sitem.target}}&projectCode={{projectCode}}{{/if}}" target="_blank" class="sub {{=getState(sitem.active)}}">{{sitem.name}}</a>
+            {{/each}}){{/if}}
+        </li>
+    {{/each}}
+</ul>
+
+<div class="line" style="width: {{150*(list2.length - 1) + subNum[1] * 58}}px"></div>
+
+<ul class="fn-clear ul">
+    {{each list3 as item i}}
+        <li class="{{if i == 0}}first{{/if}}{{if item.feed}} line-feed{{/if}}">
+            <a href="/projectMg/index.htm?systemNameDefautUrl={{item.url}}" target="_blank" class="main {{=getState(item.active)}}">{{item.name}}</a>
+            {{if item.sub}}({{each item.sub as sitem i}}
+                <a href="/projectMg/index.htm?systemNameDefautUrl={{sitem.url}}{{if sitem.target}}&projectCode={{projectCode}}{{/if}}" target="_blank" class="sub {{=getState(sitem.active)}}">{{sitem.name}}</a>
+            {{/each}}){{/if}}
+        </li>
+    {{/each}}
+    <li class="end">
+        结束
+    </li>
+</ul>
+
+{{if !!list5.length}}
+    <ul class="fn-clear ul" style="margin-left: {{branch.left}}px">
+        <li class="branch-start first" style="width: {{branch.startWidth}}px"></li>
+        {{each list5 as item i}}
+            <li class="{{if item.feed}} line-feed{{/if}}">
+                <a href="/projectMg/index.htm?systemNameDefautUrl={{item.url}}{{if item.target}}&projectCode={{projectCode}}{{/if}}" target="_blank" class="main {{=getState(item.active)}}">{{item.name}}</a>
+            </li>
+        {{/each}}
+        <li class="branch-end" style="width: {{branch.endWidth}}px"></li>
+    </ul>
+{{/if}}
+
+
+<ul class="fn-clear bottom ul">
+    
+    {{each list4 as item i}}
+        <li class="first {{if item.feed}} line-feed{{/if}}">
+            <a href="/projectMg/index.htm?systemNameDefautUrl={{item.url}}" target="_blank" class="main {{=getState(item.active)}}">{{item.name}}</a>
+        </li>
+    {{/each}}
+
+</ul>

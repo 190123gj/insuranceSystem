@@ -1,0 +1,147 @@
+<table sqlname="insurance_liability">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO insurance_liability(id,name,code,status,creator_id,creator_name,raw_add_time) VALUES (?,?,?,?,?,?,?)
+			]]>
+        </sql>
+
+        <sqlmap>
+            <![CDATA[
+				INSERT INTO insurance_liability(id,name,code,status,creator_id,creator_name,raw_add_time) VALUES (#id#,#name#,#code#,#status#,#creatorId#,#creatorName#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+        </sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE insurance_liability SET name=?,code=?,status=?,creator_id=?,creator_name=? WHERE id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,name ,code ,status ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM insurance_liability WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_liability WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+            <param name="liabilitys" javatype="java.lang.String" />
+            <param name="beginDate" javatype="java.util.Date"></param>
+            <param name="endDate" javatype="java.util.Date"></param>
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,name ,code ,status ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM insurance_liability WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,name ,code ,status ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM insurance_liability where 1=1
+			<dynamic>
+	            <isNotEmpty property="insuranceLiability.name"   prepend=" and ">
+	                name like concat('%', #insuranceLiability.name#, '%')
+	            </isNotEmpty>
+				<isNotEmpty property="insuranceLiability.creatorName"   prepend=" and ">
+	                creator_name = #insuranceLiability.creatorName#
+	            </isNotEmpty>
+	            <isNotEmpty property="liabilitys"   prepend=" and ">
+	                id not in ($liabilitys$)
+	            </isNotEmpty>
+	            <isNotEmpty property="beginDate"   prepend=" and ">
+	                raw_add_time >= #beginDate#
+	            </isNotEmpty>
+	            <isNotEmpty property="endDate"  prepend=" and ">
+	                ${cdata-start} raw_add_time <= #endDate#  ${cdata-end}
+	            </isNotEmpty>
+	        </dynamic>	
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+		<extraparams>
+		    <param name="liabilitys" javatype="java.lang.String" />
+            <param name="beginDate" javatype="java.util.Date"></param>
+            <param name="endDate" javatype="java.util.Date"></param>
+        </extraparams>
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM insurance_liability WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM insurance_liability  where 1=1
+	           <dynamic>
+	            <isNotEmpty property="insuranceLiability.name"   prepend=" and ">
+	                name like concat('%', #insuranceLiability.name#, '%')
+	            </isNotEmpty>
+				<isNotEmpty property="insuranceLiability.creatorName"   prepend=" and ">
+	                creator_name = #insuranceLiability.creatorName#
+	            </isNotEmpty>
+	            <isNotEmpty property="liabilitys"   prepend=" and ">
+	                id not in ($liabilitys$)
+	            </isNotEmpty>
+	            <isNotEmpty property="beginDate"   prepend=" and ">
+	                raw_add_time >= #beginDate#
+	            </isNotEmpty>
+	            <isNotEmpty property="endDate"  prepend=" and ">
+	            ${cdata-start} raw_add_time <= #endDate#  ${cdata-end}
+	            </isNotEmpty>
+	        </dynamic>	
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+        <operation name="checkUnique" paramtype="object">
+        <sql>
+         <![CDATA[
+					SELECT  id ,name ,code ,status ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM insurance_liability WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+				  SELECT  id ,name ,code ,status ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM insurance_liability WHERE 1=1
+				   <dynamic>
+				    	<isNotEmpty property="name" prepend=" and ">
+			              name = #name#
+			            </isNotEmpty>
+			            <isNotEmpty property="id" prepend=" and ">
+			              ${cdata-start}  id <> #id# ${cdata-end}
+			            </isNotEmpty>
+	            </dynamic>
+			]]>
+        </sqlmap>
+    </operation>
+</table>

@@ -1,0 +1,13 @@
+	/**
+	 *  Query SEQUENCE <tt>$seq.name</tt> for next value.
+	 *
+	 *  <p>
+	 *  The sql statement for this operation is <br>
+	 *  <tt>$seq.parsedSql</tt>
+	 *
+	 *	@return $seq.returnType
+##@exception
+#foreach ($e in ${seq.simpleExceptions})
+	 *	@exception $e
+#end
+	 */	 

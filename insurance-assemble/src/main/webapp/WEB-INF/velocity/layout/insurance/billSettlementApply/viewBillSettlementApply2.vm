@@ -1,0 +1,199 @@
+<style>
+    .tabContent{
+        width: 100%;
+        margin: 0 auto;
+        overflow-x: auto;
+    }
+    table {
+        width: 90%;
+        margin: 20px auto;
+        border: 1px solid #d1d1d1;
+    }
+
+    th, td {
+        padding: 8px;
+        border: 1px solid #d1d1d1;
+    }
+
+    td {
+        text-align: center;
+    }
+
+    .date > td {
+        text-align: left;
+    }
+
+    td > input {
+        width: 60px;
+        border: 0;
+        border-bottom: 1px solid #b9e2d4;
+        outline: none;
+    }
+</style>
+
+<input type="hidden" name="id" value="$!{info.id}"/>
+<input type="hidden" name="type" value="$!{info.type}"/>
+<input type="hidden" name="formId" value="$!{info.formId}"/>
+<input type="hidden" name="businessBillId" value="$!{info.businessBillId}"/>
+
+<div class="tabContent">
+    <table border="1">
+        <tr>
+            <th colspan="7" style="font-size: 24px">$!{businessBillInfo.insuranceTypeName} (非车险)费用结算清单</th>
+        </tr>
+        <tr class="date">
+            <td colspan="2">部门:$!{businessBillInfo.insuranceDepart}</td>
+            <td colspan="2">团队:$!{businessBillInfo.insuranceTeam}</td>
+            <td colspan="1">日期:$dateUtil.simpleFormat($!{info.rowAddTime})</td>
+            <td colspan="2">结算单号:$!{info.settlementNo}</td>
+        </tr>
+        <tr>
+            <td rowspan="4">保单信息</td>
+            <td>保单号</td>
+            <td colspan="2">$!{businessBillInfo.insuranceNo}</td>
+            <td>险种名称</td>
+            <td colspan="2">$!{businessBillInfo.insuranceCatalogName}</td>
+        </tr>
+        <tr>
+      	    <td>原保费</td>
+            <td colspan="2">$!{businessBillInfo.premiumAmount}</td>
+        	<td>应收费用</td>
+            <td colspan="2">$!{businessBillInfo.brokerVal}</td>
+        </tr>
+        <tr>
+            <td>承保人<br>(保险公司)</td>
+            <td colspan="2">$!{businessBillInfo.insuranceCompanyName}</td>
+            <td>已收费用</td>
+            <td colspan="5">$!{chargeNoticeInfo.recievedFee}</td>
+        </tr>
+        <tr>
+            <td>投保人</td>
+            <td colspan="5">$!{businessBillInfo.billCustomerName}</td>
+        </tr>
+        <tr>
+            <td rowspan="3">费用信息</td>
+            <td rowspan="2">业务单号</td>
+            <td rowspan="2">结算通知单号</td>
+            <td rowspan="2">预留比率(%)<br></td>
+            <td rowspan="2">费用支付总额(元)<br></td>
+            <td colspan="2">本次支付</td>
+        </tr>
+        <tr>
+            <td>经代费</td>
+            <td>服务费</td>
+        </tr>
+        <tr>
+            <td>$!{businessBillInfo.billNo}</td>
+            <td>$!{info.settlementNo}</td>
+            <td>$!{businessBillInfo.grossRate}</td>
+            <td id="commonVal">$!{businessBillInfo.commonVal}</td>
+            <td>
+                #if ($!edit)
+                    <input id="generationFee" class="text fn-w100 fn-validate fnMakeMoney" type="text" name="billSettlementApplyDetailOrder.generationFee"
+                          #if($!billSettlementApplyDetailInfo.generationFee != "0.00") value="$!billSettlementApplyDetailInfo.generationFee" #end>
+
+                #else
+                    #if ($!detailInfo)
+                        $!detailInfo.generationFee
+                    #end
+                #end
+            </td>
+            <td>
+                #if ($!edit)
+                    <input id="serviceFee" class="text fn-w100 fn-validate fnMakeMoney" type="text" name="billSettlementApplyDetailOrder.serviceFee"
+                         #if($!billSettlementApplyDetailInfo.serviceFee != "0.00") value="$!billSettlementApplyDetailInfo.serviceFee" #end readOnly>
+
+                #else
+                    #if ($!detailInfo)
+                        $!detailInfo.serviceFee
+                    #end
+                #end
+            </td>
+        </tr>
+    </table>
+    <div class="m-item diyNameBox">
+        <label class="m-label"><span class="m-required">*</span>费用支付清单：</label>
+        <div class="fn-wp90 itemBox">
+            <table class="m-table m-table-list itemsList notLifeInsurance">
+                <tr>
+                    <th class="fn-tac">收款人名称</th>
+                    <th class="fn-tac">经纪人编号</th>
+                    <th class="fn-tac">经代费</th>
+                    <th class="fn-tac">服务费</th>
+                    <th class="fn-tac">应付金额</th>
+                    <th class="fn-tac">代扣税金</th>
+                    <th class="fn-tac">实付金额</th>
+                    #if ($!edit)
+                    <th class="fn-tac">操作</th>
+                    #end
+                </tr>
+                #if ($listUtil.isNotEmpty($!{payFeeDetails}))
+                    #foreach ($detail in $!{payFeeDetails})
+                        <tr diyname="billPayFeeDetails" class="itemLine">
+                            <td class="fn-tac"><input class="text fn-w100 fn-validate" type="text" name="receiverName"
+                                                      value="$!detail.receiverName"></td>
+                          	<td class="fn-tac"><input class="text fn-w100" type="text" name="insuranceBrokerNo"
+                                                      value="$!detail.insuranceBrokerNo"></td>
+                            <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney generationFee" type="text"
+                                                      name="generationFee" value="$!detail.generationFee"></td>
+                            <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney serviceFee" type="text"
+                                                      name="serviceFee" value="$!detail.serviceFee"></td>
+                            <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney payFee" type="text"
+                                                      name="payFee" value="$!detail.payFee" readOnly></td>
+                            <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney withholdTaxes" type="text"
+                                                      name="withholdTaxes" value="$!detail.withholdTaxes"></td>
+                            <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney actualPayFee" type="text"
+                                                      name="actualPayFee" value="$!detail.actualPayFee" readOnly></td>
+                               #if ($!edit)                         
+                            <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine showBtn" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a> </td>
+                       		   #end
+                        </tr>
+                    #end
+                #else
+                	#if ($!edit)
+	                	 <tr diyname="billPayFeeDetails" class="itemLine">
+	                        <td class="fn-tac"><input class="text fn-w100 fn-validate" type="text" name="receiverName"></td>
+	                        <td class="fn-tac"><input class="text fn-w100" type="text"
+	                      						      name="insuranceBrokerNo"></td>
+	                        <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney generationFee" type="text"
+	                                                  name="generationFee"></td>
+	                        <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney serviceFee" type="text"
+	                                                  name="serviceFee"></td>
+	                        <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney payFee" type="text"
+	                                                  name="payFee" readOnly></td>
+	                        <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney withholdTaxes" type="text"
+	                                                  name="withholdTaxes"></td>
+	                        <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney actualPayFee" type="text"
+	                                                  name="actualPayFee" readOnly></td>
+	                        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine showBtn"
+	                                              parentsClass="fnNewLine" href="javascript:void(0);"
+                                              style="color: #fff;">删除</a></td>
+                       </tr>
+                  #end
+                #end
+            </table>
+            #if ($!edit)
+            <p class="fn-mb10 fn-mt10">
+                <a class="ui-btn ui-btn-fill ui-btn-green addLine showBtn" templateid="TMP_INFO2"
+                   href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+            </p>
+            #end
+        </div>
+    </div>
+
+    <script type="text/html" id="TMP_INFO2">
+        <tr diyname="billPayFeeDetails" class="itemLine">
+            <td class="fn-tac"><input class="text fn-w100 fn-validate" type="text" name="receiverName"></td>
+            <td class="fn-tac"><input class="text fn-w100" type="text"name="insuranceBrokerNo"></td>
+            <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney generationFee" type="text" name="generationFee">
+            </td>
+            <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney serviceFee" type="text" name="serviceFee"></td>
+            <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney payFee" type="text" name="payFee" readOnly></td>
+            <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney withholdTaxes" type="text" name="withholdTaxes">
+            </td>
+            <td class="fn-tac"><input class="text fn-w100 fn-validate fnMakeMoney actualPayFee" type="text" name="actualPayFee" readOnly></td>
+            <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine showBtn" parentsClass="fnNewLine"
+                                  href="javascript:void(0);" style="color: #fff;">删除</a></td>
+        </tr>
+    </script>
+</div>

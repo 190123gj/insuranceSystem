@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+    <title>保单 - 新增</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;业务管理&nbsp;&gt;&nbsp;投保申请&nbsp;&gt;&nbsp;投保确认
+</div>
+
+<h2 class="m-h2-title">投保确认</h2>
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff">
+
+    <form id="form" action="/insurance/businessBill/editSubmit.json" method="POST" callbackhref="/insurance/businessBill/list.htm">
+        <input type="hidden" name="billNo" value="$!{insuranceContactLetterInfo.billNo}" #if ($!info.businessBillId > 0) disabled #end/>
+        <input type="hidden" name="letterId" value="$!{insuranceContactLetterInfo.letterId}" #if ($!info.businessBillId > 0) disabled #end/>
+        <input type="hidden" name="billCustomerId" value="$!{policyHolder.customerUserId}"#if ($!info.businessBillId > 0) disabled #end />
+        <input type="hidden" name="billCustomerName" value="$!{policyHolder.customerUserName}"#if ($!info.businessBillId > 0) disabled #end />
+       	<input type="hidden" name="projectSetupName" value="$!{insuranceContactLetterInfo.projectSetupName}" #if ($!info.businessBillId > 0) disabled #end/>
+       	<input type="hidden" name="proportion" value="$!{insuranceContactLetterInfo.proportion}" #if ($!info.businessBillId > 0) disabled #end/>
+       	<input type="hidden" name="proportionType" value="$!{insuranceContactLetterInfo.proportionType}" #if ($!info.businessBillId > 0) disabled #end/>
+        <div class="m-item">
+            <label class="m-label">业务单号：</label>
+            <div>$!{insuranceContactLetterInfo.billNo}</div>
+        </div>
+
+        <div class="fn-clear">
+            <div class="m-item m-item-half fn-left">
+                <label class="m-label"><span class="m-required">*</span>保单号：</label>
+                <input class="ui-text fn-w200 fn-validate" type="text" name="insuranceNo" value="$!{info.insuranceNo}" #if($!info.businessBillId > 0) disabled #end/>
+            </div>
+
+            <div class="m-item m-item-half fn-left">
+                <label class="m-label">发票号：</label>
+                <input class="ui-text fn-w200" type="text" name="invoiceNo" value="$!{info.invoiceNo}" #if($!info.businessBillId > 0) disabled #end/>
+            </div>
+
+            <div class="m-item m-item-half fn-left">
+                <label class="m-label">续保单号：</label>
+                <input class="ui-text fn-w200" type="text" name="renewalNo" value="$!{info.renewalNo}" #if($!info.businessBillId > 0) disabled #end/>
+            </div>
+
+            <div class="m-item m-item-half fn-left">
+                <label class="m-label">批单号：</label>
+                <input class="ui-text fn-w200" type="text" name="batchNo" value="$!{info.batchNo}"  #if($!info.businessBillId > 0) disabled #end/>
+            </div>
+        </div>
+
+        <div class="m-item diyNameBox">
+            <label class="m-label">客户信息：</label>
+            <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac"></th>
+                        <th class="fn-tac">名称</th>
+                        <th class="fn-tac">证件类型</th>
+                        <th class="fn-tac">证件号码</th>
+                        <th class="fn-tac">关系</th>
+                    </tr>
+                    <tr class="itemLine" diyname="businessBillCustomerOrder">
+                        <td class="fn-tac">投保人</td>
+                        <td class="fn-tac">
+                            <input class="ui-text fn-w200 fn-validate" type="text" id="policyHolder" name="customerUserName" readonly  value="$!{policyHolder.customerUserName}">
+                        	<input type="hidden" name="customerUserId" id="policyHolderId" value="$!{policyHolder.customerUserId}">
+                            <input type="hidden" value="0" name="type" />
+                        </td>
+                        <td class="fn-tac certType1">$!{policyHolder.customerCertType}</td>
+                        <input type="hidden" name="customerCertType" id="certType1" value="$!{policyHolder.customerCertType}" />
+                        <td class="fn-tac certNo1">$!{policyHolder.customerCertNo}</td>
+                        <input type="hidden" name="customerCertNo" id="certNo1" value="$!{policyHolder.customerCertNo}"/>
+                        <td class="fn-tac">
+                            <select class="ui-select fn-w200 fn-validate" name="relation" #if($!info.businessBillId > 0) disabled #end >
+                                <option value="">请选择</option>
+                                #foreach($relationInfos in $customerRelation)
+                                    <option value="$relationInfos.name" #if ($relationInfos.name == $policyHolder.relation) selected #end>$relationInfos.name</option>
+                                #end
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="itemLine" diyname="businessBillCustomerOrder">
+                        <td class="fn-tac">被保险人</td>
+                        <td class="fn-tac m-item">
+                            <input class="ui-text fn-w200 fn-validate" type="text" id="insuredPerson" name="customerUserName" readonly  value="$!{insuredPerson.customerUserName}" >
+                       		<input type="hidden" name="customerUserId"  id="insuredPersonId" value="$!{insuredPerson.customerUserId}">
+                            <input type="hidden" value="1" name="type" />
+                        </td>
+                        <td class="fn-tac certType2">$!{insuredPerson.customerCertType}</td>
+                         <input type="hidden" name="customerCertType" id="certType2" value="$!{insuredPerson.customerCertType}"/>
+                        <td class="fn-tac certNo2">$!{insuredPerson.customerCertNo}</td>
+                         <input type="hidden" name="customerCertNo" id="certNo2" value="$!{insuredPerson.customerCertNo}"/>
+                        <td class="fn-tac">
+                            <select class="ui-select fn-w200 fn-validate" name="relation" #if($!info.businessBillId > 0) disabled #end >
+                                <option value="">请选择</option>
+                                #foreach($relationInfos in $customerRelation)
+                                    <option value="$relationInfos.name" #if ($relationInfos.name == $insuredPerson.relation) selected #end>$relationInfos.name</option>
+                                #end
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="m-item itemBox benefitPlanBox diyNameBox">
+            <label class="m-label">受益人信息：</label>
+            <div class="fn-mb10">
+                <label>受益方案：</label>
+                <label><input type="radio" class="radio benefitPlan" checked templateid="TMP_BENEFIT_PLAN_ORDER" name="status"/>顺序</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input type="radio" class="radio benefitPlan" templateid="TMP_BENEFIT_PLAN_SCALE" name="status"/>比例</label>
+                <input type="hidden" class="ignore allScaleNum" value="0">
+            </div>
+            <table class="m-table m-table-list itemsList" style="width: 96%;">
+                <tr>
+                    <th class="fn-tac fn-w100">受益顺序</th>
+                    <th class="fn-tac fn-w100 fn-hide">受益比例（%）</th>
+                    <th class="fn-tac">受益人名称</th>
+                    <th class="fn-tac">证件类型</th>
+                    <th class="fn-tac">证件号码</th>
+                </tr>
+                  #foreach ($list in $!{findBusinessBillBeneficiarys})
+                	 <tr>
+	                    <td class="fn-tac">$!list.beneficiaryVal</td>
+	                    <td class="fn-tac">$!list.beneficiaryUserName</td>
+	                    <td class="fn-tac">$!list.beneficiaryCertType</td>
+	                    <td class="fn-tac">$!list.beneficiaryCertNo</td>
+               		 </tr> 
+                  #end
+            </table>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">承保信息</label>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>投保日期：</label>
+            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="insuranceDate" #if($!info.businessBillId > 0) disabled #end  type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="insuranceDate" value="$!dateUtil.formatDay($!{info.beginDate})"/></div>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>保险起期：</label>
+            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="beginDate" #if($!info.businessBillId > 0) disabled #end  type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm'})" name="beginDate" value="$!dateUtil.simpleFormatYmdmd($!{info.beginDate})"/></div>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>保险止期：</label>
+            <div> <input class="ui-text fn-w200 laydate-icon fn-validate" id="endDate" #if($!info.businessBillId > 0) disabled #end  type="text" onclick="laydate({istime: true,min: laydate.now(),format: 'YYYY-MM-DD hh:mm'})" name="endDate" value="$!dateUtil.simpleFormatYmdmd($!{info.beginDate})"/></div>
+        </div>
+
+        <div class="m-item itemBox diyNameBox">
+            <label class="m-label"><span class="m-required">*</span>投保内容：</label>
+            <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">保险产品</th>
+                        <th class="fn-tac">缴费期限</th>
+                        <th class="fn-tac">保额</th>
+                        <th class="fn-tac">首期保费</th>
+                    </tr>
+                    #if ($!info.businessBillId > 0 )
+                        #foreach ($list in $!{contactLetterDetails})
+                            <tr>
+                                <td class="fn-tac">$list.productName</td>
+                                <td class="fn-tac">$list.period年</td>
+                                <td class="fn-tac">$list.insuranceAmount</td>
+                                <td class="fn-tac">$list.firstPremiumAmount元</td>
+                            </tr>
+                        #end
+                    #else
+                        #foreach ($list in $!{insuranceContactLetterDetails})
+                            <tr>
+                                <td class="fn-tac">$list.productName</td>
+                                <td class="fn-tac">$list.period年</td>
+                                <td class="fn-tac">$list.insuranceAmount</td>
+                                <td class="fn-tac">$list.firstPremiumAmount元</td>
+                            </tr>
+                        #end
+                    #end
+                </table>
+                <input type="hidden" value="$!{amount}" name="premiumAmount" />
+            </div>
+        </div>
+        <div class="m-item itemBox diyNameBox">
+            <label class="m-label"><span class="m-required">*</span>缴费计划：</label>
+            <input type="hidden" value="$!{payPlanLen}" id="payPlanLen" />
+            <div>
+                <table class="m-table m-table-list itemsList renvalwayPlanTable" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">保单年度</th>
+                        <th class="fn-tac">缴费期数</th>
+                        <th class="fn-tac">应收日期</th>
+                        <th class="fn-tac">保险费（元）</th>
+                        <th class="fn-tac">实收日期</th>
+                        <th class="fn-tac">缴费</th>
+                    </tr>
+                    #set($n = -1)
+                    #set($currentYear = 0)
+                    #foreach ($list in $!{planList})
+                    #set($a = 0)
+                    #set($n = $n+1)
+                    #set($currentYear = $currentYear+1)
+                        #foreach ($listDetail in $list.info)
+                             #set($a = $a+1)
+                  		  <tr diyname="businessBillPayPlanOrders" year="$!list.year" businessBillId="$!{listDetail.businessBillId}" period="$!{listDetail.period}">
+	                  		  #if($a == 1) 
+	                  		    <td class="fn-tac year" rowspan ="$!{list.length}">$!list.year</td>
+	                  		  #else 
+	                  		     <td class="fn-tac year fn-hide">$!list.year</td>
+	                  		  #end
+	                  	   <input type="hidden" name="serial" value="$a">
+	                  	   <input type="hidden" name="currentYear" value="$currentYear">
+                           <input type="hidden" name="year" value="$!list.year">
+                           <input type="hidden" name="appserialPeriod" value="$listDetail.period">
+                           <input type="hidden" name="premiumAmount" value="$!listDetail.premiumAmount.amount">
+                           <input type="hidden" name="planPayDate" value="$!dateUtil.formatDay($listDetail.planPayDate)">
+                           <input type="hidden" name="paymentStatus" value="$listDetail.paymentStatus" class="paymentStatus">
+                           <input type="hidden" name="payPlanId" value="$listDetail.payPlanId">
+                            <td class="fn-tac appserialPeriod">$listDetail.period</td>
+                            <td class="fn-tac planPayDate">$!dateUtil.formatDay($listDetail.planPayDate)</td>
+                            <td class="fn-tac">$!listDetail.premiumAmount.amount</td>
+                            #if($listDetail.paymentStatus > 0)
+                              <td class="fn-tac"><input class="text fn-tac" value="$!dateUtil.formatDay($!{listDetail.actualPayDate})"" readOnly  type="text"  name="actualPayDate"/></td>
+                            #else
+                            <td class="fn-tac"><input class="text laydate-icon fn-tac actualPayDate lifeActualPayDate index_$n" value="$!dateUtil.formatDay($!{listDetail.actualPayDate})""  type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="actualPayDate"/></td>
+                            #end
+                            <td class="fn-tac"><a href="javascript:void(0);" class="renewalPayment"/>[ 缴费信息 ]</a> <input type="hidden" class="renewalPaymentVal #if($!info.businessBillId == 0)newAddVal #end""  name="insuranceBillRenewal"></td>
+                        </tr>
+                        #end
+                    #end
+                </table>
+               
+            </div>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>经纪费信息：</label>
+            <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac"></th>
+                        <th class="fn-tac">比例(%)</th>
+                        <th class="fn-tac" colspan="2">金额(元)</th>
+                    </tr>
+                    
+                    #if($!info.businessBillId > 0) 
+                    <tr>
+                        <td class="fn-tac">经纪费收入</td>
+                        <td class="fn-tac">$!{brokerageFeeInfo.brokerageScale}</td>
+                        <td class="fn-tac" colspan="2">$!{brokerageFeeInfo.brokerageAmount}</td>
+                    </tr>
+                    #else
+                    <tr>
+                        <td class="fn-tac">经纪费收入</td>
+                        <td class="fn-tac ">
+                            <div class="inComeRate">$!{brokerageFeeInfo.brokerageScale}</div>
+                            <input type="hidden" class="inComeRate fn-validate" name="brokerageFeeOrder.brokerageScale" value="$!{brokerageFeeInfo.brokerageScale}" />
+                        </td>
+                        <td class="fn-tac" colspan="2">
+                            <div class="inCome">$!{brokerageFeeInfo.brokerageAmount}</div>
+                            <input type="hidden" class="inCome fn-validate" name="brokerageFeeOrder.brokerageAmount" value="$!{brokerageFeeInfo.brokerageAmount}"/>
+                        </td>
+                    </tr>
+                    #end
+                    
+                </table>
+            </div>
+            <div class="itemBox diyNameBox">明细：
+                <table class="m-table m-table-list itemsList brokerageTab" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">经纪费比例（%）</th>
+                        <th class="fn-tac">应收金额</th>
+                        <th class="fn-tac">应收日期</th>
+                        <th class="fn-tac">实收日期</th>
+                    </tr>
+                    
+                    #foreach ($brokerageFee in $!{brokerageFeeDetails})
+                     <tr class="itemLine" diyname="brokerageFeeDetailOrder"> 
+                     	<td class="fn-tac">$!brokerageFee.borkerageScale</td>
+                     	<td class="fn-tac">$!brokerageFee.receivableAmount</td>
+                     	<td class="fn-tac planPayDate">$dateUtil.dtSimpleFormat($!brokerageFee.planPayDate)</td>
+                     	<td class="fn-tac">$dateUtil.simpleFormat($!brokerageFee.actualPayDate)</td>
+                     	<input type="hidden" class="appserialPeriod" name="appserialPeriod" value="$!brokerageFee.appserialPeriod" />
+                     	<input type="hidden" class="extactTime" name="extactTime" value=""/>
+                     	<input type="hidden" class="brokerageRate" name="borkerageScale" value="$!brokerageFee.borkerageScale" />
+				        <input type="hidden" class="receivableAmount" name="receivableAmount" value="$!brokerageFee.receivableAmount" />
+				        <input type="hidden" class="planPayDate" name="planPayDate" value="$!dateUtil.dtSimpleFormat($!brokerageFee.planPayDate)" />
+				        <input type="hidden" class="actualPayDate" name="actualPayDate" value="$dateUtil.dtSimpleFormat($!brokerageFee.actualPayDate)" />
+                     </tr>
+                    #end
+                </table>
+
+                <p class="fn-mb10 fn-mt10 fn-hide">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_JJFDETAIL" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </p>
+            </div>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>佣金信息：</label>
+            <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac"></th>
+                        <th class="fn-tac">分类</th>
+                        <th class="fn-tac">比例(%)</th>
+                        <th class="fn-tac" colspan="2">金额（元） </th>
+                    </tr>
+                      #if($!info.businessBillId > 0) 
+                      <tr>
+                        <td class="fn-tac">费用信息</td>
+                        <td class="fn-tac">$!{commissionInfoInfo.commissionCatalog}类</td>
+                        <td class="fn-tac"> $!{commissionInfoInfo.commissionScale}</td>
+                        <td class="fn-tac colspan="2">$!{commissionInfoInfo.commissionAmount} </td>
+                    </tr>
+                      #else
+                      
+                    <tr>
+                        <td class="fn-tac">费用信息</td>
+                        <td class="fn-tac">
+                           <select class="ui-select fn-w200" name="commissionInfoOrder.commissionCatalog">
+				                <option value="1">1类</option>
+				                <option value="2">2类</option>
+				                <option value="3">3类</option>
+				            </select>
+				       </td>
+                        <td class="fn-tac">
+                        	<div class="payRate">$!{commissionInfo.commissionScale}</div>
+                            <input type="hidden" class="payRate fn-validate" name="commissionInfoOrder.commissionScale" value="$!{commissionInfo.commissionScale}" />
+                         </td>
+                        <td class="fn-tac" colspan="2"> 
+                        	<div class="payAmount">$!{commissionInfo.commissionAmount}</div>
+                     	    <input type="hidden" class="payAmount fn-validate" name="commissionInfoOrder.commissionAmount" value="$!{commissionInfo.commissionAmount}" />
+                        </td>
+                    </tr>
+                      #end
+                </table>
+            </div>
+            #if ($stringUtil.isNotEmpty($insuranceContactLetterInfo.proportionType))
+            <div>说明：该业务单投保申请时关联了超权限审批单，该业务员佣金比例使用的费用政策为#if ($!insuranceContactLetterInfo.proportionType == "0") 占经纪费比例 #else 占保费比例 #end的$!insuranceContactLetterInfo.proportion%</div>
+            #end
+            <div class="itemBox diyNameBox">明细：
+                <table class="m-table m-table-list itemsList commissionTab" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">应付日期</th>
+                        <th class="fn-tac">应付金额</th>
+                    </tr>
+                    #foreach ($commissionInfo in $!{commissionInfoDetails})
+                     <tr class="itemLine" diyname="commissionInfoDetailOrder">
+                        <td class="fn-tac planPayDate">$dateUtil.dtSimpleFormat($!commissionInfo.planPayDate)</td>
+                        <td class="fn-tac">$!commissionInfo.receivableAmount</td>
+                       	<input type="hidden" class="extactTime" name="extactTime" value=""/>
+                        <input type="hidden" class="appserialPeriod" name="appserialPeriod" value="$!commissionInfo.appserialPeriod" />
+				        <input type="hidden" class="planPayDate" name="planPayDate" value="$!dateUtil.dtSimpleFormat($!commissionInfo.planPayDate)" />
+				        <input type="hidden" class="receivableAmount" name="receivableAmount" value="$!commissionInfo.receivableAmount" />
+                    </tr>
+                    #end
+                </table>
+
+                <p class="fn-mb10 fn-mt10 fn-hide">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_YJDETAIL" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">机构信息</label>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">业务员：</label>
+             <input type="hidden" name="businessUserCertNo" />
+             <input type="hidden" name="businessUserMobile" />
+             <input type="hidden" name="businessUserType" />
+             <input type="hidden" name="businessUserId" value="$!{insuranceContactLetterInfo.businessUserId}" />
+             <input type="hidden" name="businessUserName" value="$!{insuranceContactLetterInfo.businessUserName}"/>
+            <div><input class="ui-text fn-w200" type="text" disabled value="$!{insuranceContactLetterInfo.businessUserName}"></div>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">业务部门：</label>
+            <div><input class="ui-text fn-w200" type="text" disabled value="$!{insuranceContactLetterInfo.department}"></div>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">承保公司：</label>
+            <input type="hidden" name="insuranceCompanyId" value="$!{insuranceContactLetterInfo.companyUserId}" />
+            <input type="hidden" name="insuranceCompanyName" value="$!{insuranceContactLetterInfo.companyUserName}" />
+            <input class="ui-text fn-w200" type="text" value="$!{insuranceContactLetterInfo.companyUserName}" readOnly>
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label">中介渠道：</label>
+             #if($!info.businessBillId > 0) 
+            <input class="ui-text fn-w200" type="text" readOnly value="$!{info.agencyCompanyName}">
+            <input class="ui-text fn-w200" type="hidden" value="$!{info.agencyCompanyId}">
+             #else
+             <select name="agencyCompanyId" class="ui-select fn-w200 fn-validate" #if($!info.businessBillId > 0) disabled #end>
+               #if($stringUtil.isNotEmpty($!{info.agencyCompanyName}))
+                	<option value="$!{info.agencyCompanyId}">$!{info.agencyCompanyName}</option>
+               #else
+                  <option value="">请选择</option>
+	              #foreach ($list in $!{agencyCompanys})
+	               <option value="$!list.userId" #if ($!info.agencyCompanyId == $!list.userId) selected #end>$!list.customerName</option>
+	              #end
+               #end
+            </select>
+             #end
+        </div>
+
+            
+        <div class="m-item itemBox diyNameBox">
+            <label class="m-label">共保信息：</label>
+            <a class="ui-btn ui-btn-fill ui-btn-green addBillCoins" #if ($listUtil.isNotEmpty($!{billCoins})) style="display:none;" #end href="javascript:void(0);"><i class="icon icon-add"></i></a>
+            <a class="ui-btn ui-btn-fill ui-btn-danger removeBillCoins"  #if (!$listUtil.isNotEmpty($!{billCoins})) style="display:none;" #end href="javascript:void(0);"><i class="icon icon-del"></i></a>
+            <div class="billCoins #if(!$!listUtil.isNotEmpty($!{billCoins})) fn-hide #end">
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">保险公司</th>
+                        <th class="fn-tac">首席</th>
+                        <th class="fn-tac">份额</th>
+                        <th class="fn-tac">保险费</th>
+                        <th class="fn-tac">经纪费</th>
+                        <th class="fn-tac">出单费</th>
+                        <th class="fn-tac">其他费用</th>
+                        <th class="fn-tac">附件上传</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+                    #foreach ($billCoins in $!{billCoins})
+                        <tr class="itemLine" diyname="businessBillCoinsInfoOrders">
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="insuraceCompanyName" value="$billCoins.insuraceCompanyName"></td>
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="chief" value="$billCoins.chief"></td>
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="portion" value="$billCoins.portion"></td>
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="premiumAmount" value="$billCoins.premiumAmount"></td>
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="brokerAmount" value="$billCoins.brokerAmount"></td>
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="outAmount" value="$billCoins.outAmount"></td>
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="otherAmount" value="$billCoins.otherAmount"></td>
+                            <td class="fn-tac">
+                                <div class=fnUpAttach">
+                                    #set($attachmentTitle="点击上传")
+                                #set($attachmentNameAttr="pathName_LIFEINSURANCEBILLCOINS")
+                                #set($hiddenUrls = $!{hiddenUrls_LIFEINSURANCEBILLCOINS})
+                                #set($attachments = $!{attaches_LIFEINSURANCEBILLCOINS})
+                                #parse("/layout/common/uploadAttachment.vm")
+                                </div>
+                            </td>
+                            <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+                        </tr>
+                    #end
+                </table>
+                <p class="fn-mb10 fn-mt10">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_SHARE_INSURANCE_INFO" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="m-item itemBox diyNameBox">
+            <label class="m-label">再保信息：</label>
+	        <a class="ui-btn ui-btn-fill ui-btn-green addBillReins" #if ($listUtil.isNotEmpty($!{billReins})) style="display:none;" #end href="javascript:void(0);"><i class="icon icon-add"></i></a>
+            <a class="ui-btn ui-btn-fill ui-btn-danger removeBillReins" #if (!$listUtil.isNotEmpty($!{billReins})) style="display:none;" #end href="javascript:void(0);"><i class="icon icon-del"></i></a>
+            <div  class="billReins #if (!$listUtil.isNotEmpty($!{billReins})) fn-hide #end">
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac">再保险公司</th>
+                        <th class="fn-tac">再保费</th>
+                        <th class="fn-tac">再保手续费</th>
+                        <th class="fn-tac">附件上传</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+                    #foreach ($billReins in $!{billReins})
+                        <tr class="itemLine" diyname="businessBillReinsInfoOrders">
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="insuraceCompanyName" value="$!billReins.insuraceCompanyName"/></td>
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="premiumAmount" value="$!billReins.premiumAmount"/></td>
+                            <td class="fn-tac"><input class="text fn-validate" type="text" name="poundageAmount" value="$billReins.poundageAmount"/></td>
+                            <td class="fn-tac">
+                                 <div class="fnUpAttach">
+					                #set($attachmentTitle="上传附件")
+					                #set($attachmentNameAttr="pathName_LIFEINSURANCE_BILL_POLICY_RECEIPT")
+					                #set($hiddenUrls = $!{hiddenUrls_LIFEINSURANCE_BILL_POLICY_RECEIPT})
+					                #set($attachments = $!{attaches_LIFEINSURANCE_BILL_POLICY_RECEIPT})
+					                #parse("/layout/common/uploadAttachment.vm")
+					            </div>
+                            </td>
+                            <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+                        </tr>
+                    #end
+                </table>
+                <p class="fn-mb10 fn-mt10">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_AGAIN_INSURANCE_INFO" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </p>
+            </div>
+        </div>
+
+
+		<div class="m-item">
+            <label class="m-label">客户保单回执：</label>
+            <div class="fnUpAttach">
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="pathName_LIFEINSURANCE_BILL_POLICY_RECEIPT")
+                #set($hiddenUrls = $!{hiddenUrls_LIFEINSURANCE_BILL_POLICY_RECEIPT})
+                #set($attachments = $!{attaches_LIFEINSURANCE_BILL_POLICY_RECEIPT})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </div>
+
+
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <input type="hidden" value="$!{info.businessBillId}" name="businessBillId"/>
+            <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn" type="button" value="保单确认">
+            <a href="/insurance/businessBill/list.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+
+    </form>
+
+</div>
+##受益人信息-受益方案
+<script type="text/html" id="TMP_BENEFIT_PLAN_ORDER">
+    <tr class="itemLine" diyname="businessBillBeneficiaryOrder">
+        <input class="text" type="hidden" name="type" value="0">
+        <td class="fn-tac"> <input type="text" class="text fn-tac itemListIndex" readonly value="" name="beneficiaryVal"></td>
+        <td class="fn-tac"> <input class="text fn-validate" name="beneficiaryUserName"></td>
+        <td class="fn-tac"> <input class="text fn-validate" type="text" name="beneficiaryCertType" ></td>
+        <td class="fn-tac"> <input class="text fn-validate" type="text" name="beneficiaryCertNo"></td>
+        <td class="fn-tac">
+            <a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a>
+        </td>
+    </tr>
+</script>
+##受益人信息-受益比例
+<script type="text/html" id="TMP_BENEFIT_PLAN_SCALE">
+    <tr class="itemLine" diyname="businessBillBeneficiaryOrder">
+        <input class="text" type="hidden" name="type" value="1">
+        <td class="fn-tac"><input type="text" class="text fn-tac benefitPlanScale fn-validate" value="" name="beneficiaryVal"></td>
+        <td class="fn-tac"> <input class="text fn-validate" name="beneficiaryUserName"></td>
+        <td class="fn-tac"> <input class="text fn-validate" type="text" name="beneficiaryCertType"></td>
+        <td class="fn-tac"> <input class="text fn-validate" type="text" name="beneficiaryCertNo"></td>
+        <td class="fn-tac">
+            <a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a>
+        </td>
+    </tr>
+</script>
+##承保信息
+<script type="text/html" id="TMP_BARE_INSURANCE">
+    <tr class="itemLine" diyname="businessBillUnderInforOrders">
+        <td class="fn-tac"> <input class="text fn-validate" type="text" name="productName"/></td>
+        <td class="fn-tac"> <input class="text fn-validate fnMoneyNumber" type="text" name="insuranceAmount"/></td>
+        <td class="fn-tac"> <input class="text fn-validate fnFloatNumber" type="text" name="permiumRate"/></td>
+        <td class="fn-tac"> <input class="text fn-validate fnFloatNumber" type="text" name="premiumAmount"/></td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+    </tr>
+</script>
+##缴费计划
+<script type="text/html" id="TMP_PAYMENT_PLAN">
+    <tr class="itemLine newItemList" diyname="businessBillPayPlanOrders">
+        <td class="fn-tac"> <input class="text fn-validate itemListIndex fn-w100 fn-tac targetId"  type="text" name="appserialPeriod" readonly></td>
+        <td class="fn-tac"> <input class="text fn-validate premiumAmount fnMakeMoney" type="text" name="premiumAmount"></td>
+        <td class="fn-tac"> <input class="text laydate-icon fn-validate"  type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="planPayDate"/></td>
+        <td class="fn-tac"> <input class="text laydate-icon actualPayDate"  type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})" name="actualPayDate"/></td>
+        <td><a href="javascript:void(0);" class="renewalPayment" >[ 缴费信息 ]</a> <input type="hidden" class="renewalPaymentVal #if ($!info.businessBillId == 0)newAddVal #end" name="insuranceBillRenewal"></td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1" cbname="deleteIndexLine">删除</a></td>
+    </tr>
+</script>
+
+##共保信息
+<script type="text/html" id="TMP_SHARE_INSURANCE_INFO">
+    <tr class="itemLine" diyname="businessBillCoinsInfoOrders">
+        <td class="fn-tac"><input class="text fn-validate" type="text" name="insuraceCompanyName"></td>
+        <td class="fn-tac"><input class="text fn-validate" type="text" name="chief"></td>
+        <td class="fn-tac"><input class="text fn-validate" type="text" name="portion"></td>
+        <td class="fn-tac"><input class="text fn-validate" type="text" name="premiumAmount"></td>
+        <td class="fn-tac"><input class="text fn-validate" type="text" name="brokerAmount"></td>
+        <td class="fn-tac"><input class="text fn-validate" type="text" name="outAmount"></td>
+        <td class="fn-tac"><input class="text fn-validate" type="text" name="otherAmount"></td>
+        <td class="fn-tac">
+            <div class=fnUpAttach">
+                #set($attachmentTitle="点击上传")
+                #set($attachmentNameAttr="pathName_PRODUCT1_PROTOCOL")
+                #set($hiddenUrls = $!{hiddenUrls_PRODUCT1_PROTOCOL})
+                #set($attachments = $!{attaches_PRODUCT1_PROTOCOL})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+    </tr>
+</script>
+##再保信息
+<script type="text/html" id="TMP_AGAIN_INSURANCE_INFO">
+    <tr class="itemLine" diyname="businessBillReinsInfoOrders">
+        <td class="fn-tac"><input class="text fn-validate" type="text" name="insuraceCompanyName"></td>
+        <td class="fn-tac"><input class="text fn-validate" type="text" name="premiumAmount"></td>
+        <td class="fn-tac"><input class="text fn-validate" type="text" name="poundageAmount"></td>
+        <td class="fn-tac">
+            <div class=fnUpAttach">
+                #set($attachmentTitle="点击上传")
+                #set($attachmentNameAttr="pathName_PRODUCT1_PROTOCOL")
+                #set($hiddenUrls = $!{hiddenUrls_PRODUCT1_PROTOCOL})
+                #set($attachments = $!{attaches_PRODUCT1_PROTOCOL})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+    </tr>
+</script>
+
+<script type="text/html" id="RENEVALPAYMENT">
+    <form action="/insurance/insuranceBillRenewal/editSubmit.json">
+        <input type="hidden" id="renevalInfoId" name="payPlanId" value="">
+        <input type="hidden" id="period" name="period" value="">
+        <input type="hidden" name="businessBillId" id="businessBillId" value="">
+        <div class="m-item fn-p-reb">
+            <label class="m-label">缴费方式：</label>
+            <select name="paymentMethod" class="ui-select fn-w200 fn-validate paymentWaySelect">
+            ##value值下面的id值相同
+                <option value="">请选择</option>
+                <option value="CASH">现金</option>
+                <option value="POSKA">POS刷卡</option>
+                <option value="TRANSFORM">转账</option>
+                <option value="ZHIPIAO">支票</option>
+                <option value="THREE">第三方平台转账</option>
+            </select>
+        </div>
+        <div class="paymentWayItems">
+        ##现金
+            <div id="CASH" class="paymentWayitemInfo fn-hide fn-clear">
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payer"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payee"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">金额：</label>
+                    <input class="ui-text fn-w200 fn-validate fnMakeMoney" type="text" name="money"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">交易时间：</label>
+                    <input class="ui-text fn-w200 laydate-icon fnChangeInput fn-validate" type="text" name="tradingTime" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">代收人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="agent"/>
+                </div>
+            </div>
+        ##POS刷卡
+            <div id="POSKA" class="paymentWayitemInfo fn-hide fn-clear">
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payer"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payee"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">金额：</label>
+                    <input class="ui-text fn-w200 fn-validate fnMakeMoney" type="text" name="money"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">交易时间：</label>
+                    <input class="ui-text fn-w200 laydate-icon fnChangeInput fn-validate" type="text" name="tradingTime" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">POS机编号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="postNo"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">商户号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="merchantId"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">交易码：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="tradingCode"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">操作员：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="operater"/>
+                </div>
+            </div>
+        ##转账
+            <div id="TRANSFORM" class="paymentWayitemInfo fn-hide fn-clear">
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payer"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payee"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">金额：</label>
+                    <input class="ui-text fn-w200 fn-validate fnMakeMoney" type="text" name="money"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">交易时间：</label>
+                    <input class="ui-text fn-w200 laydate-icon fnChangeInput fn-validate" type="text" name="tradingTime" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">转账流水号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="transferSerialNumber"/>
+                </div>
+                <div class="fn-left" style="width: 100%;height: 1px;"></div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款行：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payBank"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款账号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payAccount" />
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款行：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="receivablesBank"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款账号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="receivablesAccount"/>
+                </div>
+            </div>
+        ##支票
+            <div id="ZHIPIAO" class="paymentWayitemInfo fn-hide fn-clear">
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payer"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payee"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">金额：</label>
+                    <input class="ui-text fn-w200 fn-validate fnMakeMoney" type="text" name="money"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">交易时间：</label>
+                    <input class="ui-text fn-w200 laydate-icon fnChangeInput fn-validate" type="text" name="tradingTime"  onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">支票号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="checkNumber"/>
+                </div>
+                <div class="fn-left" style="width: 100%;height: 1px;"></div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款行：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payBank"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款账号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payAccount"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款行：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="receivablesBank" />
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款账号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="receivablesAccount"/>
+                </div>
+            </div>
+        ##三方平台
+            <div id="THREE" class="paymentWayitemInfo fn-hide fn-clear">
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payer"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款人：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payee"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">金额：</label>
+                    <input class="ui-text fn-w200 fn-validate fnMakeMoney" type="text" name="money"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">交易时间：</label>
+                    <input class="ui-text fn-w200 laydate-icon fnChangeInput fn-validate" type="text" name="tradingTime"  onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">平台名称：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="platformName"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">转账流水号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="transferSerialNumber" />
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款行：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payBank"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">付款账号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="payAccount"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款行：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="receivablesBank"/>
+                </div>
+                <div class="m-item fn-left m-item-halfp50 fn-p-reb">
+                    <label class="m-label">收款账号：</label>
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="receivablesAccount"/>
+                </div>
+            </div>
+        </div>
+        <div class="m-item fn-p-reb">
+            <label class="m-label">单据号：</label>
+            <input class="ui-text fn-w200 fn-validate" type="text" name="billNo"/>
+        </div>
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submit submitRenewalPayment" type="button" value="提交">
+            <a href="javascript:void(0)" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5 closeRenewalPayment">返回</a>
+        </div>
+    </form>
+</script>
+<script type="text/html" id="TMP_JJFDETAIL">
+    <tr class="itemLine" diyname="brokerageFeeDetailOrder">
+        <td class="fn-tac brokerageRate"></td>
+        <td class="fn-tac receivableAmount"></td>
+        <td class="fn-tac planPayDate"></td>
+        <td class="fn-tac actualPayDate"></td>
+        <input type="hidden" class="appserialPeriod" name="appserialPeriod" />
+        <input type="hidden" class="brokerageRate" name="borkerageScale" />
+        <input type="hidden" class="receivableAmount" name="receivableAmount" />
+        <input type="hidden" class="planPayDate" name="planPayDate" />
+        <input type="hidden" class="actualPayDate" name="actualPayDate" />
+    </tr>
+</script>
+<script type="text/html" id="TMP_YJDETAIL">
+    <tr class="itemLine" diyname="commissionInfoDetailOrder">
+        <td class="fn-tac fn-hide commissionRate"></td>
+        <td class="fn-tac planPayDate"></td>
+        <td class="fn-tac receivableAmount"></td>
+        <input type="hidden" class="appserialPeriod" name="appserialPeriod" />
+        <input type="hidden" class="planPayDate" name="planPayDate" />
+        <input type="hidden" class="receivableAmount" name="receivableAmount" />
+    </tr>
+</script>
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    seajs.use($_GLOBAL.zyw+'/businessBill/addBusinessBill');
+</script>
+
+</body>
+</html>

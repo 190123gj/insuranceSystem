@@ -1,0 +1,58 @@
+<table sqlname="release_project">
+	<operation name="insert" paramtype="object">
+		<sql>
+			<![CDATA[
+				INSERT INTO release_project(project_code,project_name,status,raw_add_time) VALUES (?,?,?,?)
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="update" paramtype="object">
+		<sql>
+			<![CDATA[
+				UPDATE release_project SET project_code=?,project_name=?,status=? WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="updateProjectCode" paramtype="object">
+		<sql>
+			<![CDATA[
+				UPDATE release_project SET project_name=?,status=? WHERE project_code=?
+			]]>
+		</sql>
+	</operation>		
+	
+	<operation name="findById">
+		<sql>
+			<![CDATA[
+				SELECT * FROM release_project WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="findByProjectCode">
+		<sql>
+			<![CDATA[
+				SELECT * FROM release_project WHERE project_code=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="deleteById">
+		<sql>
+			<![CDATA[
+				DELETE FROM release_project WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="deleteByProjectCode">
+		<sql>
+			<![CDATA[
+				DELETE FROM release_project WHERE project_code=?
+			]]>
+		</sql>
+	</operation>
+	
+</table>

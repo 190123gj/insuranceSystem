@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>消息模板管理</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;系统管理&nbsp;&gt;&nbsp;消息模板管理
+</div>
+
+<form class="m-main border ui-bg-fff" action="/systemMg/messageTemplete/list.htm" id="fnListSearchForm" method="POST">
+
+    ## search start
+
+    <div class="m-search fn-clear">
+
+        <div class="item">
+            消息模板
+            <select class="ui-select" name="formCode">
+                <option value="">全部</option>
+                #foreach($formCode in $!formList)
+                    <option #if($!queryOrder.formCode == $!formCode)selected="selected"#end value="$!formCode.code">$!formCode.message</option>
+                #end
+            </select>
+        </div>
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+        
+    </div>
+
+    ## search end
+
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/systemMg/messageTemplete/form.htm"><b>+</b>新增模板&nbsp;</a>
+        </div>
+
+        ## list start
+
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+                    <th sortCol="form_code">消息模板</th>
+                    <th sortCol="type" width="100px">通知类型</th>
+                    <th sortCol="base_on">通知方式</th>
+                    <th width="80px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr itemId="$!item.templeteId" itemName="$!item.formCode.message">
+                        <td>
+                            $!item.formCode.message
+                        </td>
+                        <td>
+                            $!item.type.message                  
+                        </td>
+                        <td>
+                            #if($!item.baseOn.code == "BPM")
+                                $!item.baseOn.message
+                            #else
+                                #if($!item.isSendSiteMessage.code == "IS")
+                                   	站内信&nbsp;&nbsp;
+                                #end
+                                #if($!item.isSendMail.code == "IS")
+                                   	邮件&nbsp;&nbsp;
+                                #end
+                                #if($!item.isSendSms.code == "IS")
+                                                                                                短信
+                                #end
+                            #end
+                        </td>
+                        <td>
+                            <a href="/systemMg/messageTemplete/form.htm?templeteId=$!item.templeteId" class="edit">[ 编辑 ]</a><br>
+                            <a href="javascript:void(0);" class="del">[ 删除 ]</a>
+                        </td>
+                    </tr>           
+                #end
+            </tbody>
+        </table>
+
+        ## list end
+
+        ## page start
+
+        #parse("/layout/common/pages.vm")
+
+        ## page end
+
+    </div>
+
+</form>
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+
+    seajs.use($_GLOBAL.zyw+'/system/msg.tpl');
+
+</script>
+</body>
+</html>

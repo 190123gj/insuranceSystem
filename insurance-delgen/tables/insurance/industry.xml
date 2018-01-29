@@ -1,0 +1,161 @@
+<table sqlname="industry">
+
+	<operation name="insert" paramtype="object">
+		<sql>
+			<![CDATA[
+				INSERT INTO industry
+					(type,
+					type_big,
+					type_medium,
+					type_small,
+					level,
+					code,
+					parent_code,
+					name,
+					remark,
+					review_template,
+					sort_order,
+					raw_add_time) 
+				VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+		</sql>
+	</operation>
+	<operation name="update" paramtype="object">
+		<sql>
+			<![CDATA[
+				UPDATE industry 
+				   SET type=?,
+					type_big=?,
+					type_medium=?,
+					type_small=?,
+					level=?,
+					code=?,
+					parent_code=?,
+					name=?,
+					remark=?,
+					review_template=?,
+					sort_order=?
+				  WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="findById">
+		<sql>
+			<![CDATA[
+				SELECT  * FROM industry WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="deleteById">
+		<sql>
+			<![CDATA[
+				DELETE FROM industry WHERE id=?
+			]]>
+		</sql>
+	</operation>
+	
+	
+	<operation name="findByCondition" paramtype="object" multiplicity="many">
+		<extraparams>
+			<param name="limitStart" javatype="long" />
+			<param name="pageSize" javatype="long" />
+			<param name="sortCol" javatype="java.lang.String" />
+			<param name="sortOrder" javatype="java.lang.String" />
+		</extraparams>
+	    <sql>
+	        <![CDATA[
+	       SELECT  * FROM industry WHERE 1=1
+	        ]]>
+	    </sql>
+	    <sqlmap>
+	        <![CDATA[
+	         SELECT * from industry where 1=1
+	        <dynamic>
+	            <isGreaterThan property="industry.id"  compareValue="0" prepend=" and ">
+	                id = #industry.id#
+	            </isGreaterThan>
+	            <isGreaterThan property="industry.level"  compareValue="0" prepend=" and ">
+	                level = #industry.level#
+	            </isGreaterThan>
+	             <isNotEmpty property="industry.code" prepend=" and ">
+	               	code = #industry.code#
+	            </isNotEmpty>
+	             <isNotEmpty property="industry.parentCode" prepend=" and ">
+	               	parent_code = #industry.parentCode#
+	            </isNotEmpty>
+	             <isNotEmpty property="industry.name" prepend=" and ">
+	               name like concat('%',#industry.name#,'%')
+	            </isNotEmpty>
+	             <isNotEmpty property="industry.type" prepend=" and ">
+	               type = #industry.type#
+	            </isNotEmpty>
+	             <isNotEmpty property="industry.typeBig" prepend=" and ">
+	               type_big = #industry.typeBig#
+	            </isNotEmpty>
+	             <isNotEmpty property="industry.typeMedium" prepend=" and ">
+	               type_medium = #industry.typeMedium#
+	            </isNotEmpty>
+	             <isNotEmpty property="industry.typeSmall" prepend=" and ">
+	               type_small = #industry.typeSmall#
+	            </isNotEmpty>
+	             <isNotEmpty property="industry.reviewTemplate" prepend=" and ">
+	               review_template = #industry.reviewTemplate#
+	            </isNotEmpty>
+	        </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#;
+	        ]]>
+	    </sqlmap>
+	</operation>
+	<operation name="findByConditionCount" paramtype="object" >
+	    <sql>
+	        <![CDATA[
+	       SELECT  count(*)  FROM industry WHERE  1=1
+	        ]]>
+	    </sql>
+	    <sqlmap>
+	        <![CDATA[
+	         SELECT  count(*)  FROM industry  where 1=1
+	        <dynamic>
+	            <isGreaterThan property="id"  compareValue="0" prepend=" and ">
+	                id = #id#
+	            </isGreaterThan>
+	            <isGreaterThan property="level"  compareValue="0" prepend=" and ">
+	                level = #level#
+	            </isGreaterThan>
+	             <isNotEmpty property="code" prepend=" and ">
+	               	code = #code#
+	            </isNotEmpty>
+	             <isNotEmpty property="parentCode" prepend=" and ">
+	               	parent_code = #parentCode#
+	            </isNotEmpty>
+	             <isNotEmpty property="name" prepend=" and ">
+	               name like concat('%',#name#,'%')
+	            </isNotEmpty>
+	             <isNotEmpty property="type" prepend=" and ">
+	               type = #type#
+	            </isNotEmpty>
+	             <isNotEmpty property="typeBig" prepend=" and ">
+	               type_big = #typeBig#
+	            </isNotEmpty>
+	             <isNotEmpty property="typeMedium" prepend=" and ">
+	               type_medium = #typeMedium#
+	            </isNotEmpty>
+	             <isNotEmpty property="typeSmall" prepend=" and ">
+	               type_small = #typeSmall#
+	            </isNotEmpty>
+	             <isNotEmpty property="reviewTemplate" prepend=" and ">
+	               review_template = #reviewTemplate#
+	            </isNotEmpty>
+	        </dynamic>
+	        ]]>
+	    </sqlmap>
+	</operation>
+</table>

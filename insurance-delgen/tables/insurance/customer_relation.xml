@@ -1,0 +1,106 @@
+<table sqlname="customer_relation">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO customer_relation(relation_id,parent_name,parent_id,child_name,child_id,member_no,type_id,type_name,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+
+        <sqlmap>
+            <![CDATA[
+				INSERT INTO customer_relation(relation_id,parent_name,parent_id,child_name,child_id,member_no,type_id,type_name,raw_add_time) VALUES (#relationId#,#parentName#,#parentId#,#childName#,#childId#,#memberNo#,#typeId#,#typeName#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="relationId" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+        </sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE customer_relation SET parent_name=?,parent_id=?,child_name=?,child_id=?,member_no=?,type_id=?,type_name=? WHERE relation_id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  relation_id ,parent_name ,parent_id ,child_name ,child_id ,member_no ,type_id ,type_name ,raw_add_time ,raw_update_time  FROM customer_relation WHERE relation_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM customer_relation WHERE relation_id=?
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="deleteByChildId" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM customer_relation WHERE child_id =?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  relation_id ,parent_name ,parent_id ,child_name ,child_id ,member_no ,type_id ,type_name ,raw_add_time ,raw_update_time  FROM customer_relation WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  relation_id ,parent_name ,parent_id ,child_name ,child_id ,member_no ,type_id ,type_name ,raw_add_time ,raw_update_time  FROM customer_relation where 1=1
+             <dynamic>
+	            <isNotEmpty property="customerRelation.childId"  prepend=" and ">
+	                child_id = #customerRelation.childId#
+	            </isNotEmpty>
+	        </dynamic>
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+             <isGreaterThan property="pageSize" compareValue="0"  prepend=" ">
+				LIMIT #limitStart#,#pageSize#
+			</isGreaterThan>
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM customer_relation WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM customer_relation  where 1=1
+	          <dynamic>
+	            <isNotEmpty property="childId"  prepend=" and ">
+	                child_id = #childId#
+	            </isNotEmpty>
+	        </dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" class="m-body">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>消息列表</title>
+</head>
+<body class="m-body">
+
+#parse("/layout/common/header.vm")
+
+<div class="ui-body" id="fnMainBox">
+    <!-- sidebar start -->
+    <div class="m-sidebar fn-left fnTransitionAll">
+        <div class="ui-full-screen" id="fnFullScreen"></div>
+        <h3 class="s-title"><i class="icon icon-hd"></i>消息中心<span class="sjx"></span></h3>
+        <div class="fn-usn fn-pt20 fn-pb20 m-ul" id="fnSidebar">
+            <ul class="s-ul active s-ul-bg0">
+                <li class="s-li">
+                    <p class="s-ul-hd fnMore"><a href="javascript: void(0);"><i class="icon icon-sxqgl"></i>消息中心</a><span class="indicators fnMore">&gt;</span></p>
+                    <ul class="s-ul s-ul-bg1 active">
+                        <li class="s-li"><p class="s-ul-hd #if(!$!{status}) active#end"><a href="/systemMg/message/user/list.htm">全部消息</a></p>
+                        <li class="s-li"><p class="s-ul-hd #if($!{status}=='UNREAD') active#end"><a href="/systemMg/message/user/list.htm?status=UNREAD">未读消息</a></p>
+                        <li class="s-li"><p class="s-ul-hd #if($!{status}=='READ') active#end"><a href="/systemMg/message/user/list.htm?status=READ">已读消息</a></p>
+                        <li class="s-li"><p class="s-ul-hd #if($!{status}=='COLLECT') active#end"><a href="/systemMg/message/user/list.htm?status=COLLECT">收藏</a></p>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- sidebar end -->
+    <!-- main start -->
+    <div class="m-main-box">
+        <div class="m-main-in fnTransitionAll m-main-page">
+            
+            ## <iframe id="fnIfame" frameborder="0" allowtransparency="yes" scrolling="auto" name="main" width="100%" height="100%" src="${systemNameDefautUrl}"></iframe>
+            <div class="m-main border ui-bg-fff">
+
+                <div class="fn-pl20 fn-pr20">
+                    
+                    ## search start
+
+                    <form class="fn-hide" id="searchForm" name="searchForm" method="POST" action="/systemMg/message/user/list.htm">
+                        <input type="hidden" name="pageNumber" value="$!page.currentPageNo">
+                        <input type="hidden" name="pageSize" value="$!page.pageSize">
+                        <input type="hidden" name="status" value="$!status">
+                    </form>
+
+                    ## search end
+
+                    <div class="fn-mb20 fn-mt20" id="opnBtn">
+                        <a href="javascript: void(0);" class="ui-btn ui-btn-fill ui-btn-blue fn-ml10 fnBtnReadAll">全部标记为已读</a>
+                        <a href="javascript: void(0);" class="ui-btn ui-btn-fill ui-btn-blue fn-ml10 fnBtnRead">标记为已读</a>
+                        <a href="javascript: void(0);" class="ui-btn ui-btn-fill ui-btn-blue fn-ml10 fnBtnCollect">收藏</a>
+                        <a href="javascript: void(0);" class="ui-btn ui-btn-fill ui-btn-gray fn-ml10 fnBtnDel">删除</a>
+                    </div>
+
+                    ## list start
+
+                    <table class="m-table m-table-list fn-tac" id="list">
+                        <thead>
+                            <tr id="fnListSearchTh">
+                                <th width="30"><input type="checkbox" class="fn-csp fnCheckAll"></th>
+                                <th sortCol="message_title" width="300">标题</th>
+                                <th sortCol="message_content">摘要</th>
+                                <th sortCol="message_sender_name" width="100">发件人</th>
+                                <th sortCol="raw_add_time" width="150">时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            #foreach($info in $page.result)
+                                #set($isRead='yes')
+                                #if($!{info.messageReceivedStatus} == 'UNREAD')#set($isRead='no')#end
+                                <tr class="row" isRead="$!isRead" receivedId="$!{info.receivedId}" style="cursor:pointer;">
+                                    <td><input type="checkbox" class="fn-csp fnCheck" value="$!{info.receivedId}" id="receivedId" name="receivedId"></td>
+                                    <td class="fn-tal">
+                                        #if($!isRead == "no")
+                                            <b>$!stringUtil.subString($!stringUtil.filterHtml($!{info.messageTitle}),20,"...")</b>
+                                        #else
+                                            $!stringUtil.subString($!stringUtil.filterHtml($!{info.messageTitle}),20,"...")
+                                        #end
+                                    </td>
+                                    <td class="fn-tal">
+                                        <div class="messageContent fn-hide" isRead="$!isRead"></div>
+                                        #if($!isRead == "no")
+                                            <b>$!stringUtil.subString($!stringUtil.filterHtml($!{info.messageContent}),28,"...")</b>
+                                        #else
+                                            $!stringUtil.subString($!stringUtil.filterHtml($!{info.messageContent}),28,"...")
+                                        #end
+                                    </td>
+                                    <td>
+                                        $!info.messageSenderName
+                                    </td>
+                                    <td>
+                                        $!dateUtil.simpleFormat($!{info.rawAddTime})
+                                    </td>
+                                </tr>
+                                <tr class="detail fn-hide">
+                                    <td colspan="5" align="left" style="padding: 10px 45px;background: #e3f2e6">
+                                        $!{info.messageContent}
+                                    </td>
+                                </tr>
+                            #end
+                            
+                        </tbody>
+                    </table>
+
+                    ## list end
+
+                    ## page start
+
+                    <form id="fnListSearchForm" method="POST">
+                        #parse("/layout/common/pages.vm")
+                    </form>
+                    ## page end
+
+                </div>
+
+            </div>
+
+            #parse("/layout/common/footer.vm")
+
+        </div>
+    </div>
+    <!-- main end -->
+</div>
+
+#parse("/layout/common/commonjs.vm")
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/system/msg.list');
+</script>
+</body>
+</html>

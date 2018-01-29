@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+    <title>团体客户</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;团体客户&nbsp;&gt;&nbsp;新增团体客户
+</div>
+
+<h2 class="m-h2-title">新增团体客户</h2>
+
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff" id="apply">
+    <div class="fn-mb20 apply-step" id="step">
+        <ul class="ul fn-clear">
+            <li class="item icon-s1 active" ftf="khjbqk">
+                <a href="#khjbqk">
+                    <i class="icon icon-s1"></i>
+                    <p>客户基本情况</p>
+                    <div class="step-line"></div>
+                    <div class="step-line2"></div>
+                </a>
+            </li>
+            <li class="item icon-s2" ftf="khlxxx">
+                <a href="#khlxxx">
+                    <i class="icon icon-s2"></i>
+                    <p>客户联系信息</p>
+                    <div class="step-line"></div>
+                    <div class="step-line2"></div>
+                </a>
+            </li>
+            <li class="item icon-s2" ftf="khzhxx">
+                <a href="#khzhxx">
+                    <i class="icon icon-s2"></i>
+                    <p>客户账户信息</p>
+                    <div class="step-line"></div>
+                    <div class="step-line2"></div>
+                </a>
+            </li>
+            <li class="item icon-s3" ftf="khglgx">
+                <a href="#khglgx">
+                    <i class="icon icon-s3"></i>
+                    <p>客户关联关系</p>
+                    <div class="step-line"></div>
+                    <div class="step-line2"></div>
+                </a>
+            </li>
+            <li class="item icon-s4" ftf="lsbdxx">
+                <a href="#lsbdxx">
+                    <i class="icon icon-s4"></i>
+                    <p>历史保单信息</p>
+                    <div class="step-line"></div>
+                    <div class="step-line2"></div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    #set($isBelong2Xinhui = $!dataPermissionUtil.isBelong2Xinhui())
+    <form id="form" action="/insurance/customer/company/addSubmit.json" method="post" >
+        <input class="ui-text fn-w200" type="hidden" name="customerId" id="customerId" value="$!{info.customerId}" />
+        <input class="ui-text fn-w200" type="hidden" name="userId" id="userId" value="$!{info.userId}" />
+        <input class="ui-text fn-w200" type="hidden" name="customerTypeText" id="customerTypeText" value="COMPANY_CUSTOMER" />
+
+        <h2 class="m-htitle fn-mb20" id="khjbqk"><span>客户基本情况</span></h2>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>客户名称：</label>
+            <input class="ui-text fn-w200 fnInput  fn-validate" type="text" name="customerName" id="customerName" value="$!{info.customerName}" />
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">简称1：</label>
+            <input class="ui-text fn-w200" type="text" name="abbr1"  value="$!{info.abbr1}"/>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">简称2：</label>
+            <input class="ui-text fn-w200" type="text" name="abbr2" value="$!{info.abbr2}"/>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">简称3：</label>
+            <input class="ui-text fn-w200" type="text" name="abbr3" value="$!{info.abbr3}"/>
+        </div>
+
+
+        <div class="m-item itemBox fn-wp90 diyNameBox">
+            <label class="m-label"><span class="m-required">*</span>证件信息：</label>
+            <div class="itemsList">
+                #foreach($item in $info.certInfos)
+                    <div class="itemLine" diyname="certOrders">
+                        <table class="m-table" style="margin: 0 0 20px 0;">
+                            <tr>
+                                <td class="fn-w100">证件类型：</td>
+                                <td>
+                                    <select class="ui-select fn-w200" name="certType">
+                                        #foreach($certType in $!{certType})
+                                            <option value="$!{certType.code}" #if("$!{item.certType.code}"=="$!{certType.code}") selected="selected" #end>$!{certType.message}</option>
+                                        #end
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fn-w100"><span class="m-required">*</span>证件号码：</td>
+                                <td>
+                                    <input type="hidden" id="id" name="id" value="0">
+                                    <input class="ui-text fn-w200 fn-validate" type="text" name="certNo" id="certNo" value="$!{item.certNo}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fn-w100">证件有效期：</td>
+                                <td>
+                                    <input class="ui-text fn-w200 laydate-icon" type="text" name="certExpDate" id="certExpDate" value="$!dateUtil.formatDay($!item.certExpDate)" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                                    <label><input type="checkbox" class="checkbox checkedForLong" name="longTime" value="YES" #if($!{item.longTime} == "YES") checked         #end>永久</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fn-w100">上传证件影像：</td>
+                                <td>
+                                    <div class="fnUpAttach">
+                                        <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn"><i class="icon icon-add"></i>上传附件</a>
+                                        <input class="fnUpAttachVal " type="hidden" name="">
+                                        <div class="fn-blank5"></div>
+                                        <div class="m-attach fnUpAttachUl"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                #end
+
+            </div>
+            <p class="fn-mt10 fn-mb10"><a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_CARDINFO" href="javascript:void(0);" ><i class="icon icon-add"></i>新增一行</a></p>
+        </div>
+
+
+        <h2 class="m-htitle fn-mb20 fn-mt20" id="khlxxx"><span>客户联系信息</span></h2>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>网址：</label>
+            <input class="ui-text fn-w200 fnInput  fn-validate" type="text" name="websit" id="websit" value="$!{info.websit}" />
+        </div>
+
+        <div class="m-item fnChangeApply" id="selectAddress">
+            <label class="m-label fnChangeLabel"><span class="m-required">*</span>单位地址：</label>
+
+            <span id="addressBox"></span>
+            <input type="hidden" name="provinceCode" value="$!info.provinceCode" id="provinceCode"> ## 省
+            <input type="hidden" name="provinceName" value="$!info.provinceName" id="provinceName" class="fnChangeInput">
+            <input type="hidden" name="cityCode" value="$!info.cityCode" id="cityCode"> ## 市
+            <input type="hidden" name="cityName" value="$!info.cityName" id="cityName" class="fnChangeInput">
+            <input type="hidden" name="countyCode" value="$!info.countyCode" id="countyCode" id="countyCode"> ## 区
+            <input type="hidden" name="countyName" value="$!info.countyName" id="countyName" class="fnChangeInput">
+
+            <input type="text" class="fn-input-hidden " id="addressResult"> ##是否选到末尾
+        </div>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>详细地址：</label>
+            <input class="ui-text fn-w200 fnInput  fn-validate" type="text" name="address" id="address" value="$!{info.address}" />
+        </div>
+
+        <div class="m-item">
+            <label class="m-label fnChangeLabel"><span class="m-required">*</span>所属行业：</label>
+            <span id="industryBox" maxitem="3"></span>
+            <input type="hidden" value="$!info.industryAllName" name="industryAllName" id="industryAllName">
+            <input type="hidden" class="fnChangeInput" value="$!info.industryName" name="industryName" id="industryName">
+            <input type="text" class="fn-input-hidden fnRequired" value="$!info.busiScope" name="busiScope" id="busiScope"> ## code
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>联系人姓名：</label>
+            <input class="ui-text fn-w200 fnInput  fn-validate" type="text" name="contactMan" id="contactMan" value="$!{info.contactMan}"/>
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>联系电话：</label>
+            <input class="ui-text fn-w200 fnInput  fn-validate" type="text" name="contactMobile" id="contactMobile" value="$!{info.contactMobile}"/>
+        </div>
+        <div class="m-item">##做成地图，后期做
+            <label class="m-label"><span class="m-required">*</span>所属区域：</label>
+            <input class="ui-text fn-w200 fnInput  fn-validate" type="text" name="countyName" id="countyName"  value="$!{info.countyName}"/>
+        </div>
+
+        <h2 class="m-htitle fn-mb20 fn-mt20" id="khzhxx"><span>客户账户信息</span></h2>
+
+        <div class="m-item diyNameBox">
+            <label class="m-label"><span class="m-required">*</span>增值税信息：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">单位名称</th>
+                        <th class="fn-tac">纳税人识别号</th>
+                        <th class="fn-tac">电话</th>
+                        <th class="fn-tac">单位地址</th>
+                        <th class="fn-tac">开户行</th>
+                        <th class="fn-tac">账号</th>
+                    ##                        <td class="fn-tac">操作</td>
+                    </tr>
+                    #if($listUtil.isNotEmpty($info.taxInfos))
+                        #foreach($item in $info.taxInfos)
+                            <tr diyname="taxOrders" class="itemLine">
+                                <input class="text fn-validate" type="hidden" name="id" value="$!item.id" />
+                                <td class="fn-tac">
+                                    <input class="text fn-validate" type="text" name="orgName" value="$!item.orgName" />
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text fn-validate" type="text" name="identifyNumber" value="$!item.identifyNumber">
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text fn-validate" type="text" name="mobile" value="$!item.mobile">
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text fn-validate" type="text" name="orgAddress" value="$!item.orgAddress">
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text fn-validate" type="text" name="openBankName" value="$!item.openBankName">
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text fn-validate" type="text" name="bankCardNo" value="$!item.bankCardNo">
+                                </td>
+                            ##                                <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+                            </tr>
+
+                        #end
+                    #else
+                        <tr diyname="taxOrders" class="itemLine">
+                            <td class="fn-tac">
+                                <input class="text fn-validate" type="text" name="orgName">
+                            </td>
+                            <td class="fn-tac">
+                                <input class="text fn-validate" type="text" name="identifyNumber">
+                            </td>
+                            <td class="fn-tac">
+                                <input class="text fn-validate" type="text" name="mobile">
+                            </td>
+                            <td class="fn-tac">
+                                <input class="text fn-validate" type="text" name="orgAddress">
+                            </td>
+                            <td class="fn-tac">
+                                <input class="text fn-validate" type="text" name="openBankName">
+                            </td>
+                            <td class="fn-tac">
+                                <input class="text fn-validate" type="text" name="bankCardNo">
+                            </td>
+                        </tr>
+
+                    #end
+                </table>
+            ##                <div class="fn-tar fn-mt20">
+            ##                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_ADDEDVALUE" tplID="t-tbodyZZZS" cttID="tbodyZZZS" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+            ##                </div>
+            </div>
+        </div>
+        <div class="m-item diyNameBox">
+            <label class="m-label"><span class="m-required">*</span>账户信息：</label>
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">账户名称</th>
+                        <th class="fn-tac">开户行</th>
+                        <th class="fn-tac">账号</th>
+                        <th class="fn-tac">备注</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+                    #if($listUtil.isNotEmpty($info.bankInfos))
+                        #foreach($binfo in $info.bankInfos)
+                            <tr diyname="bankOrders" class="itemLine">
+                                <input class="text fn-validate" type="hidden" name="id" value="$!binfo.id" />
+                                <td class="fn-tac">
+                                    <input class="text fn-validate" type="text" name="bankCardName" value="$!binfo.bankCardName">
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text fn-validate" type="text" name="openBankName" value="$!binfo.openBankName">
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text fn-validate" type="text" name="bankCardNo" value="$!binfo.bankCardNo">
+                                </td>
+                                <td class="fn-tac">
+                                    <input class="text fn-validate" type="text" name="remark" value="$!binfo.remark">
+                                </td>
+                                <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+                            </tr>
+                        #end
+                    #end
+                </table>
+                <div class="fn-tar fn-mt20">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_ADDBANKINFO" tplID="t-tbodyZZZS" cttID="tbodyZZZS" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="m-htitle fn-mb20 fn-mt20" id="khglgx"><span>客户关联关系</span></h2>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>所属业务员：</label>
+            <input class="ui-text fn-w200 fnInput" type="text" name="businessUserName" id="businessUserName" value="$!{info.businessUserName}" readonly/>
+            <input type="hidden" name="businessUserId" id="businessUserId" value="$!{info.businessUserId}"/>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseBusinessUserName" id="fnToChooseBusinessUserName" style="color: #fff;">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClearBusinessUserName" id="fnToClearBusinessUserName" style="color: #fff;">清除</a>
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">信息记录：</label>
+            <textarea class="ui-textarea audit-textarea" style="width: 800px;"></textarea>
+        </div>
+
+        <h2 class="m-htitle fn-mb20 fn-mt20" id="lsbdxx"><span>历史保单信息</span></h2>
+        <div class="m-item diyNameBox">
+            <div class="fn-wp90 itemBox">
+                <table class="m-table m-table-list itemsList">
+                    <tr>
+                        <th class="fn-tac">保单号</th>
+                        <th class="fn-tac">保险公司</th>
+                        <th class="fn-tac">保险险种</th>
+                        <th class="fn-tac fn-w250">保障期间</th>
+                        <th class="fn-tac">投保时间</th>
+                        <th class="fn-tac">保费（元）</th>
+                        <th class="fn-tac">操作</th>
+                    </tr>
+                    <tr class="itemLine" diyname="bankOrders">
+                        <td class="fn-tac"><input type="text" class="text"></td>
+                        <td class="fn-tac"><input type="text" class="text"></td>
+                        <td class="fn-tac"><input type="text" class="text"></td>
+                        <td class="fn-tac"><input class="text laydate-icon fn-w100" style="width: 100px;" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">&nbsp;&nbsp;<input class="text fn-w100 laydate-icon" style="width: 100px;" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})"></td>
+                        <td class="fn-tac"><input class="text laydate-icon" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})"></td>
+                        <td class="fn-tac"><input type="text" class="text"></td>
+                        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+                    </tr>
+
+                </table>
+                <div class="fn-tar fn-mt20">
+                    <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_POLICYINFO" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="fn-blank20"></div>
+    <div class="m-blank fn-mt20 fn-mb20"></div>
+    <div class="fn-tac fn-pt20 fn-pb30">
+        <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn" type="button" id="submit" value="提交">
+        <a href="javascript:void(0)" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5 toCanleOpt">返回</a>
+    </div>
+
+    <div class="fn-blank20"></div>
+</div>
+##一些新增行的模板
+<script type="text/html" id="TMP_ADDEDVALUE">
+    <tr diyname="taxOrders" class="itemLine">
+        <td class="fn-tac">
+            <input class="text fn-validate" type="text" name="orgName">
+        </td>
+        <td class="fn-tac">
+            <input class="text fn-validate" type="text" name="identifyNumber">
+        </td>
+        <td class="fn-tac">
+            <input class="text fn-validate" type="text" name="mobile">
+        </td>
+        <td class="fn-tac">
+            <input class="text fn-validate" type="text" name="orgAddress">
+        </td>
+        <td class="fn-tac">
+            <input class="text fn-validate" type="text" name="openBankName">
+        </td>
+        <td class="fn-tac">
+            <input class="text fn-validate" type="text" name="bankCardNo">
+        </td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+    </tr>
+</script>
+<script type="text/html" id="TMP_ADDBANKINFO">
+    <tr diyname="bankOrders" class="itemLine">
+        <td class="fn-tac">
+            <input class="text fn-validate" type="text" name="bankCardName">
+        </td>
+        <td class="fn-tac">
+            <input class="text fn-validate" type="text" name="openBankName">
+        </td>
+        <td class="fn-tac">
+            <input class="text fn-validate" type="text" name="bankCardNo">
+        </td>
+        <td class="fn-tac">
+            <input class="text fn-validate" type="text" name="remark">
+        </td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+    </tr>
+</script>
+<script type="text/html" id="TMP_CARDINFO">
+    <div class="itemLine" diyname="certOrders">
+        <table class="m-table" style="margin: 0 0 20px 0;">
+            <tr>
+                <td class="fn-w100">证件类型：</td>
+                <td>
+                    <select class="ui-select fn-w200" name="certType">
+                        #foreach($certType in $!{certType})
+                            <option value="$!{certType.code}" #if("$!{info.certType.code}"=="$!{certType.code}") selected="selected" #end>$!{certType.message}</option>
+                        #end
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="fn-w100"><span class="m-required">*</span>证件号码：</td>
+                <td>
+                    <input type="hidden" id="id" name="id" value="0">
+                    <input class="ui-text fn-w200 fn-validate" type="text" name="certNo" id="certNo" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="fn-w100">证件有效期：</td>
+                <td>
+                    <input class="ui-text fn-w200 laydate-icon" type="text" name="certExpDate" id="certExpDate" value="" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+                    <label><input type="checkbox" class="checkbox checkedForLong">永久</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="fn-w100">上传证件影像：</td>
+                <td>
+                    <div class="fnUpAttach">
+                        <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnUpAttachBtn"><i class="icon icon-add"></i>上传附件</a>
+                        <input class="fnUpAttachVal " type="hidden" name="">
+                        <div class="fn-blank5"></div>
+                        <div class="m-attach fnUpAttachUl"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+            </tr>
+        </table>
+    </div>
+</script>
+<script type="text/html" id="TMP_POLICYINFO">
+    <tr class="itemLine" diyname="bankOrders">
+        <td class="fn-tac"><input type="text" class="text"></td>
+        <td class="fn-tac"><input type="text" class="text"></td>
+        <td class="fn-tac"><input type="text" class="text"></td>
+        <td class="fn-tac"><input class="text laydate-icon fn-w100" style="width: 100px;" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">&nbsp;&nbsp;<input class="text laydate-icon fn-w100" style="width: 100px;" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})"></td>
+        <td class="fn-tac"><input class="text laydate-icon" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})"></td>
+        <td class="fn-tac"><input type="text" class="text"></td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" href="javascript:void(0);" style="color: #fff;" minlength="-1">删除</a></td>
+    </tr>
+</script>
+    #parse("/layout/common/footer.vm")
+    #parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    seajs.use($_GLOBAL.zyw+'/company/add.company');
+</script>
+
+</body>
+</html>

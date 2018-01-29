@@ -1,0 +1,79 @@
+<Report-Definition>
+       <Report-Header Report-Template="TEMP1" Report-Name="Union Report" Page-Width="800" Page-Height=""/>
+       <Report-Body>
+       <Table>
+         <Table-Header>
+            <Table-Row>
+			  <Table-Cell BgColor="#FFFFFF" Title="Union Code" Width="20cm" Row-Span="2" />
+              <Table-Cell BgColor="#FFFFFF" Title="REP CODE" Width="20cm" Row-Span="2" />
+			  <Table-Cell BgColor="#FFFFFF" Title="DATE APPT" Width="20cm" Row-Span="2" />
+			  <Table-Cell BgColor="#FFFFFF" Title="NAME" Width="20cm" Row-Span="2" />
+			  <Table-Cell BgColor="#FFFFFF" Title="NRIC" Width="20cm" Row-Span="2" />
+			  <Table-Cell BgColor="#FFFFFF" Title="TEAM" Width="20cm" Row-Span="2" />
+
+			  <Table-Cell BgColor="#FFFFFF" Title="Nr of PROPOSALS" Align="center" Width="20cm" Column-Span="2"/>
+			  <Table-Cell BgColor="#FFFFFF" Title="S/A of PROPOSAL" Align="center" Width="20cm" Column-Span="2"/>
+			  <Table-Cell BgColor="#FFFFFF" Title="N/C" Width="20cm" Column-Span="3"/>
+			  <Table-Cell BgColor="#FFFFFF" Title="Nr of POLICIES" Width="20cm" Column-Span="2"/>
+			  <Table-Cell BgColor="#FFFFFF" Title="S/A of POLICIES" Width="20cm" Column-Span="2"/>
+
+			  <Table-Cell BgColor="#FFFFFF" Title="ISC" Width="20cm" Row-Span="2" />			  
+			  <Table-Cell BgColor="#FFFFFF" Title="S/C" Width="20cm" Row-Span="2" />
+			  <Table-Cell BgColor="#FFFFFF" Title="Grade(Annual Contest)" Width="20cm" Row-Span="2" />			  
+            </Table-Row>
+            <Table-Row>
+			  <Table-Cell BgColor="#FFFFFF" Title="" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="M" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="YTD" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="M" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="YTD" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="M" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="YTD(ISC)" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="YTD(Annual Contest)" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="M" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="YTD" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="M" Width="20cm" />
+              <Table-Cell BgColor="#FFFFFF" Title="YTD" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="" Width="20cm" />
+			  <Table-Cell BgColor="#FFFFFF" Title="" Width="20cm" />       
+            </Table-Row>
+         </Table-Header>
+         <Table-Body>
+           <Table-Row>
+	         <Table-Cell Data-Field="union_code" Data-Type="STRING" Align="center" />
+	         <Table-Cell Data-Field="agent_code" Data-Type="STRING" Align="center" />
+			 <Table-Cell Data-Field="appoint_date" Data-Type="STRING" Align="center" />
+	         <Table-Cell Data-Field="real_name" Data-Type="STRING" Align="center" />
+			 <Table-Cell Data-Field="certi_code" Data-Type="STRING" Align="center" />
+			 <Table-Cell Data-Field="dept_name" Data-Type="STRING" Align="center" />
+			 
+			 <Table-Cell Data-Field="m_nr_proposals" Data-Type="INTEGER" Align="center" />
+			 <Table-Cell Data-Field="ytd_nr_proposals" Data-Type="INTEGER" Align="center" />
+			 <Table-Cell Data-Field="m_proposals_amount" Data-Type="INTEGER" Align="right" />
+			 <Table-Cell Data-Field="ytd_proposals_amount" Data-Type="INTEGER" Align="right" />
+			 <Table-Cell Data-Field="m_netcredit" Data-Type="INTEGER" Align="right" />
+			 <Table-Cell Data-Field="isc_netcredit" Data-Type="INTEGER" Align="right" />
+			 <Table-Cell Data-Field="ac_netcredit" Data-Type="INTEGER" Align="right" />
+
+			 <Table-Cell Data-Field="m_nr_policys" Data-Type="INTEGER" Align="center" />
+			 <Table-Cell Data-Field="ytd_nr_policys" Data-Type="INTEGER" Align="center" />
+			 <Table-Cell Data-Field="m_policys_amount" Data-Type="INTEGER" Align="right" />
+			 <Table-Cell Data-Field="ytd_policys_amount" Data-Type="INTEGER" Align="right" />
+
+			 <Table-Cell Data-Field="isc_grade" Data-Type="STRING" Align="center" />
+			 <Table-Cell Data-Field="isc_rank" Data-Type="INTEGER" Align="center" />
+			 
+			 <Table-Cell Data-Field="ac_grade" Data-Type="STRING" Align="center" />
+			 
+			 
+           </Table-Row>
+         </Table-Body>
+       </Table>
+   </Report-Body>
+</Report-Definition>

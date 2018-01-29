@@ -1,0 +1,44 @@
+<div class="fn-ml20 fn-mr20">
+	<table class="m-table m-table-list fn-tac">
+	   <thead>
+	       <tr class="nodata">
+	           <th>项目编号</th>
+	           <th>客户名称</th>
+	           <th>业务类型</th>
+	           <th>项目阶段</th>
+	           <th>客户经理</th>
+	           <th width="80px">操作</th>
+	       </tr>
+	   </thead>
+	   <tbody>
+	    #foreach($!task in $!relatedProject.result)
+	        <tr>
+	            <td class="fn-csp"> $!task.projectCode</td>
+	            <td>$!task.customerName</td>
+	            <td>$!task.busiTypeName</td>
+	            <td>$!task.phases.message</td>
+	            <td>$!task.busiManagerName</td>
+	            <td>
+	                <a href="/projectMg/index.htm?systemNameDefautUrl=/projectMg/viewProjectAllMessage.htm&projectCode=$!task.projectCode">查看详情</a>
+	            </td>
+	        </tr>
+	        #set($i=$i+1)
+	    #end
+	</tbody>
+</table>
+#set($withOutJubmBtn = true)
+#set($toPageCustomize = "toPageRelatedProject")
+#set($pageCustomize = $!relatedProject)
+#parse("/layout/common/pagesCustomize.vm")
+</div>
+<script>
+//已办任务分页
+    toPageRelatedProject = function(totalPage, pageNo) {
+        if (totalPage < pageNo) {
+            return false;
+        }
+        $('#isMyProjectNO').load("/userHome/relatedProjectList.htm", {
+            'pageNumber': pageNo
+        });	
+    }
+</script>

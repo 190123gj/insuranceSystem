@@ -1,0 +1,13 @@
+##<script>
+##    // IE6~IE8,补全缺失对象实例，保证lodash正常运行
+##    //必须置于任何库之前
+##    if (!document.addEventListener) {
+##        // IE6~IE8
+##        document.write('<script src="/js/lib/es5-shim.min.js"><\/script>');
+##        document.write('<script src="/js/lib/es5-sham.js"><\/script>');
+##    }
+##</script>
+<script src="/js/lib/jquery.1.8.3.min.js"></script>
+<script src="/js/lib/sea.3.0.0.js"></script>
+<script src="/js/lib/seajs-css.js"></script>
+<script src="/js/lib/seajs-config.js?v=20161111"></script>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/login.css" rel="stylesheet">
+<title>账户激活</title>
+</head>
+<body>
+
+<!--[if lte IE 8]>
+<div class="fixednav ui-ie-update text-center ie-update">你正在使用IE低级浏览器，为了您的网络安全和更好的产品体验，<br />强烈建议您立即 <a class="blue" href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie" target="_blank">升级IE浏览器</a> 或者用更快更安全的 <a class="blue" href="http://www.baidu.com/s?wd=Chrome&ie=utf-8" target="_blank">谷歌浏览器Chrome</a> 。</div>
+<![endif]-->
+
+<div class="login-header login-layout"></div>
+
+<div class="ui-body">
+
+	<form class="ui-bg-fff fn-ml20 fn-mr20 fn-pb20" id="form" action="/login/activeUser.json">
+
+		<h1 class="m-htitle"><span>
+				#if("forget" == $!forget)
+				忘记密码
+				#else
+				账户激活
+				#end
+				<input type='hidden' value='$!forget' name='forget' />
+		</span></h1>
+
+		<div class="activation-item fn-mt20">
+			<label class="label">用户名</label>
+			<input type="text" class="ui-text fn-w200"  name="userName" value="$!userName" id="userName">
+		</div>
+
+		<div class="activation-item fn-mt20">
+			<label class="label">手机号码</label>
+			<input type="text" class="ui-text fn-w200 fnMakeNumber" name="mobile" id="mobile">
+			<a href="javascript: void(0);" class="ui-btn ui-btn-fill ui-btn-green" id="getCode">获取验证码</a>
+		</div>
+
+		<div class="activation-item fn-mt20">
+			<label class="label">验证码</label>
+			<input type="text" class="ui-text fn-w200" name="code" id="code">
+		</div>
+
+		<div class="activation-item fn-mt20">
+			<label class="label">密码</label>
+			<input type="password" class="ui-text fn-w200 fnErrorAfter" name="password" id="password">
+			<p class="fn-999">由6—20英文字母、数字或符号组成，必须使用大（小）写字母与数字混合设置密码。</p>
+		</div>
+
+		<div class="activation-item fn-mt20">
+			<label class="label">确认密码</label>
+			<input type="password" class="ui-text fn-w200" name="repassword">
+		</div>
+
+		<div class="activation-item fn-mt20 fn-mb20">
+			<input class="ui-btn ui-btn-submit" type="button" id="submit" value="确定">
+		</div>
+
+	</form>
+
+</div>
+
+<div class="ui-footer fn-tac">
+	<p>2010-2020 版权所有 &copy; xx网 <a href="http://www.miitbeian.gov.cn/" target="_blank">备案号码</a> 地址：这里那里还是这里那里这里那里还是这里那里</p>
+	<p>某某公司某某公司某某公司</p>
+</div>
+
+#parse("/layout/common/commonjs.vm")
+<script>
+	seajs.use($_GLOBAL.zyw+'/activation');
+</script>
+</body>
+</html>

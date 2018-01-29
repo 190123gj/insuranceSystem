@@ -1,0 +1,103 @@
+<table sqlname="invoice_requisition">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO invoice_requisition(invoice_requisition_id,insurance_no,insurance_company_id,insurance_company_name,identify_number,org_address,open_bank_name,mobile,bank_card_no,capital_amount,small_amount,apply_no,settlement_no,apply_time,apply_user_id,apply_user_name,apply_deptment,department_charger,leader,remark) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO invoice_requisition(invoice_requisition_id,insurance_no,insurance_company_id,insurance_company_name,identify_number,org_address,open_bank_name,mobile,bank_card_no,capital_amount,small_amount,apply_no,settlement_no,apply_time,apply_user_id,apply_user_name,apply_deptment,department_charger,leader,remark) VALUES (#invoiceRequisitionId#,#insuranceNo#,#insuranceCompanyId#,#insuranceCompanyName#,#identifyNumber#,#orgAddress#,#openBankName#,#mobile#,#bankCardNo#,#capitalAmount#,#smallAmount#,#applyNo#,#settlementNo#,#applyTime#,#applyUserId#,#applyUserName#,#applyDeptment#,#departmentCharger#,#leader#,#remark#)
+		        <selectKey  resultClass ="long"  keyProperty ="invoiceRequisitionId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE invoice_requisition SET insurance_no=?,insurance_company_id=?,insurance_company_name=?,identify_number=?,org_address=?,open_bank_name=?,mobile=?,bank_card_no=?,capital_amount=?,small_amount=?,apply_no=?,settlement_no=?,apply_time=?,apply_user_id=?,apply_user_name=?,apply_deptment=?,department_charger=?,leader=?,remark=? WHERE invoice_requisition_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  invoice_requisition_id ,insurance_no ,insurance_company_id ,insurance_company_name ,identify_number ,org_address ,open_bank_name ,mobile ,bank_card_no ,capital_amount ,small_amount ,apply_no ,settlement_no ,apply_time ,apply_user_id ,apply_user_name ,apply_deptment ,department_charger ,leader ,remark  FROM invoice_requisition WHERE invoice_requisition_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM invoice_requisition WHERE invoice_requisition_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  invoice_requisition_id ,insurance_no ,insurance_company_id ,insurance_company_name ,identify_number ,org_address ,open_bank_name ,mobile ,bank_card_no ,capital_amount ,small_amount ,apply_no ,settlement_no ,apply_time ,apply_user_id ,apply_user_name ,apply_deptment ,department_charger ,leader ,remark  FROM invoice_requisition WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  invoice_requisition_id ,insurance_no ,insurance_company_id ,insurance_company_name ,identify_number ,org_address ,open_bank_name ,mobile ,bank_card_no ,capital_amount ,small_amount ,apply_no ,settlement_no ,apply_time ,apply_user_id ,apply_user_name ,apply_deptment ,department_charger ,leader ,remark  FROM invoice_requisition where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM invoice_requisition WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM invoice_requisition  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="getInvoiceRequisitionInfo">
+        <extraparams>
+            <param name="billNo" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  invoice_requisition_id ,insurance_no ,insurance_company_id ,insurance_company_name ,identify_number ,org_address ,open_bank_name ,mobile ,bank_card_no ,capital_amount ,small_amount ,apply_no ,settlement_no ,apply_time ,apply_user_id ,apply_user_name ,apply_deptment ,department_charger ,leader ,remark  FROM invoice_requisition WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  invoice_requisition_id ,insurance_no ,insurance_company_id ,insurance_company_name ,identify_number ,org_address ,open_bank_name ,mobile ,bank_card_no ,capital_amount ,small_amount ,apply_no ,settlement_no ,apply_time ,apply_user_id ,apply_user_name ,apply_deptment ,department_charger ,leader ,remark  FROM invoice_requisition where settlement_no = #billNo#
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+</table>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<component-config>
+      <!--two choice,default value is the first-->
+      <jsDir value="js"/>
+      <imagesDir value="images"/>
+      <cssDir value="css"/>
+      <resFilePath value="component/webapp/res"/>
+      <resRequestPath value="component/res"/>
+      <!--first:resfilepath= the path of the application  + "/" + resFilePath + "/" + jsDir -->
+      <!--second:jsfilepath= the filepath + "/" + resFilePath + "/" + jsDir -->
+      <rootFilePath value="."/>
+      <rootRequestPath value=""/>
+</component-config>
+

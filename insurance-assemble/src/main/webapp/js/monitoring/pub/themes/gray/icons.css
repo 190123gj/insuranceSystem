@@ -1,0 +1,149 @@
+@CHARSET "UTF-8";
+
+.icon-player{
+	  display: inline-block;
+	  width: 28px;
+	  height: 24px;
+	  line-height: 24px;
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -12px;
+	  font-size: 1px;
+	background:url('../icons/player.png') no-repeat center center;
+	height:24px;
+	width: 24px;
+}
+
+
+.icon-search{
+	  display: inline-block;
+	  width: 28px;
+	  height: 24px;
+	  line-height: 24px;
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -12px;
+	  font-size: 1px;
+	background:url('../icons/search.png') no-repeat center center;
+	height:24px;
+	width: 24px;
+}
+
+.icon-emap{
+	  display: inline-block;
+	  width: 28px;
+	  height: 24px;
+	  line-height: 24px;
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -12px;
+	  font-size: 1px;
+	background:url('../icons/emap.png') no-repeat center center;
+	height:24px;
+	width: 24px;
+}
+
+.icon-configset{
+	  display: inline-block;
+	  width: 24px;
+	  height: 24px;
+	  line-height: 24px;
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -12px;
+	  font-size: 1px;
+	background:url('../icons/configset.png') no-repeat center center;
+	height:24px;
+	width: 24px;
+}
+
+.icon-decode{
+	  display: inline-block;
+	  width: 24px;
+	  height: 24px;
+	  line-height: 24px;
+	  position: absolute;
+	  top: 50%;
+	  margin-top: -12px;
+	  font-size: 1px;
+	background:url('../icons/decode.png') no-repeat center center;
+	height:24px;
+	width: 24px;
+}
+
+.icon-start{
+	background:url('start.png') no-repeat center center;
+}
+.icon-stop{
+	background:url('stop.png') no-repeat center center;
+}
+
+.icon-begin-point{
+	background:url('beginpoint.png') no-repeat center center;
+}
+
+.icon-end-point{
+	background:url('endpoint.png') no-repeat center center;
+}
+
+.icon-down-point{
+	background:url('downpoint.png') no-repeat center center;
+}
+
+.icon-up-point{
+	background:url('uppoint.png') no-repeat center center;
+}
+
+
+.icon-setting{
+	background:url('setting.png') no-repeat center center;
+}
+
+.icon-close{
+	background:url('close.png') no-repeat center center;
+}
+
+.icon-open{
+	background:url('open.png') no-repeat center center;
+}
+
+.icon-rename{
+	background:url('rename.png') no-repeat center center;
+}
+
+.icon-editor{
+	background:url('editor.png') no-repeat center center;
+}
+
+.icon-go{
+	background:url('go.png') no-repeat center center;
+}
+
+.icon-talk{
+	background:url('talk.png') no-repeat center center;
+}
+
+.icon-call{
+	background:url('call.png') no-repeat center center;
+}
+
+.icon-stopall{
+	background:url('stopall.png') no-repeat center center;
+}
+
+.icon-playall{
+	background:url('playall.png') no-repeat center center;
+}
+
+.icon-online{
+	width:25px;height:25px;background-color:#000000;float:left;background:url('icon_pu_online.png') no-repeat center center;
+}
+
+.icon-offline{
+	width:25px;height:25px;background-color:#000000;float:left;background:url('icon_pu_offline.png') no-repeat center center;
+}
+
+.ovtree .tree-file {
+background: url('') ;
+}
+

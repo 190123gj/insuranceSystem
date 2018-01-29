@@ -1,0 +1,129 @@
+	<div class="m-item">
+        <label class="m-label">部门：</label>
+       	<div>$!{info.insuranceDepart}</div>
+    </div>
+    <div class="m-item">
+        <label class="m-label">团队：</label>
+       	<div>$!{info.insuranceTeam}</div>
+    </div>
+     <div class="m-item">
+        <label class="m-label">经纪人工号：</label>
+       	<div>$!{info.insuranceBrokerNo}</div>
+    </div>
+     <div class="m-item">
+        <label class="m-label">经纪人姓名：</label>
+       	<div>$!{info.insuranceBrokerName}</div>
+    </div>
+	<div class="m-item">
+        <label class="m-label">保单号：</label>
+       	<div>$!{info.insuranceNo}</div>
+    </div>
+    <div class="m-item">
+        <label class="m-label">批单号：</label>
+       	<div>$!{info.batchNo}</div>
+    </div>
+     #if($info.insuranceTypeName == "车险") 
+    <div class="m-item">
+        <label class="m-label">车牌号：</label>
+       	<div>$!{info.plateNumber}</div>
+    </div>
+    #end
+    
+    #if($info.insuranceTypeName == "寿险") 
+    <div class="m-item">
+        <label class="m-label">期数：</label>
+       	<div>$!{info.periods}</div>
+    </div>
+    #end
+    <div class="m-item">
+        <label class="m-label">业务单号：</label>
+       	<div>$!{info.billNo}</div>
+    </div>
+      <div class="m-item">
+        <label class="m-label">保险公司：</label>
+       	<div>$!{info.insuranceCompanyName}</div>
+    </div>
+    <div class="m-item">
+        <label class="m-label">投保人：</label>
+       	<div>$!{info.billCustomerName}</div>
+    </div>
+    <div class="m-item">
+        <label class="m-label">被保险人：</label>
+       	<div>$!{info.billInsuredName}</div>
+    </div>
+     <div class="m-item">
+        <label class="m-label">险种类别：</label>
+       	<div>$!{info.insuranceTypeName}</div>
+    </div>
+     <div class="m-item">
+        <label class="m-label">险种：</label>
+       	<div>$!{info.insuranceCatalogName}</div>
+    </div>
+     <div class="m-item">
+        <label class="m-label">保额：</label>
+       	<div>$!{info.insuranceAmount}</div>
+    </div>
+       <div class="m-item">
+        <label class="m-label">原保费：</label>
+       	<div>$!{info.premiumAmount}</div>
+    </div>
+       <div class="m-item">
+        <label class="m-label">签单日期：</label>
+       	<div>$!dateUtil.formatDay($!{info.insuranceDate})</div>
+    </div>
+    <div class="m-item">
+        <label class="m-label">起保日期：</label>
+       	<div>$!dateUtil.simpleFormatYmdmd($!{info.beginDate})</div>
+    </div>
+     <div class="m-item">
+        <label class="m-label">截止日期：</label>
+       	<div>$!dateUtil.simpleFormatYmdmd($!{info.endDate})</div>
+    </div>
+    #if ($!info.brokerScale != 0.00)
+    <div class="m-item">
+		<label class="m-label"><span class="m-required">*</span>经纪费率：</label>
+		  <div> $!{info.brokerScale}%</div>
+	 </div>
+    #end    
+    #if ($!info.commonScale != 0.00) 
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>佣金率：</label>
+        <div> $!{info.commonScale}%</div>
+    </div>
+     #end
+      #if ($!info.grossRate != 0.00)
+          #set($grossRate = $!info.grossRate * 100)
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>预留比率：</label>
+        <div> $grossRate %</div>
+    </div>
+     #end
+      #if ($!info.grossProfit != "0.00") 
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>税前毛利润：</label>
+        <div> $!{info.grossProfit} </div>
+    </div>
+     #end
+      #if ($!info.brokerVal != "0.00") 
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>经纪费：</label>
+        <div> $!{info.brokerVal} </div>
+    </div>
+     #end
+      #if ($!info.commonVal != "0.00") 
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>佣金：</label>
+        <div> $!{info.commonVal} </div>
+    </div>
+     #end
+     
+      <div class="m-item">
+            <label class="m-label">附件：</label>
+            <div class="fnUpAttach">
+                #set($attachmentTitle="附件")
+                #set($attachmentNameAttr="pathName_FORM_ATTACH")
+                #set($hiddenUrls = $!{hiddenUrls_FORM_ATTACH})
+                #set($attachments = $!{attaches_FORM_ATTACH})
+                #parse("/layout/common/viewAttachment.vm")
+            </div>
+        </div>

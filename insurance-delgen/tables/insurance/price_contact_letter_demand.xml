@@ -1,0 +1,95 @@
+<table sqlname="price_contact_letter_demand">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+						INSERT INTO price_contact_letter_demand(id,contact_letter_id,demand_type,demand_no,demand_name,industry,busi_scope,busi_areas,busi_address,busi_acreage,parking_num,indoor,outdoor,tempdoor,motodoor,policy_holder,insured_person,bill_lading_no,credit_letter_no,contract_no,departure_date,transport_way,insurance_way,transport_num,transport_tools,invoice_no,invoice_value,addition_ratio,departure_place,via_place,destination_place,risk_info,project_name,project_owner,engineering_contractor,engineering_subcontractor,engineering_design_unit,design_unit_level,engineering_cost,construction_area,project_duration,construction_period,construction_period_begin,construction_period_end,construction_period_num,commissioning_period_begin,commissioning_period_end,commissioning_period_num,warranty_period_begin,warranty_period_end,warranty_period_num,project_period_begin,project_period_end,project_period_num,commissioning_period,warranty_period,construction_site,delivery_ship_place,trial_regional,which_start,berth,be_launched,airworthiness,delivery_vessel,ship_type,load_ton,total_ton,total_length,type_width,deep,products,floor_num,floor_straight_num,floor_stairs_num,pool_num,pool_directly_num,pool_no_directly_num,remark,version,ext) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+						INSERT INTO price_contact_letter_demand(id,contact_letter_id,demand_type,demand_no,demand_name,industry,busi_scope,busi_areas,busi_address,busi_acreage,parking_num,indoor,outdoor,tempdoor,motodoor,policy_holder,insured_person,bill_lading_no,credit_letter_no,contract_no,departure_date,transport_way,insurance_way,transport_num,transport_tools,invoice_no,invoice_value,addition_ratio,departure_place,via_place,destination_place,risk_info,project_name,project_owner,engineering_contractor,engineering_subcontractor,engineering_design_unit,design_unit_level,engineering_cost,construction_area,project_duration,construction_period,construction_period_begin,construction_period_end,construction_period_num,commissioning_period_begin,commissioning_period_end,commissioning_period_num,warranty_period_begin,warranty_period_end,warranty_period_num,project_period_begin,project_period_end,project_period_num,commissioning_period,warranty_period,construction_site,delivery_ship_place,trial_regional,which_start,berth,be_launched,airworthiness,delivery_vessel,ship_type,load_ton,total_ton,total_length,type_width,deep,products,floor_num,floor_straight_num,floor_stairs_num,pool_num,pool_directly_num,pool_no_directly_num,remark,version,ext) VALUES (#id#,#contactLetterId#,#demandType#,#demandNo#,#demandName#,#industry#,#busiScope#,#busiAreas#,#busiAddress#,#busiAcreage#,#parkingNum#,#indoor#,#outdoor#,#tempdoor#,#motodoor#,#policyHolder#,#insuredPerson#,#billLadingNo#,#creditLetterNo#,#contractNo#,#departureDate#,#transportWay#,#insuranceWay#,#transportNum#,#transportTools#,#invoiceNo#,#invoiceValue#,#additionRatio#,#departurePlace#,#viaPlace#,#destinationPlace#,#riskInfo#,#projectName#,#projectOwner#,#engineeringContractor#,#engineeringSubcontractor#,#engineeringDesignUnit#,#designUnitLevel#,#engineeringCost#,#constructionArea#,#projectDuration#,#constructionPeriod#,#constructionPeriodBegin#,#constructionPeriodEnd#,#constructionPeriodNum#,#commissioningPeriodBegin#,#commissioningPeriodEnd#,#commissioningPeriodNum#,#warrantyPeriodBegin#,#warrantyPeriodEnd#,#warrantyPeriodNum#,#projectPeriodBegin#,#projectPeriodEnd#,#projectPeriodNum#,#commissioningPeriod#,#warrantyPeriod#,#constructionSite#,#deliveryShipPlace#,#trialRegional#,#whichStart#,#berth#,#beLaunched#,#airworthiness#,#deliveryVessel#,#shipType#,#loadTon#,#totalTon#,#totalLength#,#typeWidth#,#deep#,#products#,#floorNum#,#floorStraightNum#,#floorStairsNum#,#poolNum#,#poolDirectlyNum#,#poolNoDirectlyNum#,#remark#,#version#,#ext#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+				UPDATE price_contact_letter_demand SET contact_letter_id=?,demand_type=?,demand_no=?,demand_name=?,industry=?,busi_scope=?,busi_areas=?,busi_address=?,busi_acreage=?,parking_num=?,indoor=?,outdoor=?,tempdoor=?,motodoor=?,policy_holder=?,insured_person=?,bill_lading_no=?,credit_letter_no=?,contract_no=?,departure_date=?,transport_way=?,insurance_way=?,transport_num=?,transport_tools=?,invoice_no=?,invoice_value=?,addition_ratio=?,departure_place=?,via_place=?,destination_place=?,risk_info=?,project_name=?,project_owner=?,engineering_contractor=?,engineering_subcontractor=?,engineering_design_unit=?,design_unit_level=?,engineering_cost=?,construction_area=?,project_duration=?,construction_period=?,construction_period_begin=?,construction_period_end=?,construction_period_num=?,commissioning_period_begin=?,commissioning_period_end=?,commissioning_period_num=?,warranty_period_begin=?,warranty_period_end=?,warranty_period_num=?,project_period_begin=?,project_period_end=?,project_period_num=?,commissioning_period=?,warranty_period=?,construction_site=?,delivery_ship_place=?,trial_regional=?,which_start=?,berth=?,be_launched=?,airworthiness=?,delivery_vessel=?,ship_type=?,load_ton=?,total_ton=?,total_length=?,type_width=?,deep=?,products=?,floor_num=?,floor_straight_num=?,floor_stairs_num=?,pool_num=?,pool_directly_num=?,pool_no_directly_num=?,remark=?,version=?,ext=? WHERE id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			      SELECT  id ,contact_letter_id ,demand_type ,demand_no ,demand_name ,industry ,busi_scope ,busi_areas ,busi_address ,busi_acreage ,parking_num ,indoor ,outdoor ,tempdoor ,motodoor ,policy_holder ,insured_person ,bill_lading_no ,credit_letter_no ,contract_no ,departure_date ,transport_way ,insurance_way ,transport_num ,transport_tools ,invoice_no ,invoice_value ,addition_ratio ,departure_place ,via_place ,destination_place ,risk_info ,project_name ,project_owner ,engineering_contractor ,engineering_subcontractor ,engineering_design_unit ,design_unit_level ,engineering_cost ,construction_area ,project_duration ,construction_period ,construction_period_begin ,construction_period_end ,construction_period_num ,commissioning_period_begin ,commissioning_period_end ,commissioning_period_num ,warranty_period_begin ,warranty_period_end ,warranty_period_num ,project_period_begin ,project_period_end ,project_period_num ,commissioning_period ,warranty_period ,construction_site ,delivery_ship_place ,trial_regional ,which_start ,berth ,be_launched ,airworthiness ,delivery_vessel ,ship_type ,load_ton ,total_ton ,total_length ,type_width ,deep ,products ,floor_num ,floor_straight_num ,floor_stairs_num ,pool_num ,pool_directly_num ,pool_no_directly_num ,remark ,version ,ext  FROM price_contact_letter_demand WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM price_contact_letter_demand WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,contact_letter_id ,demand_type ,demand_no ,demand_name ,industry ,busi_scope ,busi_areas ,busi_address ,busi_acreage ,parking_num ,indoor ,outdoor ,tempdoor ,motodoor ,policy_holder ,insured_person ,bill_lading_no ,credit_letter_no ,contract_no ,departure_date ,transport_way ,insurance_way ,transport_num ,transport_tools ,invoice_no ,invoice_value ,addition_ratio ,departure_place ,via_place ,destination_place ,risk_info ,project_name ,project_owner ,engineering_contractor ,engineering_subcontractor ,engineering_design_unit ,design_unit_level ,engineering_cost ,construction_area ,project_duration ,construction_period ,construction_period_begin ,construction_period_end ,construction_period_num ,commissioning_period_begin ,commissioning_period_end ,commissioning_period_num ,warranty_period_begin ,warranty_period_end ,warranty_period_num ,project_period_begin ,project_period_end ,project_period_num ,commissioning_period ,warranty_period ,construction_site ,delivery_ship_place ,trial_regional ,which_start ,berth ,be_launched ,airworthiness ,delivery_vessel ,ship_type ,load_ton ,total_ton ,total_length ,type_width ,deep ,products ,floor_num ,floor_straight_num ,floor_stairs_num ,pool_num ,pool_directly_num ,pool_no_directly_num ,remark ,version ,ext  FROM price_contact_letter_demand WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         	SELECT  id ,contact_letter_id ,demand_type ,demand_no ,demand_name ,industry ,busi_scope ,busi_areas ,busi_address ,busi_acreage ,parking_num ,indoor ,outdoor ,tempdoor ,motodoor ,policy_holder ,insured_person ,bill_lading_no ,credit_letter_no ,contract_no ,departure_date ,transport_way ,insurance_way ,transport_num ,transport_tools ,invoice_no ,invoice_value ,addition_ratio ,departure_place ,via_place ,destination_place ,risk_info ,project_name ,project_owner ,engineering_contractor ,engineering_subcontractor ,engineering_design_unit ,design_unit_level ,engineering_cost ,construction_area ,project_duration ,construction_period ,construction_period_begin ,construction_period_end ,construction_period_num ,commissioning_period_begin ,commissioning_period_end ,commissioning_period_num ,warranty_period_begin ,warranty_period_end ,warranty_period_num ,project_period_begin ,project_period_end ,project_period_num ,commissioning_period ,warranty_period ,construction_site ,delivery_ship_place ,trial_regional ,which_start ,berth ,be_launched ,airworthiness ,delivery_vessel ,ship_type ,load_ton ,total_ton ,total_length ,type_width ,deep ,products ,floor_num ,floor_straight_num ,floor_stairs_num ,pool_num ,pool_directly_num ,pool_no_directly_num ,remark ,version ,ext  FROM price_contact_letter_demand WHERE 1=1
+             <dynamic>
+                  <isGreaterThan property="priceContactLetterDemand.contactLetterId"  compareValue="0" prepend=" and ">
+	                contact_letter_id = #priceContactLetterDemand.contactLetterId#
+	            </isGreaterThan>
+			</dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM price_contact_letter_demand WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM price_contact_letter_demand  where 1=1
+	         <dynamic>
+                  <isGreaterThan property="contactLetterId"  compareValue="0" prepend=" and ">
+	                contact_letter_id = #contactLetterId#
+	            </isGreaterThan>
+			</dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

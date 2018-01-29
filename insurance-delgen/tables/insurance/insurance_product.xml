@@ -1,0 +1,206 @@
+<table sqlname="insurance_product">
+    <column name="unit_price" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+										INSERT INTO insurance_product(product_id,product_name,product_no,company_user_id,company_base_user_id,company_user_name,record_number,catalog_id,catalog_name,sale_status,stop_sale_date,pay_type,pay_type_name,pay_period,pay_period_name,rate_id,parent_product_id,choice,remark,is_quota,is_life_insurance,abbr1,abbr2,abbr3,insurance_period_type,insurance_period,creator_id,creator_name,unit_price,period_rate,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+
+        <sqlmap>
+            <![CDATA[
+					INSERT INTO insurance_product(product_id,product_name,product_no,company_user_id,company_base_user_id,company_user_name,record_number,catalog_id,catalog_name,sale_status,stop_sale_date,pay_type,pay_type_name,pay_period,pay_period_name,rate_id,parent_product_id,choice,remark,is_quota,is_life_insurance,abbr1,abbr2,abbr3,insurance_period_type,insurance_period,creator_id,creator_name,unit_price,period_rate,raw_add_time) VALUES (#productId#,#productName#,#productNo#,#companyUserId#,#companyBaseUserId#,#companyUserName#,#recordNumber#,#catalogId#,#catalogName#,#saleStatus#,#stopSaleDate#,#payType#,#payTypeName#,#payPeriod#,#payPeriodName#,#rateId#,#parentProductId#,#choice#,#remark#,#isQuota#,#isLifeInsurance#,#abbr1#,#abbr2#,#abbr3#,#insurancePeriodType#,#insurancePeriod#,#creatorId#,#creatorName#,#unitPrice#,#periodRate#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="productId" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+        </sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+						UPDATE insurance_product SET product_name=?,product_no=?,company_user_id=?,company_base_user_id=?,company_user_name=?,record_number=?,catalog_id=?,catalog_name=?,sale_status=?,stop_sale_date=?,pay_type=?,pay_type_name=?,pay_period=?,pay_period_name=?,rate_id=?,parent_product_id=?,choice=?,remark=?,is_quota=?,is_life_insurance=?,abbr1=?,abbr2=?,abbr3=?,insurance_period_type=?,insurance_period=?,creator_id=?,creator_name=?,unit_price=?,period_rate=? WHERE product_id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			 	   		  SELECT  product_id ,product_name ,product_no ,company_user_id ,company_base_user_id ,company_user_name ,record_number ,catalog_id ,catalog_name ,sale_status ,stop_sale_date ,pay_type ,pay_type_name ,pay_period ,pay_period_name ,rate_id ,parent_product_id ,choice ,remark ,is_quota ,is_life_insurance ,abbr1 ,abbr2 ,abbr3 ,insurance_period_type ,insurance_period ,creator_id ,creator_name ,unit_price ,period_rate ,raw_add_time ,raw_update_time  FROM insurance_product WHERE product_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_product WHERE product_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="priceProducts" javatype="java.lang.String" />
+            <param name="productIds" javatype="java.lang.String" />
+            <param name="projectSetUpCatalogIds" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+						SELECT  *  FROM insurance_product WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	       	         SELECT  *  FROM insurance_product WHERE 1=1
+			<dynamic>
+	            <isNotEmpty property="insuranceProduct.productName"   prepend=" and ">
+	                product_name like concat('%', #insuranceProduct.productName#, '%')
+	            </isNotEmpty>
+	             <isNotEmpty property="insuranceProduct.recordNumber"   prepend=" and ">
+	                record_number like concat('%', #insuranceProduct.recordNumber#, '%')
+	            </isNotEmpty>
+             	<isNotEqual property="insuranceProduct.companyBaseUserId" compareValue="0"  prepend=" and ">
+			 	 company_base_user_id  = #insuranceProduct.companyBaseUserId#
+			 	</isNotEqual>
+
+			 	<isNotEqual property="insuranceProduct.companyUserId" compareValue="0"  prepend=" and ">
+			 	 company_user_id  = #insuranceProduct.companyUserId#
+			 	</isNotEqual>
+
+			 	<isNotEmpty property="insuranceProduct.isLifeInsurance" prepend=" and ">
+			 	 is_life_insurance  = #insuranceProduct.isLifeInsurance#
+			 	</isNotEmpty>
+			 	<isNotEmpty property="insuranceProduct.isQuota" prepend=" and ">
+			 	 is_quota  = #insuranceProduct.isQuota#
+			 	</isNotEmpty>
+			 	<isNotEqual property="insuranceProduct.catalogId" compareValue="0" prepend=" and ">
+			 	   catalog_id in (SELECT c.catalog_id FROM   insurance_catalog c ,insurance_catalog d  WHERE
+			 	    c.node_path like concat('%', #insuranceProduct.catalogId#, '%') AND  d.catalog_id =#insuranceProduct.catalogId# AND  c.depth >= d.depth)
+			 	</isNotEqual>
+			 	<isNotEmpty property="projectSetUpCatalogIds"   prepend=" and ">
+	                 catalog_id in ($projectSetUpCatalogIds$)
+	            </isNotEmpty>
+			 	<isNotEmpty property="insuranceProduct.saleStatus"   prepend=" and ">
+	                sale_status = #insuranceProduct.saleStatus#
+	            </isNotEmpty>
+	            <isNotEmpty property="productIds" prepend=" and ">
+	               product_id not in ($productIds$)
+	            </isNotEmpty>
+	             <isNotEmpty property="priceProducts" prepend=" and ">
+	               product_id in ($priceProducts$)
+	            </isNotEmpty>
+	        </dynamic>	
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+     <extraparams>
+      		<param name="priceProducts" javatype="java.lang.String" />
+            <param name="productIds" javatype="java.lang.String" />
+            <param name="projectSetUpCatalogIds" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM insurance_product WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM insurance_product  where 1=1
+	           <dynamic>
+	            <isNotEmpty property="insuranceProduct.productName"   prepend=" and ">
+	                product_name like concat('%', #insuranceProduct.productName#, '%')
+	            </isNotEmpty>
+	             <isNotEmpty property="insuranceProduct.recordNumber"   prepend=" and ">
+	                record_number like concat('%', #insuranceProduct.recordNumber#, '%')
+	            </isNotEmpty>
+             	<isNotEqual property="insuranceProduct.companyUserId" compareValue="0"  prepend=" and ">
+			 	 company_user_id  = #insuranceProduct.companyUserId#
+			 	</isNotEqual>
+			 	<isNotEqual property="insuranceProduct.companyBaseUserId" compareValue="0"  prepend=" and ">
+			 	 company_base_user_id  = #insuranceProduct.companyBaseUserId#
+			 	</isNotEqual>
+			 	<isNotEmpty property="insuranceProduct.isLifeInsurance" prepend=" and ">
+			 	 is_life_insurance  = #insuranceProduct.isLifeInsurance#
+			 	</isNotEmpty>
+			 	<isNotEmpty property="insuranceProduct.isQuota" prepend=" and ">
+			 	 is_quota  = #insuranceProduct.isQuota#
+			 	</isNotEmpty>
+			 	<isNotEqual property="insuranceProduct.catalogId" compareValue="0" prepend=" and ">
+			 	   catalog_id in (SELECT c.catalog_id FROM   insurance_catalog c ,insurance_catalog d  WHERE
+			 	    c.node_path like concat('%', #insuranceProduct.catalogId#, '%') AND  d.catalog_id =#insuranceProduct.catalogId# AND  c.depth >= d.depth)
+			 	</isNotEqual>
+			 	<isNotEmpty property="projectSetUpCatalogIds"   prepend=" and ">
+	                 catalog_id in ($projectSetUpCatalogIds$)
+	            </isNotEmpty>
+			 	<isNotEmpty property="insuranceProduct.saleStatus"   prepend=" and ">
+	                sale_status = #insuranceProduct.saleStatus#
+	            </isNotEmpty>
+	            <isNotEmpty property="productIds" prepend=" and ">
+	               product_id not in ($productIds$)
+	            </isNotEmpty>
+	            <isNotEmpty property="priceProducts" prepend=" and ">
+	               product_id in ($priceProducts$)
+	            </isNotEmpty>
+	       	   </dynamic>	
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    <operation name="findOutTimeProduct"  multiplicity="many">
+        <extraparams>
+            <param name="dtDate" javatype="java.util.Date" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+						SELECT  *  FROM insurance_product WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	       	        SELECT * FROM
+	insurance_product
+WHERE
+	sale_status = 0
+AND stop_sale_date IS NOT NULL
+
+AND   ${cdata-start} DATE_FORMAT(stop_sale_date, '%Y-%m-%d') < DATE_FORMAT(stop_sale_date, #dtDate#)  ${cdata-end}
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+    
+     <operation name="updateOutTimeProduct">
+        <extraparams>
+            <param name="productsId" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+			   UPDATE insurance_product SET sale_status=1 WHERE 1=1
+			]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	          UPDATE insurance_product SET sale_status = 1 where product_id in ($productsId$)
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

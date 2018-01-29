@@ -1,0 +1,91 @@
+<input type="hidden" name="id" value="$!{info.id}"/>
+<input type="hidden" name="type" value="$!{info.type}"/>
+<input type="hidden" name="formId" value="$!{info.formId}"/>
+<input type="hidden" name="businessBillId" value="$!{info.businessBillId}"/>
+
+<style>
+    .tabContent{
+        width: 90%;
+        margin: 0 auto;
+        overflow-x: auto;
+    }
+    table{
+        width: 100%;
+        margin: 20px auto;
+        border: 1px solid #d1d1d1;
+    }
+    th,td{
+        padding: 8px;
+        border: 1px solid #d1d1d1;
+    }
+    .data>td{
+
+        text-align: left;
+    }
+    td>input{
+        width: 60px;
+        border: 0;
+        border-bottom: 1px solid #b9e2d4;
+        outline:none;
+    }
+</style>
+
+<div class="tabContent">
+    <table>
+        <tr>
+            <th colspan="19" style="font-size: 24px">$!{businessBillInfo.insuranceTypeName}费用结算通知单</th>
+        </tr>
+        <tr class="data">
+            <td colspan="3">部门:$!{businessBillInfo.insuranceDepart}</td>
+            <td colspan="7">日期:$dateUtil.simpleFormat($!{info.rowAddTime})</td>
+            <td colspan="9">结算单号:$!{info.settlementNo}</td>
+        </tr>
+		<tr>
+			<th rowspan="2">业务编号</th>
+			<th rowspan="2">经纪人工号</th>
+			<th rowspan="2">经纪人姓名</th>
+			<th rowspan="2">经纪人职级</th>
+			<th rowspan="2">保单号</th>
+			<th rowspan="2">保险公司</th>
+			<th rowspan="2">原保费</th>
+			<th colspan="3">费用收取</th>
+			<th colspan="9">费用支付</th>
+			
+		</tr>
+		<tr>
+			<th>应收</th>
+			<th>已收</th>
+			<th>预留比率</th>
+			<th>佣金类别</th>
+			<th>佣金</th>
+			<th>继续率奖金</th>
+			<th>管理津贴</th>
+			<th>方案费</th>
+			<th>其他</th>
+			<th>应付合计</th>
+			<th>个税</th>
+			<th>实付</th>
+		</tr>
+		<tr>
+			<td>$!{businessBillInfo.billNo}</td>
+			<td>$!{businessBillInfo.insuranceBrokerNo}</td>
+			<td>$!{businessBillInfo.insuranceBrokerName}</td>
+            <td>#if($!edit) <input class="text fn-w60 fn-validate" type="text" name="brokerRank"value="$!info.brokerRank"> #else $!{info.brokerRank}  #end</td>
+            <td>$!{businessBillInfo.insuranceNo}</td>
+			<td>$!{businessBillInfo.insuranceCompanyName}</td>
+			<td>$!{businessBillInfo.premiumAmount}</td>
+			<td>$!{chargeNoticeInfo.recievableFee}</td>
+			<td>$!{chargeNoticeInfo.recievedFee}</td>
+			<td>$!{chargeNoticeInfo.reservedScale}</td>
+			<td>#if($!chargeNoticeInfo.commissionType == 1) 寿险佣金 #else 团险佣金 #end</td>
+			<td>$!{chargeNoticeInfo.payFee}</td>
+			<td>$!{chargeNoticeInfo.persistencyRateWard}</td>
+			<td>$!{chargeNoticeInfo.manageGrant}</td>
+			<td>$!{chargeNoticeInfo.packageFee}</td>
+			<td>$!{chargeNoticeInfo.insuranceOther}</td>
+			<td><input id="result" type="text" class="text fn-w60 fnMakeMoney" value="$!result" disabled/></td>
+			<td>#if($!edit) <input id="individualTax" maxValue="$!result" class="text fn-w60 fn-validate fnMakeMoney" type="text" name="billSettlementApplyDetailOrder.individualTax" value="$!billSettlementApplyDetailInfo.individualTax"> #else $!{detailInfo.individualTax}  #end</td>
+			<td>#if($!edit) <input id="actualPayFee" class="text fn-w60 fn-validate fnMakeMoney" type="text" name="billSettlementApplyDetailOrder.actualPayFee"value="$!billSettlementApplyDetailInfo.actualPayFee" readOnly> #else $!{detailInfo.actualPayFee}  #end</td>
+		</tr>
+    </table>
+</div>

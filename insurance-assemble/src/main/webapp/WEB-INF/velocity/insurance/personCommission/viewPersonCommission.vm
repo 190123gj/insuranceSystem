@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+    <title>业务员佣金明细</title>
+</head>
+<body>
+<div class="ui-breadcrumb">
+    &nbsp;财务管理&nbsp;&gt;&nbsp;业务员佣金结算&nbsp;&gt;&nbsp;业务员佣金明细
+</div>
+<h2 class="m-h2-title">业务员佣金明细</h2>
+
+<div class="fn-blank20"></div>
+<div class="m-main border ui-bg-fff">
+<form class="m-main border ui-bg-fff" action="/insurance/personCommission/view.htm" id="fnListSearchForm" method="POST">    
+	<input type="hidden" name="commissionId" value="$!{personCommissionDetailQueryOrder.commissionId}" />
+	<input type="hidden" name="type" value="$!{personCommissionDetailQueryOrder.type}" />
+    <div class="m-search fn-clear">
+        <div class="item">
+            日期
+            <input name="beginDate" id="beginDate" class="ui-text fn-w200 laydate-icon" value="$!{personCommissionDetailQueryOrder.beginDate}" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">&nbsp;&nbsp;-&nbsp;
+            <input name="endDate" id="endDate" class="ui-text fn-w200 laydate-icon" value="$!{personCommissionDetailQueryOrder.endDate}" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+        </div>
+        <div class="item">
+            业务员
+            <input class="ui-text fn-w200 fnInput" type="text" name="businessUserName" value="$!{personCommissionDetailQueryOrder.businessUserName}">
+       		<input type="hidden" name="businessUserId" value="$!{personCommissionDetailQueryOrder.businessUserId}" />
+        </div>
+	
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+    </div>
+
+    <div class="personCommissionViewChange">
+    	<input type="hidden" id="positiveData" value="$!{positiveData}" />
+    	<input type="hidden" id="negativeData" value="$!{negativeData}" />
+    	<input type="hidden" id="xAxisData" value="$!{xAxisData}" />
+    	  <p class="fn-mb20 fn-hide">
+      ##  <p class="fn-mb20">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue changeViewTable">切换视图</a>
+        </p>
+        <div class="item">
+            快捷筛选：
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue toChangeMonth  fn-mr20" changeval="0">本月</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue toChangeMonth  fn-mr20" changeval="-1">上月</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue toChangeMonth fn-mr20 " changeval="-2">最近三月</a>
+        </div>
+        <div class="fn-mb20 fn-tac fn-mt20">
+            <span class="fn-fwb fn-fs16 fn-mr40">上期结转：<label class="preResidue">$!{lastTotal}</label>元</span>
+            <span class="fn-fwb fn-fs16 fn-mr40">佣金收入：<label class="commissionIncommon">$!{incomeTotal}</label>元</span>
+            <span class="fn-fwb fn-fs16 fn-mr40">佣金提取：<label class="commissionDraw">$!{extractTotal}</label>元</span>
+        </div>
+    </div>
+    <div class="presonCommissionCanvas fn-hide canvas">
+   ## <div class="presonCommissionCanvas #if($stringUtil.isEmpty($!personCommissionDetailQueryOrder.type) || $!personCommissionDetailQueryOrder.type == 'presonCommissionCanvas') canvas #end">
+##        <p class="fn-tac fn-fwb fn-fs24 fn-f0 fn-mt20">业务员佣金明细</p>
+        <div id="personCommissionDtl" style="width: 80%;height: 600px;margin: 20px auto"></div>
+    </div>
+     <div class="fn-pl15 fn-pr15 presonCommissionTable">
+  ##  <div class="fn-pl15 fn-pr15 presonCommissionTable  #if($!personCommissionDetailQueryOrder.type == 'viewList') viewList #end">
+        <div class="fn-mb20 fn-mt20">
+        </div>
+        <table class="m-table m-table-list fn-tac" id="list" >
+            <thead>
+            <tr>
+                <th>流水号</th>
+                <th>日期</th>
+                <th>业务员</th>
+                <th>收入（元）</th>
+                <th>提取（元）</th>
+                <th>余额（元）</th>
+                <th>摘要</th>
+            </tr>
+            </thead>
+            <tbody>
+            #foreach ($item in $page.result)
+                <tr>
+                    <td>$!item.settlementPersonId</td>
+                    <td>$!item.commissionTime</td>
+                    <td>$!item.businessUserName</td>
+                    #if ($!item.commissionType == "INCOME")
+                    <td>$!item.commissionAmount</td>
+                    #else
+                    <td></td>
+                    #end
+                    
+                    #if ($!item.commissionType == "EXPENDITURE")
+                    <td>$!item.commissionAmount</td>
+                    #else
+                     <td></td>
+                    #end
+                    <td>$!item.balance</td>
+                    <td>$!item.remark</td>
+                </tr>
+            #end
+            </tbody>
+        </table>
+       #parse("/layout/common/pages.vm")
+    </div>
+    </form>
+    #parse("/layout/common/footer.vm")
+    #parse("/layout/common/commonjs.vm")
+    
+    <script type="text/html" id="PERSONCOMMISSIONDETAIL_INCOME">
+    <div class="wnd-wnd wnd-common">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">收入明细</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+        <div class="wnd-body fn-clear">
+            <div class="wnd-items wnd-items90">
+	                <table class="m-table m-table-list fn-tac" id="list">
+		            <thead>
+		                <tr id="fnListSearchTh">
+			 	                <th>保单号</th>
+			 	                <th>收入金额（元）</th>
+			 	                <th>收入时间</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		            </tbody>
+	              </table>
+            </div> 
+            
+        </div>
+        <div class="wnd-bottom">
+            <a href="javascript:void(0)" class="wnd-close close-btn closeBtn">返回</a>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" id="PERSONCOMMISSIONDETAIL_EXPENDITURE">
+    <div class="wnd-wnd wnd-common">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">支出明细</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+        <div class="wnd-body fn-clear">
+            <div class="wnd-items wnd-items90">
+                <table class="m-table m-table-list fn-tac" id="list">
+            <thead>
+                <tr id="fnListSearchTh">
+	 	                <th>提取金额</th>
+	 	                <th>提取时间</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+            </div> 
+            
+        </div>
+        <div class="wnd-bottom">
+            <a href="javascript:void(0)" class="wnd-close close-btn closeBtn">返回</a>
+        </div>
+    </div>
+</script>
+
+
+<script id="test" type="text/html">
+	
+    {{each data as value i}}
+    <tr>
+       <td> {{value}}</td>
+       <td> {{value}}</td>
+       <td> {{value}}</td>
+     </tr>
+    {{/each}}
+
+</script>
+
+
+    <script src="/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/personCommission/viewPersonCommission');
+</script>
+</body>
+</html>

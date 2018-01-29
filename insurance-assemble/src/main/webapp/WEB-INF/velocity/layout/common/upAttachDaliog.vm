@@ -1,0 +1,39 @@
+## 公共上传附件，弹出层查看方式
+
+## 制空，然后设值
+## #set( $thisUpAttachName = '' ) 当前控件的 name
+## #set( $thisUpAttachValue = '' ) 当前控件的 value
+## #set( $thisUpAttachType = '' ) 当前控件支持上传的附件类型
+## #set( $thisUpAttachConcise = false ) 当前控件是否简洁模式
+
+
+## 还原当前附件个数
+#set( $thisUpAttachLength = 0 )
+#if( $thisUpAttachValue != '' )
+	
+	#set( $thisUpAttachLength = $thisUpAttachValue.split(';').size() )
+
+#end
+
+
+<div class="fnUpAttach">
+    <div class="#if(!$!thisUpAttachConcise) fn-right #else fn-tac #end">
+        <span class="fn-csp #if(!$!thisUpAttachConcise)ui-btn ui-btn-fill ui-btn-blue #else fn-green #end viewDaliog"><i class="icon icon-look"></i>#if(!$!thisUpAttachConcise)弹窗#end查看</span>
+        <span class="fn-csp #if(!$!thisUpAttachConcise)ui-btn ui-btn-fill ui-btn-blue #else fn-green #end fnUpAttachBtn" #if($!thisUpAttachType) filetype="$!thisUpAttachType" #end><i class="icon icon-add"></i>上传#if(!$!thisUpAttachConcise)附件#end</span>
+        <input class="fnUpAttachVal" type="hidden" name="$!thisUpAttachName" value="$!thisUpAttachValue" length="$thisUpAttachLength">
+        <div class="m-attach fnUpAttachUl fn-hide">
+        	
+        	#set( $thisAttachVal = '' )  ## 先制空，再赋值，避免被循环使用
+			#set( $thisAttachVal = $!thisUpAttachValue )  ## string 附件的url集合
+
+			## 上传还是查看 ## #set( $thisAttachIsUp = true )
+
+        	#parse( '/layout/common/viewAttachUl.vm' )
+
+        </div>
+    </div>
+    #if( !$!thisUpAttachConcise )
+    	共有[<strong class="upFilesNumber">$thisUpAttachLength</strong>]附件
+    #end
+</div>
+#set( $thisUpAttachConcise = false )

@@ -1,0 +1,6 @@
+#set($systemName="保险经纪")
+#if(!$systemNameDefautUrl)
+	#set($systemNameDefautUrl="")
+#end
+#set($scriptPath="zyw/init")
+#parse("common/index.vm")

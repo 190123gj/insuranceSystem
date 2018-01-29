@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<toolbox>
+
+
+	<tool>
+		<key>viewShowUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.web.util.ViewShowUtil</class>
+	</tool>
+
+	
+	<tool>
+		<key>dateUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.util.DateUtil</class>
+	</tool>
+	
+	<tool>
+		<key>commonUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.util.CommonUtil</class>
+	</tool>
+	
+	<tool>
+		<key>moneyUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.util.MoneyUtil</class>
+	</tool>
+	
+	<tool>
+		<key>numberUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.util.NumberUtil</class>
+	</tool>
+	
+	<tool>
+		<key>rateUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.util.RateUtil</class>
+	</tool>
+	
+	<tool>
+		<key>loanUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.util.LoanUtil</class>
+	</tool>
+
+
+	
+	<tool>
+		<key>propertiesUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.util.PropertiesUtil</class>
+	</tool>
+	<tool>
+		<key>appConstantsUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.util.AppConstantsUtil</class>
+	</tool>
+	<tool>
+		<key>sysParamUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.web.util.SysParamUtil</class>
+	</tool>
+	
+	<tool>
+		<key>configParamProperty</key>
+		<scope>application</scope>
+		<class>com.born.insurance.util.ConfigParamProperty</class>
+	</tool>
+	
+	
+	
+	
+	<tool>
+		<key>stringUtil</key>
+		<scope>application</scope>
+		<class>com.born.insurance.util.StringUtil</class>
+	</tool>
+	
+	
+	<tool>
+        <key>listUtil</key>
+        <scope>application</scope>
+        <class>com.yjf.common.lang.util.ListUtil</class>
+    </tool>	
+    
+	<tool>
+        <key>dataPermissionUtil</key>
+        <scope>application</scope>
+        <class>com.born.insurance.web.util.DataPermissionUtil</class>
+    </tool>	
+    
+	<tool>
+        <key>permissionUtil</key>
+        <scope>application</scope>
+        <class>com.born.insurance.integration.bpm.user.PermissionUtil</class>
+    </tool>	
+    
+	<tool>
+        <key>projectUtil</key>
+        <scope>application</scope>
+        <class>com.born.insurance.util.ProjectUtil</class>
+    </tool>	
+    
+	<tool>
+        <key>formUtil</key>
+        <scope>application</scope>
+        <class>com.born.insurance.util.FormUtil</class>
+    </tool>	
+</toolbox>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>保单管理列表</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保后管理&nbsp;&gt;&nbsp;保单管理&nbsp;&gt;&nbsp;保单管理列表
+</div>
+
+<form class="m-main border ui-bg-fff" action="/insurance/businessBill/list.htm" id="fnListSearchForm" method="POST">
+
+    
+    <div class="m-search fn-clear">
+
+      
+        <div class="item">
+           保单号：
+            <input class="ui-text fn-w150" type="text" name="insuranceNo" value="$!{queryConditions.insuranceNo}">
+        </div>
+        
+        
+        <div class="item">
+            投保人：
+            <input class="ui-text fn-w100" type="text" name="billCustomerName" value="$!{queryConditions.billCustomerName}">
+        </div>
+        
+        
+        <div class="item">
+            业务员：
+            <input class="ui-text fn-w100" type="text" name="insuranceBrokerName" value="$!{queryConditions.insuranceBrokerName}">
+        </div>
+        
+          <div class="item">
+            审核状态：
+            <select name="status" class="ui-select fn-w100">
+                <option value="">请选择</option>
+                #foreach ($status in  $!{status})
+                    <option value="$status.code" #if ($status.code == $!queryConditions.status) selected #end>$status.message</option>
+                #end
+            </select>
+        </div>
+        
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+        	#if($isRightOperate)
+	        	<a class="fnUpFile fn-link ui-btn ui-btn-fill ui-btn-green-empty"><b>+</b>批量上传保单&nbsp;</a>
+	            <a class="fn-link ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/businessBill/downloadExcelModel.htm"><b></b>&nbsp;保单模板下载</a>
+        	#end
+           
+       	##	<a class="ui-btn ui-btn-fill ui-btn-green-empty checkAllItems" href="javascript:void(0);"><b>+</b>选择所有</a>
+       	##	 <div class="fn-right">
+        ##        <span class="item-name fn-mr20 countCheckedItensData">
+        ##            <input type="hidden" class="businessBillIds" name="businessBillIds">
+        ##            <input type="hidden" class="insuranceTypeNames" name="insuranceTypeNames"/>
+                ##    共选择<label class="allItems fn-mr5 fn-ml5">0</label>条记录
+        ##        </span>
+         ##       <a class="ui-btn ui-btn-fill ui-btn-green-empty updateStatus updateAllcheckedItems" href="javascript:void(0);"><b>+</b>结算申请</a>
+        ##    </div>
+       		#if($session.getAttribute("businessBillBad")) 
+       		<a class="fn-link ui-btn ui-btn-fill ui-btn-red-empty" href="/insurance/businessBill/downloadBadData.htm"><b>+</b>错误提示&nbsp;</a>
+       		#end
+        </div>
+
+        
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+		 	               ## <th><input type="checkbox" class="checkAllItems"/></th>
+		 	                <th>保单号</th>
+		 	                <th>业务单号</th>
+		 	                <th>保险公司</th>
+		 	                <th>险种类别</th>
+		 	                <th>投保人</th>
+		 	                <th>经纪人</th>
+		 	                <th>保障期间</th>
+		 	                <th>保费</th>
+		 	                <th>更新日期</th>
+		 	                <th>审核状态</th>
+		 	                <th>操作</th>
+    		   </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+					<tr>
+ 						## <td><input type="checkbox" value="$!item.businessBillId" typeName="$!item.insuranceTypeName" class="checkItem"/></td>
+ 						 #if ($item.insuranceOfType == "offline")
+ 						 <td>$!{item.insuranceNo}</td>
+ 						 #else 
+ 						 <td> <a href="/insurance/businessBill/view.htm?businessBillId=$!{item.businessBillId}">$!{item.insuranceNo}</a> </td>
+ 						 #end
+ 						 <td>	$!{item.billNo} </td>
+ 						 <td>	$!{item.insuranceCompanyName} </td>
+ 						 <td>	$!{item.insuranceTypeName} </td>
+ 						 <td>	$!{item.billCustomerName} </td>
+ 						 <td>	$!{item.insuranceBrokerName} </td>
+ 						 <td>	$dateUtil.formatDay($!{item.beginDate}) 至  $dateUtil.formatDay($!{item.endDate})止</td>
+ 						 <td>￥$!{item.premiumAmount}</td>
+ 						 <td>$dateUtil.simpleFormat($!{item.rawAddTime})</td>
+ 						  <td>
+	 						 #if ($item.insuranceOfType == "offline") 
+	 						 $!{item.formStatus.message}
+	 						 #end
+ 						  </td>
+                     	   <td>
+	 						  #if ($item.insuranceOfType == "online")
+		                         <a href="/insurance/businessBill/edit.htm?businessBillId=$!{item.businessBillId}">[ 保单信息维护 ]</a> <br />
+		                         <a href="/insurance/businessBill/renewalOfInsurance.htm?businessBillId=$!{item.businessBillId}">[ 续保 ]</a> <br />
+		                         <a href="/insurance/insuranceBillRenewal/list.htm?businessBillId=$!{item.businessBillId}">[ 续期 ]</a><br />
+		                         <a href="/insurance/businessBill/set.htm">[ 提醒设置 ]</a> 
+	 					      #else
+	 						     <a href="/insurance/businessBill/view.htm?businessBillId=$!{item.businessBillId}">[ 查看详情 ]</a> <br />
+	 						      #set($processUrl = "")
+			                      #if($!stringUtil.isNotBlank($item.taskUserData))
+			                            #set($processUrl = $!formUtil.getProcessUrl($!item.taskUserData,$!sessionLocal.userId))
+			                      #end
+			                       #if($!stringUtil.isNotBlank($processUrl))
+	                                 <a href="$!processUrl">[ 处理 ]</a>
+	                     		   #end
+                     		      #if ($!item.formStatus.code == "DRAFT" && $!sessionLocal.userId == $!item.creatorId)
+                        				<a href="/insurance/businessBill/editBusinessBill.htm?formId=$!{item.formId}">[ 编辑]</a>  <br />
+                        				<a href="javascript:void(0);" formId="$!{item.formId}" class="submit">[ 提交 ] </a><br />
+              				 		<a href="javascript:void(0)" formId="$!{item.formId}" class="deleteObj" businessBillId=$!{item.businessBillId}>[ 删除 ] </a><br />
+                  				  #end
+                  				   #if ($!item.formStatus.code == "SUBMIT" && $!sessionLocal.userId == $!item.creatorId)
+                           		  <a href="javascript:void(0);" formId="$!{item.formId}" class="revoke">[ 撤销 ] </a>
+                          		  #end
+                      		  	 #if ($!item.formStatus == "CANCEL" && $!sessionLocal.userId == $!item.creatorId)
+                      	 	    	<a href="/insurance/businessBill/editBusinessBill.htm?formId=$!{item.formId}">[重新申请]</a><br />
+                      	 	    	 <a href="javascript:void(0)" formId="$!{item.formId}" class="end">[ 作废 ] </a>
+                      	      	 #end
+                      	      	 #if ($!item.formStatus == "END" && $!sessionLocal.userId == $!item.creatorId)
+                      	 	    		 <a href="javascript:void(0)" formId="$!{item.formId}" class="deleteObj" businessBillId=$!{item.businessBillId}>[ 删除 ] </a>
+                      	      	 #end
+	 						  #end
+                     	   </td>
+                     	  
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        
+        
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+  seajs.use($_GLOBAL.zyw+'/businessBill/businessBill');
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<table sqlname="business_bill_coins_info">
+<column name="premium_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="broker_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="out_amount" javatype="com.yjf.common.lang.util.money.Money" />
+<column name="other_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO business_bill_coins_info(coins_info_id,insurace_company_id,insurace_company_name,chief,portion,premium_amount,broker_amount,out_amount,other_amount,business_bill_id) VALUES (?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO business_bill_coins_info(coins_info_id,insurace_company_id,insurace_company_name,chief,portion,premium_amount,broker_amount,out_amount,other_amount,business_bill_id) VALUES (#coinsInfoId#,#insuraceCompanyId#,#insuraceCompanyName#,#chief#,#portion#,#premiumAmount#,#brokerAmount#,#outAmount#,#otherAmount#,#businessBillId#)
+		        <selectKey  resultClass ="long"  keyProperty ="coinsInfoId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE business_bill_coins_info SET insurace_company_id=?,insurace_company_name=?,chief=?,portion=?,premium_amount=?,broker_amount=?,out_amount=?,other_amount=?,business_bill_id=? WHERE coins_info_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  coins_info_id ,insurace_company_id ,insurace_company_name ,chief ,portion ,premium_amount ,broker_amount ,out_amount ,other_amount ,business_bill_id  FROM business_bill_coins_info WHERE coins_info_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM business_bill_coins_info WHERE coins_info_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  coins_info_id ,insurace_company_id ,insurace_company_name ,chief ,portion ,premium_amount ,broker_amount ,out_amount ,other_amount ,business_bill_id  FROM business_bill_coins_info WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  coins_info_id ,insurace_company_id ,insurace_company_name ,chief ,portion ,premium_amount ,broker_amount ,out_amount ,other_amount ,business_bill_id  FROM business_bill_coins_info where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM business_bill_coins_info WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM business_bill_coins_info  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+        <operation name="findBusinessBillCoinsInfo" paramtype="long" multiplicity="many">
+        <sql>
+            <![CDATA[
+					SELECT  coins_info_id ,insurace_company_id ,insurace_company_name ,chief ,portion ,premium_amount ,broker_amount ,out_amount ,other_amount ,business_bill_id  FROM business_bill_coins_info WHERE business_bill_id = ?
+	        ]]>
+        </sql>
+        </operation>
+</table>

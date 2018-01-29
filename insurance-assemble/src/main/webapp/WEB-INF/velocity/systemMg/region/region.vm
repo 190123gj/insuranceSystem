@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/js/ztree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+    <style type="text/css">
+        .ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+    </style>
+    <title>行政区域维护</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;系统管理&nbsp;&gt;&nbsp;行政区域维护
+</div>
+
+<h2 class="m-h2-title">行政区域维护</h2>
+<div class="fn-blank20"></div>
+
+<div class="m-sidebar fn-left" style="border-top:1px solid #e5e1e1; margin-left: 0;">
+    <div id="regionTree"  class="ztree fn-usn fn-pt20 fn-pb20 m-ul" style="height: 412px;"></div>
+</div>
+
+<form class="m-main m-main-in border ui-bg-fff" id="form" style="margin-left: 260px;">
+
+    <input name="id" value="" type="hidden">
+
+    <h2 class="m-htitle fn-mb20"><span>区域信息</span></h2>
+
+    <div class="m-item fn-mt20">
+        <label class="m-label">编码：</label>
+        <input name="code" value="" class="ui-text fn-w200 fnRequired" type="text">
+    </div>
+
+    <div class="m-item">
+        <label class="m-label">名称：</label>
+        <input name="name" value="" class="ui-text fn-w200 fnRequired" type="text">
+    </div>
+
+    <div class="m-item">
+        <label class="m-label">上级编码：</label>
+        <input name="parentCode" value="root" class="ui-text fn-w200 fnRequired" readonly="readonly" type="text">
+    </div>
+
+    <div class="m-item">
+        <label class="m-label">是否有子节点：</label>
+        <label class="fn-pr20"><input class="fnRequired" type="radio" name="hasChildren" value="IS">是</label>
+        <label class="fn-pr20"><input class="fnRequired" type="radio" name="hasChildren" value="NO" checked="checked">否</label>     
+    </div>
+
+    <div class="m-item">
+        <label class="m-label">顺序：</label>
+        <input name="sortOrder" value="1" class="ui-text fn-w200" type="text">
+    </div>
+
+    <div class="fn-mt20 fn-mb20 m-blank"></div>
+
+    <div class="fn-tac fn-pt20 fn-pb20">
+        <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5" type="submit" id="submitBtn" value="保存">
+    </div>
+
+</form>
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+<script type="text/javascript" src="/js/ztree/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/system/region');
+</script>
+</body>
+</html>

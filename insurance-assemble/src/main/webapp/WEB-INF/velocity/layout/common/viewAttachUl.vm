@@ -1,0 +1,41 @@
+## 某些地方上传附件、查看附件不一定会是通用样子，但里面的遍历是通用的
+## 默认是查看模式
+
+## #set( $thisAttachVal = '' )  ## 先制空，再赋值，避免被循环使用
+## #set( $thisAttachVal = '' )  ## string 附件的url集合
+## #set( $thisAttachIsUp = true )  ## boole 是否上传方式 一般情况，一个页面统一处理
+
+
+## 在 vm 中，变量都是对象？#set( $thisAttachVal = '' ) $thisAttachVal也是对象
+
+#if($!thisAttachVal != '')
+    ## #set($attachs = $!item.fileUrl.split(";"))
+    #set($attachs = $!thisAttachVal.split(";"))
+    #if($attachs)
+        #foreach($files in $attachs)
+            <span class="attach-item fnAttachItem" val="$files">
+
+                #set($file = $files.split(","))
+
+                #if( $!file[2].endsWith(".jpg") || $!file[2].endsWith(".JPG") ||
+                    $!file[2].endsWith(".png") || $!file[2].endsWith(".PNG") ||
+                    $!file[2].endsWith(".jpeg") || $!file[2].endsWith(".JPEG") ||
+                    $!file[2].endsWith(".tiff") || $!file[2].endsWith(".TIFF") ||
+                    $!file[2].endsWith(".bmp") || $!file[2].endsWith(".BMP") )
+
+                    <i class="icon icon-img"></i><span class="fnAttachView fn-csp">$!file[0]</span>
+
+                #else
+
+                    <i class="icon icon-file"></i><a title="点击下载" download target="_blank" href="/baseDataLoad/downLoad.htm?fileName=$!stringUtil.encodeURI($!file[0])&path=$!file[1]&id=0">$!file[0]</a>
+
+                #end
+
+                #if( $!thisAttachIsUp )
+                    <span class="attach-del fn-csp fn-usn fnUpAttachDel">&times;</span>
+                #end
+
+            </span>
+        #end
+    #end
+#end

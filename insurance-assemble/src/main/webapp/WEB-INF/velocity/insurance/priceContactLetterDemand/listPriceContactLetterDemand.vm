@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>demo</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;demo&nbsp;&gt;&nbsp;
+</div>
+
+<form class="m-main border ui-bg-fff" action="" id="fnListSearchForm" method="POST">
+
+    
+    <div class="m-search fn-clear">
+
+        <div class="item">
+            姓名
+            <input class="ui-text fn-w90" type="text" name="customerName" value="\$!{queryConditions.realName}">
+        </div>
+
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/demo/edit.htm"><b>+</b>新增&nbsp;</a>
+
+        </div>
+
+        
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+				 	                <th>总长</th>
+				 	                <th>工程承包人、建造承包人</th>
+				 	                <th>上船台</th>
+				 	                <th>建造地点</th>
+				 	                <th>工程分包人、建造分包人</th>
+				 	                <th>适航</th>
+				 	                <th>详细信息</th>
+				 	                <th>交船地点</th>
+				 	                <th>保证期</th>
+				 	                <th>其中动工</th>
+				 	                <th>扩展字段</th>
+				 	                <th>型宽</th>
+				 	                <th>运输工具及航次</th>
+				 	                <th>提单(运单)号</th>
+				 	                <th>所属行业</th>
+				 	                <th>施工面积</th>
+				 	                <th>型深</th>
+				 	                <th>试车期</th>
+				 	                <th>主营业务</th>
+				 	                <th>工程设计单位</th>
+				 	                <th>总吨</th>
+				 	                <th>临时</th>
+				 	                <th>车位数</th>
+				 	                <th>设计单位等级</th>
+				 	                <th>启运日期</th>
+				 	                <th>发票号</th>
+				 	                <th>经营区域</th>
+				 	                <th>起运地</th>
+				 	                <th>工程名称、船名</th>
+				 	                <th>室内</th>
+				 	                <th>合同编号</th>
+				 	                <th>面积</th>
+				 	                <th>版本</th>
+				 	                <th>id</th>
+				 	                <th>载重吨</th>
+				 	                <th>建造期限、建造期限</th>
+				 	                <th>途径地</th>
+				 	                <th>主要原料、产品及流程</th>
+				 	                <th>船舶类型</th>
+				 	                <th>发票金额</th>
+				 	                <th>工程造价、船舶造价</th>
+				 	                <th>交船</th>
+				 	                <th>被保险人</th>
+				 	                <th>摩托车位</th>
+				 	                <th>目的地</th>
+				 	                <th>施工期限</th>
+				 	                <th>投保人</th>
+				 	                <th>下水</th>
+				 	                <th>地址</th>
+				 	                <th>室外</th>
+				 	                <th>试航区域</th>
+				 	                <th>标的编号</th>
+				 	                <th>工程所有人、船舶所有人</th>
+				 	                <th>风险信息</th>
+				 	                <th>信用证号</th>
+				 	                <th>标的名称</th>
+				 	                <th>询价方案id</th>
+				                     <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+					 						 <td>	$!{item.totalLength} </td>
+					 						 <td>	$!{item.engineeringContractor} </td>
+					 						 <td>	$!{item.berth} </td>
+					 						 <td>	$!{item.constructionSite} </td>
+					 						 <td>	$!{item.engineeringSubcontractor} </td>
+					 						 <td>	$!{item.airworthiness} </td>
+					 						 <td>	$!{item.remark} </td>
+					 						 <td>	$!{item.deliveryShipPlace} </td>
+					 						 <td>	$!{item.warrantyPeriod} </td>
+					 						 <td>	$!{item.whichStart} </td>
+					 						 <td>	$!{item.ext} </td>
+					 						 <td>	$!{item.typeWidth} </td>
+					 						 <td>	$!{item.transportNum} </td>
+					 						 <td>	$!{item.billLadingNo} </td>
+					 						 <td>	$!{item.industry} </td>
+					 						 <td>	$!{item.constructionArea} </td>
+					 						 <td>	$!{item.deep} </td>
+					 						 <td>	$!{item.commissioningPeriod} </td>
+					 						 <td>	$!{item.busiScope} </td>
+					 						 <td>	$!{item.engineeringDesignUnit} </td>
+					 						 <td>	$!{item.totalTon} </td>
+					 						 <td>	$!{item.tempdoor} </td>
+					 						 <td>	$!{item.parkingNum} </td>
+					 						 <td>	$!{item.designUnitLevel} </td>
+					 						 <td>	$!{item.departureDate} </td>
+					 						 <td>	$!{item.invoiceNo} </td>
+					 						 <td>	$!{item.busiAreas} </td>
+					 						 <td>	$!{item.departurePlace} </td>
+					 						 <td>	$!{item.projectName} </td>
+					 						 <td>	$!{item.indoor} </td>
+					 						 <td>	$!{item.contractNo} </td>
+					 						 <td>	$!{item.busiAcreage} </td>
+					 						 <td>	$!{item.version} </td>
+					 						 <td>	$!{item.id} </td>
+					 						 <td>	$!{item.loadTon} </td>
+					 						 <td>	$!{item.constructionPeriod} </td>
+					 						 <td>	$!{item.viaPlace} </td>
+					 						 <td>	$!{item.products} </td>
+					 						 <td>	$!{item.shipType} </td>
+					 						 <td>	$!{item.invoiceValue} </td>
+					 						 <td>	$!{item.engineeringCost} </td>
+					 						 <td>	$!{item.deliveryVessel} </td>
+					 						 <td>	$!{item.insuredPerson} </td>
+					 						 <td>	$!{item.motodoor} </td>
+					 						 <td>	$!{item.destinationPlace} </td>
+					 						 <td>	$!{item.projectDuration} </td>
+					 						 <td>	$!{item.policyHolder} </td>
+					 						 <td>	$!{item.beLaunched} </td>
+					 						 <td>	$!{item.busiAddress} </td>
+					 						 <td>	$!{item.outdoor} </td>
+					 						 <td>	$!{item.trialRegional} </td>
+					 						 <td>	$!{item.demandNo} </td>
+					 						 <td>	$!{item.projectOwner} </td>
+					 						 <td>	$!{item.riskInfo} </td>
+					 						 <td>	$!{item.creditLetterNo} </td>
+					 						 <td>	$!{item.demandName} </td>
+					 						 <td>	$!{item.contactLetterId} </td>
+					                          <td>
+                            <a href="">[ 查看详情 ]</a>
+                           
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        
+        
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+  //  seajs.use($_GLOBAL.zyw+'/project/rkct.rkwn.list');
+</script>
+</body>
+</html>

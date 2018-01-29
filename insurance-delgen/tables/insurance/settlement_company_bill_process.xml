@@ -1,0 +1,142 @@
+<table sqlname="settlement_company_bill_process">
+<column name="total_amount" javatype="com.yjf.common.lang.util.money.Money" />
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO settlement_company_bill_process(id,settlement_company_ids,bill_no,insurance_company_id,insurance_company_name,total_amount,total,status,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO settlement_company_bill_process(id,settlement_company_ids,bill_no,insurance_company_id,insurance_company_name,total_amount,total,status,raw_add_time) VALUES (#id#,#settlementCompanyIds#,#billNo#,#insuranceCompanyId#,#insuranceCompanyName#,#totalAmount#,#total#,#status#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE settlement_company_bill_process SET settlement_company_ids=?, bill_no=?,insurance_company_id=?,insurance_company_name=?,total_amount=?,total=?,status=? WHERE id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,settlement_company_ids ,bill_no ,insurance_company_id ,insurance_company_name ,total_amount ,total ,status ,raw_add_time ,raw_update_time  FROM settlement_company_bill_process WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM settlement_company_bill_process WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+            <param name="beginDate" javatype="java.util.Date" />
+            <param name="endDate" javatype="java.util.Date" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,settlement_company_ids ,bill_no ,insurance_company_id ,insurance_company_name ,total_amount ,total ,status ,raw_add_time ,raw_update_time  FROM settlement_company_bill_process WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,settlement_company_ids ,bill_no ,insurance_company_id ,insurance_company_name ,total_amount ,total ,status ,raw_add_time ,raw_update_time  FROM settlement_company_bill_process where 1=1
+
+	        <dynamic>
+	      	     <isGreaterThan property="settlementCompanyBillProcess.insuranceCompanyId"  compareValue="0" prepend=" and ">
+                  insurance_company_id = #settlementCompanyBillProcess.insuranceCompanyId#
+                 </isGreaterThan>
+	         	<isNotEmpty property="settlementCompanyBillProcess.billNo" prepend="and">
+	             bill_no like concat('%', #settlementCompanyBillProcess.billNo#, '%') 
+	         	</isNotEmpty>
+	         	<isNotEmpty property="settlementCompanyBillProcess.status" prepend="and">
+	             status = #settlementCompanyBillProcess.status#
+	         	</isNotEmpty>
+	         	 <isNotEmpty property="beginDate"   prepend=" and ">
+	                raw_add_time >= #beginDate#
+	            </isNotEmpty>
+	            <isNotEmpty property="endDate"  prepend=" and ">
+	                ${cdata-start} raw_add_time <= #endDate#  ${cdata-end}
+	            </isNotEmpty>
+			</dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+		<extraparams>
+            <param name="beginDate" javatype="java.util.Date" />
+            <param name="endDate" javatype="java.util.Date" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM settlement_company_bill_process WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM settlement_company_bill_process  where 1=1
+	            <dynamic>
+	             <isGreaterThan property="settlementCompanyBillProcess.insuranceCompanyId"  compareValue="0" prepend=" and ">
+                  insurance_company_id = #settlementCompanyBillProcess.insuranceCompanyId#
+                 </isGreaterThan>
+	         	<isNotEmpty property="settlementCompanyBillProcess.billNo" prepend="and">
+	              bill_no like concat('%', #settlementCompanyBillProcess.billNo#, '%') 
+	         	</isNotEmpty>
+	         	<isNotEmpty property="settlementCompanyBillProcess.status" prepend="and">
+	             status = #settlementCompanyBillProcess.status#
+	         	</isNotEmpty>
+	         	 <isNotEmpty property="beginDate"   prepend=" and ">
+	                raw_add_time >= #beginDate#
+	            </isNotEmpty>
+	            <isNotEmpty property="endDate"  prepend=" and ">
+	                ${cdata-start} raw_add_time <= #endDate#  ${cdata-end}
+	            </isNotEmpty>
+			</dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+    
+     <operation name="findSettlementCompanyBillProcess" >
+    	 <extraparams>
+            <param name="billNo" javatype="java.lang.String" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+	         SELECT  id ,settlement_company_ids ,bill_no ,insurance_company_id ,insurance_company_name ,total_amount ,total ,status ,raw_add_time ,raw_update_time  FROM settlement_company_bill_process where 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	          SELECT  id ,settlement_company_ids ,bill_no ,insurance_company_id ,insurance_company_name ,total_amount ,total ,status ,raw_add_time ,raw_update_time  FROM settlement_company_bill_process WHERE bill_no=#billNo#
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

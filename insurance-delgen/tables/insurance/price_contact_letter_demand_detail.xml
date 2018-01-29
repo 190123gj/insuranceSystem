@@ -1,0 +1,105 @@
+<table sqlname="price_contact_letter_demand_detail">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO price_contact_letter_demand_detail(id,letter_demand_id,product_name,model,sales_volume,sales_area,business_object,business_income,vehicle_use,num,seats_num,travel_area,shipping_type,goods_name,packing_condition,expected_value,transport_route,frequency,one_limit,vehicle_type,tonnage,vehicle_age,transportation_area,goods_types,remark,dangerous_goods,main_business,aset_address,purpose,building_structure,version,ext) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+		INSERT INTO price_contact_letter_demand_detail(id,letter_demand_id,product_name,model,sales_volume,sales_area,business_object,business_income,vehicle_use,num,seats_num,travel_area,shipping_type,goods_name,packing_condition,expected_value,transport_route,frequency,one_limit,vehicle_type,tonnage,vehicle_age,transportation_area,goods_types,remark,dangerous_goods,main_business,aset_address,purpose,building_structure,version,ext) VALUES (#id#,#letterDemandId#,#productName#,#model#,#salesVolume#,#salesArea#,#businessObject#,#businessIncome#,#vehicleUse#,#num#,#seatsNum#,#travelArea#,#shippingType#,#goodsName#,#packingCondition#,#expectedValue#,#transportRoute#,#frequency#,#oneLimit#,#vehicleType#,#tonnage#,#vehicleAge#,#transportationArea#,#goodsTypes#,#remark#,#dangerousGoods#,#mainBusiness#,#asetAddress#,#purpose#,#buildingStructure#,#version#,#ext#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE price_contact_letter_demand_detail SET letter_demand_id=?,product_name=?,model=?,sales_volume=?,sales_area=?,business_object=?,business_income=?,vehicle_use=?,num=?,seats_num=?,travel_area=?,shipping_type=?,goods_name=?,packing_condition=?,expected_value=?,transport_route=?,frequency=?,one_limit=?,vehicle_type=?,tonnage=?,vehicle_age=?,transportation_area=?,goods_types=?,remark=?,dangerous_goods=?,main_business=?,aset_address=?,purpose=?,building_structure=?,version=?,ext=? WHERE id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,letter_demand_id ,product_name ,model ,sales_volume ,sales_area ,business_object ,business_income ,vehicle_use ,num ,seats_num ,travel_area ,shipping_type ,goods_name ,packing_condition ,expected_value ,transport_route ,frequency ,one_limit ,vehicle_type ,tonnage ,vehicle_age ,transportation_area ,goods_types ,remark ,dangerous_goods ,main_business ,aset_address ,purpose ,building_structure ,version ,ext  FROM price_contact_letter_demand_detail WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM price_contact_letter_demand_detail WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteByLetterDemandId" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM price_contact_letter_demand_detail WHERE letter_demand_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,letter_demand_id ,product_name ,model ,sales_volume ,sales_area ,business_object ,business_income ,vehicle_use ,num ,seats_num ,travel_area ,shipping_type ,goods_name ,packing_condition ,expected_value ,transport_route ,frequency ,one_limit ,vehicle_type ,tonnage ,vehicle_age ,transportation_area ,goods_types ,remark ,dangerous_goods ,main_business ,aset_address ,purpose ,building_structure ,version ,ext  FROM price_contact_letter_demand_detail WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,letter_demand_id ,product_name ,model ,sales_volume ,sales_area ,business_object ,business_income ,vehicle_use ,num ,seats_num ,travel_area ,shipping_type ,goods_name ,packing_condition ,expected_value ,transport_route ,frequency ,one_limit ,vehicle_type ,tonnage ,vehicle_age ,transportation_area ,goods_types ,remark ,dangerous_goods ,main_business ,aset_address ,purpose ,building_structure ,version ,ext  FROM price_contact_letter_demand_detail WHERE 1=1
+             <dynamic>
+                  <isGreaterThan property="priceContactLetterDemandDetail.letterDemandId"  compareValue="0" prepend=" and ">
+	                letter_demand_id = #priceContactLetterDemandDetail.letterDemandId#
+	            </isGreaterThan>
+			</dynamic>
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM price_contact_letter_demand_detail WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM price_contact_letter_demand_detail  where 1=1
+	           <dynamic>
+                  <isGreaterThan property="letterDemandId"  compareValue="0" prepend=" and ">
+	                letter_demand_id = #letterDemandId#
+	            </isGreaterThan>
+			</dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

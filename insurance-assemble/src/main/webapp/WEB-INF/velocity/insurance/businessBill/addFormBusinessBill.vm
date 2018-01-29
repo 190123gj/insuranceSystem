@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title></title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保后管理&nbsp;&gt;&nbsp;保单管理&nbsp;&gt;&nbsp;保单修改
+</div>
+<div class="m-main border ui-bg-fff">
+   <form id="form" action="/insurance/businessBill/editSubmitBusinessBill.json" method="POST" callbackhref="/insurance/businessBill/list.htm" process="true">
+ 	 	<div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>部门：</label>
+       	<div> <input class="ui-text fn-w200 fn-validate" type="text" id="insuranceDepart" name="insuranceDepart" value="$!{info.insuranceDepart}"></div>
+    </div>
+    <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>团队：</label>
+       	<div> <input class="ui-text fn-w200 fn-validate" type="text" id="insuranceDepart" name="insuranceTeam" value="$!{info.insuranceTeam}"></div>
+    </div>
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>经纪人工号：</label>
+       	<div> <input class="ui-text fn-w200 fn-validate" type="text" id="insuranceDepart" name="insuranceBrokerNo" value="$!{info.insuranceBrokerNo}"></div>
+    </div>
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>经纪人姓名：</label>
+       <div> <input class="ui-text fn-w200 fn-validate" type="text" id="insuranceDepart" name="insuranceBrokerName" value="$!{info.insuranceBrokerName}"></div>	
+    </div>
+	<div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>保单号：</label>
+   		 <div> <input class="ui-text fn-w200 fn-validate" type="text" id="insuranceDepart" name="insuranceNo" value="$!{info.insuranceNo}"></div>	
+    </div>
+    <div class="m-item">
+        <label class="m-label">批单号：</label>
+   		 <div> <input class="ui-text fn-w200" type="text" id="batchNo" name="batchNo" value="$!{info.batchNo}"></div>	
+    </div>
+      #if($info.insuranceTypeName == "车险")
+      <div class="m-item">
+        <label class="m-label">车牌号：</label>
+   		 <div> <input class="ui-text fn-w200" type="text" id="plateNumber" name="plateNumber" value="$!{info.plateNumber}"></div>	
+    </div>
+    #end
+      #if($info.insuranceTypeName == "寿险")
+      <div class="m-item">
+        <label class="m-label">期数：</label>
+   		 <div> <input class="ui-text fn-w200" type="text" id="periods" name="periods" value="$!{info.periods}"></div>	
+    </div>
+    #end
+      <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>保险公司：</label>
+       	<div><input class="ui-text fn-w200 fn-validate" type="text" id="insuranceDepart" name="insuranceCompanyName" value="$!{info.insuranceCompanyName}"></div>
+    </div>
+    <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>投保人：</label>
+       	<div><input class="ui-text fn-w200 fn-validate" type="text" id="insuranceDepart" name="billCustomerName" value="$!{info.billCustomerName}"></div>
+    </div>
+    <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>被保险人：</label>
+       	<div><input class="ui-text fn-w200 fn-validate" type="text" id="insuranceDepart" name="billInsuredName" value="$!{info.billInsuredName}"></div>
+    </div>
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>险种类别：</label>
+       	<div><input class="ui-text fn-w200 fn-validate" type="text" id="insuranceDepart" name="insuranceTypeName" value="$!{info.insuranceTypeName}"></div>
+    </div>
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>险种：</label>
+       	<div><input class="ui-text fn-w200 fn-validate" type="text" id="insuranceDepart" name="insuranceCatalogName" value="$!{info.insuranceCatalogName}"></div>
+    </div>
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>保额：</label>
+       	<div><input class="ui-text fn-w200 fn-validate fnMakeMoney" type="text" id="insuranceDepart" name="insuranceAmount" value="$!{info.insuranceAmount}"></div>
+    </div>
+       <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>原保费：</label>
+       	<div><input class="ui-text fn-w200 fn-validate fnMakeMoney" type="text" id="insuranceDepart" name="premiumAmount" value="$!{info.premiumAmount}"></div>
+    </div>
+       <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>签单日期：</label>
+        <div><input class="ui-text fn-w200 laydate-icon fnChangeInput"  type="text" value="$!dateUtil.formatDay($!{info.insuranceDate})"  name="insuranceDate"  onclick="laydate({istime: true,format: 'YYYY-MM-DD'})"></div>
+    </div>
+    <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>起保日期：</label>
+        <div><input class="ui-text fn-w200 laydate-icon fnChangeInput"  type="text" value="$!dateUtil.simpleFormatYmdmd($!{info.beginDate})"  name="beginDate"  onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm'})"></div>
+    </div>
+     <div class="m-item">
+        <label class="m-label"><span class="m-required">*</span>截止日期：</label>
+        <div><input class="ui-text fn-w200 laydate-icon fnChangeInput"  type="text" value="$!dateUtil.simpleFormatYmdmd($!{info.endDate})"  name="endDate"  onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm'})"></div>
+    </div>
+     
+	 <div class="m-item">
+        <label class="m-label">附件上传：</label>
+        <div class="fnUpAttach">
+            #set($attachmentTitle="上传附件")
+            #set($attachmentNameAttr="pathName_FORM_ATTACH")
+            #set($hiddenUrls = $!{hiddenUrls_FORM_ATTACH})
+            #set($attachments = $!{attaches_FORM_ATTACH})
+            #parse("/layout/common/uploadAttachment.vm")
+        </div>
+    </div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <input type="hidden" name="formId" value="$!{info.formId}" />
+            <input type="hidden" name="billNo" value="$!{info.billNo}" />
+            <input type="hidden" name="businessBillId" value="$!{info.businessBillId}" />
+            <input type="hidden" name="insuranceOfType" value="$!{info.insuranceOfType}" />
+            <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn DRAFT" type="button" value="暂存">
+            <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn" type="button" value="提交">
+            <a href="/insurance/businessBill/list.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+     </form>
+</div>
+
+  #parse("/layout/common/footer.vm")
+<script src="/js/laydate/laydate.js"></script>
+    #parse("/layout/common/commonjs.vm")
+<script>
+    seajs.use($_GLOBAL.zyw+'/businessBill/addBusinessBill');
+</script>
+
+</body>
+</html>

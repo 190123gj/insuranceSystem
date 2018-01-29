@@ -1,0 +1,86 @@
+<table sqlname="common_attachment">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO common_attachment(attachment_id,biz_no,child_id,module_type,check_status,file_name,isort,file_physical_path,request_path,uploader_id,uploader_account,uploader_name,project_code,remark,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO common_attachment(attachment_id,biz_no,child_id,module_type,check_status,file_name,isort,file_physical_path,request_path,uploader_id,uploader_account,uploader_name,project_code,remark,raw_add_time) VALUES (#attachmentId#,#bizNo#,#childId#,#moduleType#,#checkStatus#,#fileName#,#isort#,#filePhysicalPath#,#requestPath#,#uploaderId#,#uploaderAccount#,#uploaderName#,#projectCode#,#remark#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="attachmentId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE common_attachment SET biz_no=?,child_id=?,module_type=?,check_status=?,file_name=?,isort=?,file_physical_path=?,request_path=?,uploader_id=?,uploader_account=?,uploader_name=?,project_code=?,remark=? WHERE attachment_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  attachment_id ,biz_no ,child_id ,module_type ,check_status ,file_name ,isort ,file_physical_path ,request_path ,uploader_id ,uploader_account ,uploader_name ,project_code ,remark ,raw_add_time ,raw_update_time  FROM common_attachment WHERE attachment_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM common_attachment WHERE attachment_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  attachment_id ,biz_no ,child_id ,module_type ,check_status ,file_name ,isort ,file_physical_path ,request_path ,uploader_id ,uploader_account ,uploader_name ,project_code ,remark ,raw_add_time ,raw_update_time  FROM common_attachment WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  attachment_id ,biz_no ,child_id ,module_type ,check_status ,file_name ,isort ,file_physical_path ,request_path ,uploader_id ,uploader_account ,uploader_name ,project_code ,remark ,raw_add_time ,raw_update_time  FROM common_attachment where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM common_attachment WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM common_attachment  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

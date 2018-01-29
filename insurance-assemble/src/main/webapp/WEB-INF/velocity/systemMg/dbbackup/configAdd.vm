@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>备份配置</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;系统管理&nbsp;&gt;&nbsp;备份配置
+</div>
+
+<h2 class="m-h2-title">备份配置</h2>
+
+<div class="fn-blank20"></div>
+
+<form class="m-main border ui-bg-fff" action="/systemMg/dbbackup/config/save.htm" id="form" method="POST">
+
+    <input type="hidden" name="configId" value="$!config.configId">
+    <input type="hidden" name="inUse" value="$!config.inUse.code">
+
+    <div class="fn-clear fn-mt20">
+        <div class="m-item m-item-half fn-left">
+            <label class="m-label"><span class="m-required">*</span>数据库地址：</label>
+            <input class="ui-text fn-w200 fnRequired" type="text" name="dbHost" value="$!config.dbHost">
+        </div>
+        
+        <div class="m-item m-item-half fn-left">
+            <label class="m-label"><span class="m-required">*</span>端口：</label>
+            <input class="ui-text fn-w200 fnMakeNumber fnRequired" type="text" name="dbPort" value="$!config.dbPort">
+        </div>
+    </div>
+    
+    <div class="fn-clear">
+        <div class="m-item m-item-half fn-left">
+            <label class="m-label"><span class="m-required">*</span>用户名：</label>
+            <input class="ui-text fn-w200 fnRequired" type="text" name="dbUser" value="$!config.dbUser">
+        </div>
+            
+        <div class="m-item m-item-half fn-left">
+            <label class="m-label"><span class="m-required">*</span>密码：</label>
+            <input class="ui-text fn-w200 fnRequired" type="password" name="dbPsw" value="$!config.dbPsw">
+        </div>
+    </div>    
+    
+    <div class="fn-clear">
+        <div class="m-item m-item-half fn-left">
+            <label class="m-label"><span class="m-required">*</span>数据库名称：</label>
+            <input class="ui-text fn-w200 fnRequired" type="text" name="schemeName" value="$!config.schemeName">
+        </div>
+         <div class="m-item m-item-half fn-left">
+            <label class="m-label"><span class="m-required">*</span>备份目录：</label>
+            <input class="ui-text fn-w200 fnRequired" type="text" name="backupFolder" value="$!config.backupFolder">
+        </div>
+
+    </div>
+
+    <div class="fn-clear fn-hide">
+         <div class="m-item m-item-half fn-left">
+            <label class="m-label">mysqldump目录：</label>
+            <input class="ui-text fn-w200" type="text" name="dbHome" value="$!config.dbHome">
+        </div>
+    </div>
+
+    <div class="fn-clear">
+        <div class="m-item fn-left">
+            <label class="m-label"><span class="m-required">*</span>备份时间：</label>
+            <input class="ui-text fn-w40 fnRequired fnInputTime" type="text" name="backupTimeBegin" value="$!config.backupTimeBegin">-
+            <input class="ui-text fn-w40 fnRequired fnInputTime" type="text" name="backupTimeEnd" value="$!config.backupTimeEnd">
+            (00:00 - 00:01)
+        </div>
+    </div>
+    
+    <div class="fn-clear">
+        <div class="m-item m-item-half fn-left">
+            <label class="m-label"><span class="m-required">*</span>备份频率：</label>
+            <input class="ui-text fn-w200 fnRequired fnMakeNumber" type="text" name="backupInvervalMinute" value="$!config.backupInvervalMinute">
+            分
+        </div>   
+    </div>    
+
+    <div class="m-blank fn-mt20 fn-mb20"></div>
+
+    <div class="fn-tac fn-pt20 fn-pb20">
+        <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn fnDoSubmit" type="submit" value="保存">
+        <a href="javascript:history.back();" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+    </div>
+
+</form>
+
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/system/dbbackup');
+</script>
+</body>
+</html>

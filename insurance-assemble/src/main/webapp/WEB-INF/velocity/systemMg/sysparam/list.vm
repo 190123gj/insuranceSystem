@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>系统参数管理</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;系统管理&nbsp;&gt;&nbsp;参数管理
+</div>
+
+<form class="m-main border ui-bg-fff" action="/systemMg/sysparam/list.htm" id="fnListSearchForm" method="POST">
+
+    ## search start
+
+    <div class="m-search fn-clear">
+
+        <div class="item">
+            参数名
+            <input class="ui-text fn-w90" type="text" name="paramName" value="$!queryOrder.paramName">
+        </div>
+        
+        <div class="item">
+            描述
+            <input class="ui-text fn-w90" type="text" name="description" value="$!queryOrder.description">
+        </div>
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-danger" href="javascript:void(0);" id="clearCache">清除系统缓存</a>
+        </div>
+
+        ## <div class="fn-clear">
+        ##     <div class="m-item m-item-half fn-left">
+        ##         <label class="m-label">参数名：</label>
+        ##         <input class="ui-text fn-w200" type="text" name="paramName" value="$!queryOrder.paramName">
+        ##     </div>
+        ##     <div class="m-item m-item-half fn-left">
+        ##             <input type="hidden" name="pageNumber" value="$!page.currentPageNo">
+        ##             <input type="hidden" name="pageSize" value="$!page.pageSize">
+        ##         <input class="ui-btn ui-btn-fill ui-btn-blue fn-w90" id="searchBtn" type="button" onclick="toPage($!{page.totalPageCount},1)" value="搜索">
+        ##     </div>
+        ## </div>
+        
+    </div>
+
+    ## search end
+
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="javascript:void(0);" id="addParam"><b>+</b>新增系统参数&nbsp;</a>
+        </div>
+
+        ## list start
+
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+                    <th width="25%" sortCol="param_name">参数名</th>
+                    <th width="25%" sortCol="param_value" width="100px">参数值</th>
+                    ## <th width="100">扩展属性1</th>
+                    ## <th width="100">扩展属性2</th>
+                    <th sortCol="description">描述</th>
+                    <th width="80px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr paramname="$!item.paramName" paramvalue="$!item.paramValue" extendone="$!item.extendAttributeOne" extendtwo="$!item.extendAttributeTwo" description="$!item.description">
+                        <td>
+                            $!item.paramName
+                        </td>
+                        <td>
+                            $!item.paramValue
+                        </td>
+                        ## <td>
+                        ##     $!item.extendAttributeOne
+                        ## </td>
+                        ## <td>
+                        ##     $!item.extendAttributeTwo
+                        ## </td>
+                        <td>$!item.description</td>
+                        <td>
+                            <a href="javascript:void(0);" class="edit">[ 编辑 ]</a><br>
+                            <a href="javascript:void(0);" class="del">[ 删除 ]</a>
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        ## list end
+
+        ## page start
+
+        #parse("/layout/common/pages.vm")
+
+        ## page end
+
+    </div>
+
+</form>
+
+<form class="m-modal-box fn-hide" id="editorBox">
+    <div class="m-modal-overlay"></div>
+    <div class="m-modal apply-org">
+        <div class="apply-org-hd"><span class="fn-usn fn-csp fn-right close">&times;</span><span id="editorTitle"></span></div>
+        <div class="apply-org-form-in">
+            <div class="fn-blank20"></div>
+            <div class="m-item">
+                <label class="m-label">参数名：</label>
+                <input class="ui-text fn-w400 fnInput" type="text" name="paramName" alias="paramname" id="paramName">
+            </div>
+            <div class="m-item">
+                <label class="m-label">参数值：</label>
+                <textarea class="ui-textarea fn-w400" style="height:100px"  name="paramValue" alias="paramValue"></textarea>
+                ##<input class="ui-text fn-w400 fnInput" type="text" name="paramValue" alias="paramvalue">
+            </div>
+            <!-- 
+            <div class="m-item">
+                <label class="m-label">扩展属性1：</label>
+                <input class="ui-text fn-w400" type="text" name="extendAttributeOne" alias="extendone">
+            </div>
+            <div class="m-item">
+                <label class="m-label">扩展属性2：</label>
+                <input class="ui-text fn-w400" type="text" name="extendAttributeTwo" alias="extendtwo">
+            </div>
+             -->
+            <div class="m-item">
+                <label class="m-label">描述：</label>
+                <textarea class="ui-textarea fn-w400" style="height:200px"  name="description" alias="description"></textarea>
+                ##<input class="ui-text fn-w200" type="text" name="description" alias="description">
+            </div>
+        </div>
+        <div class="apply-org-form-bt fn-tac">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-green fn-mr20" id="editorSure">确定</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fn-ml20 close">取消</a>
+        </div>
+    </div>
+</form>
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+
+<script src="/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/system/sysparam');
+</script>
+</body>
+</html>

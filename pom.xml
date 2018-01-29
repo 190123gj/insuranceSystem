@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.yiji</groupId>
+		<artifactId>yiji-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.born.insurance</groupId>
+	<artifactId>insurance-parent</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>Estate Projects</name>
+	<url>http://maven.apache.org</url>
+	<description>
+        Centrepoint is a basic but useful application that sets up a
+        dashboard of project information from Maven, Archiva and
+        Continuum.
+    </description>
+
+	<packaging>pom</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<insurance.version>1.0.insuranceSrc-SNAPSHOT</insurance.version>
+		<paycore.payengine.facade.version>2.5.1.20130711</paycore.payengine.facade.version>
+
+		<paycore.common.facade.version>2.2.0.20130611</paycore.common.facade.version>
+		<paycore.trade.facade.version>1.1.0.20121025</paycore.trade.facade.version>
+		<paycore.accounttrans.facade.version>2.0.1.20130523</paycore.accounttrans.facade.version>
+
+		<paycore.accountcore.facade.version>1.0.0.20120615</paycore.accountcore.facade.version>
+		<paycore.charge.facade.version>1.0.1.20120727</paycore.charge.facade.version>
+		<paycore.customer.facade.version>2.3.1.20131012</paycore.customer.facade.version>
+		<org.apache.avalon.version>4.2.0</org.apache.avalon.version>
+		<org.krysalis.barcode4j.version>2.1.0</org.krysalis.barcode4j.version>
+		<interchange.facade.channelroute.version>1.2.0.20121217</interchange.facade.channelroute.version>
+		<shiro.version>1.2.1</shiro.version>
+		<backstage.facade.version>1.0.0.20120911</backstage.facade.version>
+		<yjf.bm.version>1.0.0.20131126</yjf.bm.version>
+		<deploy.skip>false</deploy.skip>
+	</properties>
+
+
+
+	<distributionManagement>
+		<!--<repository> <id>nexus-releases</id> <name>Internal Release Repository</name> 
+			<url>http://192.168.45.199:8081/nexus/content/repositories/snapshots/</url> 
+			</repository> -->
+		<repository>
+			<id>nexus-snapshot</id>
+			<name>Internal snapshot Repository</name>
+			<url>http://192.168.45.199:8081/nexus/content/repositories/snapshots/</url>
+		</repository>
+	</distributionManagement>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.autotest</groupId>
+				<artifactId>autotest</artifactId>
+				<version>1.0.0.20130421</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.born.insurance</groupId>
+				<artifactId>insurance-dal</artifactId>
+				<version>${insurance.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.born.insurance</groupId>
+				<artifactId>insurance-common-util</artifactId>
+				<version>${insurance.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.born.insurance</groupId>
+				<artifactId>insurance-integration</artifactId>
+				<version>${insurance.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.born.insurance</groupId>
+				<artifactId>insurance-biz</artifactId>
+				<version>${insurance.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.born.insurance</groupId>
+				<artifactId>insurance-domain</artifactId>
+				<version>${insurance.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.born.insurance</groupId>
+				<artifactId>insurance-facade</artifactId>
+				<version>${insurance.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.born.insurance</groupId>
+				<artifactId>insurance-config</artifactId>
+				<version>${insurance.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.born.insurance</groupId>
+				<artifactId>insurance-test</artifactId>
+				<version>${insurance.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.born.insurance</groupId>
+				<artifactId>insurance-assemble</artifactId>
+				<version>${insurance.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.born.insurance</groupId>
+				<artifactId>insurance-web</artifactId>
+				<version>${insurance.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.spring-json</groupId>
+				<artifactId>spring-json</artifactId>
+				<version>1.3.1</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>cglib</groupId>
+						<artifactId>cglib-full</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- jxl -->
+			<dependency>
+				<groupId>net.sourceforge.jexcelapi</groupId>
+				<artifactId>jxl</artifactId>
+				<version>2.6.12</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.jxls</groupId>
+				<artifactId>jxls-core</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<!-- ҩ֤ë -->
+			<dependency>
+				<groupId>nl.captcha</groupId>
+				<artifactId>simplecaptcha</artifactId>
+				<version>1.2.1</version>
+			</dependency>
+			<!-- aop -->
+
+
+			<dependency>
+				<groupId>com.logicalcobwebs</groupId>
+				<artifactId>proxool</artifactId>
+				<version>0.9.1</version>
+			</dependency>
+			<dependency>
+				<groupId>com.logicalcobwebs</groupId>
+				<artifactId>proxool-cglib</artifactId>
+				<version>0.9.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<version>1.6.5</version>
+			</dependency>
+
+			<!-- dal -->
+
+
+			<!-- barcode -->
+			<dependency>
+				<groupId>org.krysalis.barcode4j</groupId>
+				<artifactId>barcode4j</artifactId>
+				<version>${org.krysalis.barcode4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.avalon</groupId>
+				<artifactId>avalon-framework</artifactId>
+				<version>${org.apache.avalon.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.jmock</groupId>
+				<artifactId>jmock</artifactId>
+				<version>2.5.1</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-mapper-asl</artifactId>
+				<version>1.9.9</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-core-asl</artifactId>
+				<version>1.9.9</version>
+			</dependency>
+			<!--shiro -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-core</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-web</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-ehcache</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.kaptcha</groupId>
+				<artifactId>kaptcha</artifactId>
+				<version>2.3.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>3.2.6.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.11</version>
+			</dependency>
+			<dependency>
+				<groupId>com.yjf.bm</groupId>
+				<artifactId>bm-remote</artifactId>
+				<version>${yjf.bm.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.yjf.bm</groupId>
+				<artifactId>bm-rmc</artifactId>
+				<version>${yjf.bm.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.yjf.bm</groupId>
+				<artifactId>bm-web</artifactId>
+				<version>${yjf.bm.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.yjf.security.phprpc</groupId>
+				<artifactId>phprpc</artifactId>
+				<version>3.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.yjf.gw.ceb.bcprov</groupId>
+				<artifactId>ceb-bcprov</artifactId>
+				<version>1.4.127</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.googlecode.json-simple</groupId>
+				<artifactId>json-simple</artifactId>
+				<version>1.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>itext</groupId>
+				<artifactId>itext</artifactId>
+				<version>2.1.5</version>
+			</dependency>
+			<dependency>
+				<groupId>com.itextpdf</groupId>
+				<artifactId>itextpdf</artifactId>
+				<version>5.4.5</version>
+			</dependency>
+			<dependency>
+				<groupId>com.itextpdf</groupId>
+				<artifactId>itext-asian</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.itextpdf</groupId>
+				<artifactId>itext-xtra</artifactId>
+				<version>5.4.5</version>
+			</dependency>
+			<dependency>
+				<groupId>com.itextpdf</groupId>
+				<artifactId>xmlworker</artifactId>
+				<version>5.4.5</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun</groupId>
+				<artifactId>PDFReader</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.scratchpad</groupId>
+				<artifactId>poi-scratchpad</artifactId>
+				<version>3.9</version>
+			</dependency>
+			<!--pdf process -->
+			<dependency>
+				<groupId>avalon</groupId>
+				<artifactId>framework-cvs</artifactId>
+				<version>20020806</version>
+			</dependency>
+			<dependency>
+				<groupId>fakepath</groupId>
+				<artifactId>apache-batik</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>fakepath</groupId>
+				<artifactId>apache-fop</artifactId>
+				<version>1.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.axis</groupId>
+				<artifactId>axis</artifactId>
+				<version>1.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.axis</groupId>
+				<artifactId>axis-jaxrpc</artifactId>
+				<version>1.4</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>commons-discovery</groupId>
+				<artifactId>commons-discovery</artifactId>
+				<version>0.2</version>
+			</dependency>
+
+
+			<!--certificate begin -->
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.9</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.6</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.1.0.jboss</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>1.2.4-yiji</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-httpclient</groupId>
+				<artifactId>commons-httpclient</artifactId>
+				<version>3.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>httpcomponents-httpcore</groupId>
+				<artifactId>jakarta-httpcore-niossl</artifactId>
+				<version>4.0-alpha4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpmime</artifactId>
+				<version>4.3.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-email</artifactId>
+				<version>1.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>xmlpull</groupId>
+				<artifactId>xmlpull</artifactId>
+				<version>1.1.3.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>xpp3</groupId>
+				<artifactId>xpp3_min</artifactId>
+				<version>1.1.4c</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream-parent</artifactId>
+				<version>1.4.7</version>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>born.QRcode</groupId>
+				<artifactId>QRcode</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.belerweb</groupId>
+				<artifactId>pinyin4j</artifactId>
+				<version>2.5.1</version>
+			</dependency>
+
+
+			<!--certificate end -->
+
+
+
+			<!--sms -->
+			<dependency>
+				<groupId>org.mapu.themis</groupId>
+				<artifactId>themis-sdk</artifactId>
+				<version>1.1.6</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>web-office</groupId>
+				<artifactId>web-office-2009</artifactId>
+				<version>1.0</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.yiji.postman</groupId>
+				<artifactId>postman-api-sdk</artifactId>
+				<version>1.1.7</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+
+				<version>2.3.8</version>
+			</dependency>
+
+		</dependencies>
+
+	</dependencyManagement>
+
+
+	<build>
+		<resources>
+			<!-- standard Maven folder -->
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<!-- plus root folder -->
+			<resource>
+				<directory>.</directory>
+				<includes>
+					<include>plugin.xml</include>
+					<include>META-INF/*</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+					<excludes>
+						<exclude>**/*RemoteTest.java</exclude>
+						<exclude>**/autotest/*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>${deploy.skip}</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- ================================================ -->
+	<!-- Repository Configuration -->
+	<!-- ================================================ -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>nexus-snapshot</id>
+					<name>Internal snapshot Repository</name>
+					<url>http://192.168.45.199:8081/nexus/content/repositories/snapshots/</url>
+				</snapshotRepository>
+			</distributionManagement>
+			<properties>
+				<insurance.version>1.0.insuranceSrc-SNAPSHOT</insurance.version>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>nexus-snapshot</id>
+					<name>Internal snapshot Repository</name>
+					<url>http://192.168.45.199:8081/nexus/content/repositories/snapshots/</url>
+				</snapshotRepository>
+			</distributionManagement>
+			<properties>
+				<insurance.version>1.0.insuranceSrcTest-SNAPSHOT</insurance.version>
+			</properties>
+		</profile>
+		<profile>
+			<id>online</id>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>nexus-snapshot</id>
+					<name>Internal snapshot Repository</name>
+					<url>http://192.168.45.199:8081/nexus/content/repositories/snapshots/</url>
+				</snapshotRepository>
+			</distributionManagement>
+			<properties>
+				<insurance.version>1.0.insuranceSrc-SNAPSHOT</insurance.version>
+			</properties>
+		</profile>
+	</profiles>
+
+
+	<repositories>
+		<repository>
+			<id>central</id>
+			<name>libs-release-remote</name>
+			<url>http://repo.springsource.org/libs-release-remote</url>
+		</repository>
+
+		<repository>
+			<id>repo2.maven.org</id>
+			<name>http://repo2.maven.org/maven2</name>
+			<url>http://repo2.maven.org/maven2</url>
+		</repository>
+
+		<repository>
+			<id>spring-json.sourceforge.net</id>
+			<name>http://spring-json.sourceforge.net/repository</name>
+			<url>http://spring-json.sourceforge.net/repository</url>
+		</repository>
+
+		<repository>
+			<id>opensesame</id>
+			<name>Alibaba OpenSource Repsoitory</name>
+			<url>http://code.alibabatech.com/mvn/releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<modules>
+		<module>insurance-facade</module>
+		<module>insurance-biz</module>
+		<module>insurance-integration</module>
+		<module>insurance-domain</module>
+		<module>insurance-test</module>
+		<module>insurance-dal</module>
+		<module>insurance-common-util</module>
+		<module>insurance-config</module>
+		<module>insurance-web</module>
+		<module>insurance-assemble</module>
+	</modules>
+</project>

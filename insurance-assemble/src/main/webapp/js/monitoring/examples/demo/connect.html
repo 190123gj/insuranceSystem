@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Demo-connect</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<link rel="stylesheet" type="text/css" href="../../utility/mini-easyui/themes/gray/easyui.css"  />
+	<link rel="stylesheet" type="text/css" href="../../utility/mini-easyui/themes/icon.css"  />
+	<link rel="stylesheet" type="text/css" href="demo.css" />
+	
+	<script src="../conf.js" type="text/javascript"></script>
+	
+	<script src="../../lib/plugin.iface.js" type="text/javascript"></script> 
+	<script src="../../lib/plugin.layer.js" type="text/javascript"></script>
+	
+	<script src="../../utility/json2.js" type="text/javascript"></script>
+	<script src="../../utility/mini-easyui/jquery.min.js" type="text/javascript"></script>
+	<script src="../../utility/mini-easyui/jquery.easyui.min.js" type="text/javascript"></script>
+	
+</head>
+<body style="margin:0;" >
+	<table border="0">
+		<tr>
+			<td valign="top"> 
+				<form id="conn_form">
+				<table>
+					<tr><td>平台地址：</td><td><input class="easyui-textbox" id="ip" value=""/></td></tr>
+					<tr><td>平台端口：</td><td><input class="easyui-textbox" id="port" value=""/></td></tr>
+					<tr><td>用户名称：</td><td><input class="easyui-textbox" id="uid" value=""/></td></tr>
+					<tr><td>用户密码：</td><td><input class="easyui-textbox" type="password" id="pwd" value=""/></td></tr>
+					<tr><td>企业ＩＤ：</td><td><input class="easyui-textbox" id="epId" value=""/></td></tr>
+					<tr><td>透过网闸：</td><td><input id="bfix" type="checkbox"/></td></tr>
+					<tr><td></td><td>
+					<a id="connect_btn" class="easyui-linkbutton" onclick="connect()">连接</a>
+					<a id="disconnect_btn" class="easyui-linkbutton" onclick="disconnect()" style="display:none;">断开</a>
+					</td></tr>
+				</table>
+				</form>
+			</td>
+			<td width="15">&nbsp;</td>
+			<td valign="top">
+				<div style="border:1px solid #bebebe;padding-top:2px;height:200px;width:550px;overflow:auto;">
+					<ol style="text-indent:2em;text-align:left;" id="msg_bar">
+					</ol>
+				</div>
+			</td>
+		</tr>
+	</table>
+<script>
+
+var connectId = null;
+
+// 初始化插件对象，必须初始化成功后才可以调用所有接口
+function load(){	
+		//初始化插件
+		try{
+			var rv = P_LY.Init(new P_LY.Struct.InitParamStruct(
+				true, 
+				function(msg)
+				{
+					log(JSON.stringify(msg));
+				}
+			));
+			
+			if(rv.rv != P_Error.SUCCESS)
+			{
+				return false;
+			}
+			
+			// 加载默认的连接参数			
+			$("#path").textbox('setValue',_cf.connParams.path);
+			$("#ip").textbox('setValue',_cf.connParams.ip);
+			$("#port").textbox('setValue',_cf.connParams.port);
+			$("#uid").textbox('setValue',_cf.connParams.uid);
+			$("#pwd").textbox('setValue',_cf.connParams.pwd);
+			$("#epId").textbox('setValue',_cf.connParams.epId);
+			
+			if(_cf.connParams.bfix){
+				$('#bfix').prop('checked',true);
+			}else{
+				$('#bfix').prop('checked',false);
+			}
+
+	        return true;
+		}
+		catch(e){
+			$("#msg_bar").html(e.name + ","+ e.message);
+			return false;
+		}
+}
+
+// 释放插件对象，网页退出必须释放插件，否则会出现浏览器异常的错误
+function unload(){
+	P_LY.UnLoad();
+}
+	
+function connect(){
+	//创建连接,并记录在P_LY.Connections中
+	var ip = $("#ip").textbox('getValue');
+	var port = $("#port").textbox('getValue');
+	var epId = $("#epId").textbox('getValue');
+	var uid = $("#uid").textbox('getValue');
+	var pwd = $("#pwd").textbox('getValue'); 
+	var bfix = ($("#bfix").prop('checked') == true ? 1 : 0);
+
+	// 构造连接对象
+	var param = new P_IF.Struct.ConnParamStruct(ip,port,uid,epId,pwd,bfix || 0);
+	log("登录参数:"+JSON.stringify(param));
+			
+	// 连接平台
+	var conn = P_LY.Connect(param);
+	
+	if(conn.rv == P_Error.SUCCESS){
+		connectId = conn.response;// 连接成功，返回connectId，此参数很重要，后面很多操作都需要
+		log("连接成功:connectId="+connectId);
+		$('#connect_btn').hide();
+		$('#disconnect_btn').show();
+	}else{
+		log(P_Error.Detail(conn.rv));
+	}
+}
+
+function disconnect(){
+	var rv = P_LY.DisConnection(connectId);
+	if(rv.rv == P_Error.SUCCESS){
+		log("断开成功");
+		connectId = null;
+		$('#connect_btn').show();
+		$('#disconnect_btn').hide();
+	}else{
+		log(P_Error.Detail(rv.rv));
+	}
+}
+
+function reset(){
+	$('#conn_form').form('reset');
+}
+
+function log(str){
+	var html = $("#msg_bar").html()+"<li><nobr>"+str+"</nobr></li>";
+	$("#msg_bar").html(html);
+}
+
+if(window.attachEvent){
+	window.attachEvent(
+		"onload",
+		function() {
+			load();  
+		} 
+	);
+	window.attachEvent(
+		"onunload",
+		function(){
+			unload();
+		}
+	);
+	window.attachEvent(
+		"onbeforeunload",
+		function(){
+			unload();
+		}
+	);
+}else{
+	window.addEventListener (
+        "load",
+        function() {
+			load();  
+        },
+        false
+    );
+	window.addEventListener (
+        "unload",
+        function() {
+			unload();
+        },
+        false
+    );
+	window.addEventListener (
+        "beforeunload",
+        function() {
+			unload();
+        },
+        false
+    );
+}
+</script>
+</body>
+</html>

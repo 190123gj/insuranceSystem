@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+    <title>通用</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;报价方案&nbsp;&gt;&nbsp;询价联络函-通用
+</div>
+
+<h2 class="m-h2-title">通用</h2>
+
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff">
+    #parse("/layout/insurance/priceContactLetter/viewHeadDemand.vm")
+
+    #set($isIinquiryPlan = true)
+    #foreach($demandInfo in $info.demandInfos)
+        #if($demandInfo.demandType=="carTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewCarDemand.vm")
+        #elseif($demandInfo.demandType=="placeTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewPlaceDemand.vm")
+        #elseif($demandInfo.demandType=="goodsTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewGoodsDemand.vm")
+        #elseif($demandInfo.demandType=="passengerTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewPassengerDemand.vm")
+        #elseif($demandInfo.demandType=="goodsProtocolTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewGoodsProtocolDemand.vm")
+        #elseif($demandInfo.demandType=="employeeTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewEmployeeDemand.vm")
+        #elseif($demandInfo.demandType=="shipTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewShipDemand.vm")
+        #elseif($demandInfo.demandType=="productLiabilityTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewProductLiabilityDemand.vm")
+        #elseif($demandInfo.demandType=="professionalDutyTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewProfessionalDutyDemand.vm")
+        #elseif($demandInfo.demandType=="shipBuildTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewShipBuildDemand.vm")
+        #elseif($demandInfo.demandType=="assetsTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewAssetsDemand.vm")
+        #elseif($demandInfo.demandType=="projectTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewProjectDemand.vm")
+        #elseif($demandInfo.demandType=="onceGoodsProtocolTemplate")
+            #parse("/layout/insurance/priceContactLetter/viewOnceGoodsProtocolDemand.vm")
+        #end
+
+    #end
+    <form id="form" action="/insurance/priceContactLetter/reportPriceSubmit.json" method="POST">
+        #set($showPriceCompany = false)
+        #parse("/layout/insurance/priceContactLetter/viewQuotationCompany.vm")
+        <input type="hidden" name="contactLetterId" value="$!{info.id}">
+
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+                <a href="/insurance/xxxx.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+
+    </form>
+
+</div>
+
+    #parse("/layout/common/footer.vm")
+    #parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    seajs.use($_GLOBAL.zyw+'/priceContactLetter/quotationCompany');
+</script>
+
+</body>
+</html>

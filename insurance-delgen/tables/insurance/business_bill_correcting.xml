@@ -1,0 +1,86 @@
+<table sqlname="business_bill_correcting">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO business_bill_correcting(business_bill_correcting_id,business_bill_id,business_bill_correcting_no,insurance_no,bill_customer_id,bill_customer_name,correcting_type,correcting_status,correcting_opinion,row_add_time,row_update_time) VALUES (?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO business_bill_correcting(business_bill_correcting_id,business_bill_id,business_bill_correcting_no,insurance_no,bill_customer_id,bill_customer_name,correcting_type,correcting_status,correcting_opinion,row_add_time,row_update_time) VALUES (#businessBillCorrectingId#,#businessBillId#,#businessBillCorrectingNo#,#insuranceNo#,#billCustomerId#,#billCustomerName#,#correctingType#,#correctingStatus#,#correctingOpinion#,#rowAddTime#,#rowUpdateTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="businessBillCorrectingId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE business_bill_correcting SET business_bill_id=?,business_bill_correcting_no=?,insurance_no=?,bill_customer_id=?,bill_customer_name=?,correcting_type=?,correcting_status=?,correcting_opinion=?,row_add_time=?,row_update_time=? WHERE business_bill_correcting_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  business_bill_correcting_id ,business_bill_id ,business_bill_correcting_no ,insurance_no ,bill_customer_id ,bill_customer_name ,correcting_type ,correcting_status ,correcting_opinion ,row_add_time ,row_update_time  FROM business_bill_correcting WHERE business_bill_correcting_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM business_bill_correcting WHERE business_bill_correcting_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  business_bill_correcting_id ,business_bill_id ,business_bill_correcting_no ,insurance_no ,bill_customer_id ,bill_customer_name ,correcting_type ,correcting_status ,correcting_opinion ,row_add_time ,row_update_time  FROM business_bill_correcting WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  business_bill_correcting_id ,business_bill_id ,business_bill_correcting_no ,insurance_no ,bill_customer_id ,bill_customer_name ,correcting_type ,correcting_status ,correcting_opinion ,row_add_time ,row_update_time  FROM business_bill_correcting where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM business_bill_correcting WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM business_bill_correcting  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

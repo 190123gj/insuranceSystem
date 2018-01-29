@@ -1,0 +1,114 @@
+## audit common start
+<div class="fn-pt10 fn-pb20">
+    #foreach($!bpmButton in $webNodeInfo.bpmButtonInfos)
+        #if($!bpmButton.operatortype==9)
+            <input class="ui-btn ui-btn-fill ui-btn-blue fn-ml15 fnAuditBtn" id="fnFlowChartBtnShow" type="button" value="流程图">
+        #end
+        #if($!bpmButton.operatortype==1)
+            <input class="ui-btn ui-btn-fill ui-btn-green fn-ml15 fnAuditBtn" id="fnAuditBtnPass" type="button" value="$!bpmButton.buttonName">
+        #end
+        #if($!bpmButton.operatortype==2)
+            <input class="ui-btn ui-btn-fill ui-btn-gray fn-ml15 fnAuditBtn" id="fnAuditBtnRefuse" type="button" value="$!bpmButton.buttonName">
+        #end
+        #if($!bpmButton.operatortype==5||$!bpmButton.operatortype==4)
+            <input class="ui-btn ui-btn-fill ui-btn-gray fn-ml15 fnAuditBtn" id="fnAuditBtnNoPass" type="button" value="$!bpmButton.buttonName">
+        #end
+        #if($!bpmButton.operatortype==6)
+            <input class="ui-btn ui-btn-fill ui-btn-green fn-ml15 fnAuditBtn" id="fnAssignBtn" type="button" value="$!bpmButton.buttonName">
+        #end
+        #if($!bpmButton.operatortype==10)
+            <input class="ui-btn ui-btn-fill ui-btn-blue fn-ml15 fnAuditBtn" id="fnPrintBtn" type="button" value="$!bpmButton.buttonName">
+        #end
+        #if($!bpmButton.operatortype==15)
+            <input class="ui-btn ui-btn-fill ui-btn-blue fn-ml15 fnAuditBtn" id="fnEndFormBtn" type="button" value="$!bpmButton.buttonName">
+        #end
+        #if($!bpmButton.operatortype==18)
+            <input class="ui-btn ui-btn-fill ui-btn-blue fn-ml15 fnAuditBtn" id="fnEndFormBtn" type="button" value="$!bpmButton.buttonName">
+        #end
+        #if($!bpmButton.operatortype==50)
+            <input class="ui-btn ui-btn-fill ui-btn-blue fn-ml15 fnAuditBtn" id="fnNoPassToNodeBtn" type="button" value="$!bpmButton.buttonName">
+        #end
+    #end
+    ## <input class="ui-btn ui-btn-fill ui-btn-danger fn-ml5 fn-mr5" id="fnSaveFormBtn" type="button" value="保存单据">
+    ## <input class="ui-btn ui-btn-fill ui-btn-danger fn-ml5 fn-mr5" id="fnAssignBtn" type="button" value="交办">
+    ## <input class="ui-btn ui-btn-fill ui-btn-gray fn-ml5 fn-mr5" id="fnAuditBtnBack" type="button" value="驳回到指定步骤">
+</div>
+<div class="m-blank" style="height:1px;"></div>
+<input name="hddFormActDefId" id="hddFormActDefId" type="hidden" value="${form.actDefId}">
+<input name="hddFormActInstId" id="hddFormActInstId" type="hidden" value="${form.actInstId}">
+<input name="hddFormId" id="hddFormId" type="hidden" value="${form.formId}">
+<input name="taskId" id="taskId" type="hidden" value="${taskId}">
+## 审核弹出框 start
+<div class="m-modal-box fn-hide" id="fnAuditBox">
+    <div class="m-modal-overlay"></div>
+    <div class="m-modal m-modal-default" style="height: 300px; margin-top:-200px">
+        <div class="m-modal-title"><span class="m-modal-close close">&times;</span><span class="title" id="fnAuditTitle">审核意见</span></div>
+        <div class="m-modal-body"><div class="m-modal-body-box"><div class="m-modal-body-inner">
+            ## 如果有分支
+            #if ($!hasSelectNode)
+                <div class="m-item fn-pr fnAuditPathBox">
+                    <label class="m-label"><span class="m-required">*</span>请选择执行路径：</label>
+                        <table class="m-table">
+                        <tbody>
+                            <tr>
+                                <th rowspan="${selectNodeCount}">执行路径</th>
+                                <td><label class="fn-csp"><input class="radio fnAuditPath" type="radio" name="radNextNodeId" value="$!firstNode.nodeId">$!firstNode.nodeName</label></td>
+                            </tr>
+                            #foreach($nextNode in $!secondNodes)
+                                <tr>
+                                    <td><label class="fn-csp"><input class="radio fnAuditPath" type="radio" name="radNextNodeId" value="$!nextNode.nodeId">$nextNode.nodeName</label></td>
+                                </tr>
+                            #end
+                            #if($isCanWorkflowFinished)
+                                <tr>
+                                    <td><label class="fn-csp"><input class="radio fnAuditPath" type="radio" name="radNextNodeId" value="workflowFinished">流程结束审核通过</label></td>
+                                </tr>
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            #end
+            ## 审核意见
+            <div class="m-item fn-pr">
+                <label class="m-label"><span class="m-required">*</span>审核意见：</label>
+                <textarea class="ui-textarea audit-textarea fnAuditInput" name="workflowVoteContent" id="fnAuditWorkflowVoteContent" maxlength="1000" onchange="this.value=this.value.substring(0, 1000)" onkeydown="this.value=this.value.substring(0, 1000)" onkeyup="this.value=this.value.substring(0, 1000)"></textarea>
+                <p>建议不超过1000字</p>
+            </div>
+            ## 是否通过
+            <input type="hidden" name="" id="fnAuditIsPass">
+        </div></div></div>
+        <div class="fn-mt10 fn-tac">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-fill-big ui-btn-green fn-mr20" id="fnAuditSure">确定</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-fill-big ui-btn-gray fn-ml20 close">取消</a>
+        </div>
+    </div>
+</div>
+## 审核弹出框 end
+
+## 审核弹出框 start
+<div class="m-modal-box fn-hide" id="fnAssignBox">
+    <div class="m-modal-overlay"></div>
+    <div class="m-modal m-modal-default" style="height: 300px; margin-top:-200px">
+        <div class="m-modal-title"><span class="m-modal-close close">&times;</span><span class="title">交办设置</span></div>
+        <div class="m-modal-body"><div class="m-modal-body-box"><div class="m-modal-body-inner">
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>接收人：</label>
+                <input class="ui-text fn-w200 fnAuditInput" type="text" name="fnAssignManName" id="fnAssignManName" readonly>
+                <input type="hidden" name="fnAssignManId" id="fnAssignManCode">
+                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-green fn-mr20" id="fnAssignChoose">选择</a>
+            </div>
+            ## 备注
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>备注：</label>
+                <textarea class="ui-textarea fn-w300 fnAuditInput" name="assignMemo"></textarea>
+            </div>
+        </div></div></div>
+        <div class="fn-mt10 fn-tac">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-fill-big ui-btn-green fn-mr20" id="fnAssignSure">确定</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-fill-big ui-btn-gray fn-ml20 close">取消</a>
+        </div>
+    </div>
+</div>
+## 审核弹出框 end
+
+## audit common end

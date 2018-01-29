@@ -1,0 +1,79 @@
+<div class="m-item">
+    <label class="m-label"><span class="m-required">*</span>客户：</label>
+    $!{info.customerUserName}
+</div>
+<div class="m-item">
+    <label class="m-label"><span class="m-required">*</span>询价方案名称：</label>
+    $!{info.name}
+</div>
+<div class="m-item">
+    <label class="m-label"><span class="m-required">*</span>询价方案编码：</label>
+    $!{info.billNo}
+</div>
+
+<div class="m-item">
+    <label class="m-label"><span class="m-required"></span>标的</label>
+</div>
+
+<div class="m-item">
+    <label class="m-label"><span class="m-required">*</span>详细信息：</label>
+    $!info.demandInfos.get(0).remark
+</div>
+
+<div class="m-item">
+    <label class="m-label"><span class="m-required">*</span>保险方案建议：</label>
+    <div class="fn-wp90 itemBox">
+        <table class="m-table m-table-list itemsList">
+            <tr>
+                <th class="fn-tac">险种</th>
+                <th class="fn-tac">责任范围</th>
+                <th class="fn-tac">赔偿限额类型</th>
+                <th class="fn-tac">保额/赔偿限额</th>
+                <th class="fn-tac">免赔额/率</th>
+                <th class="fn-tac">保费/费率</th>
+                <th class="fn-tac">操作</th>
+            </tr>
+            #foreach($item in $!info.demandInfos.get(0).schemeInfo.schemeDetailInfoList)
+                <tr diyname="mobileOrders" class="itemLine">
+                    <td class="fn-tac">
+                        $!{item.insurancceCatalogName}
+                    </td>
+
+                    <td class="fn-tac">
+                        $!{item.responsibilityScope}
+                    </td>
+
+                    <td class="fn-tac">
+                        $!{item.limitAmountType}
+                        <input class="text" type="text" name="" id="limitAmountType" value="">
+                    </td>
+
+                    <td class="fn-tac">
+                        $!{item.limitAmount}
+                        <input class="text" type="text" name="limitAmount" id="limitAmount" value="">
+                    </td>
+                    <td class="fn-tac">
+                        $!{item.deductibleRate}
+                        <input class="text" type="text" name="deductibleRate" id="" value="">
+                    </td>
+                    <td class="fn-tac">
+                        $!{item.premiumRate}
+                    </td>
+                </tr>
+            #end
+        </table>
+    </div>
+</div>
+
+<div class="m-item">
+    <label class="m-label"><span class="m-required">*</span>特别要求：</label>
+    $!info.demandInfos.get(0).schemeInfo.specialReq
+</div>
+
+<div class="m-item">
+    <label class="m-label"><span class="m-required">*</span>询价期限：</label>
+    $!info.demandInfos.get(0).schemeInfo.askDate
+    <br><br>
+    请在 $!info.demandInfos.get(0).schemeInfo.askDate前回复，超过此期限有可能使客户拒绝接受此报价。
+</div>
+<div class="m-blank fn-mt20 fn-mb20"></div>

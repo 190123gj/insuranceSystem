@@ -1,0 +1,43 @@
+<ReportData>
+	<Head>
+		<Date></Date>
+		<Employee><![CDATA[ ]]></Employee>
+		<Dept><![CDATA[ ]]></Dept>
+		<Organ><![CDATA[ ]]></Organ>
+	</Head>
+	<Table>
+		<Row>
+			<agent_age><![CDATA[1001]]></agent_age>
+			<dept_id><![CDATA[1001]]></dept_id>
+			<bonus_rate><![CDATA[1001]]></bonus_rate>
+			<stand_prem><![CDATA[1001]]></stand_prem>
+			<life_money><![CDATA[1001]]></life_money>
+			<real_name><![CDATA[1001]]></real_name>
+			<appointment_date><![CDATA[1001]]></appointment_date>
+			<money><![CDATA[1001]]></money>
+			<agent_code><![CDATA[1001]]></agent_code>
+		</Row>
+		<Row>
+			<agent_age><![CDATA[1001]]></agent_age>
+			<dept_id><![CDATA[1001]]></dept_id>
+			<bonus_rate><![CDATA[1001]]></bonus_rate>
+			<stand_prem><![CDATA[1001]]></stand_prem>
+			<life_money><![CDATA[1001]]></life_money>
+			<real_name><![CDATA[1001]]></real_name>
+			<appointment_date><![CDATA[1001]]></appointment_date>
+			<money><![CDATA[1001]]></money>
+			<agent_code><![CDATA[1001]]></agent_code>
+		</Row>
+		<Row>
+			<agent_age><![CDATA[1001]]></agent_age>
+			<dept_id><![CDATA[1001]]></dept_id>
+			<bonus_rate><![CDATA[1001]]></bonus_rate>
+			<stand_prem><![CDATA[1001]]></stand_prem>
+			<life_money><![CDATA[1001]]></life_money>
+			<real_name><![CDATA[1001]]></real_name>
+			<appointment_date><![CDATA[1001]]></appointment_date>
+			<money><![CDATA[1001]]></money>
+			<agent_code><![CDATA[1001]]></agent_code>
+		</Row>
+	</Table>
+</ReportData>

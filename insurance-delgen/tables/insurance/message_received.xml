@@ -1,0 +1,86 @@
+<table sqlname="message_received">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO message_received(received_id,message_id,message_title,message_type,message_subject,message_content,notification_object,view_type,link_url,message_sender_id,message_sender_name,message_received_id,message_received_date,message_received_name,message_received_account,message_received_status,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO message_received(received_id,message_id,message_title,message_type,message_subject,message_content,notification_object,view_type,link_url,message_sender_id,message_sender_name,message_received_id,message_received_date,message_received_name,message_received_account,message_received_status,raw_add_time) VALUES (#receivedId#,#messageId#,#messageTitle#,#messageType#,#messageSubject#,#messageContent#,#notificationObject#,#viewType#,#linkUrl#,#messageSenderId#,#messageSenderName#,#messageReceivedId#,#messageReceivedDate#,#messageReceivedName#,#messageReceivedAccount#,#messageReceivedStatus#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="receivedId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE message_received SET message_id=?,message_title=?,message_type=?,message_subject=?,message_content=?,notification_object=?,view_type=?,link_url=?,message_sender_id=?,message_sender_name=?,message_received_id=?,message_received_date=?,message_received_name=?,message_received_account=?,message_received_status=? WHERE received_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  received_id ,message_id ,message_title ,message_type ,message_subject ,message_content ,notification_object ,view_type ,link_url ,message_sender_id ,message_sender_name ,message_received_id ,message_received_date ,message_received_name ,message_received_account ,message_received_status ,raw_add_time ,raw_update_time  FROM message_received WHERE received_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM message_received WHERE received_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  received_id ,message_id ,message_title ,message_type ,message_subject ,message_content ,notification_object ,view_type ,link_url ,message_sender_id ,message_sender_name ,message_received_id ,message_received_date ,message_received_name ,message_received_account ,message_received_status ,raw_add_time ,raw_update_time  FROM message_received WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  received_id ,message_id ,message_title ,message_type ,message_subject ,message_content ,notification_object ,view_type ,link_url ,message_sender_id ,message_sender_name ,message_received_id ,message_received_date ,message_received_name ,message_received_account ,message_received_status ,raw_add_time ,raw_update_time  FROM message_received where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM message_received WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM message_received  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

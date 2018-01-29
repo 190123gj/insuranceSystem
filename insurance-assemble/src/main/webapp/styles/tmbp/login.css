@@ -1,0 +1,40 @@
+html,body{ background: #fff;}
+
+/*低版本IE*/
+.text-center { text-align: center; }
+.ui-ie-update { line-height: 16px; left: 0; width: 100%; padding: 10px 0; color: #915808; background-color: #fce9cf; }
+.ui-ie-update a { color: #5bc0de; }
+.ui-ie-update a:hover { color: #005982; }
+
+.ui-footer{ margin-right: 0; margin-bottom: 0;}
+
+.login-header{height: 100px; background: url(img/login_logo.jpg) 0 50% no-repeat;}
+.login-layout{ width: 1100px; margin: 0 auto;}
+
+.login-body{ position: relative; height: 480px; background: url(img/login_body_bg.jpg) 50% 50% no-repeat; overflow: hidden;}
+.login-box{ position: absolute; top: 45px; right: 50%; margin-right: -500px; width: 310px; padding: 20px; background-color: #fff; border-radius: 3px;}
+.login-h1{ position: relative; font-size: 24px; color: #333232; font-weight: 400; text-align: center;}
+.login-h1 .to-reg{ position: absolute; bottom: 0; right: 0; font-size: 14px; color: #999;}
+.login-form .btn{ display: block; width: 100%; height: 50px; line-height: 50px; font-size: 24px; color: #fff; border-radius: 4px; background: url(img/login_btn.png) 0 0 no-repeat; border: 0; outline: none;}
+.login-form .btn:hover{ background-position: 0 -50px;}
+.login-form .text{ border: 0; outline: none; height: 20px; line-height: 20px; padding: 8px 4px; font-size: 15px;}
+.login-form .icon{ width: 36px; height: 36px; background-image: url(img/login_icon.png); background-repeat: no-repeat; vertical-align: top;}
+.login-form .icon-user{ background-position: 0 0;}
+.login-form .icon-pwd{ background-position: 0 -36px;}
+.login-form .item{ border-bottom: 1px solid #c4c4c4; padding: 15px 0;}
+.login-form .tips{ padding: 20px 0; line-height: 20px;}
+
+/*账户激活*/
+.activation-item { padding-left: 40%; height: 40px; line-height: 30px;}
+.activation-item .label{ position: absolute; margin-left: -160px; text-align: right; width: 150px; line-height: 26px;}
+.activation-item b.error-tip{ background: url(img/activation_validate.png) 0 100% no-repeat; padding-left: 30px; display: inline-block; *display: inline; *zoom: 1;}
+.activation-item input.valid{ background: url(img/activation_validate.png) 100% 5% no-repeat;}
+
+/*全屏效果*/
+html,body{ height: 100%; width: 100%; overflow: hidden;}
+.login-full-box{ height: 100%; width: 100%; overflow: hidden;}
+.login-full-box .login-header{ margin: 0 30px; height: 100px; background: url(img/login_logo.jpg) 0 50% no-repeat;}
+.login-full-body{ position: relative; background-color: #f9f9f9; background-position: 50% 50%; background-repeat: no-repeat; }
+.login-full-body .login-bg{ position: absolute; left: 50%; top: 0; display: block;}
+.login-full-body .login-box{ top: 50%; margin-top: -155px; }
+.login-full-mask{ position: absolute; left: 0; right: 0; bottom: 0; top: 0; background-color: #fff;}

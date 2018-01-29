@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>保险责任</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;资源管理&nbsp;&gt;&nbsp;保险责任&nbsp;&gt;&nbsp;保险责任列表
+</div>
+
+<form class="m-main border ui-bg-fff" action="" id="fnListSearchForm" method="POST">
+
+    
+    <div class="m-search fn-clear">
+
+        <div class="item">
+            责任名称：
+            <input class="ui-text fn-w200" type="text" name="name" value="$!{queryConditions.name}" placeholder="客户名称">
+        </div>
+
+	 <div class="item">
+            创建人：
+            <input class="ui-text fn-w150" type="text" name="creatorName" value="$!{queryConditions.creatorName}" placeholder="创建人">
+        </div>
+         <div class="item">
+            创建时间：
+           <input class="ui-text fn-w200 laydate-icon fnChangeInput fnRequired fnInput" placeholder="开始时间" type="text" name="beginDate" id="beginDate" value="$!queryConditions.beginDate" onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm'})">
+        至
+        <input class="ui-text fn-w200 laydate-icon fnChangeInput fnRequired fnInput" placeholder="结束时间" type="text" name="endDate" id="endDate" value="$!queryConditions.endDate" onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm'})">
+        </div>
+       
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/insuranceLiability/edit.htm"><b>+</b>新增保险责任&nbsp;</a>
+
+        </div>
+
+        
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+                 					<th>序号</th>
+				 	                <th>保险责任名称</th>
+				 	                <th>创建人</th>
+                                    <th>创建时间</th>
+                                    <th>修改时间</th>
+				                     <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+                 	    <td>$!{velocityCount} </td>
+					 	<td>$!{item.name} </td>
+					 	 <td>$!{item.creatorName} </td>
+                        <td> $dateUtil.simpleFormat($!{item.rawAddTime})</td>
+                        <td> $dateUtil.simpleFormat($!{item.rawUpdateTime})</td>
+					                          <td>
+                            <a href="/insurance/insuranceLiability/edit.htm?liabilityId=$!{item.id}">[ 编辑 ]</a>
+                            <a href="javascript:void(0);" id="$!{item.id}" paramName="$!{item.name}" class="deleteObj">[ 删除 ]</a>
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        
+        
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+   seajs.use($_GLOBAL.zyw+'/insuranceLiability/insuranceLiability');
+</script>
+</body>
+</html>

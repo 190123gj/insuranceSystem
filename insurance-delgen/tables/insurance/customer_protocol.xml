@@ -1,0 +1,86 @@
+<table sqlname="customer_protocol">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO customer_protocol(id,name,no,customer_user_id,customer_user_name,cert_type,cert_no,beginDate,endDate,status,remark,relation_protocol_id,creator_id,creator_name,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+
+        <sqlmap>
+            <![CDATA[
+				INSERT INTO customer_protocol(id,name,no,customer_user_id,customer_user_name,cert_type,cert_no,beginDate,endDate,status,remark,relation_protocol_id,creator_id,creator_name,raw_add_time) VALUES (#id#,#name#,#no#,#customerUserId#,#customerUserName#,#certType#,#certNo#,#beginDate#,#endDate#,#status#,#remark#,#relationProtocolId#,#creatorId#,#creatorName#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+        </sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE customer_protocol SET name=?,no=?,customer_user_id=?,customer_user_name=?,cert_type=?,cert_no=?,beginDate=?,endDate=?,status=?,remark=?,relation_protocol_id=?,creator_id=?,creator_name=? WHERE id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,name ,no ,customer_user_id ,customer_user_name ,cert_type ,cert_no ,beginDate ,endDate ,status ,remark ,relation_protocol_id ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM customer_protocol WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM customer_protocol WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,name ,no ,customer_user_id ,customer_user_name ,cert_type ,cert_no ,beginDate ,endDate ,status ,remark ,relation_protocol_id ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM customer_protocol WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,name ,no ,customer_user_id ,customer_user_name ,cert_type ,cert_no ,beginDate ,endDate ,status ,remark ,relation_protocol_id ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM customer_protocol where 1=1
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM customer_protocol WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM customer_protocol  where 1=1
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

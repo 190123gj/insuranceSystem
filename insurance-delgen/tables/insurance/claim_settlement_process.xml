@@ -1,0 +1,95 @@
+<table sqlname="claim_settlement_process">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO claim_settlement_process(settlement_process_id,claim_settlement_id,type,remark,contactor_name,contactor_mobile1,contactor_mobile2,estimate_amount,damage_amount,payment_amount,process_date,creator_id,creator_name,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO claim_settlement_process(settlement_process_id,claim_settlement_id,type,remark,contactor_name,contactor_mobile1,contactor_mobile2,estimate_amount,damage_amount,payment_amount,process_date,creator_id,creator_name,raw_add_time) VALUES (#settlementProcessId#,#claimSettlementId#,#type#,#remark#,#contactorName#,#contactorMobile1#,#contactorMobile2#,#estimateAmount#,#damageAmount#,#paymentAmount#,#processDate#,#creatorId#,#creatorName#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="settlementProcessId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE claim_settlement_process SET claim_settlement_id=?,type=?,remark=?,contactor_name=?,contactor_mobile1=?,contactor_mobile2=?,estimate_amount=?,damage_amount=?,payment_amount=?,process_date=?,creator_id=?,creator_name=? WHERE settlement_process_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  settlement_process_id ,claim_settlement_id ,type ,remark ,contactor_name,contactor_mobile1,contactor_mobile2,estimate_amount,damage_amount,payment_amount,process_date ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM claim_settlement_process WHERE settlement_process_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM claim_settlement_process WHERE settlement_process_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  settlement_process_id ,claim_settlement_id ,type ,remark ,contactor_name,contactor_mobile1,contactor_mobile2,estimate_amount,damage_amount,payment_amount,process_date ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM claim_settlement_process WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  settlement_process_id ,claim_settlement_id ,type ,remark ,contactor_name,contactor_mobile1,contactor_mobile2,estimate_amount,damage_amount,payment_amount,process_date ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM claim_settlement_process where 1=1
+			 <dynamic>
+	           		<isNotEmpty property="claimSettlementProcess.claimSettlementId" prepend=" and ">
+					claim_settlement_id=#claimSettlementProcess.claimSettlementId#
+				</isNotEmpty>	
+	           </dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM claim_settlement_process WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM claim_settlement_process  where 1=1
+	           <dynamic>
+	           		<isNotEmpty property="claimSettlementId" prepend=" and ">
+					claim_settlement_id=#claimSettlementId#
+				</isNotEmpty>	
+	           </dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

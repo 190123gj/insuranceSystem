@@ -1,0 +1,121 @@
+<table sqlname="project_setup">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO project_setup(project_setup_id,project_setup_name,customer_user_id,customer_user_name,insurance_catalog_id,channels_user_id,channels_user_name,proportion,proportion_type,setup_user_id,setup_user_name,setup_use_type,setup_use_name,setup_use_id,beginDate,endDate,remark,status,form_id,creator_id,creator_name,raw_add_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO project_setup(project_setup_id,project_setup_name,customer_user_id,customer_user_name,insurance_catalog_id,channels_user_id,channels_user_name,proportion,proportion_type,setup_user_id,setup_user_name,setup_use_type,setup_use_name,setup_use_id,beginDate,endDate,remark,status,form_id,creator_id,creator_name,raw_add_time) VALUES (#projectSetupId#,#projectSetupName#,#customerUserId#,#customerUserName#,#insuranceCatalogId#,#channelsUserId#,#channelsUserName#,#proportion#,#proportionType#,#setupUserId#,#setupUserName#,#setupUseType#,#setupUseName#,#setupUseId#,#beginDate#,#endDate#,#remark#,#status#,#formId#,#creatorId#,#creatorName#,#rawAddTime#)
+		        <selectKey  resultClass ="long"  keyProperty ="projectSetupId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE project_setup SET project_setup_name=?,customer_user_id=?,customer_user_name=?,insurance_catalog_id=?,channels_user_id=?,channels_user_name=?,proportion=?,proportion_type=?,setup_user_id=?,setup_user_name=?,setup_use_type=?,setup_use_name=?,setup_use_id=?,beginDate=?,endDate=?,remark=?,status=?,form_id=?,creator_id=?,creator_name=? WHERE project_setup_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  project_setup_id ,project_setup_name ,customer_user_id ,customer_user_name ,insurance_catalog_id ,channels_user_id ,channels_user_name ,proportion ,proportion_type ,setup_user_id ,setup_user_name ,setup_use_type ,setup_use_name ,setup_use_id ,beginDate ,endDate ,remark ,status ,form_id ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM project_setup WHERE project_setup_id=?
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findByFormId" >
+        <sql>
+            <![CDATA[
+			  SELECT  project_setup_id ,project_setup_name ,customer_user_id ,customer_user_name ,insurance_catalog_id ,channels_user_id ,channels_user_name ,proportion ,proportion_type ,setup_user_id ,setup_user_name ,setup_use_type ,setup_use_name ,setup_use_id ,beginDate ,endDate ,remark ,status ,form_id ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM project_setup WHERE form_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM project_setup WHERE project_setup_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  project_setup_id ,project_setup_name ,customer_user_id ,customer_user_name ,insurance_catalog_id ,channels_user_id ,channels_user_name ,proportion ,proportion_type ,setup_user_id ,setup_user_name ,setup_use_type ,setup_use_name ,setup_use_id ,beginDate ,endDate ,remark ,status ,form_id ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM project_setup WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  project_setup_id ,project_setup_name ,customer_user_id ,customer_user_name ,insurance_catalog_id ,channels_user_id ,channels_user_name ,proportion ,proportion_type ,setup_user_id ,setup_user_name ,setup_use_type ,setup_use_name ,setup_use_id ,beginDate ,endDate ,remark ,status ,form_id ,creator_id ,creator_name ,raw_add_time ,raw_update_time  FROM project_setup where 1=1
+			<dynamic>
+				<isNotEmpty property="projectSetup.projectSetupName" prepend="and">
+	             project_setup_name like concat('%',#projectSetup.projectSetupName#,'%')
+	         	</isNotEmpty>
+	         	<isNotEmpty property="projectSetup.setupUserName" prepend="and">
+	             setup_user_name like concat('%',#projectSetup.setupUserName#,'%')
+	         	</isNotEmpty>
+	         	 <isNotEmpty property="projectSetup.beginDate" prepend=" and ">
+	                beginDate >= #projectSetup.beginDate#
+	            </isNotEmpty>
+	            <isNotEmpty property="projectSetup.endDate"  prepend=" and ">
+	                ${cdata-start} endDate <= #projectSetup.endDate#  ${cdata-end}
+	            </isNotEmpty>
+			</dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM project_setup WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM project_setup  where 1=1
+	           <dynamic>
+				<isNotEmpty property="projectSetupName" prepend="and">
+	             project_setup_name like concat('%',#projectSetupName#,'%')
+	         	</isNotEmpty>
+	         	<isNotEmpty property="setupUserName" prepend="and">
+	             setup_user_name like concat('%',#setupUserName#,'%')
+	         	</isNotEmpty>
+	         	 <isNotEmpty property="beginDate"   prepend=" and ">
+	                beginDate >= #beginDate#
+	            </isNotEmpty>
+	            <isNotEmpty property="endDate"  prepend=" and ">
+	                ${cdata-start} endDate <= #endDate#  ${cdata-end}
+	            </isNotEmpty>
+			</dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+</head>
+<body>
+<div class="fn-blank20"></div>
+<div class="m-main border ui-bg-fff">
+
+<h2 class="m-htitle fn-mb20 fn-mt20" id="khlxxx"><span>基本信息</span></h2>
+ <div>
+            <div class="m-item">
+                <label class="m-label">本次投保类型：</label>
+                <div>#if ($!info.insuranceType == "isLifeInsurance") 寿险 #else 非寿险  #end</div>
+            </div>
+            
+            #if ($!info.insuranceType == "noIsLifeInsurance")
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>是否定额产品投保：</label>
+                <div>#if ($!info.isQuota == "YES") 定额  #else 非定额 #end</div>
+            </div>
+            #end
+            
+            #if ($!info.isQuota == "NO")
+            <div class="m-item">
+                <label class="m-label">关联询报价单编号：</label>
+                <div>$!info.priceContactNo</div>
+            </div>
+            #end
+              <div class="m-item ">
+                <label class="m-label">关联超权限审批单名称：</label>
+                <div>$!info.projectSetupName</div>
+            </div>
+
+            <div class="m-item">
+                <label class="m-label">保险公司：</label>
+                <div>$!{info.companyUserName}</div>
+            </div>
+
+
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>客户类型：</label>
+                <div>#if ($!info.customerUserType == "INDIVIDUAL_CUSTOMER") 个人客户 #else 团体客户 #end</div>
+            </div>
+            
+
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>客户名称：</label>
+                <div>$!{info.customerUserName}</div>
+            </div>
+            
+             <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>业务员：</label>
+                <div>$!{info.businessUserName}</div>
+             </div>
+           <h2 class="m-htitle fn-mb20 fn-mt20" id="khlxxx"><span>客户信息</span></h2>
+           
+           #if ($!info.insuranceType == "isLifeInsurance")
+             <div class="m-item">
+            <label class="m-label">客户信息：</label>
+           	 <div>
+                <table class="m-table m-table-list itemsList" style="width: 96%;">
+                    <tr>
+                        <th class="fn-tac"></th>
+                        <th class="fn-tac">名称</th>
+                        <th class="fn-tac">证件类型</th>
+                        <th class="fn-tac">证件号码</th>
+                        <th class="fn-tac">关系</th>
+                    </tr>
+                    #foreach ($billCustomer in $!{billCustomers})
+	                     <tr class="itemLine" >
+	                     	#if ($!billCustomer.type == 0 ) 
+	                     	<td class="fn-tac">投保人</td>
+	                     	#else
+	                     	<td class="fn-tac">被保险人</td>
+	                     	#end
+	                    	<td class="fn-tac">$!billCustomer.customerUserName</td>
+	                    	<td class="fn-tac">$!billCustomer.customerCertType</td>
+	                    	<td class="fn-tac">$!billCustomer.customerCertNo</td>
+	                    	<td class="fn-tac">$!billCustomer.relation</td>
+	                    </tr>
+                    #end
+                </table>
+            </div>
+        </div>
+        
+         <div class="m-item itemBox benefitPlanBox diyNameBox">
+            <label class="m-label">受益人信息：</label>
+            <div class="fn-mb10">
+                <label>受益方案：</label>
+                <label><input type="radio" class="radio" #if($!plan_order == 0) checked #end disabled />顺序</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input type="radio" class="radio" #if($!plan_order == 1) checked #end disabled />比例</label>
+                <input type="hidden" class="ignore allScaleNum" value="0">
+            </div>
+            <table class="m-table m-table-list itemsList" style="width: 96%;">
+                <tr>
+                    <th class="fn-tac fn-w100">#if ($!plan_order == 0)受益顺序#else受益比例#end</th>
+                    <th class="fn-tac">受益人名称</th>
+                    <th class="fn-tac">证件类型</th>
+                    <th class="fn-tac">证件号码</th>
+                </tr> 
+                #foreach ($list in $!{findBusinessBillBeneficiarys})
+                	 <tr>
+	                    <td class="fn-tac">$!list.beneficiaryVal</td>
+	                    <td class="fn-tac">$!list.beneficiaryUserName</td>
+	                    <td class="fn-tac">$!list.beneficiaryCertType</td>
+	                    <td class="fn-tac">$!list.beneficiaryCertNo</td>
+               		 </tr> 
+                #end
+            </table>
+        </div>
+       	#else
+       	 	#if ($!info.isQuota == "YES") 
+       	 	  <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>地址：</label>
+                 <div>$!{info.customerUserAddress}</div>
+            </div>
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>证件类型：</label>
+                 <div>$!{info.customerCertType}</div>
+            </div>
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>证件号码：</label>
+                 <div>$!{info.customerCertNo}</div>
+            </div>
+       	 	#else
+	            <div class="m-item">
+	                <label class="m-label"><span class="m-required"></span>性别：</label>
+	                <div>$!{info.customerUserSex}</div>
+	            </div>
+	       	 	 <div class="m-item">
+	                <label class="m-label"><span class="m-required"></span>出生日期：</label>
+	                 <div>$!{info.customerUserBirth}</div>
+	             </div>
+	              <div class="m-item">
+	                <label class="m-label"><span class="m-required"></span>证件信息：</label>
+	             </div>
+       	 	#end
+        #end
+        
+            <h2 class="m-htitle fn-mb20 fn-mt20" id="khlxxx"><span>承保信息</span></h2>
+            
+            #if ($!info.insuranceType == "isLifeInsurance")
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>客户名称：</label>
+                <div>$!{info.customerUserName}</div>
+            </div>
+             <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>保险起期：</label>
+                <div> $dateUtil.formatDay($!{info.beginDate})</div>
+            </div>
+            #end
+			#if ($!info.isQuota == "NO")
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>保险项目：</label>
+                <div>$!{info.project}</div>
+            </div>
+
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>保险期间：</label>
+                $dateUtil.formatDay($!{info.beginDate}) 至 $dateUtil.formatDay($!{info.endDate})
+            </div>
+			#end
+			
+			#if ($!info.isQuota == "YES") 
+			  <div class="m-item">
+                <label class="m-label">保险产品：</label>
+                <div>$!{info.productName}</div>
+           	  </div>
+           	  <div class="m-item">
+                <label class="m-label">保障期限：</label>
+                <div>$!{info.guaranteePeriod}</div>
+           	  </div>
+           	  <div class="m-item">
+                <label class="m-label">档次：</label>
+                <div>$!{info.productLevelLevel}</div>
+           	  </div>
+           	  <div class="m-item">
+                <label class="m-label">保费：</label>
+                <div>$!{info.premiumAmount}</div>
+           	  </div>
+           	   <div class="m-item">
+                <label class="m-label">是否随车销售：</label>
+                <div>#if ($!info.isCarSales == "YES") 是 #else 否 #end</div>
+           	   </div>
+           	   
+           	   #if ($!info.isCarSales == "YES") 
+           	     <div class="m-item">
+	                <label class="m-label">车牌号：</label>
+	                <div>$!{info.plateNumber}</div>
+           	 	 </div>
+           	   #end
+           	   
+           	    <div class="m-item">
+	                <label class="m-label">保险起期：</label>
+	                <div>$dateUtil.formatDay($!{info.beginDate})</div>
+           	  </div>
+           	   
+			#end
+
+			  #if ($!info.insuranceType == "isLifeInsurance" || $!info.isQuota == "NO")
+		            <div class="m-item diyNameBox">
+		                <label class="m-label"><span class="m-required">*</span>投保内容：</label>
+		                <div class="fn-wp90 itemBox">
+		                    <table class="m-table m-table-list itemsList">
+		                     #if ($!info.insuranceType == "isLifeInsurance")
+		                        <tr>
+		                            <th class="fn-tac">保险产品</th>
+		                            <th class="fn-tac">缴费期限</th>
+		                            <th class="fn-tac">保额</th>
+		                            <th class="fn-tac">首期保费</th>
+		                        </tr>
+		                     #else
+		                      <tr>
+		                            <th class="fn-tac">保险产品</th>
+		                            <th class="fn-tac">保额</th>
+		                            <th class="fn-tac">保费</th>
+		                            <th class="fn-tac">经纪费</th>
+		                        </tr>
+		                     #end
+		                        #foreach ($insuranceContactLetterDetails in $!{insuranceContactLetterDetails}) 
+		                         #if ($!info.insuranceType == "isLifeInsurance")
+		                           <tr>
+		                            <td class="fn-tac">$insuranceContactLetterDetails.productName</td>
+		                            <td class="fn-tac">$insuranceContactLetterDetails.period</td>
+		                            <td class="fn-tac">$insuranceContactLetterDetails.insuranceAmount</td>
+		                            <td class="fn-tac">$insuranceContactLetterDetails.firstPremiumAmount</td>
+		                           </tr>
+		                         #else
+		                           <tr>
+		                            <td class="fn-tac">$insuranceContactLetterDetails.productName</td>
+		                            <td class="fn-tac">$insuranceContactLetterDetails.insuranceAmount</td>
+		                            <td class="fn-tac">$insuranceContactLetterDetails.premiumAmount</td>
+		                            <td class="fn-tac">$insuranceContactLetterDetails.brokerAmount</td>
+		                         </tr>
+		                         #end
+		                       
+		           				#end
+		                    </table>
+		                </div>
+		            </div>
+        	#end
+            
+			#if ($!info.isQuota == "NO")
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>是否开具增值税发票：</label>
+                <div>#if ($!info.isInvoice == "YES") 是 #else 否 #end</div>
+            </div>
+
+
+			#if ($!info.isInvoice == "YES") 
+            <div class="m-item diyNameBox invoice">
+                <label class="m-label"><span class="m-required">*</span>增值税信息：</label>
+                <div class="fn-wp90 itemBox">
+                    <table class="m-table m-table-list itemsList">
+                        <tr>
+                            <td class="fn-tac">单位名称：$!{valueTaxInfo.orgName}</td>
+                            <td class="fn-tac">纳税人识别号：$!{valueTaxInfo.identifyNumber}</td>
+                        </tr>
+                        <tr>
+                            <td class="fn-tac">电话:$!{valueTaxInfo.mobile}</td>
+                            <td class="fn-tac">单位地址：$!{valueTaxInfo.orgAddress}</td>
+                        </tr>
+                        <tr>
+                            <td class="fn-tac">开户行:$!{valueTaxInfo.openBankName}</td>
+                            <td class="fn-tac">账号：$!{valueTaxInfo.bankCardNo}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+			 #end
+
+
+            <div class="m-item">
+                <label class="m-label">保单和发票请寄送</label>
+            </div>
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>收件人：</label>
+               	<div>$!{info.recipients}</div>
+            </div>
+
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>单位：</label>
+                <div>$!{info.company}</div>
+            </div>
+
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>地址：</label>
+                <div>$!{info.address}</div>
+            </div>
+
+            <div class="m-item">
+                <label class="m-label"><span class="m-required">*</span>联系电话：</label>
+                <div>$!{info.mobile}</div>
+            </div>
+
+        </div>
+		#end       

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+    <title>保险协议</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;资源管理&nbsp;&gt;&nbsp;协议管理&nbsp;&gt;&nbsp;#if($!{info.protocolId}>0)编辑 #else 新增 #end 协议
+</div>
+
+<h2 class="m-h2-title">#if($!{info.protocolId}>0)编辑 #else 新增 #end 协议</h2>
+
+<div class="fn-blank20"></div>
+
+<div class="m-main border ui-bg-fff">
+
+    <form id="form" action="/insurance/insuranceProtocol/editSubmit.json" method="POST">
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>协议名称：</label>
+            $!{info.name}
+        </div>
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>协议号：</label>
+            $!{info.no}
+        </div>
+
+        <div class="m-item">
+            <label class="m-label">协议性质：</label>
+             #if($!{info.isMain}=="YES") 主协议 #else 附加协议  #end
+        </div>
+
+        <div class="m-item totalCompany"  #if($!{info.isMain}=="YES") style="display: none;" #end >
+            <label class="m-label"><span class="m-required">*</span>主协议：</label>$!{info.parentName}
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>合作机构：</label>
+            <input type="hidden" name="protocolUserId" id="protocolUserId" value="$!{info.protocolUserId}"/>
+             $!{info.protocolUserName}
+
+
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>签约机构：</label>
+            $!{info.contractingAgencyName}
+
+        </div>
+
+
+        <div class="m-item ">
+            <label class="m-label"><span class="m-required">*</span>保险信息：</label>
+            <div class="fn-p-reb" style="border:solid 1px #eee;padding:20px 0;">
+                 <table class="m-table">
+                    <thead>
+                    <tr>
+                        <th>保险分类</th>
+                        <th>产品名称</th>
+                        <th>费用比例</th>
+                        <th>首期</th>
+
+                    </tr>
+                    </thead>
+                    <tbody id="sellScopeList">
+
+                        #if($listUtil.isNotEmpty($info.protocolInfoInfos))
+                            #foreach($item in $info.protocolInfoInfos)
+                            <tr class="fnNewLine" ordername="infoOrders">
+                                <td class="fn-text-c">
+                                    <div class="">
+
+                                        <label>$!{item.catalogName}</label>
+                                        <i class="icon icon-select-down"></i>
+                                        <input type="hidden" name="catalogId" class="catalogId" value="$!{item.catalogId}">##隐藏域，存放当前分类的id，多个存在建议使用class
+
+                                     </span>
+                                        <div class="selectRslt fn-p-abs fn-usn">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="fn-text-c fn-p-reb">
+
+                                       $!{item.productName}
+
+
+                                </td>
+                                <td class="fn-text-c">
+                                    <a class="setingRatio" href="javascript:void(0)">设置费用比例</a>
+                                    <input type="hidden" name="chargeInfo" class="setingRatioArr"
+                                           value='$!{item.chargeInfo}'>
+                                </td>
+                                <td class="fn-text-c fn-p-reb">
+
+                                    $!{item.firstPeriod}
+
+
+                                </td>
+
+                            </tr>
+                            #end
+                        #else
+                        <tr class="fnNewLine" ordername="infoOrders">
+                            <td class="fn-text-c">
+                                <div class="selectFnBox1">
+                                    <span class="ui-text fn-w200 fnInput selectFn fn-text-overflow">
+                                        <label>请选择</label>
+                                        <i class="icon icon-select-down"></i>
+                                        <input type="hidden" name="catalogId" class="catalogId" value="0">##隐藏域，存放当前分类的id，多个存在建议使用class
+                                        <input type="hidden" name="catalogName" class="catalogName">
+                                     </span>
+                                    <div class="selectRslt fn-p-abs fn-usn">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="fn-text-c fn-p-reb">
+                                <input type="text" name="productName" class="text productName" readonly>
+                                <input type="hidden" name="productId" class="productId" value="0">
+                                <a class="ui-btn ui-btn-fill ui-btn-blue fn-p-abs productBtn"
+                                   style="top:5px;right:60px">选择</a>
+                                <a class="ui-btn ui-btn-fill ui-btn-gray fn-p-abs clearBtn"
+                                   style="top:5px;right:5px">清除</a>
+                            </td>
+                            <td class="fn-text-c">
+                                <a class="setingRatio" href="javascript:void(0)">设置费用比例</a>
+                                <input type="hidden" name="chargeInfo" class="setingRatioArr"
+                                       value='{"data": [{"timeLimit": "1","periods": ["22", "33", "44"]}, {"timeLimit": "3","periods": ["321", "321"]}],"maxLength": "3"}'>
+                            </td>
+                            <td class="fn-text-c">
+                                <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-green fnDelLine"
+                                   parentsClass="fnNewLine">删除</a>
+                            </td>
+                        </tr>
+                        #end
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script type="text/html" id="t-catalog">
+            <tr class="fnNewLine" ordername="infoOrders">
+                <td class="fn-text-c">
+                    <div class="selectFnBox1">
+                        <span class="ui-text fn-w200 fnInput selectFn fn-text-overflow">
+                            <label>请选择</label>
+                            <i class="icon icon-select-down"></i>
+                            <input type="hidden" name="catalogId" class="catalogId"
+                                   value="0">##隐藏域，存放当前分类的id，多个存在建议使用class
+                            <input type="hidden" name="catalogName" class="catalogName">
+                        </span>
+                        <div class="selectRslt fn-p-abs fn-usn">
+                        </div>
+                    </div>
+                </td>
+                <td class="fn-text-c fn-p-reb">
+                    <input type="text" name="productName" class="text productName" readonly>
+                    <input type="hidden" name="productId" class="productId" value="0">
+                    <a class="ui-btn ui-btn-fill ui-btn-blue fn-p-abs productBtn" style="top:5px;right:60px">选择</a>
+                    <a class="ui-btn ui-btn-fill ui-btn-gray fn-p-abs clearBtn" style="top:5px;right:5px">清除</a>
+                </td>
+                <td class="fn-text-c">
+                    <a class="setingRatio" href="javascript:void(0)">设置费用比例</a>
+                    <input type="hidden" name="chargeInfo" class="setingRatioArr" value=''>
+                </td>
+                <td class="fn-text-c">
+                    <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-green fnDelLine"
+                       parentsClass="fnNewLine">删除</a>
+                </td>
+            </tr>
+        </script>
+    #*
+            <script type="text/html" id="sellScopePopup">
+                <div class="newPopup">
+                    <span class="close">×</span>
+                    <dl>
+                        <dt class="dt"><span>保险信息</span></dt>
+                        <dd class="fn-mt10">
+                            <div class="fn-mb10 fn-clear fn-lh28">
+                                <span class="fn-left fn-mr5"><em class="replaceText">保险分类</span>
+                                <span class="fn-left">
+                                    <div class="selectFnBox1">
+                                         <span class="ui-text fn-w200 fnInput selectFn fn-text-overflow">
+                                             <label>请选择</label>
+                                             <i class="icon icon-select-down"></i>
+                                             <input type="hidden" name="id" id="selectedId" class="classify">##隐藏域，存放当前分类的id，多个存在建议使用class
+                                         </span>
+                                         <div class="selectRslt fn-p-abs fn-usn">
+                                         </div>
+                                    </div>
+                                    ##<input class="ui-text fn-w90 classify" type="text">
+                                </span>
+                            </div>
+                            <div class="fn-mb10 fn-clear fn-lh28 fn-hide productBox">
+                                <span class="fn-left fn-mr5">选择产品</span>
+                                <span class="fn-left">
+                                    <input class="ui-text fn-w200 product" type="text">
+                                </span>
+                            </div>
+                            <div class="fn-clear fn-text-c">
+
+                                <div class="fn-mt10">
+                                    <a class="ui-btn ui-btn-fill ui-btn-green fn-mr20 okBtn">确认</a>
+                                    <a class="ui-btn ui-btn-fill ui-btn-gray close">取消</a>
+                                </div>
+
+                            </div>
+
+                       </dd>
+                   </dl>
+                </div>
+            </script>
+    *#
+        <script type="text/html" id="selectProductPopup">
+            <div class="newPopup">
+                <span class="close">×</span>
+                <dl>
+                    <dt class="dt"><span>选择产品</span></dt>
+                    <dd class="fn-mt10">
+                        <div id="PopupFrom" class="fn-mb10">
+                            产品名称：
+                            <input class="ui-text fn-w90 fn-mr20" type="text" name="productName">
+                            <a class="ui-btn ui-btn-fill ui-btn-seek" id="PopupSubmit">搜索</a>
+                        </div>
+                        <table class="m-table" style="width:540px;margin:0;" border="1">
+                            <thead>
+                            <tr>
+                                <th>产品名称</th>
+                                <th>保险公司</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {{if success}}
+
+                            {{each data.pageList as value i}}
+                            <tr>
+                                <td class="fn-text-c onbreak">{{value.productName}}</td>
+                                <td class="fn-text-c onbreak">{{value.companyUserName}}</td>
+                                <td class="fn-text-c onbreak"><a class="fn-csp choose"
+                                                                 productName="{{value.productName}}"
+                                                                 companyUserName="{{value.companyUserName}}"
+                                                                 productId="{{value.productId}}">[选择]</a></td>
+                            </tr>
+                            {{/each}}
+
+                            {{else}}
+
+                            <tr>
+                                <td class="fn-text-c" colspan="6">{{message}}</td>
+                            </tr>
+
+                            {{/if}}
+
+                            </tbody>
+                        </table>
+
+                        {{if success}}
+
+                        <div class="pageBox fn-text-r fn-mt5">
+
+                            第{{data.pageNumber}}页，共{{data.pageCount}}页，合计{{data.totalCount}}条&nbsp;|&nbsp;
+
+                            {{if data.pageNumber<2}}
+                            <a class="disabled">首页</a>
+                            <a class="disabled">上一页</a>
+                            {{else}}
+                            <a class="btn" page="1" href="javascript:void(0);">首页</a>
+                            <a class="btn" page="{{data.pageNumber-1}}" href="javascript:void(0);">上一页</a>
+                            {{/if}}
+
+                            {{if data.pageNumber+1>data.pageCount}}
+                            <a class="disabled">下一页</a>
+                            <a class="disabled">尾页</a>
+                            {{else}}
+                            <a class="btn" page="{{data.pageNumber+1}}" href="javascript:void(0);">下一页</a>
+                            <a class="btn" page="{{data.pageCount}}" href="javascript:void(0);">尾页</a>
+                            {{/if}}
+
+                        </div>
+
+                        {{/if}}
+
+                    </dd>
+                </dl>
+            </div>
+        </script>
+
+        <script type="text/html" id="setingRatioPopup">
+            <div class="newPopup">
+                <span class="close">×</span>
+                <dl>
+                    <dt class="dt"><span>设置费用比例</span></dt>
+                    <dd class="fn-mt10" style="position: relative">
+                        <table class="m-table" border="1">
+                            <thead>
+                            <tr>
+                                <th style="padding:0;width:120px;height:45px;" class="onbreak">
+                                    <div class="tableOut">
+                                        <b>期数</b>
+                                        <em>缴费年限(年)</em>
+                                    </div>
+                                </th>
+                                {{if maxLength.length}}
+                                {{each maxLength as value i}}
+                                {{if i==0}}
+                                <th>首期</th>
+                                {{else}}
+                                <th class="fn-p-reb onbreak">第{{i+1}}期<span class="recordDelete rowDelete">━</span></th>
+                                {{/if}}
+                                {{/each}}
+                                {{else}}
+                                <th>首期</th>
+                                {{/if}}
+
+                            </tr>
+                            </thead>##{data: [{timeLimit: 1,periods: [123, 123, 123]}, {timeLimit: 3,periods: [321, 321]}],maxLength: 3}
+                            <tbody>
+                            {{if data.length}}
+                            {{each data as value i}}
+                            <tr {{if !!newly && newly[i]}} class="new" {{/if}}>
+                            <td class="fn-text-c fn-p-reb">
+                                <input type="text" class="text" value="{{value.timeLimit}}">
+                                {{if !!newly && newly[i]}}
+                                <span class="recordDelete colDelete">━</span>
+                                {{/if}}
+                            </td>
+                            {{if value['periods'].length}}
+                            {{each maxLength as tdVal j}}
+                            <td class="fn-text-c"><input class="text stagVal" type="text" name=""
+                                                         value="{{value['periods'][j]?value['periods'][j]:''}}"></td>
+                            {{/each}}
+                            {{/if}}
+                            </tr>
+                            {{/each}}
+                            {{else}}
+                            <tr>
+                                <td><input class="text" type="text" name=""></td>
+                                <td><input class="text" type="text" name=""></td>
+                            </tr>
+                            {{/if}}
+
+                            </tbody>
+                        </table>
+
+
+                        <div class="fn-mt10" style="position: absolute;top: 0;right: -15px;">
+                            <a class="ui-btn colBtn"><i class="icon icon-add"></i></a>
+                        </div>
+                        <div class="fn-mt10" style="position: absolute; bottom: 50px; left: -15px;">
+                            <a class="ui-btn rowBtn"><i class="icon icon-add"></i></a>
+                        </div>
+                        <div class="fn-clear fn-text-c">
+
+                            <div class="fn-mt10">
+##                                <a class="ui-btn ui-btn-fill ui-btn-blue fn-mr20 colBtn">增加期数</a>
+##                                <a class="ui-btn ui-btn-fill ui-btn-blue fn-mr20 rowBtn">增加缴费期限</a>
+                                <a class="ui-btn ui-btn-fill ui-btn-green fn-mr20 okBtn">确认</a>
+                                <a class="ui-btn ui-btn-fill ui-btn-gray close">取消</a>
+                            </div>
+
+                        </div>
+
+                    </dd>
+                </dl>
+            </div>
+        </script>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>销售区域：</label>
+            <input type="hidden" class="ui-text fn-w200 fnInput fn-validate salesAreasSelectContent">
+            <div class="salesAreasBox">
+                <div class="salesAreasCheckbox fn-hide">
+                    <dl class="level">
+                        <dt>
+                        <h2 class="m-htitle"><span>省/直辖市/自治区</span></h2></dt>
+                        <dd>
+                            <ul class="fn-clear fn-p15">##这里不用说了吧肯定要循环的
+                                #foreach($item in $provinceInfos)
+                                    <li class="fn-left fn-mr30"><input class="fn-mr5" type="checkbox"
+                                                                       value="$!{item.code}" toponymy="$!{item.name}"
+                                                                       junior="$!{item.children}"  #foreach($item2 in $info.oneCityList) #if($!{item.code} =="$!item2.code")      checked             #end #end><a
+                                            class="fn-blue fn-tdu" href="javascript:void(0)">$!{item.name}</a></li>
+                                #end
+                            </ul>
+                        </dd>
+                    </dl>
+                    <dl class="level" code="234">
+                        <dt>
+                        <h2 class="m-htitle"><span>市</span></h2></dt>
+                        <dd>
+                            <ul class="fn-clear fn-p15">
+                            ##                                <li class="fn-left fn-mr30"><input class="fn-mr5" value="465" toponymy="巴黎区" type="checkbox" checked>巴黎区</li>
+##                                <li class="fn-left fn-mr30"><input class="fn-mr5" value="874" toponymy="曼谷区" type="checkbox" checked>曼谷区</li>
+##                                <li class="fn-left fn-mr30"><input class="fn-mr5" value="556" toponymy="伦敦区" type="checkbox">伦敦区</li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+                <h2 class="m-htitle"><span>已选择如下</span><a class="fn-right packBtn"></a></h2>
+                <div class="salesAreasOutput fn-line-rl">
+                    <div class="levelOutput">##只选择了一级城市类
+                        <dl class="fn-clear">
+                            #foreach($item in $info.oneCityList)
+                                <dd class="fn-left fn-mr20" code="$!{item.code}">$!{item.name}</dd>##一级城市类的key和val
+                            #end
+                        ##
+                        </dl>
+                    </div>
+                    <div class="levelOutput">##选择了二级城市类
+                        #foreach($item in $info.twoCityList)
+                            <dl class="fn-clear" code="$!item.code">##一级城市类的key
+                                <dt class="fn-left">$!item.name：</dt>##一级城市类的val
+                                #foreach($item2 in $item.cityInfoList)
+                                    <dd class="fn-left fn-mr20" code="$!item2.code">$!item2.name</dd>##二级城市类的key和val
+                                #end
+                            </dl>
+                        #end
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" class="salesAreasCollect"
+                   name="salesAreasCollect" value='$!{info.salesAreasCollect}'>##提交所有选择的值,格式如下[{"123":[]},{"234":[]},{"456":[]},{"345":["897","215","285"]}]
+        #*
+        <div class="salesAreasBox">
+            <div class="salesAreasCheckbox">
+                <dl class="level">
+                    <dt><h2 class="m-htitle"><span>省/直辖市/自治区</span></h2></dt>
+                    <dd>
+                        <ul class="fn-clear fn-p15">
+                            <li class="fn-left fn-mr30"><input class="fn-mr5" type="checkbox" value="123" toponymy="重庆市" junior="江津区,111;渝北区,222;东京区,333;首尔区,444;华盛顿区,555" checked><a class="fn-blue fn-tdu" href="javascript:void(0)">重庆市</a></li>
+                            <li class="fn-left fn-mr30"><input class="fn-mr5" type="checkbox" value="234" toponymy="成都市" junior="巴黎区,465;曼谷区,874;伦敦区,556"><a class="fn-blue fn-tdu" href="javascript:void(0)">成都市</a></li>
+                            <li class="fn-left fn-mr30"><input class="fn-mr5" type="checkbox" value="345" toponymy="四川市" junior="罗马区,897;柏林区,215;罗索区,285"><a class="fn-blue fn-tdu" href="javascript:void(0)">四川市</a></li>
+                            <li class="fn-left fn-mr30"><input class="fn-mr5" type="checkbox" value="456" toponymy="李家沱市" junior="利马区,856;圣地亚哥区,745;卡斯特里区,953"><a class="fn-blue fn-tdu" href="javascript:void(0)">李家沱市</a></li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl class="level" code="234">
+                    <dt><h2 class="m-htitle"><span>市</span></h2></dt>
+                    <dd>
+                        <ul class="fn-clear fn-p15">
+                            <li class="fn-left fn-mr30"><input class="fn-mr5" value="465" toponymy="巴黎区" type="checkbox" checked>巴黎区</li>
+                            <li class="fn-left fn-mr30"><input class="fn-mr5" value="874" toponymy="曼谷区" type="checkbox" checked>曼谷区</li>
+                            <li class="fn-left fn-mr30"><input class="fn-mr5" value="556" toponymy="伦敦区" type="checkbox">伦敦区</li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+            <h2 class="m-htitle"><span>已选择如下</span></h2>
+            <div class="salesAreasOutput fn-line-rl">
+                <div class="levelOutput">
+                    <dl class="fn-clear">
+                        <dd class="fn-left fn-mr20" code="123">重庆市</dd>
+                    </dl>
+                </div>
+                <div class="levelOutput">
+                    <dl class="fn-clear" code="234">
+                        <dt class="fn-left">成都市：</dt>
+                        <dd class="fn-left fn-mr20" code="465">巴黎区</dd>
+                        <dd class="fn-left fn-mr20" code="874">曼谷区</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        *#
+        </div>
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>签订日期：</label>
+            $dateUtil.formatDay($!{info.signDate})
+        </div>
+
+
+        <div class="m-item">
+            <label class="m-label"><span class="m-required">*</span>协议期：</label>
+           $dateUtil.formatDay($!{info.beginDate})
+            <span>-</span>
+
+                  $dateUtil.formatDay($!{info.endDate})
+        </div>
+        <input class="ui-text fn-w200 fnInput fnRequired" type="hidden" name="type" id="type" value="INSURANCE_PROTOCOL">
+        <input class="ui-text fn-w200 fnInput fnRequired" type="hidden" name="protocolId" id="protocolId"
+               value="$!{info.protocolId}">
+
+
+        <div class="m-item">
+            <div class="fnUpAttach">
+                <label class="m-label">附件上传：</label>
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="pathName_INSURANCE_PROTOCOL")
+                #set($hiddenUrls = $!{hiddenUrls_INSURANCE_PROTOCOL})
+                #set($attachments = $!{attaches_INSURANCE_PROTOCOL})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+        </div>
+
+        <div class="m-blank fn-mt20 fn-mb20"></div>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <a href="/insurance/xxxx.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+
+    </form>
+
+</div>
+
+    #parse("/layout/common/footer.vm")
+    #parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script>
+    seajs.use($_GLOBAL.zyw+'/insuranceProtocol/addInsuranceProtocol');
+</script>
+
+</body>
+</html>

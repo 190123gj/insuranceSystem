@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+ <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+<title>结算单管理</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;结算管理&nbsp;&gt;&nbsp;结算单管理
+</div>
+
+<form class="m-main border ui-bg-fff" action="" id="fnListSearchForm" method="POST">
+
+    
+    <div class="m-search fn-clear">
+
+       <div class="item item2 fn-top">
+            <span>保险公司：</span>
+            <select name="insuranceCompanyId" class="ui-select fn-w150 fn-validate" style="box-sizing: content-box;padding:0 5px;">
+                <option value="">请选择</option>
+                #foreach ($institutions in $!{institutions})
+                    <option value="$!institutions.customerId" #if ($institutions.customerId == $!queryConditions.insuranceCompanyId) selected #end >$!{institutions.customerName}</option>
+                #end
+            </select>
+        </div>
+
+
+        <div class="item item2">
+           结算单号
+            <input class="ui-text fn-w150" type="text" name="billNo" value="$!{queryConditions.billNo}" >
+        </div>
+        
+        
+        申请结算时间：
+           <input class="ui-text fn-w200 laydate-icon fnChangeInput fnRequired fnInput" type="text" name="beginDate" id="beginDate" value="$!queryConditions.beginDate" onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm'})">
+        至
+        <input class="ui-text fn-w200 laydate-icon fnChangeInput fnRequired fnInput" type="text" name="endDate" id="endDate" value="$!queryConditions.endDate" onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm'})">
+
+
+     <div class="item item2">
+         结算单状态：
+           <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue status" val="" style="color: #fff;">全部</a>
+           <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue status" val="pendingInvoice"  style="color: #fff;">待开票</a>
+           <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue status" val="unPacking" style="color: #fff;">已拆包</a>
+           <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue status" val="accountReceivable" style="color: #fff;">待收款</a>
+           <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue status" val="alreadySettled" style="color: #fff;">已收款</a>
+           <input type="hidden" name="status" id="status" value="$!{queryConditions.status}"  />
+     </div>
+        
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    
+    <div class="fn-pl15 fn-pr15">
+        
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+	 	                <th>序号</th>
+	 	                <th>结算单号</th>
+	 	                <th>保险公司</th>
+	 	                <th>结算笔数</th>
+	 	                <th>结算总金额</th>
+	 	                <th>申请结算时间</th>
+	 	                <th>状态</th>
+	                    <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr insuranceCompanyId="$!{item.insuranceCompanyId}" insuranceCompanyName="$!{item.insuranceCompanyName}" id="$!{item.id}" invoiceId="$!{item.settlementInvoiceInformationInfo.invoiceId}" billNo="$!{item.billNo}" invoiceNo="$!{item.settlementInvoiceInformationInfo.invoiceNo}" invoiceIssuingTime="$dateUtil.simpleFormat($!{item.settlementInvoiceInformationInfo.invoiceIssuingTime}) " logisticsCompanyName="$!{item.settlementInvoiceInformationInfo.logisticsCompanyName}" logisticsNumber="$!{item.settlementInvoiceInformationInfo.logisticsNumber}">
+						 <td>	$!{velocityCount} </td>
+						 <td>	$!{item.billNo} </td>
+						 <td>	$!{item.insuranceCompanyName} </td>
+						 <td>	$!{item.total} </td>
+						 <td>	$!{item.totalAmount} </td>
+						 <td>	 $dateUtil.simpleFormat($!{item.rawAddTime})  </td>
+						 <td>	
+						 #if ($!item.status == "pendingInvoice") 待开票 #end
+						 #if ($!item.status == "unPacking") 已拆包 #end
+						 #if ($!item.status == "accountReceivable") 待收款 #end
+						 #if ($!item.status == "alreadySettled") 已收款 #end
+						  </td>
+	                     <td>
+	                     #if ($!item.status == "pendingInvoice")
+		                     #if (!$!{item.invoiceRequisitionInfo})
+		                       <a href="javascript:void(0);" class="billing">[ 申请开票 ]</a><br />
+		                     #end
+	                     <a href="javascript:void(0);" class="packet">[  拆包 ]</a><br />
+	                     <a href="javascript:void(0);">[  导出结算单 ]</a><br />
+	                     <a href="javascript:void(0);" class="lookDetail">[  查看详情 ]</a><br />
+	                      #if ($!{item.invoiceRequisitionInfo})
+	                       <a href="javascript:void(0);" class="confirmInvoice">[ 确认开票 ]</a><br />
+	                      #end
+	                     #end
+						 #if ($!item.status == "unPacking")
+						   	<a href="javascript:void(0);" class="lookDetail">[  查看详情 ]</a>
+						 #end
+						 #if ($!item.status == "accountReceivable")
+						  <a href="javascript:void(0);" class="invoiceInfo">[  查看发票信息 ]</a><br />
+	                      <a href="javascript:void(0);" class="confirmRecieve">[  确认收款 ]</a><br />
+	                      <a href="javascript:void(0);">[  导出结算单 ]</a><br />
+						  <a href="javascript:void(0);" class="supplyInvoiceInfo">[  补充开票信息 ]</a>
+						  #end
+						 #if ($!item.status == "alreadySettled")
+						  <a href="javascript:void(0);" class="invoiceInfo">[  查看发票信息 ]</a><br />
+						  <a href="javascript:void(0);">[  查看附件 ]</a><br />
+						  <a href="javascript:void(0);">[  导出结算单 ]</a><br />
+						  <a href="javascript:void(0);" class="supplyInvoiceInfo">[  补充开票信息 ]</a>
+						 #end
+	                      </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+        
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+
+</form>
+##--------------------------------------------------------------申请开票-----------
+<script type="text/html" id="BILLING">
+<form class="" id="billingForm" action="/insurance/invoiceRequisition/editSubmit.json" method="POST" callbackhref="/insurance/settlementCompanyBillProcess/list.htm">
+<div id="" class="ui-bg-fff m-main border wnd-wnd" style="width:1200px;">## style="display: none; position: absolute;top: 20%;left: 10%;z-index: 999;"
+    <div class="wnd-header" title="可拖动"><span class="wnd-title">发票申请单</span>
+        <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+    </div>
+     <input type="hidden" name="insuranceCompanyId" />
+     <input type="hidden" name="insuranceCompanyName" />
+    <table class="m-table m-table-list" border="1">
+        <caption>发票申请单</caption>
+        <tr>
+            <td>申请单号：</td>
+            <td></td>
+            <input type="hidden" value="" name="applyNo"/>
+            <td>结算单号：</td>
+            <td class="billNo"></td>
+            <input type="hidden" value="" name="settlementNo"/>
+            <td>申请日期：</td>
+            <td class="applyTime"></td>
+            <input type="hidden" value="" name="applyTime"/>
+            <td>申请人：</td>
+            <td class="applyUserName"></td>
+             <input type="hidden" value="" name="applyUserId"/>
+             <input type="hidden" value="" name="applyUserName"/>
+            <td>申请部门：</td>
+            <td class="applyUserDept">开发部</td>
+            <input type="hidden" value="" name="applyDeptment"/>
+        </tr>
+        <tr>
+            <td>保单号：</td>
+            <td colspan="5" class="insurance_no">11111</td>
+             <input type="hidden" value="" name="insuranceNo"/>
+            <td>付款公司：</td>
+            <td colspan="3" class="insuranceCompanyName"></td>
+        </tr>
+        <tr>
+            <td>纳税人识别号：</td>
+            <td colspan="9" class="identifyNumber"></td>
+        </tr>
+        <tr>
+            <td>地址：</td>
+            <td colspan="5" class="orgAddress">11111</td>
+            <td>电话：</td>
+            <td colspan="3" class="mobile">22222</td>
+        </tr>
+        <tr>
+            <td>开户行：</td>
+            <td colspan="5" class="openBankName">11111</td>
+            <td>账号：</td>
+            <td colspan="3" class="bankCardNo">22222</td>
+        </tr>
+        <tr>
+            <td>开票金额大写：</td>
+            <td colspan="5" class="capital"></td>
+            <td>开票金额小写：</td>
+            <td colspan="3" class="lowercase"></td>
+        </tr>
+        <tr>
+            <td>备注：</td>
+            <td colspan="9">11111</td>
+        </tr>
+        <tr>
+            <td>申请人：</td>
+            <td colspan="2" class="applyUserName"></td>
+            <td>业务部门负责人：</td>
+            <td colspan="2">22222</td>
+            <td>业务部门分管领导：</td>
+            <td colspan="3">20110101</td>
+        </tr>
+    </table>
+    <table class="m-table m-table-list">
+        <caption>结算单清单</caption>
+         
+        <tr>
+            <th>保单/批单号</th>
+            <th>险种</th>
+            <th>投保日期</th>
+            <th>投保人</th>
+            <th>保费</th>
+            <th>经纪费率</th>
+            <th>经纪费</th>
+        </tr>
+        <tbody id="settlementBillInfo">
+        </tbody>
+        
+    </table>
+    <div class="fn-tac fn-pt20 fn-pb20">
+        <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn" type="button" value="确认">
+        <a href="javascript:void(0);" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5" onclick="">确认并打印</a>
+        <a href="javascript:void(0);" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5 closeBtn" onclick="">返回</a>
+    </div>
+</div>
+</form>
+</script>
+##-----------------------------发票详情查看----------
+<script type="text/html" id="INVOICEINFO">
+    <div class="wnd-wnd wnd-common">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">结算单详情</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+        <table class="m-table m-table-list">
+            <caption>发票信息</caption>
+            <tr>
+                <td>结算单号：</td>
+                <td colspan="3" class="settlementNo"></td>
+            </tr>
+            <tr>
+                <th colspan="4">发票信息：</th>
+            </tr>
+            <tr>
+                <td>发票号：</td>
+                <td class="settlementInvoiceNo"></td>
+                <td>发票开具时间：</td>
+                <td class="time"></td>
+            </tr>
+            <tr>
+                <td>物流公司名称：</td>
+                <td class="companyName"></td>
+                <td>物流单号：</td>
+                <td class="flowNo"></td>
+            </tr>
+            <tr>
+                <td>发票相关附件：</td>
+                <td></td>
+                <td>发票相关附件：</td>
+                <td></td>
+            </tr>
+        </table>
+        <div class="fn-tac fn-pt20 fn-pb20">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5 closeBtn" onclick="">返回</a>
+        </div>
+    </div>
+</script>
+
+
+##-----------------------------确认开票----------
+<script type="text/html" id="CONFIRMINVOICE">
+<form class="m-main border ui-bg-fff" action="/insurance/settlementInvoiceInformation/editSubmit.json" method="POST" callbackhref="/insurance/settlementCompanyBillProcess/list.htm">
+    <div class="wnd-wnd wnd-common" style="width:800px;">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">确认发票信息</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+        <input type="hidden" name="invoiceId" id="invoiceId" value="0"/>
+        <table class="m-table m-table-list">
+            <caption>发票信息</caption>
+            <tr>
+                <td>结算单号：<input type="hidden" name="billNo" id="invoiceBillNo"/></td>
+                <td colspan="3" class="invoice_billNo">12345654</td>
+            </tr>
+            <tr>
+                <th colspan="4">发票信息：</th>
+            </tr>
+            <tr>
+                <td>发票号：</td>
+                <td> <input class="ui-text fn-w150" type="text" id="invoiceNo" name="invoiceNo" value="$!{queryConditions.invoiceNo}" ></td>
+                <td>发票开具时间：</td>
+                <td><input name="invoiceIssuingTime" id="invoiceIssuingTime" class="ui-text fn-w200 laydate-icon" type="text" onclick="laydate({istime: true,format: 'YYYY-MM-DD hh:mm:ss'})"></td>
+            </tr>
+            <tr>
+                <td>物流公司名称：</td>
+                <td> <input class="ui-text fn-w150" type="text" id="logisticsCompanyName" name="logisticsCompanyName" value="$!{queryConditions.logisticsCompanyName}" ></td>
+                <td>物流单号：</td>
+                <td> <input class="ui-text fn-w200" type="text" id="logisticsNumber" name="logisticsNumber" value="$!{queryConditions.logisticsNumber}" ></td>
+            </tr>
+            <tr>
+                <td>发票相关附件：</td>
+                <td>
+	                <div class="fnUpAttach fn-mb10 " style="text-align:center;">
+	                #set($attachmentTitle="上传附件")
+	                #set($attachmentNameAttr="pathName_PRODUCT3_PROTOCOL")
+	                #set($hiddenUrls = $!{hiddenUrls_PRODUCT3_PROTOCOL})
+	                #set($attachments = $!{attaches_PRODUCT3_PROTOCOL})
+	                #parse("/layout/common/uploadAttachment.vm")
+	          	  </div>
+              </td>
+                <td>发票相关附件：</td>
+                <td>
+                <div class="fnUpAttach fn-mb10 " style="text-align:center;">
+	                #set($attachmentTitle="上传附件")
+	                #set($attachmentNameAttr="pathName_PRODUCT3_PROTOCOL")
+	                #set($hiddenUrls = $!{hiddenUrls_PRODUCT3_PROTOCOL})
+	                #set($attachments = $!{attaches_PRODUCT3_PROTOCOL})
+	                #parse("/layout/common/uploadAttachment.vm")
+	          	  </div>
+                </td>
+            </tr>
+        </table>
+        <div class="fn-tac fn-pt20 fn-pb20">
+       	   <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5 submitBtn" type="button" value="提交">
+            <a href="/insurance/settlementCompanyBillProcess/list.htm" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+        </div>
+    </div>
+    </form>
+</script>
+<script type="text/html" id="PERSONCOMMISSIONUPDATE">
+    <div class="wnd-wnd wnd-common">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">结算单详情</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+        <div class="wnd-body fn-clear">
+         结算单号：<span class="billNo">111111111111</span>
+            <div class="wnd-items wnd-items90">
+                <table class="m-table m-table-list fn-tac" id="list">
+            <thead>
+                <tr id="fnListSearchTh">
+	 	                <th>序号</th>
+	 	                <th>保单号</th>
+	 	                <th>投保人</th>
+	 	                <th>被投保人</th>
+	 	                <th>保费</th>
+	 	                <th>经纪费费率</th>
+	 	                <th>经纪费</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+            </div> 
+            
+        </div>
+        <div class="wnd-bottom">
+            <a href="javascript:void(0)" class="wnd-close close-btn closeBtn">返回</a>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" id="CONFIRMRECIEVE">
+    <div class="wnd-wnd wnd-common">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">确认收款</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+        <div class="wnd-body">
+        
+        	 <div class="fnUpAttach fn-mb10" style="text-align:center;">
+                #set($attachmentTitle="上传附件")
+                #set($attachmentNameAttr="pathName_SETTLEMENT_COMPANY_BILL_RECIEVE")
+                #set($hiddenUrls = $!{hiddenUrls_SETTLEMENT_COMPANY_BILL_RECIEVE})
+                #set($attachments = $!{attaches_SETTLEMENT_COMPANY_BILL_RECIEVE})
+                #parse("/layout/common/uploadAttachment.vm")
+            </div>
+       		 
+             <input type="hidden" id="settlementCompanyBill" />
+   			  <div style="text-align:center;margin-top:100px;font-size:20px;"> 请再次确认款项是否已经收到 </div>
+        </div> 
+            
+        <div class="wnd-bottom">
+            <a href="javascript:void(0)" class="submit-btn confirm">确定</a>
+            <a href="javascript:void(0)" class="wnd-close close-btn closeBtn">返回</a>
+        </div>
+    </div>
+</script>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+  seajs.use($_GLOBAL.zyw+'/settlementCompanyBill/settlementCompanyBillProcess');
+</script>
+</body>
+
+<style>
+    .billingForm{
+        left: 1% !important;
+    }
+</style>
+</html>

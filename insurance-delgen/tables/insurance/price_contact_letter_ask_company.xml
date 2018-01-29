@@ -1,0 +1,98 @@
+<table sqlname="price_contact_letter_ask_company">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO price_contact_letter_ask_company(id,letter_demand_id,companyUserId,companyUserName,catalogId,catalogName,intentionFee,protocolFee,contactUserId,contactUserName,contactUserMobile,contactUserEmail,version,ext) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			]]>
+        </sql>
+
+        <sqlmap>
+            <![CDATA[
+				INSERT INTO price_contact_letter_ask_company(id,letter_demand_id,companyUserId,companyUserName,catalogId,catalogName,intentionFee,protocolFee,contactUserId,contactUserName,contactUserMobile,contactUserEmail,version,ext) VALUES (#id#,#letterDemandId#,#companyUserId#,#companyUserName#,#catalogId#,#catalogName#,#intentionFee#,#protocolFee#,#contactUserId#,#contactUserName#,#contactUserMobile#,#contactUserEmail#,#version#,#ext#)
+		        <selectKey  resultClass ="long"  keyProperty ="id" >
+		          		 SELECT LAST_INSERT_ID() AS ID
+		      	</selectKey>
+				]]>
+        </sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE price_contact_letter_ask_company SET letter_demand_id=?,companyUserId=?,companyUserName=?,catalogId=?,catalogName=?,intentionFee=?,protocolFee=?,contactUserId=?,contactUserName=?,contactUserMobile=?,contactUserEmail=?,version=?,ext=? WHERE id=?
+
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  id ,letter_demand_id ,companyUserId ,companyUserName ,catalogId ,catalogName ,intentionFee ,protocolFee ,contactUserId ,contactUserName ,contactUserMobile ,contactUserEmail ,version ,ext  FROM price_contact_letter_ask_company WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM price_contact_letter_ask_company WHERE id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  id ,letter_demand_id ,companyUserId ,companyUserName ,catalogId ,catalogName ,intentionFee ,protocolFee ,contactUserId ,contactUserName ,contactUserMobile ,contactUserEmail ,version ,ext  FROM price_contact_letter_ask_company WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  id ,letter_demand_id ,companyUserId ,companyUserName ,catalogId ,catalogName ,intentionFee ,protocolFee ,contactUserId ,contactUserName ,contactUserMobile ,contactUserEmail ,version ,ext  FROM price_contact_letter_ask_company where 1=1
+
+             <dynamic>
+                  <isGreaterThan property="priceContactLetterAskCompany.letterDemandId"  compareValue="0" prepend=" and ">
+	                letter_demand_id = #priceContactLetterAskCompany.letterDemandId#
+	            </isGreaterThan>
+			</dynamic>
+
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM price_contact_letter_ask_company WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM price_contact_letter_ask_company  where 1=1
+	          <dynamic>
+                  <isGreaterThan property="letterDemandId"  compareValue="0" prepend=" and ">
+	                letter_demand_id = #letterDemandId#
+	            </isGreaterThan>
+			</dynamic>
+
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

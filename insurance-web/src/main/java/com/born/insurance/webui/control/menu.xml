@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<MenuData ImagesBaseURL="Images/" DefaultGroupCssClass="aspnmG" DefaultItemCssClass="aspnmI" DefaultItemCssClassOver="aspnmIO" xmlns="ASP.NET Menu MenuData Schema">
+	<MenuGroup ID="库存管理" CssClass="aspnmTopG">
+		<MenuItem Label="&amp;nbsp;&amp;nbsp;&amp;nbsp;主页&amp;nbsp;&amp;nbsp;&amp;nbsp;" URL="HomePage.do" ItemType="OP1" TextAlign="center" CssClassOver="aspnmTopIO" CssClass="aspnmTopI">
+			<MenuGroup ID="">
+				<MenuItem Label="门户&amp;nbsp;&amp;nbsp;" URL="Login.do" />
+				<MenuItem Image="break.jpg" Width="100%" Height="2" />
+				<MenuItem Label="总分类账" URL="HomePage.do?ModuleID=3" />
+				<MenuItem Label="现金银行" URL="HomePage.do?ModuleID=9" />
+				<MenuItem Label="应收管理" URL="HomePage.do?ModuleID=4" />
+				<MenuItem Label="应付管理" URL="HomePage.do?ModuleID=5" />
+				<MenuItem Label="工资核算" URL="HomePage.do?ModuleID=10" />
+				<MenuItem Label="固定资产" URL="HomePage.do?ModuleID=11" />
+				<MenuItem Image="break.jpg" Width="100%" Height="2" />
+				<MenuItem Label="采购管理" URL="HomePage.do?ModuleID=6" />
+				<MenuItem Label="销售管理" URL="HomePage.do?ModuleID=7" />
+				<MenuItem Label="库存管理" URL="HomePage.do?ModuleID=8" />
+				<MenuItem Label="委托加工" URL="HomePage.do?ModuleID=15" />
+				<MenuItem Label="存货管理" URL="HomePage.do?ModuleID=18" />
+				<MenuItem Image="break.jpg" Width="100%" Height="2" />
+				<MenuItem Label="模块登录" URL="Login.do" />
+			</MenuGroup>
+		</MenuItem>
+		<MenuItem Label="&amp;nbsp;账册报表&amp;nbsp;" TextAlign="center" CssClassOver="aspnmTopIO" CssClass="aspnmTopI">
+			<MenuGroup ID="账册报表,查询" ExpandOffsetY="1" ExpandOffsetX="-1">
+				<MenuItem Label="货品序号汇总表" URL="transmit.do?&amp;ReportID=1915&amp;ViewID=1415&amp;GroupID=10&amp;TypeID=8" />
+				<MenuItem Label="货品序号一览表" URL="transmit.do?&amp;ReportID=1902&amp;ViewID=1403&amp;GroupID=10&amp;TypeID=3" />
+				<MenuItem Label="批次出入库对照表" URL="transmit.do?&amp;ReportID=1940&amp;ViewID=818&amp;GroupID=10&amp;TypeID=3" />
+				<MenuItem Label="出入库物品明细表" URL="transmit.do?&amp;ReportID=1939&amp;ViewID=817&amp;GroupID=10&amp;TypeID=3" />
+				<MenuItem Label="出入库物品汇总表" URL="transmit.do?&amp;ReportID=1938&amp;ViewID=816&amp;GroupID=10&amp;TypeID=8" />
+				<MenuItem Label="出库物品明细表" URL="transmit.do?&amp;ReportID=1937&amp;ViewID=815&amp;GroupID=10&amp;TypeID=3" />
+				<MenuItem Label="出库物品汇总表" URL="transmit.do?&amp;ReportID=1936&amp;ViewID=814&amp;GroupID=10&amp;TypeID=8" />
+				<MenuItem Label="入库物品明细表" URL="transmit.do?&amp;ReportID=1935&amp;ViewID=813&amp;GroupID=10&amp;TypeID=3" />
+				<MenuItem Label="入库物品汇总表" URL="transmit.do?&amp;ReportID=1934&amp;ViewID=812&amp;GroupID=10&amp;TypeID=8" />
+				<MenuItem Label="库存明细账" URL="transmit.do?&amp;ReportID=1932&amp;ViewID=810&amp;GroupID=10&amp;TypeID=1" />
+				<MenuItem Label="货位余额表" URL="transmit.do?&amp;ReportID=1930&amp;ViewID=808&amp;GroupID=10&amp;TypeID=8" />
+				<MenuItem Label="库存余额表" URL="transmit.do?&amp;ReportID=1929&amp;ViewID=807&amp;GroupID=10&amp;TypeID=8" />
+				<MenuItem Label="发货汇总表" URL="transmit.do?&amp;ReportID=2754&amp;ViewID=4015&amp;GroupID=10&amp;TypeID=8" />
+				<MenuItem Label="库存实存余额表" URL="transmit.do?&amp;ReportID=1451&amp;ViewID=4016&amp;GroupID=10&amp;TypeID=8" />
+				<MenuItem Label="发货明细表" URL="transmit.do?&amp;ReportID=2753&amp;ViewID=4014&amp;GroupID=10&amp;TypeID=3" />
+				<MenuItem Label="库存货位明细账" URL="transmit.do?&amp;ReportID=1933&amp;ViewID=811&amp;GroupID=10&amp;TypeID=1" />
+				<MenuItem Label="未提货物品汇总表" URL="transmit.do?&amp;ReportID=1642&amp;ViewID=579&amp;GroupID=10&amp;TypeID=8" />
+				<MenuItem Label="未提货物品明细表" URL="transmit.do?&amp;ReportID=1643&amp;ViewID=570&amp;GroupID=10&amp;TypeID=3" />
+			</MenuGroup>
+		</MenuItem>
+		<MenuItem Label="&amp;nbsp;&amp;nbsp;&amp;nbsp;帮助&amp;nbsp;&amp;nbsp;&amp;nbsp;" CssClassOver="aspnmTopIO" CssClass="aspnmTopI">
+			<MenuGroup ID="" ExpandOffsetY="1" ExpandOffsetX="-1">
+				<MenuItem Label="使用帮助" ClientSideOnClick="openHelp();"/>
+				<MenuItem Label="关于&amp;nbsp;&amp;nbsp;" ClientSideOnClick="window.open('AboutPop.do','about','toolbar=no,width=450,height=320');" />
+			</MenuGroup>
+		</MenuItem>
+	</MenuGroup>
+</MenuData>

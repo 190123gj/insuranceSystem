@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<fop version="1.0">      
+		<font-base>/opt/apache-tomcat-7.0.39-yrd/webapps/fop</font-base> 
+		<font-base>D:/dev/libs/fop/</font-base>
+		<fonts>
+		
+		
+		
+			 <font metrics-file="/opt/fonts/font/KaiTi_GB2312.xml" embed-file="/opt/fonts/font/KaiTi_GB2312.ttf"
+				kerning="yes">
+				<font-triplet name="KaiTi_GB2312" style="normal" weight="normal" />
+				<font-triplet name="KaiTi_GB2312" style="normal" weight="bold" />
+				<font-triplet name="KaiTi_GB2312" style="italic" weight="normal" />
+				<font-triplet name="KaiTi_GB2312" style="italic" weight="bold" />
+			 </font>
+			<font metrics-file="D:\opt\fonts\font\SimHei.xml" embed-file="D:\opt\fonts\font\SimHei.ttf"
+				kerning="yes">
+				<font-triplet name="SimHei" style="normal" weight="normal" />
+				<font-triplet name="SimHei" style="normal" weight="bold" />
+				<font-triplet name="SimHei" style="italic" weight="normal" />
+				<font-triplet name="SimHei" style="italic" weight="bold" />
+			 </font>
+			 
+		  	
+			 <font metrics-file="/opt/fonts/font/STKAITI.xml" embed-file="/opt/fonts/font/STKAITI.ttf"
+				kerning="yes">
+				<font-triplet name="STKAITI" style="normal" weight="normal" />
+				<font-triplet name="STKAITI" style="normal" weight="bold" />
+				<font-triplet name="STKAITI" style="italic" weight="normal" />
+				<font-triplet name="STKAITI" style="italic" weight="bold" />
+			</font>
+		
+			 <font metrics-file="/opt/fonts/font/YouYuan.xml" embed-file="/opt/fonts/font/YouYuan.ttf"
+				kerning="yes">
+				<font-triplet name="YouYuan" style="normal" weight="normal" />
+				<font-triplet name="YouYuan" style="normal" weight="bold" />
+				<font-triplet name="YouYuan" style="italic" weight="normal" />
+				<font-triplet name="YouYuan" style="italic" weight="bold" />
+			 </font>
+			 
+			
+			
+			<!--linux-->
+	   <!-- 
+		   /opt/apache-tomcat-7.0.39-dribco/   应用部署地址 
+		   + webapps/ROOT/WEB-INF/xsl/font
+		 -->  
+			
+			<font metrics-file="/opt/apache-tomcat-7.0.39-dribco/webapps/ROOT/WEB-INF/xsl/font/KaiTi_GB2312.xml" embed-file="/opt/apache-tomcat-7.0.39-dribco/webapps/ROOT/WEB-INF/xsl/font/KaiTi_GB2312.ttf"
+				kerning="yes">
+				<font-triplet name="KaiTi_GB2312" style="normal" weight="normal" />
+				<font-triplet name="KaiTi_GB2312" style="normal" weight="bold" />
+				<font-triplet name="KaiTi_GB2312" style="italic" weight="normal" />
+				<font-triplet name="KaiTi_GB2312" style="italic" weight="bold" />
+			 </font>
+			 
+			 <font metrics-file="/opt/apache-tomcat-7.0.39-dribco/webapps/ROOT/WEB-INF/xsl/font/SimHei.xml" embed-file="/opt/apache-tomcat-7.0.39-dribco/webapps/ROOT/WEB-INF/xsl/font/SimHei.ttf"
+				kerning="yes">
+				<font-triplet name="SimHei" style="normal" weight="normal" />
+				<font-triplet name="SimHei" style="normal" weight="bold" />
+				<font-triplet name="SimHei" style="italic" weight="normal" />
+				<font-triplet name="SimHei" style="italic" weight="bold" />
+			</font>
+			
+			
+			<font metrics-file="/opt/apache-tomcat-7.0.39-dribco/webapps/ROOT/WEB-INF/xsl/font/STKAITI.xml" embed-file="/opt/apache-tomcat-7.0.39-dribco/webapps/ROOT/WEB-INF/xsl/font/STKAITI.ttf"
+				kerning="yes">
+				<font-triplet name="STKAITI" style="normal" weight="normal" />
+				<font-triplet name="STKAITI" style="normal" weight="bold" />
+				<font-triplet name="STKAITI" style="italic" weight="normal" />
+				<font-triplet name="STKAITI" style="italic" weight="bold" />
+			 </font>
+			 
+			 <font metrics-file="/opt/apache-tomcat-7.0.39-dribco/webapps/ROOT/WEB-INF/xsl/font/YouYuan.xml" embed-file="/opt/apache-tomcat-7.0.39-dribco/webapps/ROOT/WEB-INF/xsl/font/YouYuan.ttf"
+				kerning="yes">
+				<font-triplet name="YouYuan" style="normal" weight="normal" />
+				<font-triplet name="YouYuan" style="normal" weight="bold" />
+				<font-triplet name="YouYuan" style="italic" weight="normal" />
+				<font-triplet name="YouYuan" style="italic" weight="bold" />
+			</font>
+			
+			
+	</fonts>
+	<renderers>
+		<renderer mime="application/pdf">
+			
+		</renderer>
+	</renderers>
+</fop>  

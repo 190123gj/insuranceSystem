@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/login.css" rel="stylesheet">
+<title>登录</title>
+</head>
+<body>
+
+<!--[if lte IE 8]>
+<div class="fixednav ui-ie-update text-center ie-update">你正在使用IE低级浏览器，为了您的网络安全和更好的产品体验，<br />强烈建议您立即 <a class="blue" href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie" target="_blank">升级IE浏览器</a> 或者用更快更安全的 <a class="blue" href="http://www.baidu.com/s?wd=Chrome&ie=utf-8" target="_blank">谷歌浏览器Chrome</a> 。</div>
+<![endif]-->
+
+## <div class="login-header login-layout"></div>
+
+## <div class="login-body">
+##     <div class="login-box">##<a class="to-reg" href="/re">立即注册</a>
+##         <h1 class="login-h1">登录</h1>
+##         <form class="login-form" autocomplete="off" action="/login/login.htm" method="post" id="login_form">
+##             <div class="item">
+##                 <i class="icon icon-user"></i>
+##                 <input class="text" type="text" name="userName" placeholder="用户名" value="">
+##             </div>
+##             <input type="hidden" class="w50" name="whithControl" value="1" id="whithControl">
+##             <div class="item">
+##                 <i class="icon icon-pwd"></i>
+##                 <input class="text" type="password" name="password" id="passwords" placeholder="密码">
+##                 ## <input type="hidden" name="password" id="password">
+##             </div>
+##             <div class="tips">
+##                 ##<a class="fn-right " href="/login/toActive.htm">首次登录</a>
+##                 ##<a class="fn-usn fn-csp" href="/login/forgetPassword.htm">忘记密码</a>
+##                  <label  class="fn-usn fn-csp forgetPassword">
+##                     <input class="fn-mr5" type="hidden" value="1" name="forgetPassword">
+##                 </label>
+##             </div>
+            
+##             ##登陆是否需要验证码
+             
+##     ##          #if($!{appConstantsUtil.getLoginWithOutCheckCode()}=="Y" || $!{appConstantsUtil.getLoginWithOutCheckCode()}=="YY")
+##     ##              #set($withOutImgCode=false)
+##     ##          #else
+##     ##              #set($withOutImgCode=true)  
+##     ##          #end
+             
+##             #if($!{needcheck})
+##                 #set($withOutImgCode=true)
+##             #end
+            
+##             #if($withOutImgCode)
+##                 <input type="hidden" value="true"  class="needCode">##需要验证码
+##             #else
+##                 <input type="hidden" value="false" class="needCode">##不需要验证码
+##             #end
+##             <input type="hidden" name="redirect" value="$!stringUtil.filterXSS($!{request.getParameter('redirect')})"/>
+##             #foreach($!key in $!redirectParamMap.keySet()) ##跳转参数
+##                 <input type="hidden" name="$!key" value="$!stringUtil.filterXSS($!redirectParamMap.get($!key))"/>
+##             #end
+##             <p class="fn-f30">#if($!code == 0) $!message #end</p>
+##             </br>
+##             <input class="btn" type="submit" value="登录" id="submit-a">
+##         </form>
+##     </div>
+## </div>
+
+## <div class="ui-footer fn-tac">
+##     <p>2010-2020 版权所有 &copy; xx网 <a href="http://www.miitbeian.gov.cn/" target="_blank">备案号码</a> 地址：重庆市北部新区黄山大道中段68号</p>
+##     <p>重庆进出口信用担保有限公司</p>
+## </div>
+
+
+<div class="login-full-box">
+    
+    <div class="login-header" id="fnLoginHeader"></div>
+
+    <div class="login-full-body" id="fnLoginBody" style="background-image: url('/styles/tmbp/img/login_body_bg_full.jpg')">
+
+        ## <img class="login-bg" src="/styles/tmbp/img/login_body_bg.jpg" id="fnLoginBg">
+
+        <div class="m-body">
+            <div class="login-box">
+                <h1 class="login-h1">登录</h1>
+                <form class="login-form" autocomplete="off" action="/login/login.htm" method="post" id="login_form">
+                    <div class="item">
+                        <i class="icon icon-user"></i>
+                        <input class="text" type="text" name="userName" placeholder="用户名" value="">
+                    </div>
+                    <input type="hidden" class="w50" name="whithControl" value="1" id="whithControl">
+                    <div class="item">
+                        <i class="icon icon-pwd"></i>
+                        <input class="text" type="password" name="password" id="passwords" placeholder="密码">
+                    ## <input type="hidden" name="password" id="password">
+                    </div>
+
+                    <div  class="item">
+                        <i class="icon icon-pwd"></i>
+                    ##<label class="fn-label">验证码</label>
+                        <input type="text" class="text " style='width:175px;' name="captcha" value="" placeholder="验证码" />
+                        <img style='position:absolute;' src="" alt="loading...." class="code-img fn-csp" id="check_code_img" width="75" height="32" style='cursor:pointer;' />
+                    ##看不清楚，
+                        <a id='reg_verify_code' href="javascript:;"></a>
+                    </div>
+
+                    <div class="tips">
+                    ##<a class="fn-right " href="/login/toActive.htm">首次登录</a>
+                    ##<a class="fn-usn fn-csp" href="/login/forgetPassword.htm">忘记密码</a>
+                        <label  class="fn-usn fn-csp forgetPassword">
+                            <input class="fn-mr5" type="hidden" value="1" name="forgetPassword">
+                        </label>
+                    </div>
+
+                ##登陆是否需要验证码
+
+                ##          #if($!{appConstantsUtil.getLoginWithOutCheckCode()}=="Y" || $!{appConstantsUtil.getLoginWithOutCheckCode()}=="YY")
+                ##              #set($withOutImgCode=false)
+                ##          #else
+                ##              #set($withOutImgCode=true)
+                ##          #end
+
+                    #if($!{needcheck})
+                        #set($withOutImgCode=true)
+                    #end
+
+                    #if($withOutImgCode)
+                        <input type="hidden" value="true"  class="needCode">##需要验证码
+                    #else
+                        <input type="hidden" value="false" class="needCode">##不需要验证码
+                    #end
+                    <input type="hidden" name="redirect" value="$!stringUtil.filterXSS($!{request.getParameter('redirect')})"/>
+                    #foreach($!key in $!redirectParamMap.keySet()) ##跳转参数
+                        <input type="hidden" name="$!key" value="$!stringUtil.filterXSS($!redirectParamMap.get($!key))"/>
+                    #end
+                    <p class="fn-f30">#if($!code == 0) $!message #end</p>
+                    </br>
+                    <input class="btn" type="submit" value="登录" id="submit-a">
+                </form>
+            </div>
+##            <div class="erwei_login">
+##                <img src="/styles/tmbp/img/erweiCode.jpg" alt="点击扫我">
+##            </div>
+        </div>
+
+    </div>
+
+    <div class="ui-footer fn-tac" id="fnLoginFooter">
+        <p>2010-2020 版权所有 &copy; <a href="http://www.miitbeian.gov.cn/" target="_blank">备案号码 渝ICP备17003029号-1</a> 地址：重庆市渝北区黄杨路5号渝兴广场B7幢9楼1.2.3号</p>
+        <p>东润保险经纪有限公司</p>
+    </div>
+
+</div>
+
+<div class="login-full-mask"></div>
+
+#parse("/layout/common/commonjs.vm")
+<script>
+    //防止登录窗口被嵌套
+    if (!(window.top === window.self)) {
+        window.top.location.href = '/login/toLogin.htm';
+    }
+
+    // 全屏
+    function setFullBody() {
+
+        var jQuerywindow = jQuery(window)
+        var FULLBODYHEIGHT = jQuerywindow.height() - jQuery('#fnLoginHeader').outerHeight() - jQuery('#fnLoginFooter').outerHeight()
+        jQuery('#fnLoginBody').outerHeight(FULLBODYHEIGHT)
+        // jQuery('#fnLoginBg').outerHeight(FULLBODYHEIGHT).outerWidth(jQuerywindow.width()).css('marginLeft', '-' + (jQuerywindow.width() / 2) + 'px')
+
+    }
+
+    setFullBody()
+
+    jQuery(window).resize(function (event) {
+        setFullBody()
+    })
+
+    // var verify = jQuery('#reg_verify_code');
+
+    // verify.click(function(e) {
+    //  e.preventDefault();
+    //  var seed = +new Date();
+    //  jQuery('#check_code_img').attr('src', '/login/getCaptchaImg4.htm?seed=' + seed);
+
+    // });
+    // setTimeout(function() {
+    //  verify.trigger('click');
+    // }, 700)
+
+    // jQuery('#check_code_img').click(function() {
+    //  verify.trigger('click');
+    // });
+    
+    jQuery('#check_code_img').on('click', function(){
+        var jQuerythis = jQuery(this)
+        if(jQuerythis.hasClass('loading')){
+            return
+        }
+        jQuerythis.attr('src', '/login/getCaptchaImg4.htm?seed=' + (new Date).getTime())
+        setTimeout(function(){
+            jQuerythis.removeClass('loading')
+        }, 1000)
+    }).trigger('click')
+    
+    $('.login-full-mask').remove()
+    // seajs.use('zyw/login');
+</script>
+</body>
+</html>

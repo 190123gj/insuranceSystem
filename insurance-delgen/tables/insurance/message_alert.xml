@@ -1,0 +1,118 @@
+<table sqlname="message_alert">
+	<operation name="insert" paramtype="object">
+		<sql>
+			<![CDATA[
+				INSERT INTO message_alert(project_code,customer_name,alert_phrase,active,last_alert_time,raw_add_time) VALUES (?,?,?,?,?,?)
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="update" paramtype="object">
+		<sql>
+			<![CDATA[
+				UPDATE message_alert SET project_code=?,customer_name=?,alert_phrase=?,active=?,last_alert_time=? WHERE alert_id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="updateByProjectCode" paramtype="object">
+		<sql>
+			<![CDATA[
+				UPDATE message_alert SET customer_name=?,alert_phrase=?,active=?,last_alert_time=? WHERE project_code=?
+			]]>
+		</sql>
+	</operation>		
+	
+	<operation name="updateToStop" paramtype="object">
+		<sql>
+			<![CDATA[
+				UPDATE message_alert SET active='NO' WHERE project_code=? AND alert_phrase=?
+			]]>
+		</sql>
+	</operation>		
+	
+	<operation name="findById">
+		<sql>
+			<![CDATA[
+				SELECT * FROM message_alert WHERE alert_id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="findByProjectCode" multiplicity="many">
+		<sql>
+			<![CDATA[
+				SELECT * FROM message_alert WHERE project_code=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="deleteById">
+		<sql>
+			<![CDATA[
+				DELETE FROM message_alert WHERE alert_id=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="deleteByProjectCode">
+		<sql>
+			<![CDATA[
+				DELETE FROM message_alert WHERE project_code=?
+			]]>
+		</sql>
+	</operation>
+	
+	<operation name="findByCondition" paramtype="object" multiplicity="many">
+		<extraparams>
+			<param name="limitStart" javatype="long" />
+			<param name="pageSize" javatype="long" />
+		</extraparams>
+	    <sql>
+	        <![CDATA[
+	       SELECT  * FROM message_alert WHERE 1=1
+	        ]]>
+	    </sql>
+	    <sqlmap>
+	        <![CDATA[
+	        SELECT * from message_alert WHERE 1=1
+	        <dynamic>
+				<isNotEmpty property="messageAlert.projectCode" prepend=" and ">
+					project_code = #messageAlert.projectCode#
+				</isNotEmpty>
+				<isNotEmpty property="messageAlert.alertPhrase" prepend=" and ">
+					alert_phrase = #messageAlert.alertPhrase#
+				</isNotEmpty>
+				<isNotEmpty property="messageAlert.active" prepend=" and ">
+					active = #messageAlert.active#
+				</isNotEmpty>
+	        </dynamic>
+            ORDER by alert_id DESC 
+            LIMIT #limitStart#,#pageSize#;
+	        ]]>
+	    </sqlmap>
+	</operation>
+	<operation name="findByConditionCount" paramtype="object" >
+	    <sql>
+	        <![CDATA[
+	       SELECT  count(*)  FROM message_alert WHERE  1=1
+	        ]]>
+	    </sql>
+	    <sqlmap>
+	        <![CDATA[
+	        SELECT  count(*)  FROM message_alert WHERE 1=1
+	        <dynamic>
+				<isNotEmpty property="projectCode" prepend=" and ">
+					project_code = #projectCode#
+				</isNotEmpty>
+				<isNotEmpty property="alertPhrase" prepend=" and ">
+					alert_phrase = #alertPhrase#
+				</isNotEmpty>
+				<isNotEmpty property="active" prepend=" and ">
+					active = #active#
+				</isNotEmpty>
+	        </dynamic>
+	        ]]>
+	    </sqlmap>
+	</operation>
+</table>

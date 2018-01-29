@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>备份配置</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;系统管理&nbsp;&gt;&nbsp;数据库备份管理&nbsp;&gt;&nbsp;备份日志
+</div>
+
+<form class="m-main border ui-bg-fff" action="" id="fnListSearchForm" method="POST">
+
+    ## search start
+
+    <div class="m-search fn-clear">
+
+        <div class="item">
+            数据库
+            <input class="ui-text fn-w200" type="text" name="schemeName" value="$!queryOrder.schemeName">
+        </div>
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+        
+    </div>
+
+    ## search end
+
+    <div class="fn-pl15 fn-pr15 fn-pt20">
+        ## list start
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+                    <th sortCol="scheme_name">数据库</th>
+                    <th sortCol="backup_file">备份文件</th>
+                    <th sortCol="log_id" width="150px">备份时间</th>
+                    <th width="100px">备份结果</th>
+                    <th width="150px">文件删除时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr logId="$!item.logId" fileName="$!item.backupFile">
+                        <td>
+                            $!item.schemeName
+                        </td>
+                        <td>
+                            $!item.backupFile
+                        </td>
+                        <td>
+                            $!dateUtil.simpleDate($!item.backupTime)
+                        </td>
+                        <td>
+                            #if($!item.isSuccess.code == "IS")
+                            	<a title="$!item.remark"> 成功</a>
+                            #else
+                            	<a title="$!item.remark">失败</a>
+                            #end
+                        </td>
+                        <td>
+                        	#if($!item.isDel.code == "IS")
+                        		$!dateUtil.simpleDate($!item.delTime)
+                        	#else
+                        		<a href="javascript:void(0);" class="del delFile">[ 删除文件 ]</a>
+                        	#end
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        ## list end
+
+        ## page start
+
+        #parse("/layout/common/pages.vm")
+
+        ## page end
+
+    </div>
+
+</form>
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+
+<script src="/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/system/dbbackup');
+</script>
+</body>
+</html>

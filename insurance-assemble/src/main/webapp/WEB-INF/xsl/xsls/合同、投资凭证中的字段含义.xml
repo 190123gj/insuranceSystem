@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<EntryDailyListReport>
+
+	<!--以下为合同用到的参数-->
+
+	<PageList><!-- 报表主体 // -->
+		<ReportBody><!-- 报表数据,表格形式,可以定义多个表格 // -->
+			<Blank />
+			<Blank />
+			<TableBegin>
+				<LETTERNO>XXXXXXXXXXXXXX</LETTERNO> <!-- 合同编号 -->
+			</TableBegin>
+			<TableContract>
+				<!-- 投资期间 -->
+				<tradeId>21450</tradeId>  <!--交易ID -->
+				<tradeName>测试用借款标题</tradeName>  <!--交易名称 -->
+				<countDays>365607</countDays><!--投资期限（天数） -->
+				<SYYYY>1900</SYYYY> <!--交易生效日（年） -->
+				<SMM>01</SMM><!--交易生效日（月） -->
+				<SDD>01</SDD><!--交易生效日（天） -->
+				<EYYYY>2900</EYYYY><!--交易到期日（年） -->
+				<EMM>12</EMM><!--交易到期日（月） -->
+				<EDD>31</EDD><!--交易到期日（天） -->
+				<DMONEY>50.00</DMONEY> <!--融资总额（万） -->
+				<moneyTal>伍拾万元整</moneyTal> <!--融资总额（大写） -->
+				<PER>0.1</PER><!-- 投资权益年化收益率 -->
+				<limit>360个月</limit><!--融资期限 -->
+				<loanPurpose>TEST TEST TEST</loanPurpose><!-- 借款用途 -->
+				<guaranteAddress>XXXXXX承诺公司地址</guaranteAddress><!-- 担保人地址 -->
+				<PlatFormAddress>河北省石家庄市高新技术产业开发区湘江道6号</PlatFormAddress><!-- 交易平台地址 -->
+				<repayWayCheak>D</repayWayCheak><!-- 还款方式选择 -->
+				<platformName>重庆易六投资服务有限公司</platformName><!--交易平台公司名称 -->
+				
+				<profitUserName>51shouyi</profitUserName><!-- 平台分润账户名 -->
+				<productName>易六</productName><!--交易平台名称 -->
+				<loanerName>融**</loanerName><!--融资人名字（部分隐藏） -->
+				<loanerRealName>融XX</loanerRealName><!--融资人名字 -->
+				<LoanerUserName>融YY</LoanerUserName><!--融资人用户名 -->
+				<investRealName>投XX</investRealName><!--投资人名字 -->
+				<InvestUserName>投YY</InvestUserName><!--投资人用户名 -->
+				<InvestName>投XX</InvestName><!--投资人名字 -->
+				<InvestCertiNO>CERT2222222222222</InvestCertiNO><!--某个投资人身份证 -->
+				<InvestCertiNO2>CERT22******2222</InvestCertiNO2><!--某个投资人身份证 （部分隐藏）-->
+				<InvestAmount>20,000.00</InvestAmount><!--某个投资人投资金额（元） -->
+				<Interest>600.00</Interest>><!--某个投资人投资收益（元） -->
+				<guaranteer> <![CDATA[ XXXXXX承诺公司 ]]></guaranteer><!--承诺/担保公司 -->
+				<guaranteer_licenseNO>LIC01248484565</guaranteer_licenseNO><!--承诺/担保公司营业执照注册号 -->
+				<guaranteer_url>                
+ 				   <![CDATA[丁方：XXXXXX承诺公司 ]]>
+				</guaranteer_url>
+				<!-- 投资人流水号 -->
+				<ENTERPRISE> <![CDATA[XXXXXX承诺公司]]></ENTERPRISE><!--承诺/担保公司 -->
+
+				<!-- 融资扩展信息 各个平台可能不同 -->
+				<YLS_TICKET_NO>31xxxxxxxxxxxxx</YLS_TICKET_NO>  
+				<YLS_TICKET_AMOUNT>xxxxxxxxxxx</YLS_TICKET_AMOUNT>
+				<YLS_ACCEPTANCE_BANK>xxxx银行xxxxx支行</YLS_ACCEPTANCE_BANK>
+				<YLS_OPEN_TICKET_TIOME> xxxx-xx-xx</YLS_OPEN_TICKET_TIOME>
+				<YLS_OVER_TICKET_TIOME> yyyy-yy-yy</YLS_OVER_TICKET_TIOME>
+				
+				
+				<!--投资人列表1 -->
+				<InvestorTable>
+					<InvestorRow>
+						<serialNO>T0001</serialNO> <!--投资流水号 -->
+						<investorName>投YY1</investorName><!--投资人用户名 -->
+						<investorCertNo>CERT22222222222221</investorCertNo><!--投资人身份证  （本人未隐藏） -->
+						<investorAccount>20141564001</investorAccount><!--投资人账户 -->
+						<investorRealName>投XX</investorRealName> <!--投资人实名 -->
+						<investorAccount2>2014*****01</investorAccount2><!--投资人账户（部分隐藏） -->
+						<amout>10000</amout>
+					</InvestorRow>
+					<InvestorRow>
+						<serialNO>T0002</serialNO><!--投资流水号 -->
+						<investorName>投YY2</investorName><!--投资人用户名 -->
+						<investorCertNo>CERT2*********2222</investorCertNo><!--投资人身份证  （其他人的隐藏） -->
+						<investorAccount>2014*****02</investorAccount><!--投资人账户（其他人的隐藏）  -->
+						<investorRealName>投**</investorRealName><!--投资人实名 （其他人的隐藏）-->
+						<investorAccount2>2014*****02</investorAccount2><!--投资人账户（部分隐藏） -->
+						<amout>20000</amout>
+					</InvestorRow>
+					<InvestorRow>
+						<serialNO>T0003</serialNO>
+						<investorName>投YY3</investorName>
+						<investorCertNo>CERT2*********2223</investorCertNo>
+						<investorAccount>2014*****03</investorAccount>
+						<investorRealName>投**</investorRealName>
+						<investorAccount2>2014*****03</investorAccount2>
+						<amout>30000</amout>
+					</InvestorRow>
+				</InvestorTable>
+				
+				<!--投资人列表2 -->
+				<InvestorTable2>
+					<InvestorRow2>
+						<serialNO>T0001</serialNO><!--投资流水号 -->
+						<investorName>投YY1</investorName><!--投资人用户名 -->
+						<investorCertNo>CERT22222222222221</investorCertNo><!--投资人身份证   -->
+						<investorCertNo>CERT2*********2222</investorCertNo><!--投资人身份证  （部分隐藏） -->
+						<investorAccount>20141564001</investorAccount><!--投资人账户 -->
+						<investorAccount2>2014*****01</investorAccount2><!--投资人账户（部分隐藏） -->
+						<investorRealName>投XX</investorRealName><!--投资人实名 -->
+						<amout>10000</amout>
+					</InvestorRow2>
+					<InvestorRow2>
+						<serialNO>T0002</serialNO><!--投资流水号 -->
+						<investorName>投YY2</investorName><!--投资人用户名 -->
+						<investorCertNo>CERT22222222222221</investorCertNo><!--投资人身份证   -->
+						<investorCertNo>CERT2*********2222</investorCertNo><!--投资人身份证  （部分隐藏） -->
+						<investorAccount>20141564001</investorAccount><!--投资人账户 -->
+						<investorAccount2>2014*****01</investorAccount2><!--投资人账户（部分隐藏） -->
+						<investorRealName>投XX</investorRealName><!--投资人实名 -->
+						<amout>10000</amout>
+					</InvestorRow2>
+					
+					<InvestorRow2>
+						<serialNO>T0003</serialNO><!--投资流水号 -->
+						<investorName>投YY3</investorName><!--投资人用户名 -->
+						<investorCertNo>CERT22222222222221</investorCertNo><!--投资人身份证   -->
+						<investorCertNo>CERT2*********2222</investorCertNo><!--投资人身份证  （部分隐藏） -->
+						<investorAccount>20141564001</investorAccount><!--投资人账户 -->
+						<investorAccount2>2014*****01</investorAccount2><!--投资人账户（部分隐藏） -->
+						<investorRealName>投XX</investorRealName><!--投资人实名 -->
+						<amout>10000</amout>
+					</InvestorRow2>
+				</InvestorTable2>
+				
+				
+				
+				<financier>
+					<serialNO>RRRRRRRRRRRRRR</serialNO><!-- 融资流水编号 -->
+					<loanerName>张**</loanerName> <!-- 融资人用户名（部分隐藏） -->
+					<loanerRealName>融XX</loanerRealName><!-- 融资人实名 -->
+					<userName>BBBB</userName> <!-- 融资人用户名 -->
+					<loanerNo>00000********0000</loanerNo> <!-- 融资人用身份证（部分隐藏） -->
+					<loanerCode>00000000000000000</loanerCode><!-- 融资人用身份证 -->
+					<loanerEmail>null</loanerEmail><!-- 融资人邮箱地址 -->
+					<loanerMobile>null</loanerMobile><!-- 融资人手机号 -->
+				</financier>
+				
+				<guaranteeLetter>
+					<serialNO>RRRRRRRRRRRRR</serialNO><!-- 担保承诺函编号 -->
+				</guaranteeLetter>
+				
+				<!-- 融资信息 -->
+				<investTable>
+					<RepayWay>到期归还本金及利息</RepayWay>	<!-- 还款方式 -->
+					<loanName>测试用借款标题</loanName><!--交易名称 -->
+					<DMONEY>50.00</DMONEY> <!--融资总额（万） -->
+					<moneyTal>伍拾万元整</moneyTal><!--融资总额（大写） -->
+					<PER>0.1</PER><!-- 投资权益年化收益率 -->
+					<SYYYY>1900</SYYYY> <!--交易生效日（年） -->
+					<SMM>01</SMM><!--交易生效日（月） -->
+					<SDD>01</SDD><!--交易生效日（天） -->
+					<EYYYY>2900</EYYYY><!--交易到期日（年） -->
+					<EMM>12</EMM><!--交易到期日（月） -->
+					<EDD>31</EDD><!--交易到期日（天） -->
+					<loanPurpose>TEST TEST TEST</loanPurpose><!-- 借款用途 -->
+				</investTable>
+			</TableContract>
+			
+			<TableEnd>
+				<guaranteer>                
+ 				   <![CDATA[ XXXXXX承诺公司 ]]><!--承诺/担保公司 -->
+				</guaranteer>
+				<PYYYY>2015</PYYYY><!-- 打印日期（年） -->
+				<PMM>04</PMM><!-- 打印日期（月） -->
+				<PDD>30</PDD><!-- 打印日期（日） -->
+				<platformName>重庆易六投资服务有限公司</platformName><!--交易平台公司名称 -->
+				<productName>易六</productName><!--交易平台名称 -->
+				<loanerName>张**</loanerName> <!-- 融资人用户名（部分隐藏） -->
+				<loanerRealName>融XX</loanerRealName><!-- 融资人实名 -->
+			</TableEnd>
+		</ReportBody><!-- 报表尾 // -->
+		<ReportFooter></ReportFooter>
+	</PageList>
+	
+	
+	
+	<!--以下为投资凭证和债权转让用到的参数-->
+	
+	<PageList3>
+		<ReportBody3>
+			<TableBegin3>
+				<ProductName>易六</ProductName><!--交易平台名称 -->
+				<InvestNO>333333T</InvestNO><!--投资流水号 -->
+			</TableBegin3>
+			<TableContract3>
+				<ReceiptTable3>
+					<tradeName>测试用借款标题</tradeName> <!--交易名称 -->
+					<ProductName>易六</ProductName><!--交易平台名称 -->
+					<PlatForm>重庆易六投资服务有限公司</PlatForm><!--交易平台公司名称 -->
+					<PlatFormAddress>河北省石家庄市高新技术产业开发区湘江道6号</PlatFormAddress><!-- 交易平台所在地址 -->
+					<GuaranteeC>XXXXXX承诺公司</GuaranteeC><!--承诺/担保公司 -->
+					<GuaranteeNO>XXXXXXXXXXXXXX</GuaranteeNO><!--承诺/担保函编号 -->
+					<RepayWay>到期归还本金及利息</RepayWay><!-- 还款方式 -->
+					<InterestRate>0.1</InterestRate><!-- 投资权益年化收益率 -->
+					<Period>360个月</Period><!--投资/融资期限 -->
+					<ValidDate>1900-01-01</ValidDate> <!--交易生效日 -->
+					<ExpireDate>2900-12-31</ExpireDate><!--交易到期效日 -->
+					<limit>360个月</limit><!--投资/融资期限 -->
+					<InvestNO>333333T</InvestNO><!--投资流水号-->
+					<InvestUserName>投YY</InvestUserName><!--投资人用户名 -->
+					<InvestName>投XX</InvestName><!--投资人实名 -->
+					<InvestCertiNO>CERT2222222222222</InvestCertiNO><!--投资人身份证号 -->
+					<InvestAmount>20,000.00</InvestAmount><!--投资金额-->
+					<Interest>600.00</Interest><!--投资收益-->
+					<ReceivableAmount>20,600.00</ReceivableAmount><!--本金收益合计-->
+					<LoanerUserName>融YY</LoanerUserName><!--融资人用户名 -->
+					<LoanerName>融XX</LoanerName><!--融资人实名 -->
+					<loanerRealName>融XX</loanerRealName><!--融资人实名 -->
+					<loanerRealName2>融**</loanerRealName2><!--融资人实名（部分隐藏）  -->
+					<LoanePurpose>TEST TEST TEST</LoanePurpose><!-- 借款用途 -->
+					<LoanerCertiNO>00000000000000000</LoanerCertiNO><!--融资人身份证号 -->
+					<LoanerCertiNO2>00000********0000</LoanerCertiNO2><!--融资人身份证号（部分隐藏）  -->
+					<PayableAmount>20,600.00</PayableAmount><!--融资人应付本金利息合计  -->
+					 
+					<ApplyUserCertiNO>510221198674897856</ApplyUserCertiNO><!-- 转让人-->
+					<ApplyUserName>appler</ApplyUserName><!-- 转让人用户名-->
+					<ApplyRealName>张转</ApplyRealName><!-- 转让人实名-->
+					<RecipientCertiNO>510226487856945126</RecipientCertiNO><!-- 受让人-->
+					<RecipientName>recipient</RecipientName><!-- 受让人用户名-->
+					<RecipientRealName>李受</RecipientRealName><!-- 受让人实名-->
+					
+					<OriginalAmount>20,000.00</OriginalAmount> <!-- 原始金额-->
+					<TransferAmount>19,000.00</TransferAmount> <!-- 转让金额-->
+					<TransferCharge>1,000.00</TransferCharge> <!-- 转让手续费-->
+					<TransferDate>2015-05-13</TransferDate>   <!-- 转让日期-->
+					
+					<MonthRepayDay>自2015-05-13起，每月13日 （24:00前，节假日不顺延）</MonthRepayDay>  <!-- 每月还款日-->
+					<TransferPeriodCnt>5期 2015-05-13起 至2015-10-13日止</TransferPeriodCnt>  <!--转让期数 -->
+					<RepayAmountPerMonth>300元</RepayAmountPerMonth> <!-- 每月还款 -->
+					
+				</ReceiptTable3>
+				<ProductName>易六</ProductName><!--交易平台名称 -->
+				<PlatForm>重庆易六投资服务有限公司</PlatForm><!--交易平台公司名称 -->
+				<PlatFormAddress>河北省石家庄市高新技术产业开发区湘江道6号</PlatFormAddress><!-- 交易平台所在地址 -->
+			</TableContract3>
+			<TableEnd></TableEnd>
+		</ReportBody3>
+		<ReportFooter3></ReportFooter3>
+	</PageList3>
+	
+	
+	
+	
+	
+</EntryDailyListReport>            

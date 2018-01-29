@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>demo</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;保险经纪&nbsp;&gt;&nbsp;demo&nbsp;&gt;&nbsp;
+</div>
+
+<form class="m-main border ui-bg-fff" action="" id="fnListSearchForm" method="POST">
+
+    
+    <div class="m-search fn-clear">
+
+        <div class="item">
+            姓名
+            <input class="ui-text fn-w90" type="text" name="customerName" value="\$!{queryConditions.realName}">
+        </div>
+
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/demo/edit.htm"><b>+</b>新增&nbsp;</a>
+
+        </div>
+
+        
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+				 	                <th>实付金额</th>
+				 	                <th>费用性质</th>
+				 	                <th></th>
+				 	                <th></th>
+				 	                <th>关联的保单的id</th>
+				 	                <th>应付金额</th>
+				 	                <th>记录新增时间</th>
+				 	                <th>保单申请表id</th>
+				 	                <th>代扣税金</th>
+				 	                <th>收款人姓名</th>
+				                     <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+					 						 <td>	$!{item.actualPayFee} </td>
+					 						 <td>	$!{item.feeProperty} </td>
+					 						 <td>	$!{item.id} </td>
+					 						 <td>	$!{item.rowUpdateTime} </td>
+					 						 <td>	$!{item.businessBillId} </td>
+					 						 <td>	$!{item.payFee} </td>
+					 						 <td>	$!{item.rowAddTime} </td>
+					 						 <td>	$!{item.settlementApplyId} </td>
+					 						 <td>	$!{item.withholdTaxes} </td>
+					 						 <td>	$!{item.receiverName} </td>
+					                          <td>
+                            <a href="">[ 查看详情 ]</a>
+                           
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        
+        
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript">
+  //  seajs.use($_GLOBAL.zyw+'/project/rkct.rkwn.list');
+</script>
+</body>
+</html>

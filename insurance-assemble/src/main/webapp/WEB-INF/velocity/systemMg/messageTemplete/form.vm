@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>消息模板管理</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;系统管理&nbsp;&gt;&nbsp;消息模板
+</div>
+
+<form class="m-main border ui-bg-fff" action="/systemMg/messageTemplete/save.json" id="form" method="post">
+	<input type="hidden" name="templeteId" value="$!templete.templeteId"/>
+    <div class="m-item fn-mt20">
+        <label class="m-label">消息模板：</label>
+        <select class="ui-select fnInput" name="formCode" id="fnMsgTpl">
+            <option value="">请选择</option>
+            #foreach($formCode in $!formList)
+                <option #if($!templete.formCode == $!formCode)selected="selected"#end value="$!formCode.code">$!formCode.message</option>
+            #end
+        </select>
+    </div>
+
+    <div class="m-item">
+        <label class="m-label">通知类型：</label>
+        <select class="ui-select fnInput" name="type" id="fnNoticeType">
+            <option value="">请选择</option>
+            #foreach($type in $!typeList)
+                <option #if($!templete.type == $!type)selected="selected"#end value="$!type.code">$!type.message</option>
+            #end
+        </select>
+    </div>
+
+    <div class="m-item">
+        <label class="m-label">消息主题：</label>
+        <input class="ui-text fn-w400 fnInput" type="text" name="subject" value="$!templete.subject">
+    </div>
+
+    <div class="m-item" style="min-height:150px;">
+        <label class="m-label">
+            消息内容：<br>
+            <a href="javascript: void(0);" class="ui-btn ui-btn-fill ui-btn-blue fn-mr20 fn-mt20" id="fnLabelBtn">添加变量</a>
+        </label>
+        ## <textarea name="contentHtml">$!templete.contentHtml</textarea>
+        <script id="editor" type="text/plain" style="width:95%;height:400px;">$!templete.contentHtml</script>
+        <input type="hidden" name="contentHtml" id="contentHtml">
+    </div>
+
+    <div class="m-item">
+        <label class="m-label">
+            文本内容：<br>
+            <a href="javascript: void(0);" class="ui-btn ui-btn-fill ui-btn-blue fn-mr20 fn-mt20" id="fnUpdateMsg">同步消息</a>
+        </label>
+        <textarea class="ui-textarea fn-w500 fnInput" name="contentTxt" id="fnContentTxt">$!templete.contentTxt</textarea>
+    </div>
+
+    <div class="m-item">
+        <label class="m-label">通知方式：</label>
+        <label class="fn-csp fn-mr20"><input type="checkbox" name="baseOn" value="BPM" id="fnBPMCheckbox" #if($!templete.baseOn.code == "BPM")checked="checked"#end/> 基于BMP配置</label>
+        <label class="fn-csp fn-mr20"><input type="checkbox" name="isSendSiteMessage" value="IS" class="fnNotBPMCheckbox" #if($!templete.isSendSiteMessage.code == "IS")checked="checked"#end/> 站内信</label>
+        <label class="fn-csp fn-mr20"><input type="checkbox" name="isSendMail" value="IS" class="fnNotBPMCheckbox" #if($!templete.isSendMail.code == "IS")checked="checked"#end/> 邮件</label>
+        <label class="fn-csp fn-mr20"><input type="checkbox" name="isSendSms" value="IS" class="fnNotBPMCheckbox" #if($!templete.isSendSms.code == "IS")checked="checked"#end/> 短信</label>
+    </div>
+    
+    <div class="m-item">
+        <label class="m-label"></label>
+        <label class="fn-csp fn-mr20">
+        	是否附带审核历史（仅支持站内信、邮件）：
+        	<input type="radio" name="withAuditOpinion" value="YES" #if($!templete.withAuditOpinion.code !="NO")checked="checked"#end/> 是	
+        	<input type="radio" name="withAuditOpinion" value="NO"  #if($!templete.withAuditOpinion.code =="NO")checked="checked"#end class="fn-ml5" /> 否
+        </label>
+    </div>
+
+    <div class="fn-tac fn-pt20 fn-pb20">
+        <input class="ui-btn ui-btn-submit ui-btn-next fn-ml5 fn-mr5" type="button" id="submit" value="添加模板">
+        <a href="javascript: history.back()" class="ui-btn ui-btn-submit ui-btn-back fn-ml5 fn-mr5">返回</a>
+    </div>
+
+</form>
+
+<div class="m-modal-box fn-hide" id="fnLabelBox">
+    <div class="m-modal-overlay"></div>
+    <div class="m-modal apply-org" style="width: 400px; margin-left: -201px; height: 210px; margin-top: -131px;">
+        <div class="apply-org-hd"><span class="fn-usn fn-csp fn-right close">&times;</span>常用变量</div>
+        <div class="apply-org-form-in" style="height: 100px;">
+            <div class="fn-pl20 fn-mt20 fn-pt20 fn-tac">
+                	选择常用变量
+                <select class="ui-select fn-w100 fn-ml20" id="fnLabelSelect">
+                    #foreach($!var in $!varList)
+                        <option value="$!var.message">$!var.code</option>
+                    #end
+                </select>
+            </div>
+        </div>
+        <div class="apply-org-form-bt fn-tac">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-green fn-mr20 sure">确定</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fn-ml20 close">取消</a>
+        </div>
+  </div>
+</div>
+
+#parse("/layout/common/footer.vm")
+#parse("/layout/common/commonjs.vm")
+
+<script type="text/javascript" src="/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" src="/js/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript">
+
+    seajs.use($_GLOBAL.zyw+'/system/msg.tpl');
+
+</script>
+</body>
+</html>

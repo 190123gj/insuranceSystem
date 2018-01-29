@@ -1,0 +1,51 @@
+--支付清单
+ALTER TABLE `bill_pay_fee_detail`
+ADD COLUMN `insurance_broker_no`  varchar(20) NULL COMMENT '经纪人工号' AFTER `receiver_name`;
+
+
+ALTER TABLE `bill_settlement_apply`
+ADD COLUMN `broker_rank`  varchar(20) NULL COMMENT '经纪人职级' AFTER `insurance_no`;
+
+
+--保单新增字段
+ALTER TABLE `business_bill`
+ADD COLUMN `plate_number`  varchar(20) NULL COMMENT '车牌号' AFTER `batch_no`,
+ADD COLUMN `periods`  varchar(20) NULL COMMENT '期数' AFTER `plate_number`;
+
+
+--新增结算通知单保
+DROP TABLE IF EXISTS `charge_notice`;
+CREATE TABLE `charge_notice` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `form_id` bigint(20) DEFAULT NULL COMMENT '流程的formId',
+  `business_bill_id` bigint(20) DEFAULT NULL COMMENT '关联的保单的id',
+  `depart` varchar(40) DEFAULT NULL COMMENT '部门',
+  `team` varchar(40) DEFAULT NULL COMMENT '团队',
+  `notice_date` datetime DEFAULT NULL COMMENT '日期',
+  `insurance_no` varchar(40) DEFAULT NULL COMMENT '保单号',
+  `insurance_type_name` varchar(40) DEFAULT NULL COMMENT '险种类别名称',
+  `bill_customer_name` varchar(40) DEFAULT NULL COMMENT '承保人简称',
+  `premium_amount` bigint(20) DEFAULT '0' COMMENT '原保费',
+  `recievable_fee` bigint(20) DEFAULT '0' COMMENT '应收金额',
+  `recieved_fee` bigint(20) DEFAULT '0' COMMENT '已收',
+  `pay_fee` bigint(20) DEFAULT '0' COMMENT '费用支付',
+  `reserved_scale` double(10,2) DEFAULT '0.00' COMMENT '费用预留比率',
+  `notice_no` varchar(40) DEFAULT NULL COMMENT '单号',
+  `bill_no` varchar(40) DEFAULT NULL COMMENT '业务编号',
+  `insurance_broker_no` varchar(20) DEFAULT NULL COMMENT '经纪人编号',
+  `insurance_broker_name` varchar(40) DEFAULT NULL COMMENT '经纪人姓名',
+  `commission_type` bigint(20) DEFAULT '0' COMMENT '佣金类别（lifeCommission、寿险佣金 teamCommission、团险佣金）',
+  `persistency_rate_ward` bigint(20) DEFAULT '0' COMMENT '继续率奖金',
+  `manage_grant` bigint(20) DEFAULT '0' COMMENT '管理津贴',
+  `package_fee` bigint(20) DEFAULT '0' COMMENT '方案费',
+  `insurance_other` bigint(20) DEFAULT NULL COMMENT '其他费用',
+  `row_add_time` datetime DEFAULT NULL COMMENT '记录新增时间',
+  `row_update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='车险 非车险  寿险 结算通知单';
+
+
+--更改保单的长度
+ALTER TABLE `bill_settlement_apply`
+MODIFY COLUMN `insurance_no`  varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '保单的编号' AFTER `business_bill_id`;
+

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    #parse("/layout/common/head.vm")
+    <link type="text/css" href="/js/ztree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+    <link type="text/css" href="/styles/tmbp/project4.css" rel="stylesheet">
+    <title>保险分类管理</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;资源管理&nbsp;&gt;&nbsp;分类管理&nbsp;&gt;&nbsp;分类列表
+</div>
+
+<div class="m-main border ui-bg-fff fn-clear">
+    <div class="m-sidebar fn-left" style="border:0;border-right:1px solid #e5e1e1; margin-left: 0;width:24%;">
+        <div id="regionTree"  class="ztree fn-usn fn-pt20 fn-pb20 m-ul" style="height: 412px;"></div>
+    </div>
+    <div class="productList fn-left">
+
+        <table class="m-table m-table-list fn-tac">
+
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>产品名称</th>
+                    <th>保险公司</th>
+                    <th>销售状态</th>
+                    <th>创建时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="fn-tac">
+                    <td colspan="5">暂无数据</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</form>
+
+##隐藏域
+<div class="fn-hide">
+    <input type="hidden" id="catalogId">
+    <input type="hidden" id="parentNodeId">
+    <input type="hidden" id="gradeName">
+    <input type="hidden" id="gradeDepth">
+    <input type="hidden" id="type">
+    <input type="hidden" id="regionTreeId">##识别选择的节点
+</div>
+##右键菜单
+<div id="rMenu" class="rightClickMenu">
+    <ul>
+        <li class="opt NEW_SAME_NODE" tempalteid="NEW_GRADE_NODE" templatetitle="新增同级分类">新增同级</li>
+        <li class="opt NEW_CHILD_NODE" tempalteid="NEW_GRADE_NODE" templatetitle="新增子集分类">新增子集</li>
+        <li class="opt NEW_INSUREANCE_GRADE" tempalteid="NEW_INSUREANCE_GRADE">新增险种</li>
+        <li class="newProduct" tempalteid="NEW_PRODUCT_GRADE"><a linkHref="/insurance/insuranceProduct/edit.htm" target="_blank" href="javascript:void(0);">新增产品</a></li>
+        <li class="editNode" tempalteid="EDIT_NODE" templatetitle="编辑节点">编辑</li>
+        <li class="removeNode" tempalteid="DELETE_NODE">删除</li>
+        <li class="editNode ViewsNode" tempalteid="VIEW_NODE" templatetitle="节点详情">详情</li>
+    </ul>
+</div>
+
+## 新增同级 && 新增子集
+<script type="text/html" id="NEW_GRADE_NODE">
+    <div class="wnd-wnd wnd-common">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">新增同级分类</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+        <form  action="/insurance/insuranceCatalog/save.json"  method="post">
+            <input type="hidden" name="parentCatalogId">
+            <input type="hidden" name="type">
+            <div class="wnd-body wnd-body1 fn-clear">
+                <div class="m-item">
+                    <label class="m-label">分类名称：</label>
+                    <input name="catalogName" value="" class="ui-text fn-w200 fn-validate" type="text" value="">
+                </div>
+                <div class="m-item">
+                    <label class="m-label">所属层级：</label>
+                    <span class="gradeName"></span>
+                </div>
+                <div class="m-item">
+                    <label class="m-label">分类级别：</label>
+                    <span class="gradeType"></span>
+                </div>
+                <div class="m-item">
+                    <label class="m-label">询价单模板：</label>
+                    <select class="ui-select fn-w200 fn-validate" name="priceTemplate">
+                        #foreach( $item in $!{priceTemplates} )
+                            <option value="$item.id" #if( $item.id == $!{info.id} ) selected="selected" #end >$item.name</option>
+                        #end
+                    </select>
+                </div>
+            </div>
+            <div class="wnd-bottom">
+                <a href="javascript:void(0)" class="submit-btn submitBtn">提交</a>
+                <a href="javascript:void(0)" class="wnd-close close-btn closeBtn">取消</a>
+            </div>
+        </form>
+    </div>
+</script>
+## 新增险种insurance
+<script type="text/html" id="NEW_INSUREANCE_GRADE">
+    <div class="wnd-wnd wnd-common wnd-newAddGrade">
+        <div class="wnd-header" title="可拖动"><span class="wnd-title">新增险种</span>
+            <a href="javascript:void(0)" class="wnd-close closeBtn" title="关闭"></a>
+        </div>
+        <form id="markerrorForm" action="/insurance/insuranceCatalog/save.json"  method="post">
+            <input type="hidden" name="parentCatalogId">
+            <input type="hidden" name="type" value="kinds">
+            <div class="wnd-body wnd-body1 fn-clear">
+                <div class="fn-clear">
+                    <div class="m-item fn-left">
+                        <label class="m-label"><span class="m-required">*</span>险种名称：</label>
+                        <input name="catalogName" value="" class="ui-text fn-w200 fn-validate" type="text" value="">
+                    </div>
+
+
+                    <div class="m-item fn-left mainInsurance">
+                        <label class="m-label">流程：</label>
+                        <input name="catalogCode" value="" class="ui-text fn-w200 " type="text" value="">
+                    </div>
+
+                    <div class="m-item fn-left mainInsurance">
+                        <label class="m-label">是否寿险：</label>
+                        <label><input name="isLifeInsurance" value="YES" class="radio " type="radio" >是</label>
+                        <label><input name="isLifeInsurance" value="NO" class="radio " type="radio">否</label>
+                    </div>
+                </div>
+
+
+                <div class="m-item">
+                    <label class="m-label">险种类别：</label>
+                    <label><input name="isMain" value="YES" class="radio " checked insurancetype="mainInsurance" type="radio">主险</label>
+                    <label><input name="isMain" value="NO" class="radio " insurancetype="otherInsurance" type="radio">附加险</label>
+                </div>
+
+
+                <div class="m-item otherInsurance">
+                    <label class="m-label">所属主险：</label>
+                    <input name="parentIds"  class="parentIds" type="hidden" disabled="disabled">
+                    <input name="parentNames"  class="ui-text fn-w200 " type="text" readonly disabled="disabled">
+                    <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseInsuranceName" style="color: #fff;">选择</a>
+                    <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClear" style="color: #fff;">清除</a>
+                </div>
+                <div class="m-item mainInsurance">
+                    <label class="m-label">添加附加险：</label>
+                    <input name="childrenIds"  class="" type="hidden" disabled="disabled">
+                    <input name="childrenNames"  class="ui-text fn-w200 " type="text" readonly disabled="disabled">
+                    <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChooseInsuranceName" style="color: #fff;">选择</a>
+                    <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClear" style="color: #fff;">清除</a>
+                </div>
+
+                <div class="m-item">
+                    <label class="m-label">简称1：</label>
+                    <input name="abbr1" value="" class="ui-text fn-w200 " type="text" value="">
+                </div>
+
+                <div class="m-item">
+                    <label class="m-label">简称2：</label>
+                    <input name="abbr2" value="" class="ui-text fn-w200 " type="text" value="">
+                </div>
+
+                <div class="m-item">
+                    <label class="m-label">简称3：</label>
+                    <input name="abbr3" value="" class="ui-text fn-w200 " type="text" value="">
+                </div>
+
+                <div class="m-item">
+                    <label class="m-label">所属层级：</label>
+                    <span class="gradeName"></span>
+                </div>
+
+##                <div class="m-item" style="display: none">
+##                    <label class="m-label">上级编码：</label>
+##                </div>
+
+                <div class="m-item">
+                    <label class="m-label">分类级别：</label>
+                    <span class="gradeType"></span>
+                </div>
+
+##                <div class="m-item" style="display: none">
+##                    <label class="m-label">是否有子节点：</label>
+##                    <input name="depth" value="0" class="ui-text fn-w200 " readonly="readonly" type="text">
+##                </div>
+                <div class="m-item diyNameBox">
+                    <label class="m-label"></label>
+                    <div class="fn-wp90 itemBox">
+                        <table class="m-table m-table-list itemsList" id="CONDITIONS">
+                            <tr>
+                                <th class="fn-tac">业务条件</th>
+                                <th class="fn-tac">询价模板</th>
+                                <th class="fn-tac">操作</th>
+                            </tr>
+                        </table>
+                        <div class="fn-tar fn-mt20">
+                            <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_WORKTEMP" tplID="t-tbodyZZZS" cttID="tbodyZZZS" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-item diyNameBox choose-dailog mainInsurance">
+                    <label class="m-label"></label>
+                    <div class="fn-wp90 itemBox">
+                        <p><label><span class="m-required">*</span>保险责任：</label></p>
+                        <table class="m-table m-table-list itemsList" id="LIABILITIS">
+                            <thead>
+                                <tr>
+                                    <th class="fn-tac">名称</th>
+                                    <th class="fn-tac">操作</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="fn-tar fn-mt20">
+                            <a class="ui-btn ui-btn-fill ui-btn-green addLine" templateid="TMP_LIABILITYORDERS" tplID="t-tbodyZZZS" cttID="tbodyZZZS" href="javascript:void(0);"><i class="icon icon-add"></i>新增一行</a>
+                        </div>
+                    </div>
+                </div>
+##                <div class="m-item ">
+##
+##                </div>
+            </div>
+            <div class="wnd-bottom">
+                <a href="javascript:void(0)" class="submit-btn submitBtn">提交</a>
+                <a href="javascript:void(0)" class="wnd-close close-btn closeBtn">取消</a>
+            </div>
+        </form>
+    </div>
+</script>
+## 新增品种增删行
+<script type="text/html" id="TMP_WORKTEMP">
+    <tr diyname="conditionOrders" class="itemLine">
+        <td class="fn-tac">
+            <input type="hidden" name="conditionId" targetkey="conditionId" value="0">
+            <input class="text fn-validate" type="text" name="businessConditions" targetkey="businessConditions">
+        </td>
+        <td class="fn-tac">
+            <select class="ui-select fn-w200 fnChangeInput" name="priceTemplate"  targetkey="priceTemplate">
+                #foreach( $item in $!{priceTemplates} )
+                    <option value="$item.id" #if( $item.id == $!{info.id} ) selected="selected" #end >$item.name</option>
+                #end
+            </select>
+        </td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+    </tr>
+</script>
+
+
+<script type="text/html" id="TMP_LIABILITYORDERS">
+    <tr diyname="liabilityOrders" class="itemLine">
+        <td class="fn-tac">
+            <input type="hidden" name="liabilityId" id="liabilityId" value="$!info.liabilityId" targetkey="liabilityId">
+            <input type="hidden" name="id"  targetkey="id" value="0">
+            <input type="text" name="liabilityName" id="liabilityName" value="$!info.liabilityName" class="ui-text fn-w200 fn-validate" readonly  targetkey="liabilityName">
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-blue fnToChoose" id="fnToChooseLiabilityId" style="color: #fff;">选择</a>
+            <a href="javascript:void(0);" class="ui-btn ui-btn-fill ui-btn-gray fnToClear" id="fnToClearLiabilityId" style="color: #fff;">清除</a>
+        </td>
+        <td class="fn-tac"><a class="ui-btn ui-btn-fill ui-btn-danger deleteLine" parentsClass="fnNewLine" href="javascript:void(0);" style="color: #fff;">删除</a></td>
+    </tr>
+</script>
+
+## 详情
+<script type="text/html" id="VIEW_NODE">
+
+</script>
+## 加载保险产品列表
+<script type="text/html" id="PRODUCT_LIST">
+    <tr class="fn-tac">
+        <td class="product_num">序号</td>
+        <td class="product_name"><a href="/insurance/insuranceProduct/view.htm?typeId="></a></td>
+        <td class="product_comanyUserName"></td>
+        <td class="product_saleStatus"></td>
+        <td class="product_rawAddTime">创建时间</td>
+        ##隐藏域
+        <td class="fn-hide">
+            <input type="hidden" value="productId">
+        </td>
+    </tr>
+</script>
+
+    #parse("/layout/common/footer.vm")
+    #parse("/layout/common/commonjs.vm")
+<script type="text/javascript" src="/js/ztree/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript">
+    seajs.use($_GLOBAL.zyw+'/catalog/listInsuranceCatalog');
+</script>
+</body>
+</html>

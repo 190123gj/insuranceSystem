@@ -1,0 +1,31 @@
+<div class="auditCommonbox">
+	<ul class="changeClass">
+		<li class="pitch"><a>尽职调查报告</a></li>
+		<li><a>风险审查报告</a></li>
+	</ul>
+	<dl class="auditCommon">
+		<dt>其他操作<b>∨</b></dt>
+		<dd>
+			<ul>
+				<li><a>暂存</a></li>
+				<li><a>保存并提交</a></li>
+				<li><a>查看合同</a></li>
+				<li><a>查看项目详情</a></li>
+				<li><a>查看审批流程</a></li>
+				<li><a>查看审批记录</a></li>
+				#*<li><a>查看修改记录</a></li>
+				<li><a>理财项目信息</a></li>
+				<li><a>历史转让信息</a></li>
+				<li><a>历史赎回信息</a></li>
+				<li><a>查看项目批复</a></li>
+				<li><a>查看风险处理表</a></li>
+				<li><a>查看立项申请单</a></li>
+				<li><a>查看尽职调查报告</a></li>
+				<li><a>查看保后检查报告</a></li>
+				<li><a>查看风险等级评定</a></li>
+				*#
+			</ul>
+		</dd>
+		<dd class="top"><a href="#">返回顶部∧</a></dd>
+	</dl>
+</div>

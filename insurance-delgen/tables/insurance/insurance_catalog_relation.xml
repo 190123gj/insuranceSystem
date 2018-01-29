@@ -1,0 +1,111 @@
+<table sqlname="insurance_catalog_relation">
+    <operation name="insert" paramtype="object">
+        <sql>
+            <![CDATA[
+				INSERT INTO insurance_catalog_relation(relation_id,parent_name,parent_id,child_name,child_id,type) VALUES (?,?,?,?,?,?)
+			]]>
+        </sql>
+		
+		<sqlmap>
+			<![CDATA[
+				INSERT INTO insurance_catalog_relation(relation_id,parent_name,parent_id,child_name,child_id,type) VALUES (#relationId#,#parentName#,#parentId#,#childName#,#childId#,#type#)
+		        <selectKey  resultClass ="long"  keyProperty ="relationId" >   
+		          		 SELECT LAST_INSERT_ID() AS ID 
+		      	</selectKey>
+				]]>
+		</sqlmap>
+
+    </operation>
+
+    <operation name="update" paramtype="object">
+        <sql>
+            <![CDATA[
+			UPDATE insurance_catalog_relation SET parent_name=?,parent_id=?,child_name=?,child_id=?,type=? WHERE relation_id=?
+                  
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="findById" >
+        <sql>
+            <![CDATA[
+			  SELECT  relation_id ,parent_name ,parent_id ,child_name ,child_id ,type  FROM insurance_catalog_relation WHERE relation_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="deleteById" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_catalog_relation WHERE relation_id=?
+			]]>
+        </sql>
+    </operation>
+
+    <operation name="deleteByChildId" paramtype="string">
+        <sql>
+            <![CDATA[
+				  DELETE FROM insurance_catalog_relation WHERE child_id=?
+			]]>
+        </sql>
+    </operation>
+
+
+    <operation name="findByCondition" paramtype="object" multiplicity="many">
+        <extraparams>
+            <param name="sortCol" javatype="java.lang.String" />
+            <param name="sortOrder" javatype="java.lang.String" />
+            <param name="limitStart" javatype="long" />
+            <param name="pageSize" javatype="long" />
+        </extraparams>
+        <sql>
+            <![CDATA[
+					SELECT  relation_id ,parent_name ,parent_id ,child_name ,child_id ,type  FROM insurance_catalog_relation WHERE 1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	         SELECT  relation_id ,parent_name ,parent_id ,child_name ,child_id ,type  FROM insurance_catalog_relation where 1=1
+             <dynamic>
+                  <isGreaterThan property="insuranceCatalogRelation.childId"  compareValue="0" prepend=" and ">
+	                child_id = #insuranceCatalogRelation.childId#
+	            </isGreaterThan>
+
+	            <isGreaterThan property="insuranceCatalogRelation.parentId"  compareValue="0" prepend=" and ">
+	                parent_id = #insuranceCatalogRelation.parentId#
+	            </isGreaterThan>
+			</dynamic>
+	         <isNotEmpty property="sortCol" prepend=" order by ">
+	             $sortCol$
+	                <isNotEmpty property="sortOrder">
+              	 		$sortOrder$
+             		</isNotEmpty>
+	         </isNotEmpty>
+            LIMIT #limitStart#,#pageSize#
+	        ]]>
+        </sqlmap>
+    </operation>
+    <operation name="findByConditionCount" paramtype="object" >
+
+        <sql>
+            <![CDATA[
+	        SELECT  count(*) FROM insurance_catalog_relation WHERE  1=1
+	        ]]>
+        </sql>
+        <sqlmap>
+            <![CDATA[
+	           SELECT  count(*) FROM insurance_catalog_relation  where 1=1
+	           <dynamic>
+                  <isGreaterThan property="childId"  compareValue="0" prepend=" and ">
+	                child_id = #childId#
+	            </isGreaterThan>
+
+	            <isGreaterThan property="parentId"  compareValue="0" prepend=" and ">
+	                parent_id = #parentId#
+	            </isGreaterThan>
+			</dynamic>
+	        ]]>
+        </sqlmap>
+    </operation>
+</table>

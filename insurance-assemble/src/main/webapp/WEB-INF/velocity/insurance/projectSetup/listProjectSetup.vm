@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+#parse("/layout/common/head.vm")
+<link type="text/css" href="/styles/tmbp/project1.css" rel="stylesheet">
+<title>超权限审批列表</title>
+</head>
+<body>
+
+<div class="ui-breadcrumb">
+    &nbsp;业务管理&nbsp;&gt;&nbsp;超权限审批&nbsp;&gt;&nbsp;超权限审批单列表
+</div>
+
+<form class="m-main border ui-bg-fff" action="" id="fnListSearchForm" method="POST">
+
+    
+    <div class="m-search fn-clear">
+
+       <div class="item">
+            项目名称：
+            <input class="ui-text fn-w200 fnInput" placeholder="请输入项目名称" type="text" name="projectSetupName" value="$!{queryConditions.projectSetupName}">
+        </div>
+        
+        <div class="item">
+            申请人：
+            <input class="ui-text fn-w200 fnInput" placeholder="申请人" type="text" name="creatorName" value="$!{queryConditions.creatorName}">
+        </div>
+
+ 		<div class="item">
+            项目有效期：
+            <input class="ui-text fn-w200 laydate-icon fnChangeInput fnRequired fnInput" placeholder="起日期" type="text" name="beginDate" id="beginDate" value="$!dateUtil.formatDay($!queryConditions.beginDate)" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+        至
+            <input class="ui-text fn-w200 laydate-icon fnChangeInput fnRequired fnInput" placeholder="止日期" type="text" name="endDate" id="endDate" value="$!dateUtil.formatDay($!queryConditions.endDate)" onclick="laydate({istime: true,format: 'YYYY-MM-DD'})">
+        </div>
+        
+        <div class="item">
+            项目状态：
+            <select name="status" class="ui-select fn-w200">
+             <option value="">请选择</option>
+             #foreach ($state in  $!{projectStatus})
+             <option value="$state.code" #if ($state.code == $!queryConditions.status) selected #end>$state.message</option>
+             #end
+            </select>
+        </div> 
+
+
+        <div class="item">
+            <a class="ui-btn ui-btn-fill ui-btn-seek" id="fnListSearchBtn">搜索</a>
+        </div>
+
+    </div>
+
+    
+    <div class="fn-pl15 fn-pr15">
+        
+        <div class="fn-mb20 fn-mt20">
+
+            <a class="ui-btn ui-btn-fill ui-btn-green-empty" href="/insurance/projectSetup/edit.htm"><b>+</b>申请超权限&nbsp;</a>
+
+        </div>
+
+        
+        <table class="m-table m-table-list fn-tac" id="list">
+
+            <thead>
+                <tr id="fnListSearchTh">
+				 	                <th>序号</th>
+				 	                <th>项目名称</th>
+				 	                <th>项目生效时间</th>
+				 	                <th>项目有效期至</th>
+				 	                <th>提交时间</th>
+				 	                <th>状态</th>
+				                     <th width="200px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                #foreach($item in $page.result)
+                    <tr>
+ 						 <td>	$!{velocityCount} </td>
+ 						 <td>	$!{item.projectSetupName} </td>
+ 						 <td>	$!dateUtil.formatDay($!{item.beginDate}) </td>
+ 						 <td>	$!dateUtil.formatDay($!{item.endDate}) </td>
+ 						 <td>	$!dateUtil.simpleFormat($!{item.rawAddTime})  </td>
+ 						 <td>	$!{item.formStatus.message}  </td>
+                      	<td>
+                     		 <a href="/insurance/projectSetup/view.htm?formId=$!{item.formId}">[ 查看详情 ] </a> 
+                     		   #set($processUrl = "")
+                            #if($!stringUtil.isNotBlank($item.taskUserData))
+                                #set($processUrl = $!formUtil.getProcessUrl($!item.taskUserData,$!sessionLocal.userId))
+                            #end
+                            #if($!stringUtil.isNotBlank($processUrl))
+                                <a href="$!processUrl">[ 处理 ]</a>
+                            #end
+                            #if ($!item.formStatus.code == "SUBMIT")
+                             <a href="javascript:void(0);" paramName="$!{item.projectSetupName}" formId="$!{item.formId}" class="revoke">[ 撤销 ] </a>
+                            #end
+                            #if ($!item.formStatus.code == "DRAFT")
+                          	 <a href="/insurance/projectSetup/edit.htm?formId=$!{item.formId}">[ 编辑 ] </a>
+                          	 <a href="javascript:void(0)" paramName="$!{item.projectSetupName}" projectSetupId="$!{item.projectSetupId}" class="deleteObj">[ 删除 ] </a>
+                          	#end
+                          	 #if ($!item.formStatus.code == "APPROVAL")
+                          	 	<a href="/insurance/projectSetup/set.htm?projectSetupId=$!{item.projectSetupId}">[ 设置跟踪提醒 ] </a> 
+                          	 #end
+                          	 #if ($!item.formStatus.code == "BACK")
+                          	 	<a href="/insurance/projectSetup/edit.htm?formId=$!{item.formId}">[重新申请]</a>
+                          	 	<a href="javascript:void(0);" paramName="$!{item.projectSetupName}" formId="$!{item.formId}" class="end">[作废 ]</a> 
+                          	 #end
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+
+        
+        
+        #parse("/layout/common/pages.vm")
+
+        
+    </div>
+
+</form>
+
+
+
+#parse("/layout/common/footer.vm")
+
+#parse("/layout/common/commonjs.vm")
+<script src="/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+  seajs.use($_GLOBAL.zyw+'/projectSetup/listProjectSetup');
+</script>
+</body>
+</html>
