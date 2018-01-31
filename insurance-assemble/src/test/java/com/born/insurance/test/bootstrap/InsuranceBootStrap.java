@@ -22,7 +22,7 @@ import com.yjf.common.test.TomcatBootstrapHelper;
 public class InsuranceBootStrap {
 	
 	public static void main(String[] args) {
-		new TomcatBootstrapHelper(8097, false, "test").start();
+		new TomcatBootstrapHelper(8097, false, "dev").start();
 	}
 	
 }
